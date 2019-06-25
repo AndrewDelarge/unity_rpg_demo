@@ -1,0 +1,48 @@
+﻿using System;
+using Scriptable;
+using UnityEngine;
+
+namespace NPC
+{
+    public class NPCActorController : MonoBehaviour
+    {
+
+        protected NPCActor actor;
+        public GameObject lookRadiusObject;
+
+        protected ActorLookRadius actorLookRadius;
+        // Start is called before the first frame update
+        void Start()
+        {
+            actor = GetComponent<NPCActor>();
+            
+            
+            if (actor == null)
+            {
+                throw new Exception("NPCActor Must Be set in object " + transform.name);
+            }
+
+            actorLookRadius = lookRadiusObject.GetComponent<ActorLookRadius>();
+
+            if (actorLookRadius == null)
+            {
+                throw new Exception("ActorLookRadius Must Be set in Look Radius Object ");
+            }
+
+            actorLookRadius.onActorEnterRadius += OnActorEnterRadius;
+            actorLookRadius.onActorOutRadius += OnActorOutRadius;
+        }
+
+        protected virtual void OnActorEnterRadius(NPCActor actor)
+        {
+            //Do smth
+        }
+        
+        protected virtual void OnActorOutRadius(NPCActor actor)
+        {
+            //Do smth
+        }
+        
+
+    }
+}

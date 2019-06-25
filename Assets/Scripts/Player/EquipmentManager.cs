@@ -24,7 +24,7 @@ namespace Player
         public delegate void OnItemEquip(Scriptable.Equipment item);
 
         public OnItemUnequip onItemUnequip;
-        public OnItemUnequip onItemEquip;
+        public OnItemEquip onItemEquip;
         
         private void Start()
         {

@@ -188,16 +188,27 @@
           </e>
           <e p="Interactable.cs" t="Include" />
           <e p="ItemPickup.cs" t="Include" />
+          <e p="NPC" t="Include">
+            <e p="ActorLookRadius.cs" t="Include" />
+            <e p="EnemyController.cs" t="Include" />
+            <e p="NPCActor.cs" t="Include" />
+            <e p="NPCActorController.cs" t="Include" />
+          </e>
           <e p="Player" t="Include">
+            <e p="CharacterStats.cs" t="Include" />
             <e p="EquipmentManager.cs" t="Include" />
             <e p="Inventory.cs" t="Include" />
             <e p="PlayerController.cs" t="Include" />
             <e p="PlayerMotor.cs" t="Include" />
+            <e p="PlayerStats.cs" t="Include" />
+            <e p="Stat.cs" t="Include" />
           </e>
           <e p="Scriptable" t="Include">
             <e p="Equipment.cs" t="Include" />
             <e p="EquipmentMeshRegion.cs" t="Include" />
             <e p="EquipmentSlot.cs" t="Include" />
+            <e p="Fraction.cs" t="Include" />
+            <e p="GameActor.cs" t="Include" />
             <e p="Item.cs" t="Include" />
           </e>
           <e p="UI" t="Include">

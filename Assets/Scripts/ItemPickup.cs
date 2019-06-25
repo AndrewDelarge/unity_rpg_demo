@@ -16,7 +16,6 @@ public class ItemPickup : Interactable
     private void Start()
     {
         itemNameTextTemplate = Resources.Load<GameObject>("UI/ItemNameText");
-        Debug.Log("ItemPickUp");
     }
 
 
@@ -35,7 +34,7 @@ public class ItemPickup : Interactable
         }
     }
 
-    private void OnMouseEnter()
+    void OnMouseEnter()
     {
         float distance = Vector3.Distance(interactableTransform.position, UnityEngine.Camera.main.transform.position);
 
