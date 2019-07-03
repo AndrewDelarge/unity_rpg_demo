@@ -8,6 +8,7 @@ namespace Player
     {
 
         public LayerMask movementMask;
+        public LayerMask interactableMask;
 
         private Interactable focus;
         private UnityEngine.Camera cam;
@@ -44,12 +45,16 @@ namespace Player
                 Ray ray = cam.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
 
-                if (Physics.Raycast(ray, out hit, 100))
+                if (Physics.Raycast(ray, out hit, 100, interactableMask))
                 {
                     Interactable interactable = hit.collider.GetComponent<Interactable>();
                     if (interactable != null)
                     {
                         SetFocus(interactable);
+                    }
+                    else
+                    {
+                        Debug.Log("Not interactable " + hit.collider.name);
                     }
                 }
             }

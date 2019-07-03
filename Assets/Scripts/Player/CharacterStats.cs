@@ -7,13 +7,13 @@ namespace Player
     {
 
         public int maxHealth = 100;
-
         public int currentHealth { get; private set; }
 
         public Stat armor;
         public Stat damage;
 
-       
+        public delegate void OnDied(GameObject diedObject);
+        public OnDied onDied;
         private void Awake()
         {
             currentHealth = maxHealth;
@@ -36,9 +36,17 @@ namespace Player
 
         public virtual void Die()
         {
+            if (onDied != null)
+            {
+                onDied.Invoke(gameObject);
+            }
             Debug.Log(transform.name + " died");
+        }
 
-            //Character die
+
+        public bool IsDead()
+        {
+            return currentHealth <= 0;
         }
         
         

@@ -20,27 +20,45 @@ namespace NPC
 
         private void OnTriggerEnter(Collider collider)
         {
-            NPCActor actor = collider.gameObject.GetComponent<NPCActor>();
+            AddToList(collider.gameObject);
 
-            if (actor != null)
-            {
-                actorsInRadius.Add(actor);
-                onActorEnterRadius.Invoke(actor);
-            }
         }
         
 
         private void OnTriggerExit(Collider collider)
         {
-            NPCActor actor = collider.gameObject.GetComponent<NPCActor>();
+            RemoveFromList(collider.gameObject);
+        }
 
+
+        void RemoveOnDied(GameObject diedObject)
+        {
+            RemoveFromList(diedObject);
+        }
+
+        
+        void AddToList(GameObject gameObject)
+        {
+            NPCActor actor = gameObject.GetComponent<NPCActor>();
+
+            if (actor != null)
+            {
+                actorsInRadius.Add(actor);
+                actor.characterStats.onDied += RemoveOnDied;
+                onActorEnterRadius.Invoke(actor);
+            }
+        }
+
+        void RemoveFromList(GameObject gameObject)
+        {
+            NPCActor actor = gameObject.GetComponent<NPCActor>();
+            
             if (actor != null)
             {
                 actorsInRadius.Remove(actor);
                 onActorOutRadius.Invoke(actor);
             }
         }
-    
-    
+        
     }
 }

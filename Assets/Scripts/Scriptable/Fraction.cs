@@ -11,6 +11,7 @@ namespace Scriptable
         public string title;
         public bool unfrendly;
         
+        
         public List<Fraction> enemies = new List<Fraction>();
 
         public bool FractionInEnemies(Fraction fraction)
@@ -35,5 +36,19 @@ namespace Scriptable
             });
             return isEnemy;
         }
+
+        
+        public void Awake()
+        {
+            Debug.Log("Awake fraction " + title);
+        }
+        public void AddEnemy(Fraction fraction)
+        {
+            if (! FractionInEnemies(fraction))
+            {
+                enemies.Add(fraction);
+            }
+        }
+
     }
 }

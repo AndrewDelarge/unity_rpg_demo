@@ -12,14 +12,15 @@ public class Interactable : MonoBehaviour
     protected bool hasInteracted = false;
 
     public Transform interactableTransform;
+    
 
-    private void Start()
+    protected virtual void Start()
     {
-        Debug.Log("Iteracable start");
         if (interactableTransform == null)
         {
             interactableTransform = transform;
         }
+        
     }
 
     public virtual void Interact()
@@ -31,13 +32,19 @@ public class Interactable : MonoBehaviour
     {
         if (isFocus && ! hasInteracted)
         {
-            float distance = Vector3.Distance(interactableTransform.position, player.position);
-            if (distance <= radius)
+            if (InInteracableDistance(player))
             {
                 Interact();
                 hasInteracted = true;
             }
         }
+    }
+
+
+    public bool InInteracableDistance(Transform target)
+    {
+        float distance = Vector3.Distance(interactableTransform.position, target.position);
+        return distance <= radius;
     }
 
 

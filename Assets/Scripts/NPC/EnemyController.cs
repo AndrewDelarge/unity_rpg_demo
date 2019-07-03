@@ -1,4 +1,5 @@
 ﻿using System;
+using Player;
 using Scriptable;
 using UnityEngine;
 using UnityEngine.AI;
@@ -7,79 +8,150 @@ namespace NPC
 {
     public class EnemyController : NPCActorController
     {
-
-        public float lockRadius = 10f;
-        private NPCActor target;
-
         private NavMeshAgent agent;
     
-        // Start is called before the first frame update
-        void Start()
+        
+        protected override void Start()
         {
+            base.Start();
             agent = GetComponent<NavMeshAgent>();
-            
-            actor = GetComponent<NPCActor>();
-            
-            
-            if (actor == null)
-            {
-                throw new Exception("NPCActor Must Be set in object " + transform.name);
-            }
-
-            actorLookRadius = lookRadiusObject.GetComponent<ActorLookRadius>();
-
-            if (actorLookRadius == null)
-            {
-                throw new Exception("ActorLookRadius Must Be set in Look Radius Object ");
-            }
-
-            actorLookRadius.onActorEnterRadius += OnActorEnterRadius;
-            actorLookRadius.onActorOutRadius += OnActorOutRadius;
+            actor.characterStats.onDied += Ragdoll;
         }
 
     
-        // Update is called once per frame
         void Update()
         {
-            if (target != null)
+            // Debug
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                agent.SetDestination(target.gameObject.transform.position);
+                Ragdoll(gameObject);
+                return;
+            }
+            
+            if (actor.target != null)
+            {
+                agent.SetDestination(actor.target.gameObject.transform.position);
+
+                if (actor.target.InInteracableDistance(transform))
+                {
+                    FaceTarget();
+
+                    actor.Attack(actor.target);
+                }
             }
         }
 
         protected override void OnActorEnterRadius(NPCActor radiusActor)
         {
-            if (target == radiusActor)
+            if (! actor.IsEnemy(radiusActor))
             {
-                Debug.Log(actor.actorScript + " allready have target : " + radiusActor.actorScript.title);
-                return; 
-            }
-
-            if (actor.actorScript.fraction.FractionInEnemies(radiusActor.actorScript.fraction))
-            {
-                target = radiusActor;
-                Debug.Log(actor.actorScript + " going attack : " + radiusActor.actorScript.title);
+                Debug.Log(actor.actorScript + " frendly for : " + radiusActor.actorScript.title);
                 return;
             }
             
-            Debug.Log(actor.actorScript + " frendly for : " + radiusActor.actorScript.title);
+            
 
+            if (actor.InCombat())
+            {
+                Debug.Log(actor.actorScript + " already in combat ");
+
+                return;
+            }
+            
+            Debug.Log(actor.actorScript + " going attack for : " + radiusActor.actorScript.title);
+
+            actor.combat.inCombat = true;
+            actor.SetTarget(radiusActor);
+            FaceTarget();
         }
+
 
         protected override void OnActorOutRadius(NPCActor radiusActor)
         {
-            if (target == radiusActor)
+            if (actor.target == radiusActor)
             {
-                target = null;
-                Debug.Log(actor.actorScript + " remove from target : " + radiusActor.actorScript.title);
+                NPCActor newTarget = GetNextEnemy();
+
+                actor.RemoveTarget();
+               
+                if (newTarget == null)
+                {
+                    actor.combat.inCombat = false;
+                }
+                else
+                {
+                    actor.SetTarget(newTarget);
+                }
             }
         }
 
 
-        private void OnDrawGizmos()
+        NPCActor GetNextEnemy()
         {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, lockRadius);
+            foreach (NPCActor npcActor in actorLookRadius.actorsInRadius)
+            {
+                if (actor.IsEnemy(npcActor))
+                {
+                    return npcActor;
+                }
+            }
+
+            return null;
+        }
+        
+        
+        private void FaceTarget()
+        {
+            Vector3 direction = (actor.target.gameObject.transform.position - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 5f);
+        }
+
+
+        public override void Defence(NPCActor attackedBy)
+        {
+            base.Defence(attackedBy);
+
+            NPCActor closestFriend = GetClosestFriend();
+
+            if (closestFriend == null || closestFriend.InCombat())
+            {
+                return;
+            }
+
+            NPCActorController actorController = closestFriend.GetComponent<NPCActorController>();
+
+            actorController.Defence(attackedBy);
+        }
+
+        NPCActor GetClosestFriend()
+        {
+            foreach (NPCActor npcActor in actorLookRadius.actorsInRadius)
+            {
+                if (actor.IsFriend(npcActor))
+                {
+                    return npcActor;
+                }
+            }
+
+            return null;
+        }
+
+        void Ragdoll(GameObject gameObject)
+        {
+            Debug.Log("Ragdolled " + name);
+            
+            Rigidbody[] rigidbodies = GetComponentsInChildren<Rigidbody>();
+            foreach (Rigidbody rigidbody in rigidbodies)
+            {
+                rigidbody.isKinematic = false;
+                rigidbody.AddForce(- gameObject.transform.forward * 10, ForceMode.Impulse);
+            }
+
+            agent.enabled = false;
+            GetComponentInChildren<Animator>().enabled = false;
+            this.enabled = false;
         }
     }
 }

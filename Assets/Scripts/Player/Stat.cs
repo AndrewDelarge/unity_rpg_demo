@@ -8,13 +8,15 @@ namespace Player
     {
         
         [SerializeField]
-        private int value;
+        private int value = 0;
 
         
         private List<int> modifiers = new List<int>();
         public int GetValue()
         {
-            return value;
+            int finalValue = value;
+            modifiers.ForEach(x => finalValue += x);
+            return finalValue;
         }
 
 

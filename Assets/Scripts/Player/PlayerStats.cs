@@ -24,5 +24,13 @@ namespace Player
             armor.RemoveModifier(item.armorModifire);
             damage.RemoveModifier(item.damageModifire);
         }
+
+
+        public override void Die()
+        {
+            base.Die();
+            
+            PlayerManager.instance.RestartScene();
+        }
     }
 }

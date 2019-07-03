@@ -11,17 +11,17 @@ public class ItemPickup : Interactable
     private GameObject itemNameTextTemplate;
 
     private GameObject itemNameTextObject;
+
     
-    
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         itemNameTextTemplate = Resources.Load<GameObject>("UI/ItemNameText");
     }
 
-
     public override void Interact()
     {
-        PickUp();        
+        PickUp();
     }
 
 
@@ -51,7 +51,7 @@ public class ItemPickup : Interactable
             itemNameTextObject.transform.LookAt(UnityEngine.Camera.main.transform.position);
             itemNameTextObject.SetActive(true);
         }
-        
+
     }
 
 

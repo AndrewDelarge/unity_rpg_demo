@@ -12,11 +12,10 @@ namespace NPC
 
         protected ActorLookRadius actorLookRadius;
         // Start is called before the first frame update
-        void Start()
+        protected virtual void Start()
         {
             actor = GetComponent<NPCActor>();
-            
-            
+
             if (actor == null)
             {
                 throw new Exception("NPCActor Must Be set in object " + transform.name);
@@ -31,6 +30,7 @@ namespace NPC
 
             actorLookRadius.onActorEnterRadius += OnActorEnterRadius;
             actorLookRadius.onActorOutRadius += OnActorOutRadius;
+            actor.onActorAttacked += Defence;
         }
 
         protected virtual void OnActorEnterRadius(NPCActor actor)
@@ -44,5 +44,14 @@ namespace NPC
         }
         
 
+        public virtual void Defence(NPCActor attackedBy)
+        {
+            if (! actor.InCombat())
+            {
+                Debug.Log(name + " Start defence!");
+                actor.combat.inCombat = true;
+                actor.SetTarget(attackedBy);
+            }
+        }
     }
 }
