@@ -7,7 +7,7 @@ namespace Player
     [RequireComponent(typeof(CharacterStats))]
     public class CharacterCombat : MonoBehaviour
     {
-        private CharacterStats stats;
+        public CharacterStats stats;
         
         public float attackSpeed = 1f;
         public float attackCooldown = 0f;
@@ -19,7 +19,7 @@ namespace Player
 
 
         public event System.Action OnAttack;
-        private void Start()
+        private void Awake()
         {
             stats = GetComponent<CharacterStats>();
         }
@@ -28,9 +28,9 @@ namespace Player
         {
             attackCooldown -= Time.deltaTime;
 
-            if (Time.time - lastAttackTime > combatCooldown)
+            if (Time.time - lastAttackTime > combatCooldown && inCombat)
             {
-                inCombat = false;
+                ExitCombat();
             }
         }
 
@@ -49,7 +49,7 @@ namespace Player
                 OnAttack();
             }
 
-            inCombat = true;
+            EnterCombat();
             attackCooldown = 1f / attackSpeed;
             lastAttackTime = Time.time;
         }
@@ -62,8 +62,19 @@ namespace Player
             targetStats.TakeDamage(stats.damage.GetValue());
             if (targetStats.currentHealth <= 0)
             {
-                inCombat = false;
+                ExitCombat();
             }
+        }
+
+        void EnterCombat()
+        {
+            inCombat = true;
+        }
+        
+        void ExitCombat()
+        {
+            Debug.Log(name + " Out from combat");
+            inCombat = false;
         }
     }
 }

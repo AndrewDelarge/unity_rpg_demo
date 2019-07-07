@@ -190,15 +190,22 @@
           <e p="ItemPickup.cs" t="Include" />
           <e p="NPC" t="Include">
             <e p="ActorLookRadius.cs" t="Include" />
+            <e p="Enemy.cs" t="Include" />
             <e p="EnemyController.cs" t="Include" />
+            <e p="EnemyStats.cs" t="Include" />
             <e p="NPCActor.cs" t="Include" />
             <e p="NPCActorController.cs" t="Include" />
+            <e p="PlayerActor.cs" t="Include" />
           </e>
           <e p="Player" t="Include">
+            <e p="CharacterCombat.cs" t="Include" />
+            <e p="CharacterFraction.cs" t="Include" />
             <e p="CharacterStats.cs" t="Include" />
             <e p="EquipmentManager.cs" t="Include" />
             <e p="Inventory.cs" t="Include" />
+            <e p="PlayerAnimator.cs" t="Include" />
             <e p="PlayerController.cs" t="Include" />
+            <e p="PlayerManager.cs" t="Include" />
             <e p="PlayerMotor.cs" t="Include" />
             <e p="PlayerStats.cs" t="Include" />
             <e p="Stat.cs" t="Include" />
@@ -218,6 +225,9 @@
               <e p="SlotInfo.cs" t="Include" />
             </e>
           </e>
+        </e>
+        <e p="Shaders" t="Include">
+          <e p="Outline.shader" t="Include" />
         </e>
         <e p="TextMesh Pro" t="Include">
           <e p="Resources" t="Include">

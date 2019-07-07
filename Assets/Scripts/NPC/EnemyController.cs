@@ -30,12 +30,12 @@ namespace NPC
             
             if (actor.target != null)
             {
+                FaceTarget();
+
                 agent.SetDestination(actor.target.gameObject.transform.position);
 
                 if (actor.target.InInteracableDistance(transform))
                 {
-                    FaceTarget();
-
                     actor.Attack(actor.target);
                 }
             }
@@ -104,7 +104,7 @@ namespace NPC
         {
             Vector3 direction = (actor.target.gameObject.transform.position - transform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
-
+            
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 5f);
         }
 

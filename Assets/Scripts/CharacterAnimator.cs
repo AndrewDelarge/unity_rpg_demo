@@ -33,6 +33,7 @@ public class CharacterAnimator : MonoBehaviour
         currentAttackAnimSet = defaultAttackAnimSet;
 
         combat.OnAttack += OnAttack;
+        combat.stats.OnGetHit += OnGetHit;
     }
 
     // Update is called once per frame
@@ -51,5 +52,10 @@ public class CharacterAnimator : MonoBehaviour
         int animIndedx = Random.Range(0, currentAttackAnimSet.Length);
 
         overrideController[replaceableAttackClip.name] = currentAttackAnimSet[animIndedx];
+    }
+
+    protected virtual void OnGetHit()
+    {
+        animator.SetTrigger("getHit");
     }
 }

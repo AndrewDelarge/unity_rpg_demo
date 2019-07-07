@@ -14,6 +14,8 @@ namespace Player
 
         public delegate void OnDied(GameObject diedObject);
         public OnDied onDied;
+
+        public event System.Action OnGetHit; 
         private void Awake()
         {
             currentHealth = maxHealth;
@@ -27,10 +29,15 @@ namespace Player
             damage = Mathf.Clamp(damage, 0, int.MaxValue);
             
             Debug.Log(transform.name + " take damage " + damage);
-
+            
             if (currentHealth <= 0)
             {
                 Die();
+            }
+            
+            if (OnGetHit != null)
+            {
+                OnGetHit();
             }
         }
 
