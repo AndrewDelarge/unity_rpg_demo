@@ -8,6 +8,7 @@ namespace Scriptable
         public EquipmentSlot equipmentSlot;
         public int armorModifire;
         public int damageModifire;
+        public string skinName = "default";
 
         public SkinnedMeshRenderer mesh;
 

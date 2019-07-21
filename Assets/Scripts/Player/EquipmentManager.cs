@@ -48,6 +48,14 @@ namespace Player
         {
             int itemIndex = (int) newItem.equipmentSlot;
             
+            GameObject mesh = targetMesh.transform.Find(newItem.skinName).gameObject;
+
+            if (mesh == null)
+            {
+                Debug.Log("You cant equip " + newItem.name + "; Not set skin name or skin with this name not exist!");
+                return;
+            }
+            
             Unequip(itemIndex);
             
             currentEquipment[itemIndex] = newItem;
@@ -57,11 +65,14 @@ namespace Player
                 onItemEquip.Invoke(newItem);
             }
 
-            SkinnedMeshRenderer newMesh = Instantiate<SkinnedMeshRenderer>(newItem.mesh);
-            newMesh.transform.parent = targetMesh.transform;
-
-            newMesh.bones = targetMesh.bones;
-            newMesh.rootBone = targetMesh.rootBone;
+            SkinnedMeshRenderer newMesh = mesh.GetComponent<SkinnedMeshRenderer>();
+            
+            newMesh.enabled = true;
+//            SkinnedMeshRenderer newMesh = Instantiate<SkinnedMeshRenderer>(newItem.mesh);
+//            newMesh.transform.parent = targetMesh.transform;
+//
+//            newMesh.bones = targetMesh.bones;
+//            newMesh.rootBone = targetMesh.rootBone;
             currentMeshes[itemIndex] = newMesh;
         }
 
