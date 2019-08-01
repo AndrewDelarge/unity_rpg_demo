@@ -27,15 +27,21 @@ namespace Player
 
         public void MoveTo(Vector3 point)
         {
+            agent.isStopped = false;
+
             agent.SetDestination(point);
         }
 
 
         public void Follow(Interactable newTarget)
         {
+            agent.isStopped = false;
+
             target = newTarget.interactableTransform;
+
             agent.stoppingDistance = newTarget.radius * .8f;
             agent.updateRotation = false;
+
         }
 
         public void StopFollow()
@@ -46,13 +52,27 @@ namespace Player
             target = null;
         }
 
-
+        public void Stop()
+        {
+            agent.isStopped = true;
+        }
+        
+        
         private void FaceTarget()
         {
             Vector3 direction = (target.position - transform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
 
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 5f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 10f);
+        }
+        
+        
+        private void FaceTarget(Transform target)
+        {
+            Vector3 direction = (target.position - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 10f);
         }
     }
 }

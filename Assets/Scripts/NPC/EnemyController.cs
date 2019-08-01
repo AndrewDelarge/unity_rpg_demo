@@ -30,12 +30,11 @@ namespace NPC
             
             if (actor.target != null)
             {
-                FaceTarget();
-
                 agent.SetDestination(actor.target.gameObject.transform.position);
 
                 if (actor.target.InInteracableDistance(transform))
                 {
+                    FaceTarget();
                     actor.Attack(actor.target);
                 }
             }

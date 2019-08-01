@@ -1,140 +1,404 @@
 fileFormatVersion: 2
 guid: 73be9633513854604baae3aa06041436
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: Armature
-    100002: Body
-    100004: Chest
-    100006: Fingers01_L
-    100008: Fingers01_R
-    100010: Fingers02_L
-    100012: Fingers02_R
-    100014: Foot_L
-    100016: Foot_R
-    100018: Hair
-    100020: Hand_Hold_L
-    100022: Hand_Hold_R
-    100024: Hand_L
-    100026: Hand_R
-    100028: Head
-    100030: Helmet
-    100032: Hips
-    100034: Lower_Arm_L
-    100036: Lower_Arm_R
-    100038: Lower_Leg_L
-    100040: Lower_Leg_R
-    100042: Neck
-    100044: Pants
-    100046: Platebody
-    100048: Platelegs
-    100050: //RootNode
-    100052: Shield
-    100054: Shirt
-    100056: Shoes
-    100058: Shoulder_L
-    100060: Shoulder_R
-    100062: Spine
-    100064: Sword
-    100066: Thumb01_L
-    100068: Thumb01_R
-    100070: Thumb02_L
-    100072: Thumb02_R
-    100074: Toes_L
-    100076: Toes_R
-    100078: Upper_Arm_L
-    100080: Upper_Arm_R
-    100082: Upper_Leg_L
-    100084: Upper_Leg_R
-    400000: Armature
-    400002: Body
-    400004: Chest
-    400006: Fingers01_L
-    400008: Fingers01_R
-    400010: Fingers02_L
-    400012: Fingers02_R
-    400014: Foot_L
-    400016: Foot_R
-    400018: Hair
-    400020: Hand_Hold_L
-    400022: Hand_Hold_R
-    400024: Hand_L
-    400026: Hand_R
-    400028: Head
-    400030: Helmet
-    400032: Hips
-    400034: Lower_Arm_L
-    400036: Lower_Arm_R
-    400038: Lower_Leg_L
-    400040: Lower_Leg_R
-    400042: Neck
-    400044: Pants
-    400046: Platebody
-    400048: Platelegs
-    400050: //RootNode
-    400052: Shield
-    400054: Shirt
-    400056: Shoes
-    400058: Shoulder_L
-    400060: Shoulder_R
-    400062: Spine
-    400064: Sword
-    400066: Thumb01_L
-    400068: Thumb01_R
-    400070: Thumb02_L
-    400072: Thumb02_R
-    400074: Toes_L
-    400076: Toes_R
-    400078: Upper_Arm_L
-    400080: Upper_Arm_R
-    400082: Upper_Leg_L
-    400084: Upper_Leg_R
-    2100000: Skin
-    2100002: Metal_Dark
-    2100004: Blade_highlight
-    2100006: Blade
-    2100008: Metal
-    2100010: Wood
-    2100012: Emblem
-    2100014: Metal_dark
-    2100016: Metal_002
-    2100018: Underclothes_001
-    2100020: Black
-    2100022: Hair
-    2100024: Shirt
-    2100026: Shoe
-    2100028: Pants_001
-    4300000: Body
-    4300002: Sword
-    4300004: Shield
-    4300006: Platelegs
-    4300008: Helmet
-    4300010: Platebody
-    4300012: Hair
-    4300014: Shirt
-    4300016: Shoes
-    4300018: Pants
-    7400000: Default Take
-    7400002: Combat_idle
-    7400004: Grip_left
-    7400006: Grip_right
-    7400008: Idle
-    7400010: Punch
-    7400012: Run
-    7400014: Sword_atk01
-    7400016: Sword_atk02
-    7400018: Walk
-    9500000: //RootNode
-    13700000: Body
-    13700002: Hair
-    13700004: Helmet
-    13700006: Pants
-    13700008: Platebody
-    13700010: Platelegs
-    13700012: Shield
-    13700014: Shirt
-    13700016: Shoes
-    13700018: Sword
+  serializedVersion: 25
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: Armature
+  - first:
+      1: 100002
+    second: Body
+  - first:
+      1: 100004
+    second: Chest
+  - first:
+      1: 100006
+    second: Fingers01_L
+  - first:
+      1: 100008
+    second: Fingers01_R
+  - first:
+      1: 100010
+    second: Fingers02_L
+  - first:
+      1: 100012
+    second: Fingers02_R
+  - first:
+      1: 100014
+    second: Foot_L
+  - first:
+      1: 100016
+    second: Foot_R
+  - first:
+      1: 100018
+    second: Hair
+  - first:
+      1: 100020
+    second: Hand_Hold_L
+  - first:
+      1: 100022
+    second: Hand_Hold_R
+  - first:
+      1: 100024
+    second: Hand_L
+  - first:
+      1: 100026
+    second: Hand_R
+  - first:
+      1: 100028
+    second: Head
+  - first:
+      1: 100030
+    second: Helmet
+  - first:
+      1: 100032
+    second: Hips
+  - first:
+      1: 100034
+    second: Lower_Arm_L
+  - first:
+      1: 100036
+    second: Lower_Arm_R
+  - first:
+      1: 100038
+    second: Lower_Leg_L
+  - first:
+      1: 100040
+    second: Lower_Leg_R
+  - first:
+      1: 100042
+    second: Neck
+  - first:
+      1: 100044
+    second: Pants
+  - first:
+      1: 100046
+    second: Platebody
+  - first:
+      1: 100048
+    second: Platelegs
+  - first:
+      1: 100050
+    second: //RootNode
+  - first:
+      1: 100052
+    second: Shield
+  - first:
+      1: 100054
+    second: Shirt
+  - first:
+      1: 100056
+    second: Shoes
+  - first:
+      1: 100058
+    second: Shoulder_L
+  - first:
+      1: 100060
+    second: Shoulder_R
+  - first:
+      1: 100062
+    second: Spine
+  - first:
+      1: 100064
+    second: Sword
+  - first:
+      1: 100066
+    second: Thumb01_L
+  - first:
+      1: 100068
+    second: Thumb01_R
+  - first:
+      1: 100070
+    second: Thumb02_L
+  - first:
+      1: 100072
+    second: Thumb02_R
+  - first:
+      1: 100074
+    second: Toes_L
+  - first:
+      1: 100076
+    second: Toes_R
+  - first:
+      1: 100078
+    second: Upper_Arm_L
+  - first:
+      1: 100080
+    second: Upper_Arm_R
+  - first:
+      1: 100082
+    second: Upper_Leg_L
+  - first:
+      1: 100084
+    second: Upper_Leg_R
+  - first:
+      4: 400000
+    second: Armature
+  - first:
+      4: 400002
+    second: Body
+  - first:
+      4: 400004
+    second: Chest
+  - first:
+      4: 400006
+    second: Fingers01_L
+  - first:
+      4: 400008
+    second: Fingers01_R
+  - first:
+      4: 400010
+    second: Fingers02_L
+  - first:
+      4: 400012
+    second: Fingers02_R
+  - first:
+      4: 400014
+    second: Foot_L
+  - first:
+      4: 400016
+    second: Foot_R
+  - first:
+      4: 400018
+    second: Hair
+  - first:
+      4: 400020
+    second: Hand_Hold_L
+  - first:
+      4: 400022
+    second: Hand_Hold_R
+  - first:
+      4: 400024
+    second: Hand_L
+  - first:
+      4: 400026
+    second: Hand_R
+  - first:
+      4: 400028
+    second: Head
+  - first:
+      4: 400030
+    second: Helmet
+  - first:
+      4: 400032
+    second: Hips
+  - first:
+      4: 400034
+    second: Lower_Arm_L
+  - first:
+      4: 400036
+    second: Lower_Arm_R
+  - first:
+      4: 400038
+    second: Lower_Leg_L
+  - first:
+      4: 400040
+    second: Lower_Leg_R
+  - first:
+      4: 400042
+    second: Neck
+  - first:
+      4: 400044
+    second: Pants
+  - first:
+      4: 400046
+    second: Platebody
+  - first:
+      4: 400048
+    second: Platelegs
+  - first:
+      4: 400050
+    second: //RootNode
+  - first:
+      4: 400052
+    second: Shield
+  - first:
+      4: 400054
+    second: Shirt
+  - first:
+      4: 400056
+    second: Shoes
+  - first:
+      4: 400058
+    second: Shoulder_L
+  - first:
+      4: 400060
+    second: Shoulder_R
+  - first:
+      4: 400062
+    second: Spine
+  - first:
+      4: 400064
+    second: Sword
+  - first:
+      4: 400066
+    second: Thumb01_L
+  - first:
+      4: 400068
+    second: Thumb01_R
+  - first:
+      4: 400070
+    second: Thumb02_L
+  - first:
+      4: 400072
+    second: Thumb02_R
+  - first:
+      4: 400074
+    second: Toes_L
+  - first:
+      4: 400076
+    second: Toes_R
+  - first:
+      4: 400078
+    second: Upper_Arm_L
+  - first:
+      4: 400080
+    second: Upper_Arm_R
+  - first:
+      4: 400082
+    second: Upper_Leg_L
+  - first:
+      4: 400084
+    second: Upper_Leg_R
+  - first:
+      21: 2100000
+    second: Skin
+  - first:
+      21: 2100002
+    second: Metal_Dark
+  - first:
+      21: 2100004
+    second: Blade_highlight
+  - first:
+      21: 2100006
+    second: Blade
+  - first:
+      21: 2100008
+    second: Metal
+  - first:
+      21: 2100010
+    second: Wood
+  - first:
+      21: 2100012
+    second: Emblem
+  - first:
+      21: 2100014
+    second: Metal_dark
+  - first:
+      21: 2100016
+    second: Metal_002
+  - first:
+      21: 2100018
+    second: Underclothes_001
+  - first:
+      21: 2100020
+    second: Black
+  - first:
+      21: 2100022
+    second: Hair
+  - first:
+      21: 2100024
+    second: Shirt
+  - first:
+      21: 2100026
+    second: Shoe
+  - first:
+      21: 2100028
+    second: Pants_001
+  - first:
+      43: 4300000
+    second: Body
+  - first:
+      43: 4300002
+    second: Sword
+  - first:
+      43: 4300004
+    second: Shield
+  - first:
+      43: 4300006
+    second: Platelegs
+  - first:
+      43: 4300008
+    second: Helmet
+  - first:
+      43: 4300010
+    second: Platebody
+  - first:
+      43: 4300012
+    second: Hair
+  - first:
+      43: 4300014
+    second: Shirt
+  - first:
+      43: 4300016
+    second: Shoes
+  - first:
+      43: 4300018
+    second: Pants
+  - first:
+      74: 7400000
+    second: Default Take
+  - first:
+      74: 7400002
+    second: Combat_idle
+  - first:
+      74: 7400004
+    second: Grip_left
+  - first:
+      74: 7400006
+    second: Grip_right
+  - first:
+      74: 7400008
+    second: Idle
+  - first:
+      74: 7400010
+    second: Punch
+  - first:
+      74: 7400012
+    second: Run
+  - first:
+      74: 7400014
+    second: Sword_atk01
+  - first:
+      74: 7400016
+    second: Sword_atk02
+  - first:
+      74: 7400018
+    second: Walk
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: Body
+  - first:
+      137: 13700002
+    second: Hair
+  - first:
+      137: 13700004
+    second: Helmet
+  - first:
+      137: 13700006
+    second: Pants
+  - first:
+      137: 13700008
+    second: Platebody
+  - first:
+      137: 13700010
+    second: Platelegs
+  - first:
+      137: 13700012
+    second: Shield
+  - first:
+      137: 13700014
+    second: Shirt
+  - first:
+      137: 13700016
+    second: Shoes
+  - first:
+      137: 13700018
+    second: Sword
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -155,7 +419,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -166,6 +430,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Default Take
       takeName: Default Take
+      internalID: 7400000
       firstFrame: 0
       lastFrame: 37
       wrapMode: 0
@@ -194,6 +459,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Combat_idle
       takeName: Combat_idle
+      internalID: 7400002
       firstFrame: 0
       lastFrame: 38
       wrapMode: 0
@@ -222,6 +488,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Grip_left
       takeName: Grip_left
+      internalID: 7400004
       firstFrame: 0
       lastFrame: 1
       wrapMode: 0
@@ -250,6 +517,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Grip_right
       takeName: Grip_right
+      internalID: 7400006
       firstFrame: 0
       lastFrame: 1
       wrapMode: 0
@@ -278,6 +546,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Idle
       takeName: Idle
+      internalID: 7400008
       firstFrame: 0
       lastFrame: 99
       wrapMode: 0
@@ -306,6 +575,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Punch
       takeName: Punch
+      internalID: 7400010
       firstFrame: 0
       lastFrame: 29
       wrapMode: 0
@@ -334,6 +604,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Run
       takeName: Run
+      internalID: 7400012
       firstFrame: 0
       lastFrame: 16
       wrapMode: 0
@@ -362,6 +633,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Sword_atk01
       takeName: Sword_atk01
+      internalID: 7400014
       firstFrame: 0
       lastFrame: 29
       wrapMode: 0
@@ -390,6 +662,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Sword_atk02
       takeName: Sword_atk02
+      internalID: 7400016
       firstFrame: 0
       lastFrame: 29
       wrapMode: 0
@@ -418,6 +691,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Walk
       takeName: Walk
+      internalID: 7400018
       firstFrame: 0
       lastFrame: 24
       wrapMode: 0
@@ -457,18 +731,19 @@ ModelImporter:
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -477,10 +752,11 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -490,12 +766,13 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 3
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

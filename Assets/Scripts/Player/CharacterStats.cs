@@ -15,6 +15,9 @@ namespace Player
         public delegate void OnDied(GameObject diedObject);
         public OnDied onDied;
 
+        public delegate void OnHealthChange(int value, int health);
+        public OnHealthChange onHealthChange;
+        
         public event System.Action OnGetHit; 
         private void Awake()
         {
@@ -25,9 +28,9 @@ namespace Player
         public void TakeDamage(int damage)
         {
             damage -= armor.GetValue();
-            currentHealth -= damage;
             damage = Mathf.Clamp(damage, 0, int.MaxValue);
-            
+            currentHealth -= damage;
+
             Debug.Log(transform.name + " take damage " + damage);
             
             if (currentHealth <= 0)
@@ -38,6 +41,23 @@ namespace Player
             if (OnGetHit != null)
             {
                 OnGetHit();
+            }
+
+            if (onHealthChange != null)
+            {
+                onHealthChange.Invoke(- damage, currentHealth);
+            }
+        }
+
+        public void Heal(int heal)
+        {
+            heal = Mathf.Clamp(heal, 0, (maxHealth - currentHealth));
+
+            currentHealth += heal;
+            
+            if (onHealthChange != null)
+            {
+                onHealthChange.Invoke(heal, currentHealth);
             }
         }
 

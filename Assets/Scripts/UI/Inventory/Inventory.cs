@@ -1,4 +1,5 @@
-﻿using Scriptable;
+﻿using Player;
+using Scriptable;
 using UnityEngine;
 
 namespace UI.Inventory
@@ -21,6 +22,8 @@ namespace UI.Inventory
             _inventory.onItemChangedCallback += this.UpdateUI;
 
             slots = slotsHub.GetComponentsInChildren<Slot>();
+
+            PlayerManager.instance.UI.upperPanel.onInventoryButtonClick += ToggleInventory;
         }
 
         // Update is called once per frame
@@ -32,11 +35,19 @@ namespace UI.Inventory
             }
         }
 
+        public void ToggleInventory()
+        {
+            PlayerManager.instance.Pause(! inventoryUI.activeSelf);
+            inventoryUI.SetActive(! inventoryUI.activeSelf);
+        }
+        
+
         public void ShowInfo(Item item)
         {
             HideInfo();
             slotInfo.Show(item);
         }
+        
         public void HideInfo()
         {
             slotInfo.Hide();

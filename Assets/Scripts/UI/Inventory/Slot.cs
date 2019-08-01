@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 namespace UI.Inventory
 {
-    public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+//    public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class Slot : MonoBehaviour
     {
         public Image icon;
         
@@ -49,22 +50,23 @@ namespace UI.Inventory
         {
             if (item != null)
             {
-                item.Use();
-            }
-        }
-
-
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            if (item != null)
-            {
                 inventoryUI.slotInfo.Show(item);
+//                item.Use();
             }
         }
 
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            inventoryUI.slotInfo.Hide();
-        }
+
+//        public void OnPointerEnter(PointerEventData eventData)
+//        {
+//            if (item != null)
+//            {
+//                inventoryUI.slotInfo.Show(item);
+//            }
+//        }
+//
+//        public void OnPointerExit(PointerEventData eventData)
+//        {
+//            inventoryUI.slotInfo.Hide();
+//        }
     }
 }

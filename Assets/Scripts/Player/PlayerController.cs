@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UI.Hud;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Player
@@ -9,38 +12,39 @@ namespace Player
 
         public LayerMask movementMask;
         public LayerMask interactableMask;
-
+        public float rotationSpeed = 100f;
+        
+        
         private Interactable focus;
         private UnityEngine.Camera cam;
-
+        
         
         private PlayerMotor playerMotor;
-        // Start is called before the first frame update
+        
         void Start()
         {
             playerMotor = GetComponent<PlayerMotor>();
             cam = UnityEngine.Camera.main;
+            PlayerManager.instance.UI.actionBar.onActionKeyClick += ActionKeyDown;
         }
 
-        // Update is called once per frame
         void Update()
         {
-            if (EventSystem.current.IsPointerOverGameObject()) 
+            if (IsPointerOverUIObject()) 
                 return;
-            
-            if (Input.GetMouseButtonDown(0))
-            {
-                Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
 
-                if (Physics.Raycast(ray, out hit, 100, movementMask))
-                {
-                    playerMotor.MoveTo(hit.point);
-                    RemoveFocus();
-                }
-            }
-        
-            if (Input.GetMouseButtonDown(1))
+//            float rotation = Input.GetAxis("Mouse X");
+            
+            /**
+             * When you click on screen once "rotation" will be 0.3, -0.1 and etc,
+             * but when you try to rotate camera "rotation" will be like 0.1245 and then we lock control
+             */
+//            if (rotation != 0 && rotation.ToString().Length > 3)
+//            {
+//                return;
+//            }
+            
+            if (Input.GetMouseButtonUp(0))
             {
                 Ray ray = cam.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
@@ -51,14 +55,29 @@ namespace Player
                     if (interactable != null)
                     {
                         SetFocus(interactable);
-                    }
-                    else
-                    {
-                        Debug.Log("Not interactable " + hit.collider.name);
+                        return;
                     }
                 }
+                
+                if (Physics.Raycast(ray, out hit, 100, movementMask))
+                {
+                    playerMotor.MoveTo(hit.point);
+                    RemoveFocus();
+                }
             }
-        
+           
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                if (focus == null)
+                {
+                    return;
+                }
+
+                if (focus.InInteracableDistance(transform))
+                {
+                    focus.Interact();
+                }
+            }
         }
 
         void SetFocus (Interactable newFocus)
@@ -76,6 +95,20 @@ namespace Player
             focus.OnFocused(transform);
         }
 
+
+        public void ActionKeyDown()
+        {
+            if (focus == null)
+            {
+                return;
+            }
+
+            if (focus.InInteracableDistance(transform))
+            {
+                focus.Interact();
+            }
+        }
+        
         void RemoveFocus()
         {
             if (focus)
@@ -86,5 +119,16 @@ namespace Player
        
             playerMotor.StopFollow();
         }
+
+        
+        private bool IsPointerOverUIObject() {
+            PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+            eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+ 
+            List<RaycastResult> results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+            return results.Count > 0;
+        }
+
     }
 }

@@ -20,7 +20,6 @@ public class Interactable : MonoBehaviour
         {
             interactableTransform = transform;
         }
-        
     }
 
     public virtual void Interact()
@@ -34,7 +33,7 @@ public class Interactable : MonoBehaviour
         {
             if (InInteracableDistance(player))
             {
-                Interact();
+//                Interact();
                 hasInteracted = true;
             }
         }

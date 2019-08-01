@@ -18,7 +18,7 @@ namespace Player
         private SkinnedMeshRenderer[] currentMeshes;
 
         public Equipment[] defaultEquipments;
-        public SkinnedMeshRenderer targetMesh;
+        public GameObject targetMesh;
         
         public delegate void OnItemUnequip(Scriptable.Equipment item);
         public delegate void OnItemEquip(Scriptable.Equipment item);
@@ -47,19 +47,23 @@ namespace Player
         public void Equip(Scriptable.Equipment newItem)
         {
             int itemIndex = (int) newItem.equipmentSlot;
-            
-            GameObject mesh = targetMesh.transform.Find(newItem.skinName).gameObject;
 
-            if (mesh == null)
+            Transform tmp;
+            
+            tmp = targetMesh.transform.Find(newItem.skinName);
+
+            if (tmp == null)
             {
                 Debug.Log("You cant equip " + newItem.name + "; Not set skin name or skin with this name not exist!");
                 return;
             }
+
+            GameObject mesh = tmp.gameObject;
             
             Unequip(itemIndex);
             
             currentEquipment[itemIndex] = newItem;
-            SetEquipmentBlendShape(newItem, 100);
+//            SetEquipmentBlendShape(newItem, 100);
             if (onItemEquip != null)
             {
                 onItemEquip.Invoke(newItem);
@@ -83,12 +87,14 @@ namespace Player
             {
                 if (currentMeshes[slot] != null)
                 {
-                    Destroy(currentMeshes[slot].gameObject);
+
+                    currentMeshes[slot].enabled = false;
+//                    Destroy(currentMeshes[slot].gameObject);
                 }
                 
                 Scriptable.Equipment oldItem = currentEquipment[slot];
                 currentEquipment[slot] = null;
-                SetEquipmentBlendShape(oldItem, 0);
+//                SetEquipmentBlendShape(oldItem, 0);
                 if (onItemUnequip != null)
                 {
                     onItemUnequip.Invoke(oldItem);
@@ -96,13 +102,13 @@ namespace Player
             }
         }
 
-        void SetEquipmentBlendShape(Equipment item, int weight)
-        {
-            foreach (EquipmentMeshRegion meshRegion in item.coveredMeshRegion)
-            {
-                targetMesh.SetBlendShapeWeight((int) meshRegion, weight);
-            }
-        }
+//        void SetEquipmentBlendShape(Equipment item, int weight)
+//        {
+//            foreach (EquipmentMeshRegion meshRegion in item.coveredMeshRegion)
+//            {
+//                targetMesh.SetBlendShapeWeight((int) meshRegion, weight);
+//            }
+//        }
 
         public void UnequipAll()
         {

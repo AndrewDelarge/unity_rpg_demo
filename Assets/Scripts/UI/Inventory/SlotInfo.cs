@@ -13,8 +13,11 @@ namespace UI.Inventory
 
         public Text description;
 
+        public Item item;
+
         public void Show(Item item)
         {
+            this.item = item;
             image.sprite = item.icon;
             image.enabled = true;
             title.text = item.name;
@@ -34,5 +37,13 @@ namespace UI.Inventory
         }
 
 
+        public void Use()
+        {
+            if (item != null)
+            {
+                Hide();
+                item.Use();
+            }
+        }
     }
 }
