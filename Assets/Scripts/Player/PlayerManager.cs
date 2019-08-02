@@ -8,6 +8,7 @@ namespace Player
     public class PlayerManager : MonoBehaviour
     {
         public UI.Hud.UI UI;
+        public PlayerActor player;
 
         #region Singleton
         public static PlayerManager instance;
@@ -18,9 +19,6 @@ namespace Player
         }
         #endregion
         
-
-        public PlayerActor player;
-
 
         public void RestartScene()
         {

@@ -58,6 +58,7 @@
               <e p="Slot.cs" t="Include" />
               <e p="SlotInfo.cs" t="Include" />
             </e>
+            <e p="Pointer.cs" t="Include" />
           </e>
         </e>
         <e p="Shaders" t="Include">

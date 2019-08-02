@@ -7,9 +7,11 @@ namespace GameCamera
     public class CameraController : MonoBehaviour
     {
         private const float ROTATION_RETURN_TIME = 2f; 
+        private const float POINTER_LIFE_TIME = 1f; 
         
         
         public Transform target;
+        public GameObject pointer;
         public Vector3 offset;
     
         public float pitch = 2f;
@@ -22,6 +24,7 @@ namespace GameCamera
         private float currentYaw = 0f;
         private NavMeshAgent targetRigidbody;
         private float lastRotation;
+        private float lastPointerActive;
 
         
         private void Start()
@@ -37,7 +40,6 @@ namespace GameCamera
 
             float horizontal = Input.GetAxis("Mouse X");
 
-
             if (Input.touchCount > 0)
             {
                 Touch touch = Input.GetTouch(0);
@@ -48,7 +50,11 @@ namespace GameCamera
                     lastRotation = Time.time;
                 }
             }
-           
+
+            if (isPointerOld())
+            {
+                pointer.SetActive(false);
+            }
         }
 
         // Update is called once per frame
@@ -75,6 +81,18 @@ namespace GameCamera
             
         }
 
+
+        public void SetPointer(Vector3 pos)
+        {
+            pointer.SetActive(true);
+            pointer.transform.position = pos;
+            lastPointerActive = Time.time;
+        }
+
+        bool isPointerOld()
+        {
+            return (Time.time - lastPointerActive) > POINTER_LIFE_TIME;
+        }
         bool isCanReturnRotation()
         {
             return (Time.time - lastRotation) > ROTATION_RETURN_TIME;

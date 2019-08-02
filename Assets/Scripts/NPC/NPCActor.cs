@@ -24,6 +24,7 @@ namespace NPC
 
         protected virtual void Awake()
         {
+            
             characterStats = GetComponent<CharacterStats>();
             combat = GetComponent<CharacterCombat>();
         }

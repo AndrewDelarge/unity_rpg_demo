@@ -18,6 +18,8 @@ namespace UI.Hud
 
         public void Awake()
         {
+//            Debug.Log("Health bar Awake");
+
             value = transform.Find("Value").gameObject.GetComponent<RectTransform>();
             size = value.sizeDelta;
             maxWidhth = size.x;
@@ -25,6 +27,8 @@ namespace UI.Hud
 
         private void Start()
         {
+//            Debug.Log("Health bar Start");
+
             player = PlayerManager.instance.player;
             player.combat.stats.onHealthChange += ChangeHeathBarValue;
         }

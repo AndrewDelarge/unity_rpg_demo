@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using GameCamera;
 using UI.Hud;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -16,15 +17,18 @@ namespace Player
         
         
         private Interactable focus;
-        private UnityEngine.Camera cam;
+        private Camera cam;
+        private CameraController _cameraController;
         
         
         private PlayerMotor playerMotor;
-        
+
+       
         void Start()
         {
+            cam = Camera.main;
             playerMotor = GetComponent<PlayerMotor>();
-            cam = UnityEngine.Camera.main;
+            _cameraController = cam.GetComponent<CameraController>();
             PlayerManager.instance.UI.actionBar.onActionKeyClick += ActionKeyDown;
         }
 
@@ -43,15 +47,18 @@ namespace Player
 //            {
 //                return;
 //            }
-            
+
+
             if (Input.GetMouseButtonUp(0))
             {
                 Ray ray = cam.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
-
+                
                 if (Physics.Raycast(ray, out hit, 100, interactableMask))
                 {
                     Interactable interactable = hit.collider.GetComponent<Interactable>();
+                    _cameraController.SetPointer(hit.collider.transform.position);
+
                     if (interactable != null)
                     {
                         SetFocus(interactable);
@@ -61,6 +68,8 @@ namespace Player
                 
                 if (Physics.Raycast(ray, out hit, 100, movementMask))
                 {
+                    _cameraController.SetPointer(hit.point);
+
                     playerMotor.MoveTo(hit.point);
                     RemoveFocus();
                 }
@@ -108,6 +117,9 @@ namespace Player
                 focus.Interact();
             }
         }
+        
+        
+        
         
         void RemoveFocus()
         {

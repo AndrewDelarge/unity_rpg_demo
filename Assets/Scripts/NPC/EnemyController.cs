@@ -44,7 +44,7 @@ namespace NPC
         {
             if (! actor.IsEnemy(radiusActor))
             {
-                Debug.Log(actor.actorScript + " frendly for : " + radiusActor.actorScript.title);
+//                Debug.Log(actor.actorScript + " frendly for : " + radiusActor.actorScript.title);
                 return;
             }
             
@@ -52,12 +52,12 @@ namespace NPC
 
             if (actor.InCombat())
             {
-                Debug.Log(actor.actorScript + " already in combat ");
+//                Debug.Log(actor.actorScript + " already in combat ");
 
                 return;
             }
             
-            Debug.Log(actor.actorScript + " going attack for : " + radiusActor.actorScript.title);
+//            Debug.Log(actor.actorScript + " going attack for : " + radiusActor.actorScript.title);
 
             actor.combat.inCombat = true;
             actor.SetTarget(radiusActor);
