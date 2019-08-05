@@ -1,61 +1,167 @@
 fileFormatVersion: 2
 guid: 88351fd19dbaafe4984d8740fe1c2afc
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: Armature
-    100002: Belly
-    100004: Chest
-    100006: Head
-    100008: Henry
-    100010: //RootNode
-    100012: LArm_L
-    100014: LArm_L_001
-    100016: LArm_R
-    100018: LArm_R_001
-    100020: LLeg_L
-    100022: LLeg_L_001
-    100024: LLeg_R
-    100026: LLeg_R_001
-    100028: Neck
-    100030: Root
-    100032: UArm_L
-    100034: UArm_R
-    100036: ULeg_L
-    100038: ULeg_R
-    400000: Armature
-    400002: Belly
-    400004: Chest
-    400006: Head
-    400008: Henry
-    400010: //RootNode
-    400012: LArm_L
-    400014: LArm_L_001
-    400016: LArm_R
-    400018: LArm_R_001
-    400020: LLeg_L
-    400022: LLeg_L_001
-    400024: LLeg_R
-    400026: LLeg_R_001
-    400028: Neck
-    400030: Root
-    400032: UArm_L
-    400034: UArm_R
-    400036: ULeg_L
-    400038: ULeg_R
-    2100000: None__character_textere_png
-    4300000: Henry
-    7400000: Default Take
-    7400002: Idle
-    7400004: Run_cycle
-    7400006: Run_cycle_001
-    7400008: Run_cycle_002
-    7400010: Walk
-    7400012: Walk_pol
-    7400014: Walking_cycle
-    9500000: //RootNode
-    13700000: Henry
-    2186277476908879412: ImportLogs
+  serializedVersion: 25
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: Armature
+  - first:
+      1: 100002
+    second: Belly
+  - first:
+      1: 100004
+    second: Chest
+  - first:
+      1: 100006
+    second: Head
+  - first:
+      1: 100008
+    second: Henry
+  - first:
+      1: 100010
+    second: //RootNode
+  - first:
+      1: 100012
+    second: LArm_L
+  - first:
+      1: 100014
+    second: LArm_L_001
+  - first:
+      1: 100016
+    second: LArm_R
+  - first:
+      1: 100018
+    second: LArm_R_001
+  - first:
+      1: 100020
+    second: LLeg_L
+  - first:
+      1: 100022
+    second: LLeg_L_001
+  - first:
+      1: 100024
+    second: LLeg_R
+  - first:
+      1: 100026
+    second: LLeg_R_001
+  - first:
+      1: 100028
+    second: Neck
+  - first:
+      1: 100030
+    second: Root
+  - first:
+      1: 100032
+    second: UArm_L
+  - first:
+      1: 100034
+    second: UArm_R
+  - first:
+      1: 100036
+    second: ULeg_L
+  - first:
+      1: 100038
+    second: ULeg_R
+  - first:
+      4: 400000
+    second: Armature
+  - first:
+      4: 400002
+    second: Belly
+  - first:
+      4: 400004
+    second: Chest
+  - first:
+      4: 400006
+    second: Head
+  - first:
+      4: 400008
+    second: Henry
+  - first:
+      4: 400010
+    second: //RootNode
+  - first:
+      4: 400012
+    second: LArm_L
+  - first:
+      4: 400014
+    second: LArm_L_001
+  - first:
+      4: 400016
+    second: LArm_R
+  - first:
+      4: 400018
+    second: LArm_R_001
+  - first:
+      4: 400020
+    second: LLeg_L
+  - first:
+      4: 400022
+    second: LLeg_L_001
+  - first:
+      4: 400024
+    second: LLeg_R
+  - first:
+      4: 400026
+    second: LLeg_R_001
+  - first:
+      4: 400028
+    second: Neck
+  - first:
+      4: 400030
+    second: Root
+  - first:
+      4: 400032
+    second: UArm_L
+  - first:
+      4: 400034
+    second: UArm_R
+  - first:
+      4: 400036
+    second: ULeg_L
+  - first:
+      4: 400038
+    second: ULeg_R
+  - first:
+      21: 2100000
+    second: None__character_textere_png
+  - first:
+      43: 4300000
+    second: Henry
+  - first:
+      74: 7400000
+    second: Default Take
+  - first:
+      74: 7400002
+    second: Idle
+  - first:
+      74: 7400004
+    second: Run_cycle
+  - first:
+      74: 7400006
+    second: Run_cycle_001
+  - first:
+      74: 7400008
+    second: Run_cycle_002
+  - first:
+      74: 7400010
+    second: Walk
+  - first:
+      74: 7400012
+    second: Walk_pol
+  - first:
+      74: 7400014
+    second: Walking_cycle
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: Henry
+  - first:
+      41386430: 2186277476908879412
+    second: ImportLogs
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -88,231 +194,7 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations:
-    - serializedVersion: 16
-      name: Default Take
-      takeName: Default Take
-      firstFrame: 0
-      lastFrame: 39
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Idle
-      takeName: Idle
-      firstFrame: 0
-      lastFrame: 40
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Run_cycle
-      takeName: Run_cycle
-      firstFrame: 0
-      lastFrame: 16
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Run_cycle_001
-      takeName: Run_cycle_001
-      firstFrame: 0
-      lastFrame: 16
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Run_cycle_002
-      takeName: Run_cycle_002
-      firstFrame: 0
-      lastFrame: 16
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Walk
-      takeName: Walk
-      firstFrame: -1
-      lastFrame: 23
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Walk_pol
-      takeName: Walk_pol
-      firstFrame: -1
-      lastFrame: 23
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Walking_cycle
-      takeName: Walking_cycle
-      firstFrame: -1
-      lastFrame: 23
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+    clipAnimations: []
     isReadable: 1
   meshes:
     lODScreenPercentages: []
@@ -327,18 +209,19 @@ ModelImporter:
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -347,10 +230,11 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
-  importAnimation: 1
+  referencedClips: []
+  importAnimation: 0
   copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human:
     - boneName: Belly
       humanName: Hips
@@ -588,6 +472,7 @@ ModelImporter:
     armStretch: 0.5
     legStretch: 0.5
     feetSpacing: 0.5
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 1
     hasExtraRoot: 1

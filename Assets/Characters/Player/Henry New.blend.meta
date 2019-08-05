@@ -123,9 +123,9 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
@@ -152,9 +152,9 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
@@ -181,9 +181,9 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
@@ -237,11 +237,11 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
@@ -266,11 +266,11 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
@@ -440,11 +440,11 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
@@ -469,11 +469,11 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
@@ -656,13 +656,13 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: Henry_test(Clone)
+    - name: Henry New(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Armature
-      parentName: Henry_test(Clone)
+      parentName: Henry New(Clone)
       position: {x: -3.4216e-11, y: 0.5282712, z: -0.00086822436}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
       scale: {x: 0.15, y: 0.15, z: 0.15}
@@ -739,7 +739,7 @@ ModelImporter:
     - name: LLeg_L
       parentName: ULeg_L
       position: {x: -1.7431793, y: 0.00000009313226, z: 0.000000029802322}
-      rotation: {x: -0.29414767, y: 0.11571294, z: -0.31059787, w: 0.89644665}
+      rotation: {x: -0.2941477, y: 0.11571294, z: -0.3105979, w: 0.89644665}
       scale: {x: 1.0000002, y: 1.0000004, z: 1.0000002}
     - name: LLeg_L_001
       parentName: LLeg_L
@@ -759,35 +759,35 @@ ModelImporter:
     - name: LLeg_R_001
       parentName: LLeg_R
       position: {x: -1.4524193, y: 0.00000014901161, z: -0.000000074505806}
-      rotation: {x: 0.93955755, y: -0.105044566, z: 0.026726509, w: -0.3247812}
+      rotation: {x: 0.9395576, y: -0.10504457, z: 0.02672651, w: -0.32478124}
       scale: {x: 0.9999998, y: 1, z: 0.9999999}
     - name: Chest_1
-      parentName: Henry_test(Clone)
+      parentName: Henry New(Clone)
       position: {x: -0.27936018, y: -0.3066617, z: 3.6726255}
       rotation: {x: -2.9103914e-10, y: -1.9396018e-10, z: -4.97384e-13, w: 1}
       scale: {x: 2.762297, y: 1, z: 1.0000001}
     - name: Helmet_1
-      parentName: Henry_test(Clone)
+      parentName: Henry New(Clone)
       position: {x: 2.28108e-10, y: -0.33265436, z: 7.229388}
       rotation: {x: -0.000000002328306, y: 8.10311e-11, z: 4.073782e-12, w: 1}
       scale: {x: 2.4519696, y: 2.4519696, z: 2.4519699}
     - name: Henry
-      parentName: Henry_test(Clone)
+      parentName: Henry New(Clone)
       position: {x: 3.4216e-11, y: -0.37086818, z: -3.5162108}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Stick_1
-      parentName: Henry_test(Clone)
+      parentName: Henry New(Clone)
       position: {x: 2.5938241, y: -1.7243946, z: 1.5658625}
       rotation: {x: -0.14349942, y: 0.04396109, z: -0.14650688, w: 0.97775817}
       scale: {x: 1.0000001, y: 0.9999998, z: 0.99999994}
     - name: Sword_Big
-      parentName: Henry_test(Clone)
+      parentName: Henry New(Clone)
       position: {x: 2.9885173, y: 0.007663766, z: 0.5248594}
       rotation: {x: -0.14349942, y: 0.04396109, z: -0.14650688, w: 0.97775817}
       scale: {x: 1.1211411, y: 1.1211408, z: 1.121141}
     - name: Sword_Small
-      parentName: Henry_test(Clone)
+      parentName: Henry New(Clone)
       position: {x: 2.8887208, y: 0.071377255, z: 0.28983855}
       rotation: {x: -0.14349943, y: 0.04396109, z: -0.14650688, w: 0.97775817}
       scale: {x: 1, y: 0.9999997, z: 0.99999994}
