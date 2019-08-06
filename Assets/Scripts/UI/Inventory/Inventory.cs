@@ -115,7 +115,7 @@ namespace UI.Inventory
             lootUI.SetActive(true);
         }
 
-        void HideLoot()
+        public void HideLoot()
         {
             lootUI.SetActive(false);
             PlayerManager.instance.Pause(false);

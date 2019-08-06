@@ -7,7 +7,8 @@ namespace UI.Hud
         public ActionBar actionBar;
         public HealthBar healthBar;
         public UpperPanel upperPanel;
-
+        public Inventory.Inventory inventory;
+        
     }
     
     

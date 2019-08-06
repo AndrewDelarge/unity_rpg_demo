@@ -5,6 +5,9 @@ namespace UI.Hud
 {
     public class PauseMenu : MonoBehaviour
     {
+        
+        
+
         public void OnExitButton()
         {
             Application.Quit();
