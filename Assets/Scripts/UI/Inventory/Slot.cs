@@ -13,9 +13,9 @@ namespace UI.Inventory
         
         public Button remove;
 
-        private Item item;
+        protected Item item;
 
-        private Inventory inventoryUI;
+        protected Inventory inventoryUI;
         
         private void Start()
         {

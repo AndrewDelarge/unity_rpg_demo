@@ -21,7 +21,11 @@ namespace NPC
                 if (!characterStats.IsDead())
                 {
                     interactInitedActor.Attack(this);
-                } 
+                }
+                else
+                {
+                    Loot();
+                }
             }
         }
     }

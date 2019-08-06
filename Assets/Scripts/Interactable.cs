@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using Player;
+using Scriptable;
+using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
@@ -12,8 +15,11 @@ public class Interactable : MonoBehaviour
     protected bool hasInteracted = false;
 
     public Transform interactableTransform;
-    
 
+    [SerializeField] private List<Item> loot = new List<Item>();
+
+    public System.Action onLootChange;
+    
     protected virtual void Start()
     {
         if (interactableTransform == null)
@@ -24,7 +30,7 @@ public class Interactable : MonoBehaviour
 
     public virtual void Interact()
     {
-        
+        Loot();
     }
     
     private void Update()
@@ -39,6 +45,10 @@ public class Interactable : MonoBehaviour
         }
     }
 
+    public virtual void Loot()
+    {
+        Inventory.instance.Loot(this);
+    }
 
     public bool InInteracableDistance(Transform target)
     {
@@ -59,6 +69,33 @@ public class Interactable : MonoBehaviour
         isFocus = false;
         player = null;
         hasInteracted = false;
+        
+        Inventory.instance.StopLoot();
+    }
+
+    public void RemoveFromLoot(Item item)
+    {
+        loot.Remove(item);
+        
+        if (onLootChange != null)
+        {
+            onLootChange();
+        }
+    }
+    
+    public void AddToLoot(Item item)
+    {
+        loot.Add(item);
+        
+        if (onLootChange != null)
+        {
+            onLootChange();
+        }
+    }
+    
+    public List<Item> GetLoot()
+    {
+        return loot;
     }
     
     

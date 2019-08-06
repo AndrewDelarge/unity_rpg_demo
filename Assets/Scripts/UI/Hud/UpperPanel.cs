@@ -9,6 +9,7 @@ namespace UI.Hud
 
         public OnInventoryButtonClick onInventoryButtonClick;
 
+        public System.Action onMenuButtonClick;
 
         public void InventoryButtonClick()
         {
@@ -16,6 +17,11 @@ namespace UI.Hud
             {
                 onInventoryButtonClick.Invoke();
             }
+        }
+
+
+        public void MenuButtonClick()
+        {
         }
     }
 }

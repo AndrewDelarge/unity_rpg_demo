@@ -50,11 +50,13 @@
             <e p="Hud" t="Include">
               <e p="ActionBar.cs" t="Include" />
               <e p="HealthBar.cs" t="Include" />
+              <e p="PauseMenu.cs" t="Include" />
               <e p="UI.cs" t="Include" />
               <e p="UpperPanel.cs" t="Include" />
             </e>
             <e p="Inventory" t="Include">
               <e p="Inventory.cs" t="Include" />
+              <e p="LootSlot.cs" t="Include" />
               <e p="Slot.cs" t="Include" />
               <e p="SlotInfo.cs" t="Include" />
             </e>

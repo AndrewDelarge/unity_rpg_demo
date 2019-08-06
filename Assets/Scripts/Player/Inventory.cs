@@ -28,12 +28,18 @@ namespace Player
 
         public OnItemChanged onItemChangedCallback;
         
+        public delegate void OnLoot(Interactable lootTarget);
+        
+        public System.Action onLootEnd;
+        
+        public OnLoot onLoot;
+        
         public int space = 20;
 
         public Transform player;
         
         public List<Item> items = new List<Item>();
-
+        
         private GameObject defaultItemGameObject;
         
         private void Start()
@@ -82,6 +88,34 @@ namespace Player
             }
         }
 
+
+        public void Loot()
+        {
+            Interactable target = PlayerManager.instance.player.target;
+            
+            if (onLoot != null && target != null)
+            {
+                onLoot.Invoke(target);
+            }
+        }
+        
+        public void Loot(Interactable lootTarget)
+        {
+            if (onLoot != null)
+            {
+                onLoot.Invoke(lootTarget);
+            }
+        }
+
+        public void StopLoot()
+        {
+            if (onLootEnd != null)
+            {
+                onLootEnd();
+            }
+        }
+        
+        
         public void Drop(Item item)
         {
             if (item.gameObject != null)
