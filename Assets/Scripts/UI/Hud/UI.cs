@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UI.MainMenu;
+using UnityEngine;
 
 namespace UI.Hud
 {
@@ -7,8 +8,7 @@ namespace UI.Hud
         public ActionBar actionBar;
         public HealthBar healthBar;
         public UpperPanel upperPanel;
-        public Inventory.Inventory inventory;
-        
+
     }
     
     

@@ -1,16 +1,26 @@
 ﻿using Player;
+using UI.MainMenu;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace UI.Hud
 {
     public class PauseMenu : MonoBehaviour
     {
         
+        public Loading loading;
+
         
+        private void Awake()
+        {
+            Debug.Log(SceneManager.sceneCount);
+        }
 
         public void OnExitButton()
         {
-            Application.Quit();
+            // TODO hardcode
+            loading.ShowAndLoad(0);
+            PlayerManager.instance.Pause(false);
         }
         
         

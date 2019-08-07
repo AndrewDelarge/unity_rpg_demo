@@ -120,7 +120,7 @@ namespace Player
         {
             if (item.gameObject != null)
             {
-                Instantiate<GameObject>(item.gameObject, player.transform.position, Quaternion.identity);
+                Instantiate<GameObject>(item.gameObject, new Vector3(player.transform.position.x - 1, player.transform.position.y + 2, player.transform.position.z -1), Quaternion.identity);
             }
         }
     }

@@ -15,7 +15,7 @@ namespace Player
         #endregion
 
         private Scriptable.Equipment[] currentEquipment;
-        private SkinnedMeshRenderer[] currentMeshes;
+        private Renderer[] currentMeshes;
 
         public Equipment[] defaultEquipments;
         public GameObject targetMesh;
@@ -30,7 +30,7 @@ namespace Player
         {
             int equipCount = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
             currentEquipment = new Scriptable.Equipment[equipCount];
-            currentMeshes = new SkinnedMeshRenderer[equipCount];
+            currentMeshes = new Renderer[equipCount];
             
             EquipDefault();
         }
@@ -69,7 +69,7 @@ namespace Player
                 onItemEquip.Invoke(newItem);
             }
 
-            SkinnedMeshRenderer newMesh = mesh.GetComponent<SkinnedMeshRenderer>();
+            Renderer newMesh = mesh.GetComponent<Renderer>();
             
             newMesh.enabled = true;
 //            SkinnedMeshRenderer newMesh = Instantiate<SkinnedMeshRenderer>(newItem.mesh);
