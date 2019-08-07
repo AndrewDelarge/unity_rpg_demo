@@ -21,6 +21,7 @@ public class ItemPickup : Interactable
 
     public override void Interact()
     {
+        base.Interact();
         PickUp();
     }
 
@@ -48,7 +49,7 @@ public class ItemPickup : Interactable
         
         if (distance <= 15)
         {
-            itemNameTextObject.transform.LookAt(UnityEngine.Camera.main.transform.position);
+            itemNameTextObject.transform.forward = - (UnityEngine.Camera.main.transform.forward);
             itemNameTextObject.SetActive(true);
         }
 

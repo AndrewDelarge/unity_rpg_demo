@@ -96,7 +96,12 @@ ModelImporter:
   - first:
       74: 7470179210669286893
     second: Armature|Walking_Final
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: No Name
+    second: {fileID: 2100000, guid: fb2158dcf44cd1945885e0ac3f84a72c, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -111,63 +116,7 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'Walking_cycle' has import animation warnings
-      that might lower retargeting quality:\nNote: Activate translation DOF on avatar
-      to improve retargeting quality.\n\t'UArm.L' has translation animation that will
-      be discarded.\n\t'UArm.R' has translation animation that will be discarded.\n\nClip
-      'Armature|Attack_2' has import animation warnings that might lower retargeting
-      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'UArm.L'
-      has translation animation that will be discarded.\n\t'UArm.R' has translation
-      animation that will be discarded.\n\nClip 'Armature|Attack_Slash' has import
-      animation warnings that might lower retargeting quality:\nNote: Activate translation
-      DOF on avatar to improve retargeting quality.\n\t'UArm.L' has translation animation
-      that will be discarded.\n\t'UArm.R' has translation animation that will be discarded.\n\nClip
-      'Armature|Block' has import animation warnings that might lower retargeting
-      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'UArm.L'
-      has translation animation that will be discarded.\n\t'UArm.R' has translation
-      animation that will be discarded.\n\nClip 'Armature|Attack_Idle_2' has import
-      animation warnings that might lower retargeting quality:\nNote: Activate translation
-      DOF on avatar to improve retargeting quality.\n\t'UArm.L' has translation animation
-      that will be discarded.\n\t'UArm.R' has translation animation that will be discarded.\n\nClip
-      'Armature|notworking' has import animation warnings that might lower retargeting
-      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'UArm.L'
-      has translation animation that will be discarded.\n\t'UArm.R' has translation
-      animation that will be discarded.\n\nClip 'Armature|notworking2' has import
-      animation warnings that might lower retargeting quality:\nNote: Activate translation
-      DOF on avatar to improve retargeting quality.\n\t'UArm.L' has translation animation
-      that will be discarded.\n\t'UArm.R' has translation animation that will be discarded.\n\nClip
-      'Armature|notworking3' has import animation warnings that might lower retargeting
-      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'UArm.L'
-      has translation animation that will be discarded.\n\t'UArm.R' has translation
-      animation that will be discarded.\n\nClip 'Armature|notworking4' has import
-      animation warnings that might lower retargeting quality:\nNote: Activate translation
-      DOF on avatar to improve retargeting quality.\n\t'UArm.L' has translation animation
-      that will be discarded.\n\t'UArm.R' has translation animation that will be discarded.\n\nClip
-      'Armature|PickiUp_notworking' has import animation warnings that might lower
-      retargeting quality:\nNote: Activate translation DOF on avatar to improve retargeting
-      quality.\n\t'UArm.L' has translation animation that will be discarded.\n\t'UArm.R'
-      has translation animation that will be discarded.\n\nClip 'Armature|PickiUp_reverse'
-      has import animation warnings that might lower retargeting quality:\nNote: Activate
-      translation DOF on avatar to improve retargeting quality.\n\t'UArm.L' has translation
-      animation that will be discarded.\n\t'UArm.R' has translation animation that
-      will be discarded.\n\nClip 'Armature|Pickup_item' has import animation warnings
-      that might lower retargeting quality:\nNote: Activate translation DOF on avatar
-      to improve retargeting quality.\n\t'UArm.L' has translation animation that will
-      be discarded.\n\t'UArm.R' has translation animation that will be discarded.\n\nClip
-      'Armature|Run_cycle.001' has import animation warnings that might lower retargeting
-      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'UArm.L'
-      has translation animation that will be discarded.\n\t'UArm.R' has translation
-      animation that will be discarded.\n\nClip 'Armature|Run_Final' has import animation
-      warnings that might lower retargeting quality:\nNote: Activate translation DOF
-      on avatar to improve retargeting quality.\n\t'UArm.L' has translation animation
-      that will be discarded.\n\t'UArm.R' has translation animation that will be discarded.\n\nClip
-      'Armature|Run_notworking' has import animation warnings that might lower retargeting
-      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'UArm.L'
-      has translation animation that will be discarded.\n\t'UArm.R' has translation
-      animation that will be discarded.\n\nClip 'Armature|Walking_Final' has import
-      animation warnings that might lower retargeting quality:\nNote: Activate translation
-      DOF on avatar to improve retargeting quality.\n\t'UArm.L' has translation animation
-      that will be discarded.\n\t'UArm.R' has translation animation that will be discarded.\n"
+    animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0

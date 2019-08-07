@@ -2,6 +2,7 @@
 using Player;
 using Scriptable;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Interactable : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class Interactable : MonoBehaviour
     [SerializeField] private List<Item> loot = new List<Item>();
 
     public System.Action onLootChange;
+
+    public UnityEvent onInteract;
     
     protected virtual void Start()
     {
@@ -30,7 +33,10 @@ public class Interactable : MonoBehaviour
 
     public virtual void Interact()
     {
-        Loot();
+        if (onInteract != null)
+        {
+            onInteract.Invoke();
+        }
     }
     
     private void Update()

@@ -10,16 +10,9 @@ namespace UI.MainMenu
         private const float MAX_PROGRESS_SCALE = 1f;
         
         private AsyncOperation sceneLoadingOperation;
+        
         [SerializeField]
         private RectTransform progressBar;
-        
-        private void Awake()
-        {
-            
-            
-            
-            
-        }
 
 
         private void Update()
@@ -52,7 +45,10 @@ namespace UI.MainMenu
 
         void SetProgress(float progress)
         {
-            progressBar.transform.localScale = new Vector3(progress, 1, 1);
+            if (progress <= MAX_PROGRESS_SCALE)
+            {
+                progressBar.transform.localScale = new Vector3(progress, 1, 1);
+            }
         }
         
     }

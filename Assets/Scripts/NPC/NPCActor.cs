@@ -31,6 +31,7 @@ namespace NPC
 
         public override void Interact()
         {
+            base.Interact();
             if (player != null)
             {
                 interactInitedActor = player.GetComponent<NPCActor>();

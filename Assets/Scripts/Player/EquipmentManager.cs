@@ -49,8 +49,23 @@ namespace Player
             int itemIndex = (int) newItem.equipmentSlot;
 
             Transform tmp;
+
+            string equipPath = "";
+            switch (newItem.equipmentSlot)
+            {
+                case EquipmentSlot.Weapon:
+                    equipPath = "Armature/Root/Belly/Chest/UArm.R/LArm.R/HandHold.R/" + newItem.skinName;
+                    break;
+                case EquipmentSlot.Chest:
+                    equipPath = "Armature/Root/Belly/Chest/" + newItem.skinName;
+                    break;
+                case EquipmentSlot.Head:
+                    equipPath = "Armature/Root/Belly/Chest/Neck/Head/" + newItem.skinName;
+                    break;
+            }
             
-            tmp = targetMesh.transform.Find(newItem.skinName);
+            
+            tmp = targetMesh.transform.Find(equipPath);
 
             if (tmp == null)
             {

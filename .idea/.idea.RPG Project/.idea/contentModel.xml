@@ -8,6 +8,8 @@
       <e p="Assets" t="Include">
         <e p="Scripts" t="Include">
           <e p="CharacterAnimator.cs" t="Include" />
+          <e p="Door.cs" t="Include" />
+          <e p="Encounter.cs" t="Include" />
           <e p="GameCamera" t="Include">
             <e p="CameraController.cs" t="Include" />
           </e>
@@ -47,6 +49,7 @@
             <e p="Item.cs" t="Include" />
           </e>
           <e p="UI" t="Include">
+            <e p="HealthUI.cs" t="Include" />
             <e p="Hud" t="Include">
               <e p="ActionBar.cs" t="Include" />
               <e p="HealthBar.cs" t="Include" />
