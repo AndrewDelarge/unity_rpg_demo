@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using GameCamera;
+using NPC;
 using UI.Hud;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -19,16 +20,23 @@ namespace Player
         private Interactable focus;
         private Camera cam;
         private CameraController _cameraController;
-        
+        private NPCActor actor;
         
         private PlayerMotor playerMotor;
 
-       
-        void Start()
+
+        private void Awake()
         {
             cam = Camera.main;
             playerMotor = GetComponent<PlayerMotor>();
             _cameraController = cam.GetComponent<CameraController>();
+            actor = GetComponent<PlayerActor>();
+        }
+
+        void Start()
+        {
+            actor.combat.TargetDied += OnTargetDied;
+            
             PlayerManager.instance.UI.actionBar.onActionKeyClick += ActionKeyDown;
         }
 
@@ -77,15 +85,7 @@ namespace Player
            
             if (Input.GetKeyDown(KeyCode.E))
             {
-                if (focus == null)
-                {
-                    return;
-                }
-
-                if (focus.InInteracableDistance(transform))
-                {
-                    focus.Interact();
-                }
+                ActionKeyDown();
             }
         }
 
@@ -117,9 +117,12 @@ namespace Player
                 focus.Interact();
             }
         }
-        
-        
-        
+
+
+        void OnTargetDied()
+        {
+            RemoveFocus();
+        }
         
         void RemoveFocus()
         {

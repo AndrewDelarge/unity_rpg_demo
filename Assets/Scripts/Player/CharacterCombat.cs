@@ -19,6 +19,7 @@ namespace Player
 
 
         public event System.Action OnAttack;
+        public event System.Action TargetDied;
         private void Awake()
         {
             stats = GetComponent<CharacterStats>();
@@ -63,6 +64,10 @@ namespace Player
             if (targetStats.currentHealth <= 0)
             {
                 ExitCombat();
+                if (TargetDied != null)
+                {
+                    TargetDied();
+                }
             }
         }
 

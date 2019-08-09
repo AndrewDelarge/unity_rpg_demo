@@ -18,7 +18,7 @@ namespace NPC
             base.Interact();
             if (interactInitedActor != null)
             {
-                if (!characterStats.IsDead())
+                if (! characterStats.IsDead())
                 {
                     interactInitedActor.Attack(this);
                 }

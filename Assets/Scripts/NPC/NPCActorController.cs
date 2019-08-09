@@ -9,6 +9,7 @@ namespace NPC
 
         protected NPCActor actor;
         public GameObject lookRadiusObject;
+        public GameObject lootBox;
 
         protected ActorLookRadius actorLookRadius;
         // Start is called before the first frame update
@@ -26,6 +27,13 @@ namespace NPC
             if (actorLookRadius == null)
             {
                 throw new Exception("ActorLookRadius Must Be set in Look Radius Object ");
+            }
+
+            if (lootBox != null)
+            {
+                lootBox.SetActive(false);
+                actor.characterStats.onDied += ShowLootBox;
+
             }
 
             actorLookRadius.onActorEnterRadius += OnActorEnterRadius;
@@ -51,6 +59,15 @@ namespace NPC
                 Debug.Log(name + " Start defence!");
                 actor.combat.inCombat = true;
                 actor.SetTarget(attackedBy);
+            }
+        }
+
+
+        void ShowLootBox(GameObject diedObject)
+        {
+            if (lootBox != null)
+            {
+                lootBox.SetActive(true);
             }
         }
     }

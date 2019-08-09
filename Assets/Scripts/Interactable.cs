@@ -8,12 +8,10 @@ public class Interactable : MonoBehaviour
 {
 
     public float radius = 3f;
-
+    
     private bool isFocus = false;
 
-    protected Transform player;
-
-    protected bool hasInteracted = false;
+    protected Transform interactInitedTransform;
 
     public Transform interactableTransform;
 
@@ -38,18 +36,6 @@ public class Interactable : MonoBehaviour
             onInteract.Invoke();
         }
     }
-    
-    private void Update()
-    {
-        if (isFocus && ! hasInteracted)
-        {
-            if (InInteracableDistance(player))
-            {
-//                Interact();
-                hasInteracted = true;
-            }
-        }
-    }
 
     public virtual void Loot()
     {
@@ -66,15 +52,13 @@ public class Interactable : MonoBehaviour
     public void OnFocused(Transform transformPlayer)
     {
         isFocus = true;
-        player = transformPlayer;
-        hasInteracted = false;
+        interactInitedTransform = transformPlayer;
     }
 
     public void OnDisfocused()
     {
         isFocus = false;
-        player = null;
-        hasInteracted = false;
+        interactInitedTransform = null;
         
         Inventory.instance.StopLoot();
     }

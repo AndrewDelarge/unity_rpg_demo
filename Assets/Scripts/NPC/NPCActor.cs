@@ -12,7 +12,7 @@ namespace NPC
         
         [HideInInspector]
         public CharacterStats characterStats;
-        [HideInInspector]
+//        [HideInInspector]
         public NPCActor interactInitedActor;
         [HideInInspector]
         public CharacterCombat combat;
@@ -32,9 +32,9 @@ namespace NPC
         public override void Interact()
         {
             base.Interact();
-            if (player != null)
+            if (interactInitedTransform != null)
             {
-                interactInitedActor = player.GetComponent<NPCActor>();
+                interactInitedActor = interactInitedTransform.GetComponent<NPCActor>();
             }
             Debug.Log("You interact with " + transform.name);
         }

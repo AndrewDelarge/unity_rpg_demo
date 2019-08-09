@@ -9,12 +9,13 @@ namespace NPC
     public class EnemyController : NPCActorController
     {
         private NavMeshAgent agent;
-    
+        private CapsuleCollider _collider;
         
         protected override void Start()
         {
             base.Start();
             agent = GetComponent<NavMeshAgent>();
+            _collider = GetComponent<CapsuleCollider>();
             actor.characterStats.onDied += Ragdoll;
         }
 
@@ -42,6 +43,11 @@ namespace NPC
 
         protected override void OnActorEnterRadius(NPCActor radiusActor)
         {
+            if (actor.combat.stats.IsDead())
+            {
+                return;
+            }
+            
             if (! actor.IsEnemy(radiusActor))
             {
 //                Debug.Log(actor.actorScript + " frendly for : " + radiusActor.actorScript.title);
@@ -62,6 +68,11 @@ namespace NPC
 
         protected override void OnActorOutRadius(NPCActor radiusActor)
         {
+            if (actor.combat.stats.IsDead())
+            {
+                return;
+            }
+            
             if (actor.target == radiusActor)
             {
                 NPCActor newTarget = GetNextEnemy();
@@ -78,7 +89,6 @@ namespace NPC
                 }
             }
         }
-
 
         NPCActor GetNextEnemy()
         {
@@ -134,8 +144,8 @@ namespace NPC
 
         void Ragdoll(GameObject gameObject)
         {
-            Debug.Log("Ragdolled " + name);
-            
+            actor.target.RemoveTarget();
+            actor.RemoveTarget();
             Rigidbody[] rigidbodies = GetComponentsInChildren<Rigidbody>();
             foreach (Rigidbody rigidbody in rigidbodies)
             {
@@ -146,6 +156,8 @@ namespace NPC
             agent.enabled = false;
             GetComponentInChildren<Animator>().enabled = false;
             this.enabled = false;
+            _collider.height = 1;
+            _collider.center = new Vector3();
         }
     }
 }

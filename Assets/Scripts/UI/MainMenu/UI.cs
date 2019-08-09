@@ -1,5 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace UI.MainMenu
 {
@@ -22,6 +21,11 @@ namespace UI.MainMenu
         public void OnButtonStart()
         {
             _loading.ShowAndLoad(firstSceneIndex);
+        }
+
+        public void OnButtonExit()
+        {
+            Application.Quit();
         }
     }
 }

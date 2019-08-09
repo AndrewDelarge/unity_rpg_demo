@@ -41,7 +41,6 @@ namespace UI
                 return;
             }
             healthImage.fillAmount = health / (float) stats.maxHealth;
-            Debug.Log(healthImage.fillAmount + "  % " +stats.maxHealth + "  $  " + health);
 
             if (health <= 0)
             {
