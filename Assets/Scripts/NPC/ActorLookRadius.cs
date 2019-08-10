@@ -40,12 +40,16 @@ namespace NPC
         void AddToList(GameObject gameObject)
         {
             NPCActor actor = gameObject.GetComponent<NPCActor>();
-
+               
             if (actor != null)
             {
                 actorsInRadius.Add(actor);
                 actor.characterStats.onDied += RemoveOnDied;
-                onActorEnterRadius.Invoke(actor);
+
+                if (onActorEnterRadius != null)
+                {
+                    onActorEnterRadius.Invoke(actor);
+                }
             }
         }
 
@@ -56,7 +60,11 @@ namespace NPC
             if (actor != null)
             {
                 actorsInRadius.Remove(actor);
-                onActorOutRadius.Invoke(actor);
+                
+                if (onActorOutRadius != null)
+                {
+                    onActorOutRadius.Invoke(actor);
+                }
             }
         }
         

@@ -14,7 +14,6 @@ namespace UI.MainMenu
         [SerializeField]
         private RectTransform progressBar;
 
-
         private void Update()
         {
             if (gameObject.activeSelf)

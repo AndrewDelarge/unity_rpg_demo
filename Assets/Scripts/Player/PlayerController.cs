@@ -80,6 +80,7 @@ namespace Player
 
                     playerMotor.MoveTo(hit.point);
                     RemoveFocus();
+                    return;
                 }
             }
            

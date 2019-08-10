@@ -85,5 +85,10 @@ namespace NPC
         {
             return combat.inCombat;
         }
+
+        public bool IsDead()
+        {
+            return this.combat.stats.IsDead();
+        }
     }
 }
