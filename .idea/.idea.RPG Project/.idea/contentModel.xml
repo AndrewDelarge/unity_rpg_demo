@@ -13,7 +13,6 @@
           </e>
         </e>
         <e p="Scripts" t="Include">
-          <e p="CharacterAnimator.cs" t="Include" />
           <e p="Door.cs" t="Include" />
           <e p="GameCamera" t="Include">
             <e p="CameraController.cs" t="Include" />
@@ -34,6 +33,7 @@
             <e p="PlayerActor.cs" t="Include" />
           </e>
           <e p="Player" t="Include">
+            <e p="CharacterAnimator.cs" t="Include" />
             <e p="CharacterCombat.cs" t="Include" />
             <e p="CharacterFraction.cs" t="Include" />
             <e p="CharacterStats.cs" t="Include" />

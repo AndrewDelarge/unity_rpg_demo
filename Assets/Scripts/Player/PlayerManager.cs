@@ -8,7 +8,11 @@ namespace Player
     public class PlayerManager : MonoBehaviour
     {
         public UI.Hud.UI UI;
+        [HideInInspector]
         public PlayerActor player;
+        
+        
+        public GameObject playerGameObject;
 
         #region Singleton
         public static PlayerManager instance;
@@ -16,6 +20,8 @@ namespace Player
         private void Awake()
         {
             instance = this;
+
+            player = playerGameObject.GetComponent<PlayerActor>();
         }
         #endregion
         

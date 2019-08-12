@@ -28,9 +28,9 @@ namespace UI.Hud
         private void Start()
         {
 //            Debug.Log("Health bar Start");
-
             player = PlayerManager.instance.player;
-            player.combat.stats.onHealthChange += ChangeHeathBarValue;
+            
+            player.characterStats.onHealthChange += ChangeHeathBarValue;
         }
 
 

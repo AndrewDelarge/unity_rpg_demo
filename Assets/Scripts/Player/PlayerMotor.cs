@@ -28,7 +28,7 @@ namespace Player
         public void MoveTo(Vector3 point)
         {
             agent.isStopped = false;
-
+            
             agent.SetDestination(point);
         }
 

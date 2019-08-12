@@ -24,9 +24,10 @@ namespace NPC
 
         protected virtual void Awake()
         {
-            
             characterStats = GetComponent<CharacterStats>();
             combat = GetComponent<CharacterCombat>();
+            Debug.Log(name + " awake");
+            Debug.Log(characterStats);
         }
 
         public override void Interact()
