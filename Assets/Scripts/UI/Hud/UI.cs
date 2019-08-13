@@ -1,5 +1,6 @@
 ﻿using UI.MainMenu;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI.Hud
 {
@@ -8,7 +9,21 @@ namespace UI.Hud
         public ActionBar actionBar;
         public HealthBar healthBar;
         public UpperPanel upperPanel;
+        public Text FPSTracker;
 
+        private float deltaTime;
+        
+        
+        void Update () {
+
+            if (FPSTracker != null)
+            {
+                deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
+                float fps = 1.0f / deltaTime;
+                FPSTracker.text = Mathf.Ceil (fps).ToString();
+            }
+            
+        }
     }
     
     
