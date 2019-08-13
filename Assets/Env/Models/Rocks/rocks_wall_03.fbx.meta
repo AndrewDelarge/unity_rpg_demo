@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 093cda779807fa944a7988a08d6c30d6
+guid: c5fca33f1641b0c4cb1fbddc8383f0e6
 ModelImporter:
   serializedVersion: 25
   internalIDToNameTable: []
@@ -7,8 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Material
-    second: {fileID: 2100000, guid: 94a6504693340374e90fa1fbde4be33f, type: 2}
+      name: WAll_01
+    second: {fileID: 2100000, guid: 82f1586ca3c6a2c4987db23dff23d7fe, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -64,7 +64,7 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 1
   tangentSpace:
-    normalSmoothAngle: 180
+    normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
