@@ -24,6 +24,7 @@ namespace Player
         
         private PlayerMotor playerMotor;
 
+        private bool buttonStillDown = false;
 
         private void Awake()
         {
@@ -45,6 +46,15 @@ namespace Player
             if (IsPointerOverUIObject()) 
                 return;
 
+            if (Input.GetMouseButtonDown(0))
+            {
+                buttonStillDown = true;
+            }
+            
+            if (Input.GetMouseButtonUp(0))
+            {
+                buttonStillDown = false;
+            }
 //            float rotation = Input.GetAxis("Mouse X");
             
             /**
@@ -57,7 +67,7 @@ namespace Player
 //            }
 
 
-            if (Input.GetMouseButtonUp(0))
+            if (buttonStillDown)
             {
                 Ray ray = cam.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
