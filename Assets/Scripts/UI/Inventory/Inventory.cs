@@ -32,6 +32,7 @@ namespace UI.Inventory
             _inventory.onLoot += ShowLoot;
             _inventory.onLootEnd += HideLoot;
             PlayerManager.instance.UI.upperPanel.onInventoryButtonClick += ToggleInventory;
+            UpdateUI();
         }
 
         // Update is called once per frame
