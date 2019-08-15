@@ -78,12 +78,9 @@
           </e>
         </e>
         <e p="Shaders" t="Include">
-          <e p="Outline.shader" t="Include" />
           <e p="Pixelation" t="Include">
             <e p="Pixelationv2.cs" t="Include" />
           </e>
-          <e p="Pixelation.shader" t="Include" />
-          <e p="Test.shader" t="Include" />
         </e>
         <e p="Sprites" t="Include">
           <e p="UI" t="Include">

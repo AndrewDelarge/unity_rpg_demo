@@ -20,6 +20,7 @@ namespace GameCamera
         public float zoomSpeed = 3f;
         public float yawSpeed = 100f;
 
+
         private float currentZoom = 10f;
         private float currentYaw = 0f;
         private NavMeshAgent targetRigidbody;

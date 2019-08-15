@@ -10,12 +10,6 @@ namespace UI.Hud
         
         public Loading loading;
 
-        
-        private void Awake()
-        {
-            Debug.Log(SceneManager.sceneCount);
-        }
-
         public void OnExitButton()
         {
             // TODO hardcode
