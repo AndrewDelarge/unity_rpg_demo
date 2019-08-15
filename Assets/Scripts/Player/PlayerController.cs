@@ -65,7 +65,7 @@ namespace Player
                 if (Physics.Raycast(ray, out hit, 100, interactableMask))
                 {
                     Interactable interactable = hit.collider.GetComponent<Interactable>();
-                    _cameraController.SetPointer(hit.collider.transform.position);
+                    _cameraController.PointerFollow(hit.collider.gameObject);
 
                     if (interactable != null)
                     {

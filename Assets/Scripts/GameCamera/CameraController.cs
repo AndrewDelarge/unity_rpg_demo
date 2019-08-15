@@ -26,7 +26,8 @@ namespace GameCamera
         private NavMeshAgent targetRigidbody;
         private float lastRotation;
         private float lastPointerActive;
-
+        private GameObject pointerFollows;
+    
         
         private void Start()
         {
@@ -52,9 +53,16 @@ namespace GameCamera
                 }
             }
 
+            
             if (isPointerOld())
             {
+                PointerStopFollow();
                 pointer.SetActive(false);
+            }
+            
+            if (pointerFollows != null)
+            {
+                MovePointer(pointerFollows.transform.position);
             }
         }
 
@@ -86,9 +94,29 @@ namespace GameCamera
         public void SetPointer(Vector3 pos)
         {
             pointer.SetActive(true);
-            pointer.transform.position = pos;
+            MovePointer(pos);
             lastPointerActive = Time.time;
         }
+
+        void MovePointer(Vector3 pos)
+        {
+            pointer.transform.position = pos;
+        }
+        
+        public void PointerFollow(GameObject gameObject)
+        {
+            pointerFollows = gameObject;
+            pointer.SetActive(true);
+            lastPointerActive = Time.time;
+        }
+
+        void PointerStopFollow()
+        {
+            pointerFollows = null;
+        }
+        
+        
+        
 
         bool isPointerOld()
         {
