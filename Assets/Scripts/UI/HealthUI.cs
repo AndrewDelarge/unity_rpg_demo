@@ -23,7 +23,7 @@ namespace UI
                 if (canvas.renderMode == RenderMode.WorldSpace)
                 {
                     ui = Instantiate(uiPrefab, canvas.transform).transform;
-                    healthImage = ui.GetChild(1).GetComponent<Image>();
+                    healthImage = ui.GetChild(0).GetComponent<Image>();
                 }
             }
 

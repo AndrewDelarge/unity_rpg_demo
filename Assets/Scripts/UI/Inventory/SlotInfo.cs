@@ -42,7 +42,7 @@ namespace UI.Inventory
             if (item != null)
             {
                 Hide();
-                item.Use();
+                Player.Inventory.instance.Use(item);
             }
         }
     }

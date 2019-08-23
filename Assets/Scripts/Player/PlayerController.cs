@@ -20,7 +20,7 @@ namespace Player
         private Interactable focus;
         private Camera cam;
         private CameraController _cameraController;
-        private NPCActor actor;
+        private PlayerActor actor;
         
         private PlayerMotor playerMotor;
 
@@ -132,6 +132,17 @@ namespace Player
 
         void OnTargetDied()
         {
+            if (focus)
+            {
+                NPCActor npcActor = focus.GetComponent<NPCActor>();
+
+                if (npcActor != null)
+                {
+                    actor.TargetDied(npcActor);
+                }
+            }
+           
+            
             RemoveFocus();
         }
         

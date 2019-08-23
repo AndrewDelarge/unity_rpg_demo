@@ -25,22 +25,22 @@ namespace Player
         #endregion
 
         public delegate void OnItemChanged();
-
         public OnItemChanged onItemChangedCallback;
-        
-        public delegate void OnLoot(Interactable lootTarget);
-        
-        public System.Action onLootEnd;
-        
-        public OnLoot onLoot;
-        
-        public int space = 20;
 
-        public Transform player;
-        
+        public delegate void OnItemUse(Item item);
+        public OnItemUse onItemUse;
+
+        public delegate void OnLoot(Interactable lootTarget);
+        public OnLoot onLoot;
+
+        public System.Action onLootEnd;
+
+        public int space = 20;
         public List<Item> items = new List<Item>();
         
         private GameObject defaultItemGameObject;
+        
+        
         
         private void Start()
         {
@@ -88,7 +88,6 @@ namespace Player
             }
         }
 
-
         public void Loot()
         {
             Interactable target = PlayerManager.instance.player.target;
@@ -120,8 +119,21 @@ namespace Player
         {
             if (item.gameObject != null)
             {
-                Instantiate<GameObject>(item.gameObject, new Vector3(player.transform.position.x - 1, player.transform.position.y + 2, player.transform.position.z -1), Quaternion.identity);
+                Transform playerTransform = PlayerManager.instance.player.transform;
+                Instantiate<GameObject>(item.gameObject, new Vector3(playerTransform.position.x - 1, playerTransform.position.y + 2, playerTransform.position.z -1), Quaternion.identity);
             }
         }
+
+        public void Use(Item item)
+        {
+            item.Use();
+
+            if (onItemUse != null)
+            {
+                onItemUse.Invoke(item);
+            }
+        }
+        
+        
     }
 }

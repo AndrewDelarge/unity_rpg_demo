@@ -12,9 +12,9 @@ namespace Player
         public string activeTag;
         
         [SerializeField]
-        private UnityEvent OnEnter;
+        public UnityEvent OnEnter;
         [SerializeField]
-        private UnityEvent OnExit;
+        public UnityEvent OnExit;
 
         private void OnTriggerEnter(Collider other)
         {

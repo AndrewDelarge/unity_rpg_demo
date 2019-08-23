@@ -47,6 +47,16 @@
             <e p="Stat.cs" t="Include" />
             <e p="Trigger.cs" t="Include" />
           </e>
+          <e p="Quests" t="Include">
+            <e p="ConditionBase.cs" t="Include" />
+            <e p="Conditions" t="Include">
+              <e p="KillNPC.cs" t="Include" />
+              <e p="KillNPCType.cs" t="Include" />
+              <e p="StepInTrigger.cs" t="Include" />
+              <e p="UseItem.cs" t="Include" />
+            </e>
+            <e p="Quest.cs" t="Include" />
+          </e>
           <e p="Scriptable" t="Include">
             <e p="Equipment.cs" t="Include" />
             <e p="EquipmentMeshRegion.cs" t="Include" />
@@ -54,6 +64,10 @@
             <e p="Fraction.cs" t="Include" />
             <e p="GameActor.cs" t="Include" />
             <e p="Item.cs" t="Include" />
+            <e p="Quests" t="Include">
+              <e p="ConditionInfo.cs" t="Include" />
+              <e p="QuestInfo.cs" t="Include" />
+            </e>
           </e>
           <e p="UI" t="Include">
             <e p="HealthUI.cs" t="Include" />
@@ -61,6 +75,7 @@
               <e p="ActionBar.cs" t="Include" />
               <e p="HealthBar.cs" t="Include" />
               <e p="PauseMenu.cs" t="Include" />
+              <e p="QuestPanel.cs" t="Include" />
               <e p="UI.cs" t="Include" />
               <e p="UpperPanel.cs" t="Include" />
             </e>
@@ -75,11 +90,6 @@
               <e p="UI.cs" t="Include" />
             </e>
             <e p="Pointer.cs" t="Include" />
-          </e>
-        </e>
-        <e p="Shaders" t="Include">
-          <e p="Pixelation" t="Include">
-            <e p="Pixelationv2.cs" t="Include" />
           </e>
         </e>
         <e p="Sprites" t="Include">

@@ -9,7 +9,7 @@ public class Interactable : MonoBehaviour
 
     public float radius = 3f;
     
-    private bool isFocus = false;
+    private bool isFocus;
 
     protected Transform interactInitedTransform;
 

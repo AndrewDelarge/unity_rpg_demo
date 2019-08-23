@@ -1,6 +1,7 @@
 ﻿using NPC;
 using Player;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI.Hud
 {
@@ -9,9 +10,8 @@ namespace UI.Hud
         [HideInInspector]
         public PlayerActor player;
         
-        protected RectTransform value;
+        protected Image value;
         protected GameObject healthBar;
-        protected Vector2 size;
 
         protected float maxWidhth;
 
@@ -19,10 +19,7 @@ namespace UI.Hud
         public void Awake()
         {
 //            Debug.Log("Health bar Awake");
-
-            value = transform.Find("Value").gameObject.GetComponent<RectTransform>();
-            size = value.sizeDelta;
-            maxWidhth = size.x;
+            value = transform.Find("Value").gameObject.GetComponent<Image>();
         }
 
         private void Start()
@@ -51,14 +48,13 @@ namespace UI.Hud
         
         public void SetHealth(int health)
         {
-            size.x = GetWidthFromHealth(health);
-            value.sizeDelta = size;
+            value.fillAmount = GetWidthFromHealth(health);
         }
 
         
         private float GetWidthFromHealth(int health)
         {
-            return (maxWidhth * health) / player.combat.stats.maxHealth;
+            return health / (float) player.combat.stats.maxHealth;
         }
         
         private void ChangeHeathBarValue(int value, int health)

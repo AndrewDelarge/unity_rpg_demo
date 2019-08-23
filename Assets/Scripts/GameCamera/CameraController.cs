@@ -96,6 +96,7 @@ namespace GameCamera
             pointer.SetActive(true);
             MovePointer(pos);
             lastPointerActive = Time.time;
+            PointerStopFollow();
         }
 
         void MovePointer(Vector3 pos)

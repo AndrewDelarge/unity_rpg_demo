@@ -2,6 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace UI.MainMenu
 {
@@ -13,6 +14,13 @@ namespace UI.MainMenu
         
         [SerializeField]
         private RectTransform progressBar;
+
+        private Image progressBarImage;
+
+        private void Awake()
+        {
+            progressBarImage = progressBar.GetComponent<Image>();
+        }
 
         private void Update()
         {
@@ -46,7 +54,7 @@ namespace UI.MainMenu
         {
             if (progress <= MAX_PROGRESS_SCALE)
             {
-                progressBar.transform.localScale = new Vector3(progress, 1, 1);
+                progressBarImage.fillAmount = progress;
             }
         }
         
