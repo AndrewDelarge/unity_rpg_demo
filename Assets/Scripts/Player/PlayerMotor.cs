@@ -6,7 +6,6 @@ namespace Player
     [RequireComponent(typeof(NavMeshAgent))]
     public class PlayerMotor : MonoBehaviour
     {
-
         private Transform target;
         private NavMeshAgent agent;
         
@@ -39,7 +38,6 @@ namespace Player
 
             agent.stoppingDistance = newTarget.radius * .8f;
             agent.updateRotation = false;
-
         }
 
         public void StopFollow()

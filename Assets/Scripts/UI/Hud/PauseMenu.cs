@@ -7,7 +7,6 @@ namespace UI.Hud
 {
     public class PauseMenu : MonoBehaviour
     {
-        
         public Loading loading;
 
         public void OnExitButton()

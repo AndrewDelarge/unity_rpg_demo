@@ -54,7 +54,7 @@ namespace Quests
             if (IsAllConditionsCompleted())
             {
                 ShowCompletedUI();
-                SendNudes();
+                RewardPlayer();
                 PlayerManager.instance.StopQuest(this);
                 if (onCompleted != null)
                 {
@@ -63,7 +63,7 @@ namespace Quests
             }
         }
         
-        private void SendNudes()
+        private void RewardPlayer()
         {
             Debug.Log("Now you've got reward");
 
@@ -108,8 +108,6 @@ namespace Quests
                 Debug.Log(" - condition " + condition.GetTitle() + " is completed: " + condition.IsCompleted());
             }
         }
-        
-        
 //        [MenuItem("GameObject/Quest/NewQuest", false, 10)]
 //        static void Create(MenuCommand menuCommand)
 //        {
@@ -119,7 +117,5 @@ namespace Quests
 //            Undo.RegisterCreatedObjectUndo(go, "Create " + go.name);
 //            Selection.activeObject = go;
 //        }
-        
-        
     }
 }

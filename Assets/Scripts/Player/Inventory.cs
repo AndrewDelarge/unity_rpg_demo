@@ -39,8 +39,6 @@ namespace Player
         
         private GameObject defaultItemGameObject;
         
-        
-        
         private void Start()
         {
             EquipmentManager.instance.onItemUnequip += AddAfterUnequip;
@@ -113,7 +111,6 @@ namespace Player
             }
         }
         
-        
         public void Drop(Item item)
         {
             if (item.gameObject != null)
@@ -132,7 +129,5 @@ namespace Player
                 onItemUse.Invoke(item);
             }
         }
-        
-        
     }
 }

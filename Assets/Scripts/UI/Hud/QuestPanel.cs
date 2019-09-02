@@ -17,7 +17,6 @@ namespace UI.Hud
         private float completeTextShown;
         private bool isShowed;
 
-
         private void Update()
         {
             if (completed.gameObject.activeSelf)
@@ -99,7 +98,5 @@ namespace UI.Hud
                 conditions[i].color = (quest.conditions[i].IsCompleted()) ? DONE_COLOR : NOT_DONE_COLOR;
             }
         }
-        
-        
     }
 }

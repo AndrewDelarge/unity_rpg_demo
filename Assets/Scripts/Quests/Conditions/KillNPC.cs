@@ -37,7 +37,6 @@ namespace Quests.Conditions
             }
         }
 
-
         void SetCounterInTitle()
         {
             this.title = info.title + " " + currentKills + "/" + targets.Length;

@@ -4,7 +4,6 @@ namespace Player
 {
     public class CharacterStats : MonoBehaviour
     {
-
         public int maxHealth = 100;
         public int currentHealth { get; private set; }
         public Stat armor;

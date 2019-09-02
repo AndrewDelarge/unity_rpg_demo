@@ -30,8 +30,4 @@ namespace UI.Hud
             endScreen.SetActive(true);
         }
     }
-    
-    
-    
-    
 }
