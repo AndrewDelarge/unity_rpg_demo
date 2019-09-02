@@ -11,19 +11,15 @@ namespace Player
     [RequireComponent(typeof(PlayerMotor))]
     public class PlayerController : MonoBehaviour
     {
-
         public LayerMask movementMask;
         public LayerMask interactableMask;
         public float rotationSpeed = 100f;
-        
         
         private Interactable focus;
         private Camera cam;
         private CameraController _cameraController;
         private PlayerActor actor;
-        
         private PlayerMotor playerMotor;
-
         private bool buttonStillDown = false;
 
         private void Awake()
@@ -55,17 +51,16 @@ namespace Player
             {
                 buttonStillDown = false;
             }
-//            float rotation = Input.GetAxis("Mouse X");
             
             /**
              * When you click on screen once "rotation" will be 0.3, -0.1 and etc,
              * but when you try to rotate camera "rotation" will be like 0.1245 and then we lock control
              */
+//            float rotation = Input.GetAxis("Mouse X");
 //            if (rotation != 0 && rotation.ToString().Length > 3)
 //            {
 //                return;
 //            }
-
 
             if (buttonStillDown)
             {
@@ -115,7 +110,6 @@ namespace Player
             focus.OnFocused(transform);
         }
 
-
         public void ActionKeyDown()
         {
             if (focus == null)
@@ -129,7 +123,6 @@ namespace Player
             }
         }
 
-
         void OnTargetDied()
         {
             if (focus)
@@ -141,7 +134,6 @@ namespace Player
                     actor.TargetDied(npcActor);
                 }
             }
-           
             
             RemoveFocus();
         }

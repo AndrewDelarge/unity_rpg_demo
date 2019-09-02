@@ -57,7 +57,6 @@ namespace UI.Inventory
             inventoryUI.SetActive(!inventoryUI.activeSelf);
         }
 
-
         public void ShowInfo(Item item)
         {
             HideInfo();
@@ -68,7 +67,6 @@ namespace UI.Inventory
         {
             slotInfo.Hide();
         }
-
 
         void UpdateUI()
         {
@@ -83,7 +81,6 @@ namespace UI.Inventory
                     inventorySlots[i].Clear();
                 }
             }
-
         }
 
         void UpdateLoot()

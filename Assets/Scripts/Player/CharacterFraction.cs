@@ -9,15 +9,13 @@ namespace Player
     public class CharacterFraction
     {
         private Scriptable.Fraction Fraction;
-        List<Fraction> _enemies;
+        private List<Fraction> _enemies;
 
         public CharacterFraction(Fraction fraction)
         {
             Fraction = fraction;
             _enemies = fraction.enemies.ToList();
         }
-        
-        
         
         public bool FractionInEnemies(Fraction fraction)
         {

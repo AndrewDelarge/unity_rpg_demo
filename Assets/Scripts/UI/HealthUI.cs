@@ -13,6 +13,7 @@ namespace UI
         private Image healthImage;
         private Transform cam;
         private CharacterStats stats;
+        
         private void Awake()
         {
             stats = GetComponent<CharacterStats>();
@@ -30,7 +31,6 @@ namespace UI
             stats.onHealthChange += SetHealth;
             ui.gameObject.SetActive(false);
         }
-
 
         void SetHealth(int value, int health)
         {

@@ -1,5 +1,4 @@
-﻿using Player;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 namespace GameCamera
@@ -9,17 +8,14 @@ namespace GameCamera
         private const float ROTATION_RETURN_TIME = 2f; 
         private const float POINTER_LIFE_TIME = 1f; 
         
-        
         public Transform target;
         public GameObject pointer;
         public Vector3 offset;
-    
         public float pitch = 2f;
         public float minZoom = 5f;
         public float maxZoom = 20f;
         public float zoomSpeed = 3f;
         public float yawSpeed = 100f;
-
 
         private float currentZoom = 10f;
         private float currentYaw = 0f;
@@ -66,15 +62,11 @@ namespace GameCamera
             }
         }
 
-        // Update is called once per frame
         void LateUpdate()
         {
             transform.position = target.position - offset * currentZoom;
             transform.LookAt(target.position + Vector3.up * pitch);
 
-            
-            
-            
 //            Debug.Log(targetRigidbody.hasPath);
 //            if (targetRigidbody.hasPath && Input.GetAxis("Mouse X") == 0f && isCanReturnRotation())
 //            {
@@ -87,7 +79,6 @@ namespace GameCamera
 //                Vector3.up,
 //                currentYaw
 //            );
-            
         }
 
 
@@ -116,9 +107,6 @@ namespace GameCamera
             pointerFollows = null;
         }
         
-        
-        
-
         bool isPointerOld()
         {
             return (Time.time - lastPointerActive) > POINTER_LIFE_TIME;

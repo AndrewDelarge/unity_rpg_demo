@@ -46,8 +46,6 @@ namespace Quests
             ShowNewUI();
             wasStarted = true;
         }
-
-        
         
         private void OnConditionComplete(ConditionBase conditionBase)
         {
@@ -64,8 +62,7 @@ namespace Quests
                 }
             }
         }
-
-
+        
         private void SendNudes()
         {
             Debug.Log("Now you've got reward");
@@ -75,7 +72,6 @@ namespace Quests
                 Inventory.instance.Add(reward);
             }
         }
-        
 
         public bool IsAllConditionsCompleted()
         {
@@ -89,7 +85,6 @@ namespace Quests
 
             return true;
         }
-
 
         private void ShowNewUI()
         {

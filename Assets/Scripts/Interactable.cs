@@ -8,19 +8,14 @@ public class Interactable : MonoBehaviour
 {
 
     public float radius = 3f;
-    
-    private bool isFocus;
-
-    protected Transform interactInitedTransform;
-
     public Transform interactableTransform;
+    public System.Action onLootChange;
+    public UnityEvent onInteract;
 
     [SerializeField] private List<Item> loot = new List<Item>();
+    private bool isFocus;
+    protected Transform interactInitedTransform;
 
-    public System.Action onLootChange;
-
-    public UnityEvent onInteract;
-    
     protected virtual void Start()
     {
         if (interactableTransform == null)
@@ -87,7 +82,6 @@ public class Interactable : MonoBehaviour
     {
         return loot;
     }
-    
     
     private void OnDrawGizmosSelected()
     {

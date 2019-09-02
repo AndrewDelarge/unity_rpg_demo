@@ -15,7 +15,6 @@ namespace UI.Hud
 
         private float deltaTime;
         
-        
         void Update () {
 
             if (FPSTracker != null)

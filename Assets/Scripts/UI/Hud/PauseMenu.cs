@@ -17,7 +17,6 @@ namespace UI.Hud
             PlayerManager.instance.Pause(false);
         }
         
-        
         public void Show()
         {
             PlayerManager.instance.Pause(true);

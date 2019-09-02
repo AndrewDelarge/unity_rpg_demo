@@ -8,18 +8,16 @@ namespace Player
     public class CharacterCombat : MonoBehaviour
     {
         public CharacterStats stats;
-        
         public float attackSpeed = 1f;
         public float attackCooldown = 0f;
         public float attackDelay = .6f;
         public float combatCooldown = 6;
-        private float lastAttackTime;
-        
         public bool inCombat = false;
-
-
         public event System.Action OnAttack;
         public event System.Action TargetDied;
+
+        private float lastAttackTime;
+
         private void Awake()
         {
             stats = GetComponent<CharacterStats>();
@@ -41,7 +39,6 @@ namespace Player
             {
                 return;
             }
-            
             
             StartCoroutine(DoDamage(targetActor, attackDelay));
 

@@ -5,13 +5,11 @@ namespace Player
 {
     public class PlayerStats : CharacterStats
     {
-        // Start is called before the first frame update
         void Start()
         {
             EquipmentManager.instance.onItemEquip += ItemEquip;
             EquipmentManager.instance.onItemUnequip += ItemUnequip;
         }
-
 
         void ItemEquip(Equipment item)
         {
@@ -24,7 +22,6 @@ namespace Player
             armor.RemoveModifier(item.armorModifire);
             damage.RemoveModifier(item.damageModifire);
         }
-
 
         public override void Die()
         {

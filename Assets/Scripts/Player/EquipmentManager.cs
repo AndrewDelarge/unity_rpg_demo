@@ -19,7 +19,6 @@ namespace Player
 
         public Equipment[] defaultEquipments;
         public GameObject targetMesh;
-        
         public delegate void OnItemUnequip(Scriptable.Equipment item);
         public delegate void OnItemEquip(Scriptable.Equipment item);
 
@@ -34,7 +33,6 @@ namespace Player
             
             EquipDefault();
         }
-
 
         private void Update()
         {
@@ -64,7 +62,6 @@ namespace Player
                     break;
             }
             
-            
             tmp = targetMesh.transform.Find(equipPath);
 
             if (tmp == null)
@@ -78,7 +75,6 @@ namespace Player
             Unequip(itemIndex);
             
             currentEquipment[itemIndex] = newItem;
-//            SetEquipmentBlendShape(newItem, 100);
             if (onItemEquip != null)
             {
                 onItemEquip.Invoke(newItem);
@@ -87,14 +83,8 @@ namespace Player
             Renderer newMesh = mesh.GetComponent<Renderer>();
             
             newMesh.enabled = true;
-//            SkinnedMeshRenderer newMesh = Instantiate<SkinnedMeshRenderer>(newItem.mesh);
-//            newMesh.transform.parent = targetMesh.transform;
-//
-//            newMesh.bones = targetMesh.bones;
-//            newMesh.rootBone = targetMesh.rootBone;
             currentMeshes[itemIndex] = newMesh;
         }
-
 
         public void Unequip(int slot)
         {
@@ -104,26 +94,16 @@ namespace Player
                 {
 
                     currentMeshes[slot].enabled = false;
-//                    Destroy(currentMeshes[slot].gameObject);
                 }
                 
                 Scriptable.Equipment oldItem = currentEquipment[slot];
                 currentEquipment[slot] = null;
-//                SetEquipmentBlendShape(oldItem, 0);
                 if (onItemUnequip != null)
                 {
                     onItemUnequip.Invoke(oldItem);
                 }
             }
         }
-
-//        void SetEquipmentBlendShape(Equipment item, int weight)
-//        {
-//            foreach (EquipmentMeshRegion meshRegion in item.coveredMeshRegion)
-//            {
-//                targetMesh.SetBlendShapeWeight((int) meshRegion, weight);
-//            }
-//        }
 
         public void UnequipAll()
         {

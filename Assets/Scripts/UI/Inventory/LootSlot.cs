@@ -1,14 +1,9 @@
-﻿using System;
-using Scriptable;
-using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
+﻿using Scriptable;
 
 namespace UI.Inventory
 {
     public class LootSlot : Slot
     {
-
         public new void AddItem(Item newItem)
         {
             item = newItem;
@@ -23,11 +18,6 @@ namespace UI.Inventory
 
             icon.sprite = null;
             icon.enabled = false;
-        }
-
-        public new void OnDropClick()
-        {
-            return;
         }
 
         public new void UseItem()

@@ -10,8 +10,6 @@ namespace Scriptable
         public int id = -1;
         public string title;
         public bool unfrendly;
-        
-        
         public List<Fraction> enemies = new List<Fraction>();
 
         public bool FractionInEnemies(Fraction fraction)
@@ -36,7 +34,6 @@ namespace Scriptable
             });
             return isEnemy;
         }
-
         
         public void Awake()
         {

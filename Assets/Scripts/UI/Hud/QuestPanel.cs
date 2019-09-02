@@ -11,13 +11,10 @@ namespace UI.Hud
         static float COMPLETE_TEXT_SHOWTIME = 2f;
         
         public Text questTitle;
-        
         public Text completed;
-
         public Text[] conditions;
 
         private float completeTextShown;
-        
         private bool isShowed;
 
 

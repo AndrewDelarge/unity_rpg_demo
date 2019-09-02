@@ -11,13 +11,12 @@ namespace Quests.Conditions
         public Item item;
         public int times = 1;
 
-
         public int currentCount = 0;
+        
         public override void Init()
         {
             Inventory.instance.onItemUse += Completing;
         }
-
 
         void Completing(Item usedItem)
         {

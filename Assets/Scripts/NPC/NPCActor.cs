@@ -7,19 +7,15 @@ namespace NPC
     [RequireComponent(typeof(CharacterStats))]
     public class NPCActor : Interactable
     {
-        
         public GameActor actorScript;
-        
         [HideInInspector]
         public CharacterStats characterStats;
-//        [HideInInspector]
+        [HideInInspector]
         public NPCActor interactInitedActor;
         [HideInInspector]
         public CharacterCombat combat;
         public NPCActor target;
-
         public delegate void OnActorAttacked(NPCActor attackedBy);
-
         public OnActorAttacked onActorAttacked;
 
         protected virtual void Awake()
@@ -57,7 +53,6 @@ namespace NPC
             }
 
             target = newTarget;
-            
 //            Debug.Log(transform.name + " going attack : " + newTarget.name);
         }
 

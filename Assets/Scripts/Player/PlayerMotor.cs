@@ -9,12 +9,11 @@ namespace Player
 
         private Transform target;
         private NavMeshAgent agent;
-        // Start is called before the first frame update
+        
         void Start()
         {
             agent = GetComponent<NavMeshAgent>();
         }
-
 
         private void Update()
         {
@@ -31,7 +30,6 @@ namespace Player
             
             agent.SetDestination(point);
         }
-
 
         public void Follow(Interactable newTarget)
         {

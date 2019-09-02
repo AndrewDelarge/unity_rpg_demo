@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Player
 {
@@ -8,22 +7,18 @@ namespace Player
 
         public int maxHealth = 100;
         public int currentHealth { get; private set; }
-
         public Stat armor;
         public Stat damage;
-
         public delegate void OnDied(GameObject diedObject);
         public OnDied onDied;
-
         public delegate void OnHealthChange(int value, int health);
         public OnHealthChange onHealthChange;
+        public event System.Action OnGetHit;
         
-        public event System.Action OnGetHit; 
         private void Awake()
         {
             currentHealth = maxHealth;
         }
-
 
         public void TakeDamage(int damage)
         {
@@ -69,7 +64,6 @@ namespace Player
             }
             Debug.Log(transform.name + " died");
         }
-
 
         public bool IsDead()
         {

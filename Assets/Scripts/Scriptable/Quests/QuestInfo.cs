@@ -10,6 +10,5 @@ namespace Scriptable.Quests
     {
         public string title;
         public string description;
-        
     }
 }

@@ -1,18 +1,7 @@
-﻿using Player;
-using UnityEngine;
-
-namespace NPC
+﻿namespace NPC
 {
     public class Enemy : NPCActor
     {
-        protected override void Awake()
-        {
-            base.Awake();
-
-           
-        }
-
-
         public override void Interact()
         {
             base.Interact();

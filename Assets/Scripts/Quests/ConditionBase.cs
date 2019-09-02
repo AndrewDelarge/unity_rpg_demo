@@ -7,9 +7,7 @@ namespace Quests
     {
         [SerializeField]
         protected ConditionInfo info;
-        
         public delegate void OnComplete (ConditionBase thisCondition);
-
         public OnComplete onComplete;
         
         private bool isCompleted;

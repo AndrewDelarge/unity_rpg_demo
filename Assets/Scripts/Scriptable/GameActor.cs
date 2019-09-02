@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 namespace Scriptable
@@ -9,6 +8,5 @@ namespace Scriptable
     {
         public string title = "New Actor";
         public Fraction fraction;
-
     }
 }

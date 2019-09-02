@@ -9,8 +9,8 @@ namespace UI.MainMenu
         public int firstSceneIndex;
         public GameObject loading;
 
-
         private Loading _loading;
+        
         private void Awake()
         {
             _loading = loading.GetComponent<Loading>();

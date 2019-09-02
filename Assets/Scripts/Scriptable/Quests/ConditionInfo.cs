@@ -6,6 +6,5 @@ namespace Scriptable.Quests
     public class ConditionInfo : ScriptableObject
     {
         public string title;
-        
     }
 }

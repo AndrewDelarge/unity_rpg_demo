@@ -5,7 +5,6 @@ namespace NPC
     public class PlayerActor : NPCActor
     {
         public delegate void OnTargetDied(NPCActor actor);
-
         public OnTargetDied onTargetDied;
         
         public override void Interact()

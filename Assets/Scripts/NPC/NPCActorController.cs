@@ -6,7 +6,6 @@ namespace NPC
 {
     public class NPCActorController : MonoBehaviour
     {
-
         protected NPCActor actor;
         public GameObject lookRadiusObject;
         public GameObject lootBox;
@@ -50,7 +49,6 @@ namespace NPC
         {
             //Do smth
         }
-        
 
         public virtual void Defence(NPCActor attackedBy)
         {
@@ -61,7 +59,6 @@ namespace NPC
                 actor.SetTarget(attackedBy);
             }
         }
-
 
         void ShowLootBox(GameObject diedObject)
         {

@@ -23,8 +23,6 @@ namespace Player
             }
         }
 
-
-
         void OnItemEquip(Equipment equipment)
         {
             if (equipment.equipmentSlot == EquipmentSlot.Weapon)
@@ -51,7 +49,6 @@ namespace Player
 
             overrideController[replaceableAttackClip.name] = currentAttackAnimSet[animIndedx];
         }
-        
     }
 
     [System.Serializable]

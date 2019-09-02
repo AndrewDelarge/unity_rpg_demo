@@ -12,12 +12,11 @@ namespace Player
         public UI.Hud.UI UI;
         [HideInInspector]
         public PlayerActor player;
-        
         public GameObject playerGameObject;
-        
-        private Quest currentQuest;
         public UnityEvent onGameStart;
-        
+
+        private Quest currentQuest;
+
         #region Singleton
         public static PlayerManager instance;
 
@@ -28,7 +27,6 @@ namespace Player
             player = playerGameObject.GetComponent<PlayerActor>();
         }
         #endregion
-
 
         private void Start()
         {
@@ -42,7 +40,6 @@ namespace Player
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
-
 
         public void Pause(bool value)
         {
@@ -60,11 +57,9 @@ namespace Player
             return true;
         }
 
-
         public void StopQuest(Quest quest)
         {
             currentQuest = null;
         }
-        
     }
 }

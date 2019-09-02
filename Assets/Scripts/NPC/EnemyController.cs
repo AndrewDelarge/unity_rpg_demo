@@ -1,7 +1,4 @@
-﻿using System;
-using Player;
-using Scriptable;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 namespace NPC
@@ -19,7 +16,6 @@ namespace NPC
             actor.characterStats.onDied += Ragdoll;
         }
 
-    
         void Update()
         {
             // Debug
@@ -65,7 +61,6 @@ namespace NPC
             FaceTarget();
         }
 
-
         protected override void OnActorOutRadius(NPCActor radiusActor)
         {
             if (actor.combat.stats.IsDead())
@@ -103,7 +98,6 @@ namespace NPC
             return null;
         }
         
-        
         private void FaceTarget()
         {
             Vector3 direction = (actor.target.gameObject.transform.position - transform.position).normalized;
@@ -111,7 +105,6 @@ namespace NPC
             
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 5f);
         }
-
 
         public override void Defence(NPCActor attackedBy)
         {

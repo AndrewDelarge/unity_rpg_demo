@@ -5,11 +5,7 @@ namespace UI.Hud
     public class ActionBar : MonoBehaviour
     {
         public delegate void OnActionKeyClick();
-
         public OnActionKeyClick onActionKeyClick;
-        
-        
-        
         
         public void OnActionClick()
         {

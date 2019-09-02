@@ -12,9 +12,7 @@ namespace UI.Hud
         
         protected Image value;
         protected GameObject healthBar;
-
         protected float maxWidhth;
-
 
         public void Awake()
         {
@@ -29,7 +27,6 @@ namespace UI.Hud
             
             player.characterStats.onHealthChange += ChangeHeathBarValue;
         }
-
 
         public void Show()
         {
@@ -50,7 +47,6 @@ namespace UI.Hud
         {
             value.fillAmount = GetWidthFromHealth(health);
         }
-
         
         private float GetWidthFromHealth(int health)
         {

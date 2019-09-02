@@ -10,6 +10,7 @@ namespace Quests.Conditions
         public NPCActor[] targets;
 
         private int currentKills = 0;
+        
         public override void Init()
         {
             foreach (NPCActor target in targets)

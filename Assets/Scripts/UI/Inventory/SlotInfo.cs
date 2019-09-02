@@ -6,13 +6,9 @@ namespace UI.Inventory
 {
     public class SlotInfo : MonoBehaviour
     {
-
         public Image image;
-
         public Text title;
-
         public Text description;
-
         public Item item;
 
         public void Show(Item item)
@@ -35,7 +31,6 @@ namespace UI.Inventory
             
             gameObject.SetActive(false);
         }
-
 
         public void Use()
         {

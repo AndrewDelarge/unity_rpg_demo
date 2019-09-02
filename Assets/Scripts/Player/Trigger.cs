@@ -1,8 +1,5 @@
-﻿using System;
-using System.ComponentModel;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
-
 
 namespace Player
 {
@@ -10,7 +7,6 @@ namespace Player
     {
         [TagSelector]
         public string activeTag;
-        
         [SerializeField]
         public UnityEvent OnEnter;
         [SerializeField]
@@ -29,7 +25,6 @@ namespace Player
             }
         }
         
-        
         private void OnTriggerExit(Collider other)
         {
             if (! IsTagAllowed(other.gameObject))
@@ -42,7 +37,6 @@ namespace Player
                 OnExit.Invoke();
             }
         }
-
 
         bool IsTagAllowed(GameObject gameObject)
         {

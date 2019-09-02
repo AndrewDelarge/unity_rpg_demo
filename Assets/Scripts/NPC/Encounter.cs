@@ -21,7 +21,6 @@ namespace NPC
         protected float lastWaveSpawn;
         protected bool active;
 
-
         public void Enable()
         {
             enabled = true;
@@ -38,7 +37,6 @@ namespace NPC
             active = true;
             SpawnWave();
         }
-
 
         void SpawnWave()
         {
@@ -72,7 +70,6 @@ namespace NPC
             SpawnWave();
         }
 
-
         private void FixedUpdate()
         {
             if (! active)
@@ -96,7 +93,6 @@ namespace NPC
                     return;
                 }
             }
-            
             
             if (currentWaveMobs.Count == 0)
             {

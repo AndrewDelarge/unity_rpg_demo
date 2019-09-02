@@ -1,20 +1,15 @@
-﻿using System;
-using Scriptable;
+﻿using Scriptable;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace UI.Inventory
 {
-//    public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public class Slot : MonoBehaviour
     {
         public Image icon;
-        
         public Button remove;
 
         protected Item item;
-
         protected Inventory inventoryUI;
         
         private void Start()
@@ -54,19 +49,5 @@ namespace UI.Inventory
 //                item.Use();
             }
         }
-
-
-//        public void OnPointerEnter(PointerEventData eventData)
-//        {
-//            if (item != null)
-//            {
-//                inventoryUI.slotInfo.Show(item);
-//            }
-//        }
-//
-//        public void OnPointerExit(PointerEventData eventData)
-//        {
-//            inventoryUI.slotInfo.Hide();
-//        }
     }
 }

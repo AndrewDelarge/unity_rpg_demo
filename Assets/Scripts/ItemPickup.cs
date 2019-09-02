@@ -9,10 +9,8 @@ public class ItemPickup : Interactable
     public Item item;
 
     private GameObject itemNameTextTemplate;
-
     private GameObject itemNameTextObject;
 
-    
     protected override void Start()
     {
         base.Start();
@@ -24,7 +22,6 @@ public class ItemPickup : Interactable
         base.Interact();
         PickUp();
     }
-
 
     public void PickUp()
     {
@@ -46,15 +43,12 @@ public class ItemPickup : Interactable
             textMesh.text = item.name;
         }
         
-        
         if (distance <= 15)
         {
             itemNameTextObject.transform.forward = - (UnityEngine.Camera.main.transform.forward);
             itemNameTextObject.SetActive(true);
         }
-
     }
-
 
     private void OnMouseExit()
     {

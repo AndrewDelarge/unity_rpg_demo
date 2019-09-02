@@ -6,24 +6,16 @@ namespace NPC
 {
     public class ActorLookRadius : MonoBehaviour
     {
-
-    
         public delegate void OnActorEnterRadius(NPCActor actor);
         public delegate void OnActorOutRadius(NPCActor actor);
-
         public OnActorEnterRadius onActorEnterRadius;
         public OnActorOutRadius onActorOutRadius;
-
-
         public List<NPCActor> actorsInRadius = new List<NPCActor>();
-
 
         private void OnTriggerEnter(Collider collider)
         {
             AddToList(collider.gameObject);
-
         }
-        
 
         private void OnTriggerExit(Collider collider)
         {
@@ -35,7 +27,6 @@ namespace NPC
         {
             RemoveFromList(diedObject);
         }
-
         
         void AddToList(GameObject gameObject)
         {

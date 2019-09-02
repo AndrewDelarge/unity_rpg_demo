@@ -9,9 +9,7 @@ namespace Scriptable
         public int armorModifire;
         public int damageModifire;
         public string skinName = "default";
-
         public SkinnedMeshRenderer mesh;
-
         public EquipmentMeshRegion[] coveredMeshRegion;
         
         public override void Use()

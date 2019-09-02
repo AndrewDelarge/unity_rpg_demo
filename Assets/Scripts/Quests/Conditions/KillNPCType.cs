@@ -12,8 +12,8 @@ namespace Quests.Conditions
         public GameActor enemyType;
         public int howMuch = 1;
         
-        
         private int currentKills = 0;
+        
         public override void Init()
         {
             PlayerManager.instance.player.onTargetDied += Completing; 
@@ -40,7 +40,6 @@ namespace Quests.Conditions
                 Completed();
             }
         }
-
 
         void SetCounterInTitle()
         {
