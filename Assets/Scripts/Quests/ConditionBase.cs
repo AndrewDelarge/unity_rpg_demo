@@ -32,6 +32,8 @@ namespace Quests
             {
                 onComplete.Invoke(this);
             }
+
+            onComplete = null;
         }
 
         public string GetTitle()

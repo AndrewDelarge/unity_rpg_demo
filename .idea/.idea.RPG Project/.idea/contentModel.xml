@@ -12,6 +12,9 @@
             <e p="TagSelector.cs" t="Include" />
           </e>
         </e>
+        <e p="Info" t="Include">
+          <e p="adb.txt" t="Include" />
+        </e>
         <e p="Scripts" t="Include">
           <e p="Door.cs" t="Include" />
           <e p="GameCamera" t="Include">
