@@ -8,11 +8,14 @@ namespace Player
     {
         public WeaponAnimation[] weaponAnimations;
         Dictionary<Equipment, AnimationClip[]> weaponAnimationDict;
-        
+
+        private CharacterController _characterController;
         protected override void Start()
         {
             base.Start();
 
+
+            _characterController = GetComponent<CharacterController>();
             EquipmentManager.instance.onItemEquip += OnItemEquip;
             EquipmentManager.instance.onItemUnequip += OnItemUnequip;
             weaponAnimationDict = new Dictionary<Equipment, AnimationClip[]>();
@@ -23,6 +26,14 @@ namespace Player
             }
         }
 
+        void Update()
+        {
+            float speedPercent = _characterController.velocity.magnitude;
+            animator.SetFloat("speedPercent", speedPercent, locomotionAnimationSmoothTime, Time.deltaTime);
+        
+            animator.SetBool("inCombat", combat.inCombat);
+        }
+        
         void OnItemEquip(Equipment equipment)
         {
             if (equipment.equipmentSlot == EquipmentSlot.Weapon)

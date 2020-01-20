@@ -21,12 +21,20 @@ namespace Player
         private PlayerActor actor;
         private PlayerMotor playerMotor;
         private bool buttonStillDown = false;
+        private CharacterController _characterController;
 
+
+
+        private Vector3 startPos;
+        private Vector3 endPos;
+        
+        
         private void Awake()
         {
             cam = Camera.main;
             playerMotor = GetComponent<PlayerMotor>();
             _cameraController = cam.GetComponent<CameraController>();
+            _characterController = GetComponent<CharacterController>();
             actor = GetComponent<PlayerActor>();
         }
 
@@ -39,19 +47,86 @@ namespace Player
 
         void Update()
         {
-            if (IsPointerOverUIObject()) 
-                return;
+//            if (IsPointerOverUIObject()) 
+//                return;
+//
+//            if (Input.GetMouseButtonDown(0))
+//            {
+//                buttonStillDown = true;
+//            }
+//            
+//            if (Input.GetMouseButtonUp(0))
+//            {
+//                buttonStillDown = false;
+//            }
+
+
+
+            float horz = 0f;
+            float vert = 0f;
+
 
             if (Input.GetMouseButtonDown(0))
             {
-                buttonStillDown = true;
+                startPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y) * 0.05f;
+
             }
-            
-            if (Input.GetMouseButtonUp(0))
+
+            if (Input.GetMouseButton(0))
+            {
+                buttonStillDown = true;
+                endPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y) * 0.05f;
+            }
+            else
             {
                 buttonStillDown = false;
             }
+
+            if (buttonStillDown)
+            {
+                Vector2 offset = endPos - startPos;
+                
+                
+                Vector2 dir = Vector2.ClampMagnitude(offset, 1f);
+                    
+                
+                Debug.Log(dir);
+                horz = dir.x;
+                vert = dir.y;
+//                _characterController.Move(dir * -1);
+            }
             
+            
+            
+            
+            
+//            float horz = Input.GetAxis("Horizontal");
+//            float vert = Input.GetAxis("Vertical");
+            Vector3 newPosition = Vector3.zero;
+
+            if ((horz != 0f || vert != 0f) && _characterController.isGrounded)
+            {
+                newPosition = new Vector3(horz, 0f, vert);
+                newPosition *= 8.0f;
+            
+                newPosition = cam.transform.TransformDirection(newPosition);
+
+            
+                Quaternion targetRotation = Quaternion.LookRotation(new Vector3(newPosition.x, 0f, newPosition.z));
+         
+                Quaternion newRotation = Quaternion.Lerp(gameObject.transform.rotation, targetRotation, 15f * Time.deltaTime);
+            
+                gameObject.transform.rotation = (newRotation);
+            }
+            
+            
+
+            newPosition.y -= 200f * Time.deltaTime;
+            Debug.Log(newPosition);
+
+            _characterController.Move(newPosition * Time.deltaTime);
+            
+            return;
             /**
              * When you click on screen once "rotation" will be 0.3, -0.1 and etc,
              * but when you try to rotate camera "rotation" will be like 0.1245 and then we lock control

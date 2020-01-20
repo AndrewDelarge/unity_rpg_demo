@@ -1,0 +1,1 @@
+https://docs.unity3d.com/560/Documentation/Manual/AttachingMonoDevelopDebuggerToAnAndroidDevice.html?_ga=2.30608636.2123892840.1579199525-254453648.1564724675

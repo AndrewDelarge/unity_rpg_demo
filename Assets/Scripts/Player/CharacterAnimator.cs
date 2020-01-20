@@ -7,11 +7,11 @@ namespace Player
     {
         public AnimationClip replaceableAttackClip;
         public AnimationClip[] defaultAttackAnimSet;
-        
-        private const float locomotionAnimationSmoothTime = .1f;
+
         private NavMeshAgent agent;
-        private CharacterCombat combat;
-        
+        protected CharacterCombat combat;
+
+        protected const float locomotionAnimationSmoothTime = .1f;
         protected Animator animator;
         protected AnimatorOverrideController overrideController;
         protected AnimationClip[] currentAttackAnimSet;
