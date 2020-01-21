@@ -55,10 +55,18 @@ namespace Player
         
         protected override void OnAttack()
         {
+            animator.SetLayerWeight(attackLayerId, 1);
             animator.SetTrigger("attack");
             int animIndedx = Random.Range(0, currentAttackAnimSet.Length);
 
             overrideController[replaceableAttackClip.name] = currentAttackAnimSet[animIndedx];
+        }
+        
+        
+        protected override void OnAttackEnd()
+        {
+            
+            animator.SetLayerWeight(attackLayerId, 0);
         }
     }
 

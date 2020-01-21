@@ -8,12 +8,34 @@
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="Editor" t="Include">
+          <e p="Player" t="Include">
+            <e p="FiledOfView.cs" t="Include" />
+          </e>
           <e p="PropertyDrawer" t="Include">
             <e p="TagSelector.cs" t="Include" />
           </e>
         </e>
         <e p="Info" t="Include">
           <e p="adb.txt" t="Include" />
+        </e>
+        <e p="Joystick Pack" t="Include">
+          <e p="Scripts" t="Include">
+            <e p="Base" t="Include">
+              <e p="Joystick.cs" t="Include" />
+            </e>
+            <e p="Editor" t="Include">
+              <e p="DynamicJoystickEditor.cs" t="Include" />
+              <e p="FloatingJoystickEditor.cs" t="Include" />
+              <e p="JoystickEditor.cs" t="Include" />
+              <e p="VariableJoystickEditor.cs" t="Include" />
+            </e>
+            <e p="Joysticks" t="Include">
+              <e p="DynamicJoystick.cs" t="Include" />
+              <e p="FixedJoystick.cs" t="Include" />
+              <e p="FloatingJoystick.cs" t="Include" />
+              <e p="VariableJoystick.cs" t="Include" />
+            </e>
+          </e>
         </e>
         <e p="Scripts" t="Include">
           <e p="Door.cs" t="Include" />

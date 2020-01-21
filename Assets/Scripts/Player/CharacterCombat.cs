@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using NPC;
 using UnityEngine;
 
@@ -10,13 +11,14 @@ namespace Player
         public CharacterStats stats;
         public float attackSpeed = 1f;
         public float attackCooldown = 0f;
-        public float attackDelay = .6f;
+        public float attackDelay = 1f;
         public float combatCooldown = 6;
         public bool inCombat = false;
         public event System.Action OnAttack;
+        public event System.Action OnAttackEnd;
         public event System.Action TargetDied;
 
-        private float lastAttackTime;
+        protected float lastAttackTime;
 
         private void Awake()
         {
@@ -32,19 +34,35 @@ namespace Player
                 ExitCombat();
             }
         }
-
-        public void Attack(CharacterStats targetActor)
+        
+        public void Attack(CharacterStats targetActor, float attackRadius)
         {
             if (attackCooldown > 0)
             {
                 return;
             }
             
-            StartCoroutine(DoDamage(targetActor, attackDelay));
+            InvokeOnAttack();
 
-            if (OnAttack != null)
+            StartCoroutine(DoDamage(targetActor, attackDelay, attackRadius));
+
+            EnterCombat();
+            attackCooldown = 1f / attackSpeed;
+            lastAttackTime = Time.time;
+        }
+        
+        public void Attack(List<CharacterStats> targetActors, float attackRadius)
+        {
+            if (attackCooldown > 0 || targetActors.Count == 0)
             {
-                OnAttack();
+                return;
+            }
+            
+            InvokeOnAttack();
+
+            for (int i = 0; i < targetActors.Count; i++)
+            {
+                StartCoroutine(DoDamage(targetActors[i], attackDelay, attackRadius));
             }
 
             EnterCombat();
@@ -52,12 +70,23 @@ namespace Player
             lastAttackTime = Time.time;
         }
 
-
-        IEnumerator DoDamage(CharacterStats targetStats, float delay)
+        protected void InvokeOnAttack()
+        {
+            if (OnAttack != null)
+            {
+                OnAttack();
+            }
+        }
+        
+        protected IEnumerator DoDamage(CharacterStats targetStats, float delay, float attackRadius)
         {
             yield return new WaitForSeconds(delay);
 
-            targetStats.TakeDamage(stats.damage.GetValue());
+            if (Vector3.Distance(transform.position, targetStats.transform.position) <= attackRadius)
+            {
+                targetStats.TakeDamage(stats.damage.GetValue());
+            }
+            
             if (targetStats.currentHealth <= 0)
             {
                 ExitCombat();
@@ -66,14 +95,19 @@ namespace Player
                     TargetDied();
                 }
             }
+
+            if (OnAttackEnd != null)
+            {
+                OnAttackEnd();
+            }
         }
 
-        void EnterCombat()
+        protected void EnterCombat()
         {
             inCombat = true;
         }
         
-        void ExitCombat()
+        protected void ExitCombat()
         {
             Debug.Log(name + " Out from combat");
             inCombat = false;

@@ -38,7 +38,7 @@ namespace NPC
 
         public virtual void Attack(NPCActor newTarget)
         {
-            combat.Attack(newTarget.characterStats);
+            combat.Attack(newTarget.characterStats, radius);
             if (newTarget.onActorAttacked != null)
             {
                 newTarget.onActorAttacked.Invoke(this);

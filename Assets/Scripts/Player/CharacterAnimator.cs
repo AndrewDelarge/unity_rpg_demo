@@ -7,7 +7,8 @@ namespace Player
     {
         public AnimationClip replaceableAttackClip;
         public AnimationClip[] defaultAttackAnimSet;
-
+        public string attackLayerName = "Attack";
+        
         private NavMeshAgent agent;
         protected CharacterCombat combat;
 
@@ -16,18 +17,23 @@ namespace Player
         protected AnimatorOverrideController overrideController;
         protected AnimationClip[] currentAttackAnimSet;
 
+        protected int attackLayerId;
+
         protected virtual void Start()
         {
             agent = GetComponent<NavMeshAgent>();
             animator = GetComponentInChildren<Animator>();
             combat = GetComponent<CharacterCombat>();
-        
+            
+            attackLayerId = animator.GetLayerIndex(attackLayerName);
+
             overrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
             animator.runtimeAnimatorController = overrideController;
 
             currentAttackAnimSet = defaultAttackAnimSet;
 
             combat.OnAttack += OnAttack;
+            combat.OnAttackEnd += OnAttackEnd;
             combat.stats.OnGetHit += OnGetHit;
         }
         
@@ -42,9 +48,15 @@ namespace Player
         protected virtual void OnAttack()
         {
             animator.SetTrigger("attack");
+            animator.SetLayerWeight(attackLayerId, 1);
             int animIndedx = Random.Range(0, currentAttackAnimSet.Length);
 
             overrideController[replaceableAttackClip.name] = currentAttackAnimSet[animIndedx];
+        }
+
+        protected virtual void OnAttackEnd()
+        {
+            animator.SetLayerWeight(attackLayerId, 0);
         }
 
         protected virtual void OnGetHit()

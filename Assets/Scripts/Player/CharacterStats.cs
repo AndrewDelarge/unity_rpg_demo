@@ -61,6 +61,8 @@ namespace Player
             {
                 onDied.Invoke(gameObject);
             }
+
+            onDied = null;
             Debug.Log(transform.name + " died");
         }
 
