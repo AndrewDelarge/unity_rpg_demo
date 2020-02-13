@@ -55,7 +55,7 @@ namespace UI.Hud
         
         private void ChangeHeathBarValue(int value, int health)
         {
-            Debug.Log("player gets " + value);
+//            Debug.Log("player gets " + value);
             SetHealth(health);
         }
     }

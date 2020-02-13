@@ -25,7 +25,7 @@ namespace Player
             damage = Mathf.Clamp(damage, 0, int.MaxValue);
             currentHealth -= damage;
 
-            Debug.Log(transform.name + " take damage " + damage);
+//            Debug.Log(transform.name + " take damage " + damage);
             
             if (currentHealth <= 0)
             {
@@ -63,7 +63,7 @@ namespace Player
             }
 
             onDied = null;
-            Debug.Log(transform.name + " died");
+//            Debug.Log(transform.name + " died");
         }
 
         public bool IsDead()

@@ -5,6 +5,8 @@ namespace NPC
 {
     public class EnemyController : NPCActorController
     {
+        public GameObject hitParticle;
+        
         private NavMeshAgent agent;
         private CapsuleCollider _collider;
         
@@ -14,6 +16,7 @@ namespace NPC
             agent = GetComponent<NavMeshAgent>();
             _collider = GetComponent<CapsuleCollider>();
             actor.characterStats.onDied += Ragdoll;
+            actor.characterStats.OnGetHit += GetHit;
         }
 
         void Update()
@@ -37,6 +40,17 @@ namespace NPC
             }
         }
 
+        protected void GetHit()
+        {
+            if (hitParticle != null)
+            {
+                //TODO REWORK!
+                Vector3 pos = transform.position;
+                pos.y += 1;
+                Instantiate(hitParticle, pos, Quaternion.identity);
+            }
+        }
+        
         protected override void OnActorEnterRadius(NPCActor radiusActor)
         {
             if (actor.combat.stats.IsDead())
@@ -139,18 +153,21 @@ namespace NPC
         {
             actor.target.RemoveTarget();
             actor.RemoveTarget();
+            _collider.enabled = false;
+            agent.enabled = false;
+            
             Rigidbody[] rigidbodies = GetComponentsInChildren<Rigidbody>();
             foreach (Rigidbody rigidbody in rigidbodies)
             {
                 rigidbody.isKinematic = false;
-                rigidbody.AddForce(- gameObject.transform.forward * 10, ForceMode.Impulse);
+//                rigidbody.AddForce(- gameObject.transform.forward * 10, ForceMode.Impulse);
             }
-
-            agent.enabled = false;
+            
             GetComponentInChildren<Animator>().enabled = false;
+
+            
             this.enabled = false;
-            _collider.height = 1;
-            _collider.center = new Vector3();
+//            _collider.center = new Vector3();
         }
     }
 }

@@ -14,7 +14,6 @@ namespace Player
         {
             base.Start();
 
-
             _characterController = GetComponent<CharacterController>();
             EquipmentManager.instance.onItemEquip += OnItemEquip;
             EquipmentManager.instance.onItemUnequip += OnItemUnequip;
@@ -28,9 +27,11 @@ namespace Player
 
         void Update()
         {
-            float speedPercent = _characterController.velocity.magnitude;
+            // TODO: HARCODED!!!
+            float speedPercent = _characterController.velocity.magnitude / 5f;
+            
             animator.SetFloat("speedPercent", speedPercent, locomotionAnimationSmoothTime, Time.deltaTime);
-        
+            
             animator.SetBool("inCombat", combat.inCombat);
         }
         
@@ -55,10 +56,9 @@ namespace Player
         
         protected override void OnAttack()
         {
-            animator.SetLayerWeight(attackLayerId, 1);
+//            animator.SetLayerWeight(attackLayerId, 1);
             animator.SetTrigger("attack");
             int animIndedx = Random.Range(0, currentAttackAnimSet.Length);
-
             overrideController[replaceableAttackClip.name] = currentAttackAnimSet[animIndedx];
         }
         
@@ -66,7 +66,7 @@ namespace Player
         protected override void OnAttackEnd()
         {
             
-            animator.SetLayerWeight(attackLayerId, 0);
+//            animator.SetLayerWeight(attackLayerId, 0);
         }
     }
 

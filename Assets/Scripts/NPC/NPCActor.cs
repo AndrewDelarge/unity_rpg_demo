@@ -22,8 +22,8 @@ namespace NPC
         {
             characterStats = GetComponent<CharacterStats>();
             combat = GetComponent<CharacterCombat>();
-            Debug.Log(name + " awake");
-            Debug.Log(characterStats);
+//            Debug.Log(name + " awake");
+//            Debug.Log(characterStats);
         }
 
         public override void Interact()

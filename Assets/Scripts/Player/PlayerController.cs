@@ -31,6 +31,7 @@ namespace Player
 
         public float viewRadius;
         public float viewAngle;
+        public float speedMultiply;
 
         
         public List<Transform> visibleTargets = new List<Transform>(); 
@@ -68,7 +69,7 @@ namespace Player
             }
             Vector3 result = new Vector3(Mathf.Sin(angleInDegrese * Mathf.Deg2Rad), 0,
                 Mathf.Cos(angleInDegrese * Mathf.Deg2Rad));
-            Debug.Log(result);
+
             return result;
         }
         
@@ -89,6 +90,64 @@ namespace Player
             PlayerManager.instance.UI.actionBar.onActionKeyClick += ActionKeyDown;
         }
 
+
+        private void FixedUpdate()
+        {
+            float horz = 0f;
+            float vert = 0f;
+
+
+            if (joystick != null)
+            {
+                horz = joystick.Horizontal;
+                vert = joystick.Vertical;
+            }
+
+            if (horz == 0f && vert == 0f)
+            {
+                horz = Input.GetAxis("Horizontal");
+                vert = Input.GetAxis("Vertical");
+            }
+
+            
+            Vector3 newPosition = Vector3.zero;
+
+            if ((horz != 0f || vert != 0f) && _characterController.isGrounded)
+            {
+                
+                newPosition = new Vector3(horz, 0f, vert);
+                newPosition = cam.transform.TransformDirection(newPosition);
+                newPosition.y = 0;
+                newPosition = newPosition.normalized;
+                
+                
+                if (Mathf.Abs(horz) >= .3f || Mathf.Abs(vert) >= .3f)
+                {
+                    speedMultiply = 5.0f;
+                }
+                else
+                {
+                    speedMultiply = 2.0f;
+                }
+
+                newPosition *= speedMultiply;
+
+
+                Quaternion targetRotation = Quaternion.LookRotation(new Vector3(newPosition.x, 0f, newPosition.z));
+         
+                Quaternion newRotation = Quaternion.Lerp(gameObject.transform.rotation, targetRotation, 15f * Time.deltaTime);
+            
+                gameObject.transform.rotation = newRotation;
+                
+            }
+            
+            
+            
+            newPosition.y -= 500f * Time.deltaTime;
+
+            _characterController.Move(newPosition * Time.deltaTime);
+        }
+
         void Update()
         {
 //            if (IsPointerOverUIObject()) 
@@ -104,82 +163,6 @@ namespace Player
 //                buttonStillDown = false;
 //            }
 
-            
-
-            float horz = 0f;
-            float vert = 0f;
-
-
-            if (joystick != null)
-            {
-                horz = joystick.Horizontal;
-                vert = joystick.Vertical;
-            }
-
-//            if (Input.GetMouseButtonDown(0))
-//            {
-//                startPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y) * 0.05f;
-//
-//            }
-//
-//            if (Input.GetMouseButton(0))
-//            {
-//                buttonStillDown = true;
-//                endPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y) * 0.05f;
-//            }
-//            else
-//            {
-//                buttonStillDown = false;
-//            }
-//
-//            if (buttonStillDown)
-//            {
-//                Vector2 offset = endPos - startPos;
-//                
-//                
-//                Vector2 dir = Vector2.ClampMagnitude(offset, 1f);
-//                    
-//                
-//                horz = dir.x;
-//                vert = dir.y;
-////                _characterController.Move(dir * -1);
-//            }
-
-
-
-            if (horz == 0f && vert == 0f)
-            {
-                horz = Input.GetAxis("Horizontal");
-                vert = Input.GetAxis("Vertical");
-            }
-//            
-//            
-            Vector3 newPosition = Vector3.zero;
-
-            if ((horz != 0f || vert != 0f) && _characterController.isGrounded)
-            {
-                
-                newPosition = new Vector3(horz, 0f, vert);
-                newPosition = cam.transform.TransformDirection(newPosition);
-                newPosition.y = 0;
-                newPosition = newPosition.normalized;
-                Debug.Log(newPosition);
-                newPosition *= 5.0f;
-
-
-                Quaternion targetRotation = Quaternion.LookRotation(new Vector3(newPosition.x, 0f, newPosition.z));
-         
-                Quaternion newRotation = Quaternion.Lerp(gameObject.transform.rotation, targetRotation, 15f * Time.deltaTime);
-            
-                gameObject.transform.rotation = newRotation;
-            }
-            
-            
-
-            newPosition.y -= 100f * Time.deltaTime;
-
-            _characterController.Move(newPosition * Time.deltaTime);
-            
             return;
             /**
              * When you click on screen once "rotation" will be 0.3, -0.1 and etc,
@@ -247,29 +230,15 @@ namespace Player
             List<CharacterStats> targetsToAttack = new List<CharacterStats>();
             for (int i = 0; i < visibleTargets.Count; i++)
             {
-                CharacterStats target = visibleTargets[i].GetComponent<CharacterStats>();
-                
-                
+                NPCActor npcActor = visibleTargets[i].GetComponent<NPCActor>();
+                CharacterStats target = npcActor.characterStats;
+
                 if (target != null && ! target.IsDead())
                 {
                     targetsToAttack.Add(target);
                 }
             }
             actor.combat.Attack(targetsToAttack, viewRadius);
-
-            
-            
-            
-            
-//            if (focus == null)
-//            {
-//                return;
-//            }
-//
-//            if (focus.InInteracableDistance(transform))
-//            {
-//                focus.Interact();
-//            }
         }
 
         void OnTargetDied()
@@ -296,16 +265,6 @@ namespace Player
             focus = null;
        
             playerMotor.StopFollow();
-        }
-
-        
-        private bool IsPointerOverUIObject() {
-            PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
-            eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
- 
-            List<RaycastResult> results = new List<RaycastResult>();
-            EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
-            return results.Count > 0;
         }
 
     }

@@ -48,7 +48,7 @@ namespace Player
         protected virtual void OnAttack()
         {
             animator.SetTrigger("attack");
-            animator.SetLayerWeight(attackLayerId, 1);
+//            animator.SetLayerWeight(attackLayerId, 1);
             int animIndedx = Random.Range(0, currentAttackAnimSet.Length);
 
             overrideController[replaceableAttackClip.name] = currentAttackAnimSet[animIndedx];
@@ -56,7 +56,7 @@ namespace Player
 
         protected virtual void OnAttackEnd()
         {
-            animator.SetLayerWeight(attackLayerId, 0);
+//            animator.SetLayerWeight(attackLayerId, 0);
         }
 
         protected virtual void OnGetHit()

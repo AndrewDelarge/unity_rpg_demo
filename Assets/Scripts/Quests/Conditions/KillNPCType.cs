@@ -13,14 +13,33 @@ namespace Quests.Conditions
         public int howMuch = 1;
         
         private int currentKills = 0;
+        private NPCActor[] _npcActors;
+        
         
         public override void Init()
         {
-            PlayerManager.instance.player.onTargetDied += Completing; 
+//            PlayerManager.instance.player.onTargetDied += Completing;
 
+
+
+            UpdateEnemyList();
+            
             SetCounterInTitle();
         }
 
+
+        private void UpdateEnemyList()
+        {
+            _npcActors = FindObjectsOfType<NPCActor>();
+
+            
+            for (int i = 0; i < _npcActors.Length; i++)
+            {
+                NPCActor npcActor = _npcActors[i];
+                _npcActors[i].characterStats.onDied += x => Completing(npcActor);
+            }
+        }
+        
         void Completing(NPCActor actor)
         {
             if (actor.actorScript != enemyType)

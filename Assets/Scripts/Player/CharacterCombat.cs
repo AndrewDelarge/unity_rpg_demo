@@ -35,6 +35,8 @@ namespace Player
             }
         }
         
+        
+        
         public void Attack(CharacterStats targetActor, float attackRadius)
         {
             if (attackCooldown > 0)
@@ -47,26 +49,29 @@ namespace Player
             StartCoroutine(DoDamage(targetActor, attackDelay, attackRadius));
 
             EnterCombat();
-            attackCooldown = 1f / attackSpeed;
+            attackCooldown = attackSpeed;
             lastAttackTime = Time.time;
         }
         
         public void Attack(List<CharacterStats> targetActors, float attackRadius)
         {
-            if (attackCooldown > 0 || targetActors.Count == 0)
+            if (attackCooldown > 0)
             {
                 return;
             }
             
             InvokeOnAttack();
-
-            for (int i = 0; i < targetActors.Count; i++)
+            if (targetActors.Count > 0)
             {
-                StartCoroutine(DoDamage(targetActors[i], attackDelay, attackRadius));
+                for (int i = 0; i < targetActors.Count; i++)
+                {
+                    StartCoroutine(DoDamage(targetActors[i], attackDelay, attackRadius));
+                }
+                
+                EnterCombat();
             }
 
-            EnterCombat();
-            attackCooldown = 1f / attackSpeed;
+            attackCooldown = attackSpeed;
             lastAttackTime = Time.time;
         }
 
@@ -84,7 +89,10 @@ namespace Player
 
             if (Vector3.Distance(transform.position, targetStats.transform.position) <= attackRadius)
             {
-                targetStats.TakeDamage(stats.damage.GetValue());
+                if (!stats.IsDead())
+                {
+                    targetStats.TakeDamage(stats.damage.GetValue());
+                }
             }
             
             if (targetStats.currentHealth <= 0)
@@ -109,7 +117,7 @@ namespace Player
         
         protected void ExitCombat()
         {
-            Debug.Log(name + " Out from combat");
+//            Debug.Log(name + " Out from combat");
             inCombat = false;
         }
     }
