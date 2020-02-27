@@ -38,9 +38,35 @@
           </e>
         </e>
         <e p="Scripts" t="Include">
+          <e p="Actors" t="Include">
+            <e p="AI" t="Include">
+              <e p="Movement.cs" t="Include" />
+            </e>
+            <e p="Base" t="Include">
+              <e p="Actor.cs" t="Include" />
+              <e p="Combat.cs" t="Include" />
+              <e p="CommonAnimator.cs" t="Include" />
+              <e p="IControlable.cs" t="Include" />
+              <e p="Stats.cs" t="Include" />
+            </e>
+            <e p="Combat" t="Include">
+              <e p="Damage.cs" t="Include" />
+            </e>
+            <e p="Player" t="Include">
+              <e p="Movement.cs" t="Include" />
+              <e p="PlayerActor.cs" t="Include" />
+            </e>
+            <e p="Stat.cs" t="Include" />
+          </e>
           <e p="Door.cs" t="Include" />
           <e p="GameCamera" t="Include">
             <e p="CameraController.cs" t="Include" />
+          </e>
+          <e p="GameInput" t="Include">
+            <e p="AI.cs" t="Include" />
+            <e p="BaseInput.cs" t="Include" />
+            <e p="JoystickInput.cs" t="Include" />
+            <e p="Keyboard.cs" t="Include" />
           </e>
           <e p="Helpers" t="Include">
             <e p="ConvertToRegularMesh.cs" t="Include" />
@@ -83,6 +109,10 @@
             <e p="Quest.cs" t="Include" />
           </e>
           <e p="Scriptable" t="Include">
+            <e p="Equipment" t="Include">
+              <e p="Weapon.cs" t="Include" />
+              <e p="WeaponType.cs" t="Include" />
+            </e>
             <e p="Equipment.cs" t="Include" />
             <e p="EquipmentMeshRegion.cs" t="Include" />
             <e p="EquipmentSlot.cs" t="Include" />

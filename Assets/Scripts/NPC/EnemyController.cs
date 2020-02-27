@@ -22,11 +22,7 @@ namespace NPC
         void Update()
         {
             // Debug
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                Ragdoll(gameObject);
-                return;
-            }
+            
             
             if (actor.target != null)
             {

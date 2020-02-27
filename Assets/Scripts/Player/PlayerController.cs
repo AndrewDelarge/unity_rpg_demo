@@ -135,9 +135,8 @@ namespace Player
 
                 Quaternion targetRotation = Quaternion.LookRotation(new Vector3(newPosition.x, 0f, newPosition.z));
          
-                Quaternion newRotation = Quaternion.Lerp(gameObject.transform.rotation, targetRotation, 15f * Time.deltaTime);
-            
-                gameObject.transform.rotation = newRotation;
+                gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, targetRotation, 15f * Time.deltaTime);
+                
                 
             }
             
