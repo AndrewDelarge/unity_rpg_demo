@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using Actors.Combat;
+using GameInput;
 using Player;
 using UnityEngine;
 
 namespace Actors.Base
 {
+    
+    [RequireComponent(typeof(Stats))]
     public class Combat : MonoBehaviour
     {
         [SerializeField]
@@ -25,7 +28,7 @@ namespace Actors.Base
         public event System.Action OnAttackEnd;
         public event System.Action TargetDied;
 
-        public void Init(Stats actorStats)
+        public void Init(Stats actorStats, BaseInput input)
         {
             stats = actorStats;
         }

@@ -1,4 +1,6 @@
 using Actors.Base;
+using Actors.Base.Interface;
+using GameInput;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -6,27 +8,34 @@ namespace Actors.AI
 {
     
     [RequireComponent(typeof(NavMeshAgent))]
-    public class Movement : MonoBehaviour, IControlable
+    public class AIMovement : MonoBehaviour, IControlable
     {
-        private Vector3 target;
         private NavMeshAgent agent;
 
         private Stats stats;
+        private BaseInput input;
 
-        public void Init(Stats actorStats)
+        public void Init(Stats actorStats, BaseInput baseInput)
         {
             agent = GetComponent<NavMeshAgent>();
             stats = actorStats;
+            input = baseInput;
         }
 
         private void Update()
         {
+            Vector3 target = input.GetTarget();
             if (target != Vector3.zero)
             {
                 FaceTarget();
 
                 agent.speed = stats.GetMovementSpeed();
                 agent.SetDestination(target);
+            }
+
+            if (input.IsSomeDirection())
+            {
+                Debug.Log("Implement this movement!");
             }
         }
 
@@ -58,7 +67,7 @@ namespace Actors.AI
         {
             agent.isStopped = false;
 
-            target = newTarget;
+//            target = newTarget;
 
             agent.stoppingDistance = stoppingDistance;
             agent.updateRotation = false;
@@ -68,8 +77,9 @@ namespace Actors.AI
         {
             agent.stoppingDistance = 0f;
             agent.updateRotation = true;
+            agent.isStopped = true;
 
-            target = Vector3.zero;
+//            target = Vector3.zero;
         }
 
         public void Stop()
@@ -79,7 +89,7 @@ namespace Actors.AI
         
         public void FaceTarget()
         {
-            Vector3 direction = (target - transform.position).normalized;
+            Vector3 direction = (input.GetTarget() - transform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
 
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 10f);

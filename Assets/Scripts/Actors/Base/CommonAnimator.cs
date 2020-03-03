@@ -1,7 +1,10 @@
+using Actors.Base.Interface;
 using UnityEngine;
 
 namespace Actors.Base
 {
+    [RequireComponent(typeof(Stats), typeof(Combat))]
+
     public class CommonAnimator : MonoBehaviour
     {
         public AnimationClip replaceableAttackClip;
@@ -20,7 +23,7 @@ namespace Actors.Base
         protected int attackLayerId;
 
 
-        protected void Init(Combat actCombat, IControlable actMovement, Stats actStats)
+        public void Init(Combat actCombat, IControlable actMovement, Stats actStats)
         {
             combat = actCombat;
             movement = actMovement;

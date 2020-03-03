@@ -1,4 +1,5 @@
 using Actors.Base;
+using Actors.Base.Interface;
 using GameInput;
 using UnityEngine;
 using UnityEngine.AI;
@@ -26,8 +27,21 @@ namespace Actors.Player
         private void FixedUpdate()
         {
             Vector3 direction = Vector3.zero;
-
-            if (input.IsSomeDirection() && IsCanMove())
+            Vector3 target = input.GetTarget();
+            if (! IsCanMove())
+            {
+                Move(direction);
+                return;
+            }
+            
+            if (target != Vector3.zero)
+            {
+                direction = (transform.position - target).normalized;
+            }
+            
+            
+            
+            if (input.IsSomeDirection())
             {
                 direction = new Vector3(input.horizontal, 0f, input.vertical);
                 direction = cam.transform.TransformDirection(direction);

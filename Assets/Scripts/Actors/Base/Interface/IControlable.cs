@@ -1,9 +1,11 @@
+using GameInput;
 using UnityEngine;
 
-namespace Actors.Base
+namespace Actors.Base.Interface
 {
     public interface IControlable
     {
+        void Init(Stats actorStats, BaseInput input);
         float GetSpeed();
 
         float GetCurrentMagnitude();
