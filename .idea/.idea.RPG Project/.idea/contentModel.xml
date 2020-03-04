@@ -49,6 +49,9 @@
               <e p="Behavior" t="Include">
                 <e p="AiBehavior.cs" t="Include" />
                 <e p="BaseBehavior.cs" t="Include" />
+                <e p="State" t="Include">
+                  <e p="Base.cs" t="Include" />
+                </e>
               </e>
             </e>
             <e p="Base" t="Include">

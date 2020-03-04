@@ -10,6 +10,8 @@ namespace GameInput
         public BaseBehavior behavior;
 
         public bool aiEnabled = true;
+
+        private BehaviorState currentBstate;
         
         public override void Init(Actor actor)
         {
@@ -31,6 +33,7 @@ namespace GameInput
             if (aiEnabled)
             {
                 behavior.AIUpdate();
+                currentBstate = behavior.GetState();
             }
         }
         

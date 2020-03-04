@@ -5,12 +5,14 @@ namespace GameInput
 {
     public abstract class BaseInput : MonoBehaviour
     {
-        protected Vector3 target = Vector3.zero;
+        protected Transform target = null;
         
         public float vertical = 0f;
         public float horizontal = 0f;
 
+        public event System.Action OnAttackPressed;
 
+        
         public virtual void Init(Actor actor)
         {
             
@@ -21,14 +23,28 @@ namespace GameInput
             return vertical != 0f || horizontal != 0f;
         }
 
-        public Vector3 GetTarget()
+        public Transform GetTarget()
         {
             return target;
         }
 
-        public void SetTarget(Vector3 target)
+        public void SetTarget(Transform target)
         {
             this.target = target;
         }
+
+        public bool HasTarget()
+        {
+            return target != null;
+        }
+
+        public void Attack()
+        {
+            if (OnAttackPressed != null)
+            {
+                OnAttackPressed.Invoke();
+            }
+        }
+        
     }
 }

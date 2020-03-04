@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Actors.Combat;
 using GameInput;
-using Player;
 using UnityEngine;
 
 namespace Actors.Base
@@ -17,22 +16,46 @@ namespace Actors.Base
         private float currentMeleeAttackCooldown = 0f;
         
         private float meleeAttackSpeed = 1f;
-        private float meleeAttackDamageDelay = 0f;
-        private float meleeAttackDamageRaduis = 2f;
-        
-        private Stats stats;
+        private float meleeAttackDelay = 0f;
+        private float meleeAttackRaduis = 2f;
+
+        protected Actor targetActor;
+        protected Stats stats;
+        protected BaseInput input;
         private bool inCombat = false;
         
         
         public event System.Action OnAttack;
         public event System.Action OnAttackEnd;
-        public event System.Action TargetDied;
 
-        public void Init(Stats actorStats, BaseInput input)
+        public virtual void Init(Stats actorStats, BaseInput baseInput)
         {
             stats = actorStats;
+            SetInput(baseInput);
         }
 
+
+        public virtual void SetInput(BaseInput baseInput)
+        {
+            if (input != null)
+            {
+                input.OnAttackPressed -= InputAttack;
+            }
+            
+            input = baseInput;
+            input.OnAttackPressed += InputAttack;
+        }
+
+        public void SetTarget(Actor target)
+        {
+            targetActor = target;
+        }
+        
+        public Actor GetTarget()
+        {
+            return targetActor;
+        }
+        
         public bool InCombat()
         {
             return inCombat;
@@ -47,48 +70,50 @@ namespace Actors.Base
                 ExitCombat();
             }
         }
-        
-        
-        public void MeleeAttack(List<Stats> targetStats)
+
+        protected virtual void InputAttack()
         {
+            Debug.Log("Base");
+        }
+        
+        protected virtual void MeleeAttack(List<Stats> targetStats)
+        {
+            EnterCombat();
+
             if (currentMeleeAttackCooldown > 0)
             {
                 return;
             }
-            
-            InvokeOnAttack();
 
             StartCoroutine(DoDamage(targetStats));
 
-            EnterCombat();
             currentMeleeAttackCooldown = meleeAttackSpeed;
             lastAttackTime = Time.time;
         }
+
+        public bool InMeleeRange(Transform target)
+        {
+            return Vector3.Distance(transform.position, target.position) <= meleeAttackRaduis;
+        }
+        
         
         protected IEnumerator DoDamage(List<Stats> targetStats)
         {
-            yield return new WaitForSeconds(meleeAttackDamageDelay);
+            InvokeOnAttack();
+
+            yield return new WaitForSeconds(meleeAttackDelay);
 
             for (int i = 0; i < targetStats.Count; i++)
             {
-                if (Vector3.Distance(transform.position, targetStats[i].transform.position) <= meleeAttackDamageRaduis)
+                if (InMeleeRange(targetStats[i].transform))
                 {
                     if (!stats.IsDead())
                     {
-                        targetStats[i].TakeDamage(new Damage(stats.GetDamageValue()));
-                    }
-                }
-            
-                if (targetStats[i].IsDead())
-                {
-                    ExitCombat();
-                    if (TargetDied != null)
-                    {
-                        TargetDied();
+                        Damage damage = new Damage(stats.GetDamageValue());
+                        targetStats[i].TakeDamage(damage);
                     }
                 }
             }
-            
 
             if (OnAttackEnd != null)
             {

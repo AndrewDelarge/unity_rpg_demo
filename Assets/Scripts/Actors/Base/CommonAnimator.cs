@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Actors.Base
 {
-    [RequireComponent(typeof(Stats), typeof(Combat))]
+    [RequireComponent(typeof(Stats))]
 
     public class CommonAnimator : MonoBehaviour
     {

@@ -27,16 +27,15 @@ namespace Actors.Player
         private void FixedUpdate()
         {
             Vector3 direction = Vector3.zero;
-            Vector3 target = input.GetTarget();
             if (! IsCanMove())
             {
                 Move(direction);
                 return;
             }
             
-            if (target != Vector3.zero)
+            if (input.HasTarget())
             {
-                direction = (transform.position - target).normalized;
+                direction = (transform.position - input.GetTarget().transform.position).normalized;
             }
             
             

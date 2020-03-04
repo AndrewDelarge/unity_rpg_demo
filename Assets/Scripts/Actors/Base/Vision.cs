@@ -34,6 +34,8 @@ namespace Actors.Base
         
         void FindVisibleTargets(LayerMask mask)
         {
+            visibleTargets.Clear();
+            actors.Clear();
             
             Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, mask);
             
@@ -43,6 +45,13 @@ namespace Actors.Base
                 Vector3 dirToTarget = (target.transform.position - transform.position).normalized;
                 if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
                 {
+                    Actor actor = target.GetComponent<Actor>();
+
+                    if (actor != null)
+                    {
+                        actors.Add(actor);
+                    }
+                    
                     visibleTargets.Add(target);
                     
 //                    float dstToTarget = Vector3.Distance(target.position, transform.position);

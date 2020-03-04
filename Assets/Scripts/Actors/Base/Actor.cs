@@ -17,6 +17,7 @@ namespace Actors.Base
         public Vision vision{ get; protected set; }
         public BaseInput input{ get; protected set; }
         
+        
         public IControlable movement { get; protected set; }
 
         private void Awake()
@@ -24,22 +25,52 @@ namespace Actors.Base
             Init();
         }
 
-        protected abstract void Init();
-
-        void Ragdoll(GameObject gameObject)
+        protected virtual void Init()
         {
-            Rigidbody[] rigidbodies = GetComponentsInChildren<Rigidbody>();
-            foreach (Rigidbody rigidbody in rigidbodies)
-            {
-                rigidbody.isKinematic = false;
-//                rigidbody.AddForce(- gameObject.transform.forward * 10, ForceMode.Impulse);
-            }
+            animator = GetComponent<CommonAnimator>();
+            vision = GetComponent<Vision>();
+            combat = GetComponent<Combat>();
+            input = GetComponent<BaseInput>();
+            stats = GetComponent<Stats>();
+            movement = GetComponent<IControlable>();
+            stats.Init();
+            input.Init(this);
             
-            animator.enabled = false;
+            combat.Init(stats, input);
+            movement.Init(stats, input);
+            animator.Init(combat, movement, stats);
 
-            
-            this.enabled = false;
-//            _collider.center = new Vector3();
+            stats.onDied += Die;
         }
+
+        protected virtual void Die(GameObject go)
+        {
+            Debug.Log("Transform die");
+            enabled = false;
+            animator.enabled = false;
+            input.enabled = false;
+        }
+        
+        public bool IsEnemy(Actor actor)
+        {
+            return actorScript.fraction.FractionInEnemies(actor.actorScript.fraction);
+        }
+
+        public bool IsFriend(Actor actor)
+        {
+            return actorScript.fraction.GetInstanceID() == actor.actorScript.fraction.GetInstanceID();
+        }
+
+        public bool InCombat()
+        {
+            return combat.InCombat();
+        }
+
+        public bool IsDead()
+        {
+            return stats.IsDead();
+        }
+        
+
     }
 }

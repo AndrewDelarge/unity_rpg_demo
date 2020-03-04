@@ -49,7 +49,7 @@ namespace Actors.Base
 
         public float GetArmorMultiplier()
         {
-            return armor.GetValue() / ARMOR_CAP;
+            return 1 - armor.GetValue() / ARMOR_CAP;
         }
 
         public float GetCriticalChance()
@@ -95,7 +95,7 @@ namespace Actors.Base
             }
 
             // Damage Randomising 
-            damage *= Mathf.FloorToInt(UnityEngine.Random.Range(.9f, 1.1f));
+            damage = Mathf.FloorToInt(damage * UnityEngine.Random.Range(.9f, 1.1f));
 
             return damage;
         }
@@ -103,6 +103,8 @@ namespace Actors.Base
         public virtual void TakeDamage(Damage damage)
         {
             int damageValue = Mathf.FloorToInt(damage.GetValue() * GetArmorMultiplier());
+            
+            Debug.Log(damage.GetValue() + " - damage,  armor multiplyer " +  GetArmorMultiplier() + " fin dam " + damageValue);
             damageValue = Mathf.Clamp(damageValue, 0, int.MaxValue);
             currentHealth -= damageValue;
             
@@ -126,6 +128,7 @@ namespace Actors.Base
         {
             if (onDied != null && ! IsDead())
             {
+                isDead = true;
                 onDied.Invoke(gameObject);
             }
         }

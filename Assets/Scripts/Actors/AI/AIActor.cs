@@ -1,24 +1,39 @@
 using Actors.Base;
 using Actors.Base.Interface;
 using GameInput;
+using UnityEngine;
 
 namespace Actors.AI
 {
+    [RequireComponent(typeof(AICombat))]
     public class AIActor : Actor
     {
+        public Collider collider{ get; protected set; }
+
+
         protected override void Init()
         {
-            animator = GetComponent<CommonAnimator>();
-            vision = GetComponent<Vision>();
-            combat = GetComponent<Base.Combat>();
-            input = GetComponent<AIInput>();
-            stats = GetComponent<Stats>();
-            movement = GetComponent<IControlable>();
-            stats.Init();
-            input.Init(this);
-            combat.Init(stats, input);
-            movement.Init(stats, input);
-            animator.Init(combat, movement, stats);
+            base.Init();
+
+            collider = GetComponent<Collider>();
+        }
+
+        protected override void Die(GameObject go)
+        {
+            base.Die(go);
+            collider.enabled = false;
+            Ragdoll();
+        }
+
+        void Ragdoll()
+        {
+            Rigidbody[] rigidbodies = GetComponentsInChildren<Rigidbody>();
+            foreach (Rigidbody rigidbody in rigidbodies)
+            {
+                rigidbody.isKinematic = false;
+                rigidbody.AddForce(- gameObject.transform.forward * 10, ForceMode.Impulse);
+            }
+            
         }
     }
 }

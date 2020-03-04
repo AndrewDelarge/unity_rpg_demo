@@ -24,18 +24,18 @@ namespace Actors.AI
 
         private void Update()
         {
-            Vector3 target = input.GetTarget();
-            if (target != Vector3.zero)
+            Transform target = input.GetTarget();
+            if (target != null)
             {
                 FaceTarget();
 
                 agent.speed = stats.GetMovementSpeed();
-                agent.SetDestination(target);
+                agent.SetDestination(target.transform.position);
             }
 
             if (input.IsSomeDirection())
             {
-                Debug.Log("Implement this movement!");
+//                agent.SetDestination(target.transform.position);
             }
         }
 
@@ -89,7 +89,7 @@ namespace Actors.AI
         
         public void FaceTarget()
         {
-            Vector3 direction = (input.GetTarget() - transform.position).normalized;
+            Vector3 direction = (input.GetTarget().transform.position - transform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
 
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 10f);
