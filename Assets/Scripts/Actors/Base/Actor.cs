@@ -10,13 +10,16 @@ namespace Actors.Base
     public abstract class Actor : MonoBehaviour
     {
         public GameActor actorScript;
-        public GameObject target { get; protected set; }
         public Stats stats{ get; protected set; }
         public Combat combat{ get; protected set; }
         public CommonAnimator animator{ get; protected set; }
         public Vision vision{ get; protected set; }
         public BaseInput input{ get; protected set; }
         
+        
+        protected Actor actorTarget;
+        protected Transform transformTarget;
+
         
         public IControlable movement { get; protected set; }
 
@@ -43,11 +46,22 @@ namespace Actors.Base
             stats.onDied += Die;
         }
 
+
+        public virtual void SetActorTarget(Actor newTarget)
+        {
+            actorTarget = newTarget;
+        }
+        
+        public virtual void SetTransformTarget(Transform newTarget)
+        {
+            transformTarget = newTarget;
+        }
+        
         protected virtual void Die(GameObject go)
         {
-            Debug.Log("Transform die");
             enabled = false;
-            animator.enabled = false;
+            animator.Disable();
+            movement.Disable();
             input.enabled = false;
         }
         

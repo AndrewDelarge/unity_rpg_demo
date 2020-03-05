@@ -23,15 +23,21 @@ namespace Actors.Base
         protected Stats stats;
         protected BaseInput input;
         private bool inCombat = false;
-        
+        private Actor actor;
         
         public event System.Action OnAttack;
         public event System.Action OnAttackEnd;
+
+        public delegate void OnTargetChange(Actor target);
+        
 
         public virtual void Init(Stats actorStats, BaseInput baseInput)
         {
             stats = actorStats;
             SetInput(baseInput);
+            
+            // TODO Rework 
+            actor = GetComponent<Actor>();
         }
 
 
@@ -109,7 +115,7 @@ namespace Actors.Base
                 {
                     if (!stats.IsDead())
                     {
-                        Damage damage = new Damage(stats.GetDamageValue());
+                        Damage damage = new Damage(stats.GetDamageValue(), actor);
                         targetStats[i].TakeDamage(damage);
                     }
                 }

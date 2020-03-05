@@ -15,7 +15,8 @@ namespace Actors.Player
         private Camera cam;
         
         private bool stopped = false;
-
+        private Transform target;
+        
         public void Init(Stats actorStats, BaseInput input)
         {
             this.input = input;
@@ -33,12 +34,10 @@ namespace Actors.Player
                 return;
             }
             
-            if (input.HasTarget())
+            if (target != null)
             {
-                direction = (transform.position - input.GetTarget().transform.position).normalized;
+                direction = (transform.position - target.transform.position).normalized;
             }
-            
-            
             
             if (input.IsSomeDirection())
             {
@@ -94,9 +93,9 @@ namespace Actors.Player
             return;
         }
 
-        public void Follow(Vector3 newTarget, float stoppingDistance = 1f)
+        public void Follow(Transform newTarget, float stoppingDistance = 1f)
         {
-            FaceTarget(newTarget);
+            return;
         }
 
         public void StopFollow()
@@ -124,5 +123,20 @@ namespace Actors.Player
             gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, targetRotation, 15f * Time.deltaTime);
         }
 
+
+        public void SetTarget(Transform target)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Disable()
+        {
+            enabled = false;
+        }
+
+        public void Enable()
+        {
+            enabled = true;
+        }
     }
 }

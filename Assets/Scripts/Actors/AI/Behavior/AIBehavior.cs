@@ -1,4 +1,5 @@
 using Actors.Base;
+using Actors.Combat;
 using GameInput;
 using UnityEngine;
 
@@ -10,13 +11,16 @@ namespace Actors.AI.Behavior
         public float visionTickRate = 0.1f;
 
 
-        private Transform lastIdlePosition;
-        public override void Init(Actor baseActor, BaseInput baseInput)
+        private Vector3 lastIdlePosition;
+
+        private bool moved = false;
+        public override void Init(Actor baseActor)
         {
-            base.Init(baseActor, baseInput);
+            base.Init(baseActor);
 
             state = BehaviorState.Idle;
-            lastIdlePosition = actor.transform;
+            lastIdlePosition = actor.transform.position;
+            actor.stats.onGetDamage += OnGetDamage;
         }
 
         public override void AIUpdate()
@@ -25,7 +29,6 @@ namespace Actors.AI.Behavior
             {
                 case BehaviorState.Idle:
                     Idle();
-                    lastIdlePosition = actor.transform;
                     break;
                 case BehaviorState.Patrol:
                     Patrol();
@@ -36,6 +39,14 @@ namespace Actors.AI.Behavior
             }
         }
 
+        void OnGetDamage(Damage damage)
+        {
+            if (damage.GetOwner() != null)
+            {
+                Defence(damage.GetOwner());
+            }
+        }
+        
         protected override void Idle()
         {
             Actor newTarget = GetNextEnemy();
@@ -49,19 +60,19 @@ namespace Actors.AI.Behavior
         {
             if (attackTarget == null || attackTarget.IsDead())
             {
-                Debug.Log("FIIAFSAs");
                 attackTarget = null;
                 state = BehaviorState.Idle;
-                input.SetTarget(lastIdlePosition);
+                actor.movement.StopFollow();
+                actor.movement.MoveTo(lastIdlePosition);
                 return;
             }
             
             
-            input.SetTarget(attackTarget.transform);
+            actor.movement.Follow(attackTarget.transform);
+            actor.SetActorTarget(attackTarget);
 
             if (actor.combat.InMeleeRange(attackTarget.transform))
             {
-                actor.combat.SetTarget(attackTarget);
                 input.Attack();
             }
         }
@@ -70,26 +81,7 @@ namespace Actors.AI.Behavior
         {
             
         }
-
-        public override void Defence(Actor attackedBy)
-        {
-            base.Defence(attackedBy);
-
-            Actor closestFriend = GetClosestFriend();
-
-            if (closestFriend == null || closestFriend.InCombat())
-            {
-                return;
-            }
-            
-            BaseBehavior aiBehavior = closestFriend.GetComponent<BaseBehavior>();
-
-            if (aiBehavior != null)
-            {
-                aiBehavior.Defence(attackedBy);
-            }
-        }
-        
+       
         
     }
 }

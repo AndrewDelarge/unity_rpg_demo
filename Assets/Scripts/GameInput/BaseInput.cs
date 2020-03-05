@@ -5,8 +5,6 @@ namespace GameInput
 {
     public abstract class BaseInput : MonoBehaviour
     {
-        protected Transform target = null;
-        
         public float vertical = 0f;
         public float horizontal = 0f;
 
@@ -21,21 +19,6 @@ namespace GameInput
         public bool IsSomeDirection()
         {
             return vertical != 0f || horizontal != 0f;
-        }
-
-        public Transform GetTarget()
-        {
-            return target;
-        }
-
-        public void SetTarget(Transform target)
-        {
-            this.target = target;
-        }
-
-        public bool HasTarget()
-        {
-            return target != null;
         }
 
         public void Attack()

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.AI;
 
 namespace GameCamera
@@ -36,18 +37,18 @@ namespace GameCamera
             currentZoom -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
             currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom);
 
-            float horizontal = Input.GetAxis("Mouse X");
-
-            if (Input.touchCount > 0)
-            {
-                Touch touch = Input.GetTouch(0);
-                
-                if (touch.phase == TouchPhase.Moved)
-                {
-                    currentYaw -= horizontal * yawSpeed * Time.deltaTime;
-                    lastRotation = Time.time;
-                }
-            }
+//            float horizontal = Input.GetAxis("Mouse X");
+//
+//            if (Input.touchCount > 0)
+//            {
+//                Touch touch = Input.GetTouch(0);
+//                
+//                if (touch.phase == TouchPhase.Moved)
+//                {
+//                    currentYaw -= horizontal * yawSpeed * Time.deltaTime;
+//                    lastRotation = Time.time;
+//                }
+//            }
 
             
             if (isPointerOld())
@@ -60,13 +61,18 @@ namespace GameCamera
             {
                 MovePointer(pointerFollows.transform.position);
             }
+
+            StartCoroutine(MoveCamera(transform.position, target.position));
+
         }
 
         void LateUpdate()
         {
-            transform.position = target.position - offset * currentZoom;
-            transform.LookAt(target.position + Vector3.up * pitch);
-
+            
+            
+            
+//            
+//            transform.LookAt(target.position + Vector3.up * pitch);
 //            Debug.Log(targetRigidbody.hasPath);
 //            if (targetRigidbody.hasPath && Input.GetAxis("Mouse X") == 0f && isCanReturnRotation())
 //            {
@@ -81,7 +87,22 @@ namespace GameCamera
 //            );
         }
 
-
+        private IEnumerator MoveCamera(Vector3 camPos, Vector3 targetPos)
+        {
+            Vector3 targetPos2 = targetPos - offset * currentZoom;
+            Vector3 camPos2 = camPos - offset * currentZoom;
+            
+            
+            float t = 0f;
+            while (t < 1)
+            {
+                t += Time.deltaTime / .1f;
+                transform.position = Vector3.Lerp(camPos2, targetPos2, t);
+                transform.LookAt(Vector3.Slerp(targetPos + Vector3.up * pitch, target.position + Vector3.up * pitch, t));
+                yield return null;
+            }
+        }
+        
         public void SetPointer(Vector3 pos)
         {
             pointer.SetActive(true);

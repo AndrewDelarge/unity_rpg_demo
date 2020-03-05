@@ -21,10 +21,10 @@ namespace Actors.AI.Behavior
         protected Actor attackTarget;
         protected BehaviorState state;
         
-        public virtual void Init(Actor baseActor, BaseInput baseInput)
+        public virtual void Init(Actor baseActor)
         {
             actor = baseActor;
-            input = baseInput;
+            input = actor.input;
         }
 
         public abstract void AIUpdate();
@@ -39,6 +39,10 @@ namespace Actors.AI.Behavior
 
         public void SetAttackTarget(Actor target)
         {
+            if (target.IsDead())
+            {
+                return;
+            }
             attackTarget = target;
             state = BehaviorState.Attack;
         }

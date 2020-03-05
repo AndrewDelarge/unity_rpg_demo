@@ -34,13 +34,14 @@ namespace Actors.Base
         public Stat criticalChancePoints;
 
         public delegate void OnHealthChange(int value, int health);
+        public delegate void OnGetDamage(Damage damage);
         public delegate void OnDied(GameObject diedObject);
 
         public OnHealthChange onHealthChange;
         public OnDied onDied;
-        public event System.Action OnGetHit;
+        public OnGetDamage onGetDamage;
 
-
+        
         public void Init()
         {
             currentHealth = GetMaxHealth();
@@ -113,9 +114,9 @@ namespace Actors.Base
                 Die();
             }
             
-            if (OnGetHit != null)
+            if (onGetDamage != null)
             {
-                OnGetHit();
+                onGetDamage.Invoke(damage);
             }
 
             if (onHealthChange != null)

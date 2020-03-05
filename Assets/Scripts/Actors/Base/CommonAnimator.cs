@@ -1,4 +1,5 @@
 using Actors.Base.Interface;
+using Actors.Combat;
 using UnityEngine;
 
 namespace Actors.Base
@@ -16,7 +17,7 @@ namespace Actors.Base
         private IControlable movement;
         private Stats stats;
         protected const float locomotionAnimationSmoothTime = .1f;
-        protected UnityEngine.Animator animator;
+        protected Animator animator;
         protected AnimatorOverrideController overrideController;
         protected AnimationClip[] currentAttackAnimSet;
 
@@ -28,7 +29,7 @@ namespace Actors.Base
             combat = actCombat;
             movement = actMovement;
             stats = actStats;
-            animator = GetComponentInChildren<UnityEngine.Animator>();
+            animator = GetComponentInChildren<Animator>();
             
             attackLayerId = animator.GetLayerIndex(attackLayerName);
 
@@ -39,7 +40,7 @@ namespace Actors.Base
 
             combat.OnAttack += OnAttack;
             combat.OnAttackEnd += OnAttackEnd;
-            stats.OnGetHit += OnGetHit;
+            stats.onGetDamage += OnGetHit;
         }
         
         protected virtual void Start()
@@ -53,6 +54,16 @@ namespace Actors.Base
             animator.SetFloat("speedPercent", speedPercent, locomotionAnimationSmoothTime, Time.deltaTime);
         
             animator.SetBool("inCombat", combat.InCombat());
+        }
+
+        public void Disable()
+        {
+            animator.enabled = false;
+        }
+
+        public void Enable()
+        {
+            animator.enabled = true;
         }
 
         protected virtual void OnAttack()
@@ -69,9 +80,11 @@ namespace Actors.Base
 //            animator.SetLayerWeight(attackLayerId, 0);
         }
 
-        protected virtual void OnGetHit()
+        protected virtual void OnGetHit(Damage damage)
         {
             animator.SetTrigger("getHit");
         }
+        
+        
     }
 }

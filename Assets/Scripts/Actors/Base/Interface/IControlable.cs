@@ -14,7 +14,7 @@ namespace Actors.Base.Interface
 
         void MoveTo(Vector3 point);
 
-        void Follow(Vector3 newTarget, float stoppingDistance = 1f);
+        void Follow(Transform newTarget, float stoppingDistance = 1f);
 
         void StopFollow();
 
@@ -22,5 +22,9 @@ namespace Actors.Base.Interface
 
         void FaceTarget(Vector3 target);
 
+        void SetTarget(Transform target);
+
+        void Disable();
+        void Enable();
     }
 }

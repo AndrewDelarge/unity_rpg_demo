@@ -31,9 +31,25 @@ namespace Actors.AI
             foreach (Rigidbody rigidbody in rigidbodies)
             {
                 rigidbody.isKinematic = false;
-                rigidbody.AddForce(- gameObject.transform.forward * 10, ForceMode.Impulse);
+                
+//                rigidbody.AddForce(- gameObject.transform.forward * 10, ForceMode.Impulse);
             }
             
+        }
+
+
+        public override void SetActorTarget(Actor newTarget)
+        {
+            base.SetActorTarget(newTarget);
+            
+            combat.SetTarget(newTarget);
+        }
+
+        public override void SetTransformTarget(Transform newTarget)
+        {
+            base.SetTransformTarget(newTarget);
+            
+            movement.SetTarget(newTarget);
         }
     }
 }

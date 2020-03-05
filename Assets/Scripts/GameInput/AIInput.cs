@@ -24,7 +24,7 @@ namespace GameInput
                     break;
             }
 
-            behavior.Init(actor, this);
+            behavior.Init(actor);
         }
 
 

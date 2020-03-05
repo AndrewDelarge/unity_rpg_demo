@@ -11,7 +11,7 @@ namespace Actors.AI
     public class AIMovement : MonoBehaviour, IControlable
     {
         private NavMeshAgent agent;
-
+        private Transform target;
         private Stats stats;
         private BaseInput input;
 
@@ -22,20 +22,25 @@ namespace Actors.AI
             input = baseInput;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
-            Transform target = input.GetTarget();
+            agent.speed = stats.GetMovementSpeed();
+
             if (target != null)
             {
                 FaceTarget();
 
-                agent.speed = stats.GetMovementSpeed();
                 agent.SetDestination(target.transform.position);
             }
 
             if (input.IsSomeDirection())
             {
-//                agent.SetDestination(target.transform.position);
+                Vector3 direction = new Vector3(input.horizontal, 0f, input.vertical);
+                direction = Camera.main.transform.TransformDirection(direction);
+                direction.y = 0;
+                direction = direction.normalized;
+
+                Move(direction);
             }
         }
 
@@ -63,11 +68,11 @@ namespace Actors.AI
             agent.SetDestination(point);
         }
 
-        public void Follow(Vector3 newTarget, float stoppingDistance = 1f)
+        public void Follow(Transform newTarget, float stoppingDistance = 1f)
         {
             agent.isStopped = false;
 
-//            target = newTarget;
+            target = newTarget;
 
             agent.stoppingDistance = stoppingDistance;
             agent.updateRotation = false;
@@ -78,8 +83,7 @@ namespace Actors.AI
             agent.stoppingDistance = 0f;
             agent.updateRotation = true;
             agent.isStopped = true;
-
-//            target = Vector3.zero;
+            target = null;
         }
 
         public void Stop()
@@ -89,21 +93,35 @@ namespace Actors.AI
         
         public void FaceTarget()
         {
-            Vector3 direction = (input.GetTarget().transform.position - transform.position).normalized;
-            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
-
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 10f);
+            FaceTarget(target.position);
         }
         
         
         public void FaceTarget(Vector3 target)
         {
             Vector3 direction = (target - transform.position).normalized;
-            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
+            if (direction != Vector3.zero)
+            {
+                Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
 
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 10f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 10f);
+            }
         }
 
+        public void SetTarget(Transform newTarget)
+        {
+            target = newTarget;
+        }
 
+        public void Disable()
+        {
+            enabled = false;
+            agent.enabled = false;
+        }
+
+        public void Enable()
+        {
+            agent.enabled = true;
+        }
     }
 }
