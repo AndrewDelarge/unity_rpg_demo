@@ -1,4 +1,6 @@
-﻿using NPC;
+﻿using System;
+using Actors.Base.Interface;
+using NPC;
 using Player;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,24 +10,31 @@ namespace UI.Hud
     public class HealthBar : MonoBehaviour
     {
         [HideInInspector]
-        public PlayerActor player;
+        public IHealthable healthable;
         
         protected Image value;
-        protected GameObject healthBar;
-        protected float maxWidhth;
 
-        public void Awake()
-        {
-//            Debug.Log("Health bar Awake");
-            value = transform.Find("Value").gameObject.GetComponent<Image>();
-        }
 
-        private void Start()
+        public void SetHealthable(IHealthable target)
         {
-//            Debug.Log("Health bar Start");
-            player = PlayerManager.instance.player;
+            if (healthable != null)
+            {
+                healthable.OnHealthChange -= ChangeHeathBarValue;
+            }
             
-            player.characterStats.onHealthChange += ChangeHeathBarValue;
+            healthable = target;
+            healthable.OnHealthChange += ChangeHeathBarValue;
+            SetHealth(healthable.GetHealth());
+        }
+        
+        public void Init()
+        {
+            value = transform.Find("Value").gameObject.GetComponent<Image>();
+            
+            if (healthable != null)
+            {
+                SetHealth(healthable.GetHealth());
+            }
         }
 
         public void Show()
@@ -50,13 +59,12 @@ namespace UI.Hud
         
         private float GetWidthFromHealth(int health)
         {
-            return health / (float) player.combat.stats.maxHealth;
+            return health / (float) healthable.GetMaxHealth();
         }
         
-        private void ChangeHeathBarValue(int value, int health)
+        private void ChangeHeathBarValue(object healthable, EventArgs args)
         {
-//            Debug.Log("player gets " + value);
-            SetHealth(health);
+            SetHealth(this.healthable.GetHealth());
         }
     }
 }

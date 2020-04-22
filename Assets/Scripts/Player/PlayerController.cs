@@ -93,6 +93,7 @@ namespace Player
 
         private void FixedUpdate()
         {
+            return;
             float horz = 0f;
             float vert = 0f;
 
@@ -145,65 +146,6 @@ namespace Player
             newPosition.y -= 500f * Time.deltaTime;
 
             _characterController.Move(newPosition * Time.deltaTime);
-        }
-
-        void Update()
-        {
-//            if (IsPointerOverUIObject()) 
-//                return;
-//
-//            if (Input.GetMouseButtonDown(0))
-//            {
-//                buttonStillDown = true;
-//            }
-//            
-//            if (Input.GetMouseButtonUp(0))
-//            {
-//                buttonStillDown = false;
-//            }
-
-            return;
-            /**
-             * When you click on screen once "rotation" will be 0.3, -0.1 and etc,
-             * but when you try to rotate camera "rotation" will be like 0.1245 and then we lock control
-             */
-//            float rotation = Input.GetAxis("Mouse X");
-//            if (rotation != 0 && rotation.ToString().Length > 3)
-//            {
-//                return;
-//            }
-
-            if (buttonStillDown)
-            {
-                Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-                
-                if (Physics.Raycast(ray, out hit, 100, interactableMask))
-                {
-                    Interactable interactable = hit.collider.GetComponent<Interactable>();
-                    _cameraController.PointerFollow(hit.collider.gameObject);
-
-                    if (interactable != null)
-                    {
-                        SetFocus(interactable);
-                        return;
-                    }
-                }
-                
-                if (Physics.Raycast(ray, out hit, 100, movementMask))
-                {
-                    _cameraController.SetPointer(hit.point);
-
-                    playerMotor.MoveTo(hit.point);
-                    RemoveFocus();
-                    return;
-                }
-            }
-           
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                ActionKeyDown();
-            }
         }
 
         void SetFocus (Interactable newFocus)

@@ -1,4 +1,6 @@
-﻿using Player;
+﻿using System;
+using Actors.Base.Interface;
+using Player;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,52 +11,78 @@ namespace UI
         public GameObject uiPrefab;
         public Transform target;
 
+        private GameObject levelGameObject;
         private Transform ui;
         private Image healthImage;
+        private Text healthText;
         private Transform cam;
-        private CharacterStats stats;
+        private IHealthable stats;
         
-        private void Awake()
+        private void Start()
         {
-            stats = GetComponent<CharacterStats>();
+            stats = GetComponent<IHealthable>();
+            
+            if (Camera.main == null)
+            {
+                return;
+            }
             
             cam = Camera.main.transform;
+            
             foreach (Canvas canvas in FindObjectsOfType<Canvas>())
             {
                 if (canvas.renderMode == RenderMode.WorldSpace)
                 {
                     ui = Instantiate(uiPrefab, canvas.transform).transform;
                     healthImage = ui.GetChild(0).GetComponent<Image>();
+                    healthText = ui.GetComponentInChildren<Text>();
+                    levelGameObject = ui.GetChild(3).gameObject;
+
+                    if (stats.IsHasLevel())
+                    {
+                        levelGameObject.SetActive(true);
+                        Text levelText = levelGameObject.GetComponentInChildren<Text>();
+                        levelText.text = stats.GetLevel().ToString();
+                    }
+                    
                 }
             }
 
-            stats.onHealthChange += SetHealth;
-            ui.gameObject.SetActive(false);
-        }
-
-        void SetHealth(int value, int health)
-        {
-            ui.gameObject.SetActive(true);
-
-            if (ui == null)
+            if (target == null)
             {
+                target = transform;
+            }
+            stats.OnHealthChange += SetHealth;
+            
+            ui.gameObject.SetActive(true);
+        }
+        
+        void SetHealth(object obj, EventArgs args)
+        {
+            if (ui == null)
+            {        
                 return;
             }
-            healthImage.fillAmount = health / (float) stats.maxHealth;
+            
+            ui.gameObject.SetActive(true);
 
-            if (health <= 0)
+            healthImage.fillAmount = stats.GetHealth() / (float) stats.GetMaxHealth();
+            healthText.text = stats.GetHealth().ToString();
+            if (stats.GetHealth() <= 0)
             {
                 Destroy(ui.gameObject);
             }
         }
         
-        void Update()
+        void FixedUpdate()
         {
             if (ui == null)
             {
                 return;
             }
-            ui.position = target.position;
+
+            float scale = transform.localScale.x;
+            ui.position = new Vector3(target.position.x, target.position.y + (2.3f * scale), target.position.z);
             ui.forward = -cam.forward;
         }
     }

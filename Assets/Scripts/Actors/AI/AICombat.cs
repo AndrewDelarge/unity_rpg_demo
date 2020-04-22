@@ -7,19 +7,12 @@ namespace Actors.AI
 {
     public class AICombat : Base.Combat
     {
-        protected override void InputAttack()
+
+        public override void Init(Stats actorStats, BaseInput baseInput)
         {
-            if (targetActor == null)
-            {
-                return;
-            }
-            
-            List<Stats> attackList = new List<Stats>();
-            attackList.Add(targetActor.stats);
-            
-            MeleeAttack(attackList);
+            base.Init(actorStats, baseInput);
+
         }
 
-        
     }
 }

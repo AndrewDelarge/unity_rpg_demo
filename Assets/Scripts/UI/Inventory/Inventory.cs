@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Managers.Player;
 using Player;
 using Scriptable;
 using UnityEngine;
@@ -14,29 +15,28 @@ namespace UI.Inventory
 
         public SlotInfo slotInfo;
 
-        private Player.Inventory _inventory;
+        private InventoryManager inventory;
         public Interactable lootTarget;
         
         private Slot[] inventorySlots;
         private LootSlot[] lootSlots;
 
         // Start is called before the first frame update
-        void Start()
+        public void Init()
         {
-            _inventory = Player.Inventory.instance;
-            _inventory.onItemChangedCallback += this.UpdateUI;
+            inventory = GameController.instance.playerManager.inventoryManager;
+            inventory.onItemChangedCallback += UpdateUI;
 
             inventorySlots = slotsHub.GetComponentsInChildren<Slot>();
             lootSlots = lootSlotsHub.GetComponentsInChildren<LootSlot>();
             
-            _inventory.onLoot += ShowLoot;
-            _inventory.onLootEnd += HideLoot;
-            PlayerManager.instance.UI.upperPanel.onInventoryButtonClick += ToggleInventory;
+            inventory.onLoot += ShowLoot;
+            inventory.onLootEnd += HideLoot;
+
             UpdateUI();
         }
 
-        // Update is called once per frame
-        void Update()
+        void FixedUpdate()
         {
             if (Input.GetButtonDown("Inventory"))
             {
@@ -53,7 +53,7 @@ namespace UI.Inventory
 
         public void ToggleInventory()
         {
-            PlayerManager.instance.Pause(!inventoryUI.activeSelf);
+            GameController.instance.Pause(!inventoryUI.activeSelf);
             inventoryUI.SetActive(!inventoryUI.activeSelf);
         }
 
@@ -72,9 +72,9 @@ namespace UI.Inventory
         {
             for (int i = 0; i < inventorySlots.Length; i++)
             {
-                if (i < _inventory.items.Count)
+                if (i < inventory.items.Count)
                 {
-                    inventorySlots[i].AddItem(_inventory.items[i]);
+                    inventorySlots[i].AddItem(inventory.items[i]);
                 }
                 else
                 {
@@ -105,7 +105,7 @@ namespace UI.Inventory
         void ShowLoot(Interactable loot)
         {
             lootTarget = loot;
-            PlayerManager.instance.Pause(true);
+            GameController.instance.Pause(true);
             lootTarget.onLootChange += UpdateLoot;
             
             UpdateLoot();
@@ -116,7 +116,7 @@ namespace UI.Inventory
         public void HideLoot()
         {
             lootUI.SetActive(false);
-            PlayerManager.instance.Pause(false);
+            GameController.instance.Pause(false);
             if (lootTarget != null)
             {
                 lootTarget.onLootChange -= UpdateLoot;

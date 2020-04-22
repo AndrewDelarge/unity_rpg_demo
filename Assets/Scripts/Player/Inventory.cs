@@ -41,17 +41,13 @@ namespace Player
         
         private void Start()
         {
-            EquipmentManager.instance.onItemUnequip += AddAfterUnequip;
-            EquipmentManager.instance.onItemEquip += Remove;
+//            EquipmentManager.instance.onItemUnequip += AddAfterUnequip;
+//            EquipmentManager.instance.onItemEquip += Remove;
             defaultItemGameObject = Resources.Load<GameObject>("Equipments/EmptyItem");
         }
 
         public bool Add(Item item)
         {
-            if (item.isDefaultItem)
-            {
-                return false;
-            }
             
             if (items.Count >= space)
             {

@@ -10,8 +10,10 @@ namespace Actors.AI
     [RequireComponent(typeof(NavMeshAgent))]
     public class AIMovement : MonoBehaviour, IControlable
     {
+        public float speedMultiplier = 1f;
         private NavMeshAgent agent;
-        private Transform target;
+        public Transform target { get; private set; }
+        
         private Stats stats;
         private BaseInput input;
 
@@ -24,7 +26,7 @@ namespace Actors.AI
 
         private void FixedUpdate()
         {
-            agent.speed = stats.GetMovementSpeed();
+            agent.speed = stats.GetMovementSpeed() * speedMultiplier;
 
             if (target != null)
             {
@@ -68,12 +70,10 @@ namespace Actors.AI
             agent.SetDestination(point);
         }
 
-        public void Follow(Transform newTarget, float stoppingDistance = 1f)
+        public void Follow(Transform newTarget, float stoppingDistance = 1.5f)
         {
             agent.isStopped = false;
-
             target = newTarget;
-
             agent.stoppingDistance = stoppingDistance;
             agent.updateRotation = false;
         }
@@ -122,6 +122,16 @@ namespace Actors.AI
         public void Enable()
         {
             agent.enabled = true;
+        }
+
+        public void Jump()
+        {
+            return;
+        }
+        
+        public void SetSpeed(float multiplier)
+        {
+            speedMultiplier = multiplier;
         }
     }
 }

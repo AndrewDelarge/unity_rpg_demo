@@ -147,7 +147,10 @@ namespace NPC
 
         void Ragdoll(GameObject gameObject)
         {
-            actor.target.RemoveTarget();
+            if (actor.target != null)
+            {
+                actor.target.RemoveTarget();
+            }
             actor.RemoveTarget();
             _collider.enabled = false;
             agent.enabled = false;

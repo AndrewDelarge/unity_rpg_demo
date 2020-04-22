@@ -9,14 +9,15 @@ namespace Actors.Player
     
     public class Movement : MonoBehaviour, IControlable
     {
+        public float speedMultiplier = 1f;
         private BaseInput input;
         private Stats stats;
         private CharacterController characterController;
         private Camera cam;
-        
+        public Transform target { get; private set; }
         private bool stopped = false;
-        private Transform target;
-        
+        private bool jump = false;
+
         public void Init(Stats actorStats, BaseInput input)
         {
             this.input = input;
@@ -30,7 +31,7 @@ namespace Actors.Player
             Vector3 direction = Vector3.zero;
             if (! IsCanMove())
             {
-                Move(direction);
+                characterController.SimpleMove(direction);
                 return;
             }
             
@@ -44,8 +45,12 @@ namespace Actors.Player
                 direction = new Vector3(input.horizontal, 0f, input.vertical);
                 direction = cam.transform.TransformDirection(direction);
                 direction.y = 0;
+
+                
                 direction = direction.normalized;
 
+                direction *= GetSpeed();
+                
                 float speedMultiply;
                 
                 if (Mathf.Abs(input.horizontal) >= .3f || Mathf.Abs(input.vertical) >= .3f)
@@ -69,11 +74,15 @@ namespace Actors.Player
         {
             return characterController.isGrounded && !stopped;
         }
-        
-        
+
+        public void Jump()
+        {
+            this.jump = true;
+        }
+
         public float GetSpeed()
         {
-            return stats.GetMovementSpeed();
+            return stats.GetMovementSpeed() * speedMultiplier;
         }
 
         public float GetCurrentMagnitude()
@@ -84,7 +93,6 @@ namespace Actors.Player
         public void Move(Vector3 direction)
         {
             direction.y -= 500f * Time.deltaTime;
-            
             characterController.Move(direction * Time.deltaTime);
         }
 
@@ -137,6 +145,11 @@ namespace Actors.Player
         public void Enable()
         {
             enabled = true;
+        }
+
+        public void SetSpeed(float multiplier)
+        {
+            speedMultiplier = multiplier;
         }
     }
 }

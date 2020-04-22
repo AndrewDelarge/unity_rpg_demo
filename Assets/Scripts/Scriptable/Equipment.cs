@@ -7,7 +7,9 @@ namespace Scriptable
     {
         public EquipmentSlot equipmentSlot;
         public int armorModifire;
-        public int damageModifire;
+        public int attackPowerModifire;
+        public int staminaModifire;
+        public int critChanceModifire;
         public string skinName = "default";
         public SkinnedMeshRenderer mesh;
         public EquipmentMeshRegion[] coveredMeshRegion;
@@ -16,7 +18,7 @@ namespace Scriptable
         {
             base.Use();
             
-            Player.EquipmentManager.instance.Equip(this);
+            GameController.instance.playerManager.equipmentManager.Equip(this);
 //            RemoveFromInventory();
         }
         

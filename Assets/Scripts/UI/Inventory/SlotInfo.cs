@@ -1,4 +1,6 @@
-﻿using Scriptable;
+﻿using Managers.Player;
+using Player;
+using Scriptable;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -37,7 +39,7 @@ namespace UI.Inventory
             if (item != null)
             {
                 Hide();
-                Player.Inventory.instance.Use(item);
+                InventoryManager.instance.Use(item);
             }
         }
     }

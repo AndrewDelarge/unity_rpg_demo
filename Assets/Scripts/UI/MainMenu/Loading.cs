@@ -11,7 +11,6 @@ namespace UI.MainMenu
         [SerializeField]
         private RectTransform progressBar;
         private const float MAX_PROGRESS_SCALE = 1f;
-        private AsyncOperation sceneLoadingOperation;
         private Image progressBarImage;
 
         private void Awake()
@@ -19,35 +18,19 @@ namespace UI.MainMenu
             progressBarImage = progressBar.GetComponent<Image>();
         }
 
-        private void Update()
-        {
-            if (gameObject.activeSelf)
-            {
-                if (sceneLoadingOperation.isDone)
-                {
-                    Hide();
-                }
-                
-                SetProgress(sceneLoadingOperation.progress);
-            }
-        }
-
-        public void ShowAndLoad(int scene)
+        public void Show()
         {
             gameObject.SetActive(true);
-            sceneLoadingOperation = SceneManager.LoadSceneAsync(scene);
             SetProgress(0f);
-//            sceneLoadingOperation.progress;
         }
 
         public void Hide()
         {
             gameObject.SetActive(false);
-            sceneLoadingOperation = null;
         }
 
 
-        void SetProgress(float progress)
+        public void SetProgress(float progress)
         {
             if (progress <= MAX_PROGRESS_SCALE)
             {

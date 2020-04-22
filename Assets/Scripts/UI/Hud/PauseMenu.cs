@@ -12,20 +12,20 @@ namespace UI.Hud
         public void OnExitButton()
         {
             // TODO hardcode
-            loading.ShowAndLoad(0);
-            PlayerManager.instance.Pause(false);
+            GameController.instance.StartScene(1);
+            gameObject.SetActive(false);
         }
         
         public void Show()
         {
-            PlayerManager.instance.Pause(true);
+            GameController.instance.Pause(true);
 
             gameObject.SetActive(! gameObject.activeSelf);
         }
         
         public void OnResumeButton()
         {
-            PlayerManager.instance.Pause(false);
+            GameController.instance.Pause(false);
             this.gameObject.SetActive(false);
         }
     }

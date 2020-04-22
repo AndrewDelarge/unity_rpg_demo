@@ -7,7 +7,7 @@ namespace Actors.Base
     {
         public bool isEnabled = true;
         public LayerMask defaultLayerMask;
-        private float visionUpdateTime = .0f;
+        public float visionUpdateTime = .5f;
         public float viewRadius;
         public float viewAngle = 360f;
         
@@ -16,14 +16,22 @@ namespace Actors.Base
 
         void Start()
         {
-            InvokeRepeating(nameof(UpdateVision), 1f, 0.5f);
+            if (isEnabled)
+            {
+                InvokeRepeating(nameof(UpdateVision), 1f, visionUpdateTime);
+            }
         }
 
-
-        void FindVisibleTargets()
+        public void FindVisibleTargets()
         {
             FindVisibleTargets(defaultLayerMask);
         }
+
+        public List<GameObject> FindVisibleColliders()
+        {
+            return FindVisibleColliders(defaultLayerMask);
+        }
+
         
         void UpdateVision()
         {
@@ -36,33 +44,46 @@ namespace Actors.Base
         {
             visibleTargets.Clear();
             actors.Clear();
-            
-            Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, mask);
-            
-            for (int i = 0; i < targetsInViewRadius.Length; i++)
-            {
-                GameObject target = targetsInViewRadius[i].gameObject;
-                Vector3 dirToTarget = (target.transform.position - transform.position).normalized;
-                if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
-                {
-                    Actor actor = target.GetComponent<Actor>();
 
-                    if (actor != null)
-                    {
-                        actors.Add(actor);
-                    }
+            List<GameObject> visibleObjects = FindVisibleColliders(mask);
+            
+            for (int i = 0; i < visibleObjects.Count; i++)
+            {
+                Actor actor = visibleObjects[i].GetComponent<Actor>();
+
+                if (actor != null && actor.transform != transform)
+                {
+                    actors.Add(actor);
+                }
                     
-                    visibleTargets.Add(target);
+//                    visibleTargets.Add(target);
                     
 //                    float dstToTarget = Vector3.Distance(target.position, transform.position);
 //
 //                    if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, interactableMask))
 //                    {
 //                    }
-                    
-                }
-
             }
+        }
+
+
+        public List<GameObject> FindVisibleColliders(LayerMask mask)
+        {
+            Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, mask);
+            
+            List<GameObject> visibleObjects = new List<GameObject>();
+            
+            for (int i = 0; i < targetsInViewRadius.Length; i++)
+            {
+                GameObject target = targetsInViewRadius[i].gameObject;
+                
+                if (IsInViewAngle(target.transform.position) && target.transform != transform)
+                {
+                    visibleObjects.Add(target);
+                }
+            }
+            
+            return visibleObjects;
         }
         
         public Vector3 DirFromAngle(float angleInDegrese, bool angleIsGlobal)
@@ -76,5 +97,17 @@ namespace Actors.Base
 
             return result;
         }
+
+        public bool IsInViewAngle(Vector3 target)
+        {
+            Vector3 dirToTarget = (target - transform.position).normalized;
+            if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
+            {
+                return true;
+            }
+
+            return false;
+        }
+        
     }
 }

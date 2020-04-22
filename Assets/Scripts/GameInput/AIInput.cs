@@ -28,16 +28,14 @@ namespace GameInput
         }
 
 
-        private void Update()
+        private void FixedUpdate()
         {
             if (aiEnabled)
             {
-                behavior.AIUpdate();
+                StartCoroutine(behavior.AIUpdate());
                 currentBstate = behavior.GetState();
             }
         }
-        
-        
         
     }
 }

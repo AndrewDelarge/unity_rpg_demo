@@ -10,7 +10,6 @@ namespace Scriptable
         public string description = "Some item description";
         public Sprite icon = null;
         public GameObject gameObject;
-        public bool isDefaultItem = false;
 
         public virtual void Use()
         {

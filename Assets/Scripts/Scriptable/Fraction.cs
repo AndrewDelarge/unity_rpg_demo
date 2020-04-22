@@ -37,7 +37,6 @@ namespace Scriptable
         
         public void Awake()
         {
-            Debug.Log("Awake fraction " + title);
         }
         public void AddEnemy(Fraction fraction)
         {

@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using Actors.Base;
 using Actors.Base.Interface;
 using GameInput;
+using Scriptable;
 using UnityEngine;
 
 namespace Actors.AI
@@ -10,8 +12,13 @@ namespace Actors.AI
     {
         public Collider collider{ get; protected set; }
 
+        protected virtual void Awake()
+        {
+            Init();
+        }
 
-        protected override void Init()
+
+        public override void Init()
         {
             base.Init();
 
@@ -31,12 +38,23 @@ namespace Actors.AI
             foreach (Rigidbody rigidbody in rigidbodies)
             {
                 rigidbody.isKinematic = false;
+                rigidbody.useGravity = true;
                 
-//                rigidbody.AddForce(- gameObject.transform.forward * 10, ForceMode.Impulse);
+                rigidbody.AddForce(- gameObject.transform.forward * 10, ForceMode.Impulse);
             }
             
         }
 
+        public override void MeleeAttack(Actor target)
+        {
+            if (combat.InMeleeRange(target.transform.position))
+            {
+                List<IHealthable> attackList = new List<IHealthable>();
+                attackList.Add(target.stats);
+                
+                combat.MeleeAttack(attackList);
+            }
+        }
 
         public override void SetActorTarget(Actor newTarget)
         {

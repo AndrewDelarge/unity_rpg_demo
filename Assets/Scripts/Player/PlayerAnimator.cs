@@ -15,13 +15,13 @@ namespace Player
             base.Start();
 
             _characterController = GetComponent<CharacterController>();
-            EquipmentManager.instance.onItemEquip += OnItemEquip;
-            EquipmentManager.instance.onItemUnequip += OnItemUnequip;
+//            EquipmentManager.instance.onItemEquip += OnItemEquip;
+//            EquipmentManager.instance.onItemUnequip += OnItemUnequip;
             weaponAnimationDict = new Dictionary<Equipment, AnimationClip[]>();
 
             foreach (WeaponAnimation anim in weaponAnimations)
             {
-                weaponAnimationDict.Add(anim.weapon, anim.clips);
+//                weaponAnimationDict.Add(anim.weapon, anim.clips);
             }
         }
 
@@ -70,10 +70,10 @@ namespace Player
         }
     }
 
-    [System.Serializable]
+//    [System.Serializable]
     public struct WeaponAnimation
     {
-        public Equipment weapon;
+        public WeaponType weapon;
         public AnimationClip[] clips;
     }
 }

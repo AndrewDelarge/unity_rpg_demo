@@ -20,7 +20,7 @@ namespace UI.MainMenu
 
         public void OnButtonStart()
         {
-            _loading.ShowAndLoad(firstSceneIndex);
+            GameController.instance.StartScene(firstSceneIndex);
         }
 
         public void OnButtonExit()

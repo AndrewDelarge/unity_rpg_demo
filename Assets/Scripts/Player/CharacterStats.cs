@@ -1,8 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Linq.Expressions;
+using Actors.Base.Interface;
+using Actors.Combat;
+using UnityEngine;
 
 namespace Player
 {
-    public class CharacterStats : MonoBehaviour
+    public class CharacterStats : MonoBehaviour, IHealthable
     {
         public int maxHealth = 100;
         public int currentHealth { get; private set; }
@@ -10,13 +14,33 @@ namespace Player
         public Stat damage;
         public delegate void OnDied(GameObject diedObject);
         public OnDied onDied;
-        public delegate void OnHealthChange(int value, int health);
-        public OnHealthChange onHealthChange;
         public event System.Action OnGetHit;
         
         private void Awake()
         {
             currentHealth = maxHealth;
+        }
+
+        public Vector3 GetPosition()
+        {
+            return transform.position;
+        }
+
+        public int GetMaxHealth()
+        {
+            return maxHealth;
+        }
+
+        public event EventHandler OnHealthChange;
+
+        public void TakeDamage(Damage damage)
+        {
+            TakeDamage(damage.GetValue());
+        }
+
+        public int GetHealth()
+        {
+            return this.currentHealth;
         }
 
         public void TakeDamage(int damage)
@@ -37,10 +61,8 @@ namespace Player
                 OnGetHit();
             }
 
-            if (onHealthChange != null)
-            {
-                onHealthChange.Invoke(- damage, currentHealth);
-            }
+            OnHealthChange?.Invoke(this, EventArgs.Empty);
+
         }
 
         public void Heal(int heal)
@@ -49,10 +71,7 @@ namespace Player
 
             currentHealth += heal;
             
-            if (onHealthChange != null)
-            {
-                onHealthChange.Invoke(heal, currentHealth);
-            }
+            OnHealthChange?.Invoke(this, EventArgs.Empty);
         }
 
         public virtual void Die()
@@ -70,7 +89,15 @@ namespace Player
         {
             return currentHealth <= 0;
         }
-        
-        
+
+        public bool IsHasLevel()
+        {
+            return false;
+        }
+
+        public int GetLevel()
+        {
+            return -1;
+        }
     }
 }

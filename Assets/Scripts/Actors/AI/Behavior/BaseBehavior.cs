@@ -1,3 +1,4 @@
+using System.Collections;
 using Actors.Base;
 using GameInput;
 using UnityEngine;
@@ -27,7 +28,7 @@ namespace Actors.AI.Behavior
             input = actor.input;
         }
 
-        public abstract void AIUpdate();
+        public abstract IEnumerator AIUpdate();
         
         public virtual void Defence(Actor attackedBy)
         {

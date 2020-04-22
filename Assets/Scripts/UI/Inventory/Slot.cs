@@ -1,4 +1,5 @@
-﻿using Scriptable;
+﻿using Managers.Player;
+using Scriptable;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -37,8 +38,8 @@ namespace UI.Inventory
 
         public void OnDropClick()
         {
-            Player.Inventory.instance.Drop(item);
-            Player.Inventory.instance.Remove(item);
+            InventoryManager.instance.Drop(item);
+            InventoryManager.instance.Remove(item);
         }
 
         public void UseItem()

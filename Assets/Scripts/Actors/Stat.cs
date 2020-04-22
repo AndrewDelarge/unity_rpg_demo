@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Actors
@@ -9,6 +10,7 @@ namespace Actors
         [SerializeField]
         private int value = 0;
         private List<int> modifiers = new List<int>();
+        public Action onChange;
         
         public int GetValue()
         {
@@ -23,6 +25,8 @@ namespace Actors
             {
                 modifiers.Add(modifier);
             }
+            
+            onChange?.Invoke();
         }
 
         public void RemoveModifier(int modifier)
@@ -31,6 +35,8 @@ namespace Actors
             {
                 modifiers.Remove(modifier);
             }
+            
+            onChange?.Invoke();
         }
         
     }

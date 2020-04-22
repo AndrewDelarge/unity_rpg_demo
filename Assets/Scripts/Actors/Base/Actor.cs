@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Actors.Base.Interface;
 using GameInput;
@@ -23,12 +24,12 @@ namespace Actors.Base
         
         public IControlable movement { get; protected set; }
 
-        private void Awake()
-        {
-            Init();
-        }
+//        protected virtual void Awake()
+//        {
+//            Init();
+//        }
 
-        protected virtual void Init()
+        public virtual void Init()
         {
             animator = GetComponent<CommonAnimator>();
             vision = GetComponent<Vision>();
@@ -84,7 +85,15 @@ namespace Actors.Base
         {
             return stats.IsDead();
         }
-        
 
+        public virtual void MeleeAttack()
+        {
+            throw new NotImplementedException("Implement Melee Attack method!");
+        }
+        
+        public virtual void MeleeAttack(Actor actor)
+        {
+            throw new NotImplementedException("Implement Melee Attack method!");
+        }
     }
 }

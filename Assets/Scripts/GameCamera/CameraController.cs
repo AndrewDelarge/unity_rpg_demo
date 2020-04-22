@@ -6,135 +6,70 @@ namespace GameCamera
 {
     public class CameraController : MonoBehaviour
     {
-        private const float ROTATION_RETURN_TIME = 2f; 
-        private const float POINTER_LIFE_TIME = 1f; 
-        
         public Transform target;
-        public GameObject pointer;
         public Vector3 offset;
         public float pitch = 2f;
-        public float minZoom = 5f;
-        public float maxZoom = 20f;
-        public float zoomSpeed = 3f;
-        public float yawSpeed = 100f;
 
         private float currentZoom = 10f;
-        private float currentYaw = 0f;
-        private NavMeshAgent targetRigidbody;
         private float lastRotation;
         private float lastPointerActive;
-        private GameObject pointerFollows;
-    
-        
+
+
         private void Start()
         {
-            targetRigidbody = target.GetComponent<NavMeshAgent>();
-        }
-
-        // Start is called before the first frame update
-        void Update()
-        {
-            currentZoom -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
-            currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom);
-
-//            float horizontal = Input.GetAxis("Mouse X");
-//
-//            if (Input.touchCount > 0)
-//            {
-//                Touch touch = Input.GetTouch(0);
-//                
-//                if (touch.phase == TouchPhase.Moved)
-//                {
-//                    currentYaw -= horizontal * yawSpeed * Time.deltaTime;
-//                    lastRotation = Time.time;
-//                }
-//            }
-
-            
-            if (isPointerOld())
+            if (target != null)
             {
-                PointerStopFollow();
-                pointer.SetActive(false);
+                transform.position = target.position - offset * currentZoom;
+                transform.LookAt(target.position + Vector3.up * pitch);
             }
             
-            if (pointerFollows != null)
-            {
-                MovePointer(pointerFollows.transform.position);
-            }
-
-            StartCoroutine(MoveCamera(transform.position, target.position));
-
         }
-
-        void LateUpdate()
+        
+        void FixedUpdate()
         {
+            if (Time.timeScale > 0f && target != null)
+            {
+                StartCoroutine(MoveCamera(transform.position, target.position));
+            }
             
-            
-            
-//            
-//            transform.LookAt(target.position + Vector3.up * pitch);
-//            Debug.Log(targetRigidbody.hasPath);
-//            if (targetRigidbody.hasPath && Input.GetAxis("Mouse X") == 0f && isCanReturnRotation())
-//            {
-//                currentYaw = target.eulerAngles.y - 180;
-//            }
-//            
-//            
-//            transform.RotateAround(
-//                target.position,
-//                Vector3.up,
-//                currentYaw
-//            );
         }
 
         private IEnumerator MoveCamera(Vector3 camPos, Vector3 targetPos)
         {
-            Vector3 targetPos2 = targetPos - offset * currentZoom;
-            Vector3 camPos2 = camPos - offset * currentZoom;
-            
-            
-            float t = 0f;
+            Vector3 offsetTargetPos = targetPos - offset * currentZoom;
+            Vector3 offsetCamPos = camPos - offset * currentZoom;
+            float t = 0;
+
             while (t < 1)
             {
                 t += Time.deltaTime / .1f;
-                transform.position = Vector3.Lerp(camPos2, targetPos2, t);
-                transform.LookAt(Vector3.Slerp(targetPos + Vector3.up * pitch, target.position + Vector3.up * pitch, t));
+                transform.position = Vector3.Lerp(offsetCamPos, offsetTargetPos, t * 2);
+                transform.LookAt(Vector3.Lerp(targetPos + Vector3.up * pitch, target.position + Vector3.up * pitch, t * 2));
                 yield return null;
             }
         }
-        
-        public void SetPointer(Vector3 pos)
-        {
-            pointer.SetActive(true);
-            MovePointer(pos);
-            lastPointerActive = Time.time;
-            PointerStopFollow();
-        }
 
-        void MovePointer(Vector3 pos)
+        public IEnumerator Shake(float power = 1f, float speed = .1f)
         {
-            pointer.transform.position = pos;
-        }
-        
-        public void PointerFollow(GameObject gameObject)
-        {
-            pointerFollows = gameObject;
-            pointer.SetActive(true);
-            lastPointerActive = Time.time;
-        }
+            float oldSize = Camera.main.orthographicSize;
+            Camera.main.orthographicSize += power;
+            float t = oldSize;
+            
+            while (t < Camera.main.orthographicSize)
+            {
+                if (power >= 0)
+                {
+                    Camera.main.orthographicSize -= Time.deltaTime / speed;
+                }
+                else
+                {
+                    Camera.main.orthographicSize += Time.deltaTime / speed;
+                }
+                
+                yield return null;
+            }
 
-        void PointerStopFollow()
-        {
-            pointerFollows = null;
-        }
-        
-        bool isPointerOld()
-        {
-            return (Time.time - lastPointerActive) > POINTER_LIFE_TIME;
-        }
-        bool isCanReturnRotation()
-        {
-            return (Time.time - lastRotation) > ROTATION_RETURN_TIME;
+            Camera.main.orthographicSize = oldSize;
         }
         
     }

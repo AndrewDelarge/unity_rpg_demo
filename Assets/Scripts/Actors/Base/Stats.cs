@@ -1,4 +1,5 @@
 using System;
+using Actors.Base.Interface;
 using Actors.Combat;
 using Player;
 using UnityEngine;
@@ -6,46 +7,67 @@ using Random = System.Random;
 
 namespace Actors.Base
 {
-    public class Stats : MonoBehaviour
+    public class Stats : MonoBehaviour, IHealthable
     {
-        private const int STAMINA_COST = 2;
-        private const int DAMAGE_COST = 3;
-        private const int CRIT_CAP = 100;
-        private const int ARMOR_CAP = 100;
-        private const float CRIT_MULTIPLIER = 1.5f;
+        public event EventHandler OnHealthChange;
+        protected const int STAMINA_COEF = 10;
+        protected const int ATTACK_POWER_COEF = 2;
+
+        protected const int STAMINA_TO_LVL_COEF = 5;
+        protected const int ATTACK_POWER_TO_LVL_COEF = 4;
         
-        [SerializeField]
-        private int baseHealth = 100;
-        [SerializeField]
-        private float movementSpeed = 2f;
-        private int currentHealth = 0;
-        private bool isDead;
+        protected const float CRIT_CAP = 100;
+        protected const float ARMOR_CAP = 100;
+        protected const float CRIT_MULTIPLIER = 1.5f;
 
         
-        /// <summary>
-        ///     <para>Incrase health in: (stamina * STAMINA_COST)</para>
-        /// </summary>
+        [SerializeField]
+        private int level = 1;
+        [SerializeField]
+        private int baseMaxHealth = 1;
+        [SerializeField]
+        private float movementSpeed = 2f;
+        [SerializeField]
+        private int currentHealth = 0;
+        [SerializeField]
+        private int currentMaxHealth = 0;
+        private bool isDead;
+        
         public Stat stamina;
-        /// <summary>
-        ///     <para>Reduce taking damage in: (armor / ARMOR_CAP * 100) %</para>
-        /// </summary>
         public Stat armor;
         public Stat attackPower;
         public Stat criticalChancePoints;
 
-        public delegate void OnHealthChange(int value, int health);
         public delegate void OnGetDamage(Damage damage);
         public delegate void OnDied(GameObject diedObject);
 
-        public OnHealthChange onHealthChange;
         public OnDied onDied;
         public OnGetDamage onGetDamage;
 
-        
-        public void Init()
+        public Vector3 GetPosition()
         {
+            return transform.position;
+        }
+
+        public virtual void Init()
+        {
+            // Lvl coefs
+            stamina.onChange = null;
+            int startStamina = 21 + ((level - 1) * STAMINA_TO_LVL_COEF);
+            int startAP = 20 + ((level - 1) * ATTACK_POWER_TO_LVL_COEF);
+            stamina.RemoveModifier(startStamina);
+            attackPower.RemoveModifier(startAP);
+            stamina.AddModifier(startStamina);
+            attackPower.AddModifier(startAP);
+            
             currentHealth = GetMaxHealth();
-            isDead = false;
+            currentMaxHealth = GetMaxHealth();
+            stamina.onChange += UpdateCurrentStats;
+            OnHealthChange?.Invoke(this, EventArgs.Empty);
+            if (isDead)
+            {
+                onDied?.Invoke(gameObject);
+            }
         }
 
         public float GetArmorMultiplier()
@@ -60,12 +82,12 @@ namespace Actors.Base
         
         private int StaminaToHealth(Stat stamina)
         {
-            return stamina.GetValue() * STAMINA_COST;
+            return stamina.GetValue() * STAMINA_COEF;
         }
 
         public int GetMaxHealth()
         {
-            return baseHealth + StaminaToHealth(stamina);
+            return baseMaxHealth + StaminaToHealth(stamina);
         }
 
         public float GetMovementSpeed()
@@ -73,14 +95,10 @@ namespace Actors.Base
             return movementSpeed;
         }
         
-        public bool IsDead()
+        
+        protected int ConvertAPToDamage(Stat ap)
         {
-            return isDead;
-        }
-
-        private int ConvertAPToDamage(Stat ap)
-        {
-            return ap.GetValue() * DAMAGE_COST;
+            return ap.GetValue() / ATTACK_POWER_COEF;
         }
         
         public virtual int GetDamageValue()
@@ -88,11 +106,10 @@ namespace Actors.Base
             int damage = ConvertAPToDamage(attackPower);
             int chance = Mathf.FloorToInt(GetCriticalChance());
             int throwed = UnityEngine.Random.Range(0, 99);
-            
-            
+
             if (throwed <= chance)
             {
-                damage = Mathf.FloorToInt(attackPower.GetValue() * CRIT_MULTIPLIER);
+                damage = Mathf.FloorToInt(damage * CRIT_MULTIPLIER);
             }
 
             // Damage Randomising 
@@ -100,12 +117,31 @@ namespace Actors.Base
 
             return damage;
         }
+
+        public bool IsHasLevel()
+        {
+            return true;
+        }
+
+        public int GetLevel()
+        {
+            return level;
+        }
+
+        public bool IsDead()
+        {
+            return isDead;
+        }
+
+        public int GetHealth()
+        {
+            return currentHealth;
+        }
         
         public virtual void TakeDamage(Damage damage)
         {
             int damageValue = Mathf.FloorToInt(damage.GetValue() * GetArmorMultiplier());
             
-            Debug.Log(damage.GetValue() + " - damage,  armor multiplyer " +  GetArmorMultiplier() + " fin dam " + damageValue);
             damageValue = Mathf.Clamp(damageValue, 0, int.MaxValue);
             currentHealth -= damageValue;
             
@@ -119,19 +155,29 @@ namespace Actors.Base
                 onGetDamage.Invoke(damage);
             }
 
-            if (onHealthChange != null)
-            {
-                onHealthChange.Invoke(- damageValue, currentHealth);
-            }
+
+            OnHealthChange?.Invoke(this, EventArgs.Empty);
         }
         
-        public virtual void Die()
+        protected virtual void Die()
         {
             if (onDied != null && ! IsDead())
             {
                 isDead = true;
                 onDied.Invoke(gameObject);
             }
+        }
+
+        protected void UpdateCurrentStats()
+        {
+            currentMaxHealth = GetMaxHealth();
+
+            if (currentHealth > currentMaxHealth)
+            {
+                currentHealth = currentMaxHealth;
+            }
+            
+            OnHealthChange?.Invoke(this, EventArgs.Empty);
         }
     }
 }

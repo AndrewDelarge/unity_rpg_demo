@@ -1,3 +1,4 @@
+using System.Collections;
 using Actors.Base;
 using Actors.Combat;
 using GameInput;
@@ -7,13 +8,10 @@ namespace Actors.AI.Behavior
 {
     public class AIBehavior : BaseBehavior
     {
-        private float visionUpdateTime = .0f;
-        public float visionTickRate = 0.1f;
+        private float visionUpdateTime = .5f;
 
+        protected Vector3 lastIdlePosition;
 
-        private Vector3 lastIdlePosition;
-
-        private bool moved = false;
         public override void Init(Actor baseActor)
         {
             base.Init(baseActor);
@@ -21,9 +19,10 @@ namespace Actors.AI.Behavior
             state = BehaviorState.Idle;
             lastIdlePosition = actor.transform.position;
             actor.stats.onGetDamage += OnGetDamage;
+            actor.vision.visionUpdateTime = visionUpdateTime;
         }
 
-        public override void AIUpdate()
+        public override IEnumerator AIUpdate()
         {
             switch (state)
             {
@@ -37,6 +36,8 @@ namespace Actors.AI.Behavior
                     Attack();
                     break;
             }
+
+            yield return null;
         }
 
         void OnGetDamage(Damage damage)
@@ -58,7 +59,9 @@ namespace Actors.AI.Behavior
 
         protected override void Attack()
         {
-            if (attackTarget == null || attackTarget.IsDead())
+            if (attackTarget == null 
+                || attackTarget.IsDead()
+                || Vector3.Distance(attackTarget.transform.position, actor.transform.position) > actor.vision.viewRadius)
             {
                 attackTarget = null;
                 state = BehaviorState.Idle;
@@ -67,14 +70,14 @@ namespace Actors.AI.Behavior
                 return;
             }
             
-            
             actor.movement.Follow(attackTarget.transform);
-            actor.SetActorTarget(attackTarget);
+            actor.MeleeAttack(attackTarget);
+        }
 
-            if (actor.combat.InMeleeRange(attackTarget.transform))
-            {
-                input.Attack();
-            }
+
+        protected void FollowTarget(Transform transform)
+        {
+            
         }
 
         protected override void Patrol(Vector3[] points = null)

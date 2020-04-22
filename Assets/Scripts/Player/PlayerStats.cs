@@ -7,20 +7,20 @@ namespace Player
     {
         void Start()
         {
-            EquipmentManager.instance.onItemEquip += ItemEquip;
-            EquipmentManager.instance.onItemUnequip += ItemUnequip;
+//            EquipmentManager.instance.onItemEquip += ItemEquip;
+//            EquipmentManager.instance.onItemUnequip += ItemUnequip;
         }
 
         void ItemEquip(Equipment item)
         {
             armor.AddModifier(item.armorModifire);
-            damage.AddModifier(item.damageModifire);
+            damage.AddModifier(item.attackPowerModifire);
         }
 
         void ItemUnequip(Equipment item)
         {
             armor.RemoveModifier(item.armorModifire);
-            damage.RemoveModifier(item.damageModifire);
+            damage.RemoveModifier(item.attackPowerModifire);
         }
 
         public override void Die()

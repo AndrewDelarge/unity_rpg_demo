@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Actors.Base.Interface;
 using Actors.Combat;
 using GameInput;
 using UnityEngine;
@@ -12,19 +13,27 @@ namespace Actors.Base
     {
         [SerializeField]
         private float combatCooldown = 6;
-        private float lastAttackTime;
-        private float currentMeleeAttackCooldown = 0f;
+        protected float lastAttackTime;
         
-        private float meleeAttackSpeed = 1f;
-        private float meleeAttackDelay = 0f;
-        private float meleeAttackRaduis = 2f;
+        protected int successAttackInRow = 0;
+        protected int maxSuccessAttackInRow = 3;
+        protected float successAttackRowTime = 1f;
+        
+        public float meleeAttackSpeed = 1f;
+        public float meleeAttackDelay = 0f;
+        public float meleeAttackRaduis = 2f;
+        public float meleeAttackDamageMultiplier = 1f;
 
+
+        protected float curMAttackSpeed;
+        protected float curMAttackDelay;
+        protected float curMAttackRadius;
+        protected float curMAttackDamageMultiplier;
         protected Actor targetActor;
+        protected Actor actor;
         protected Stats stats;
-        protected BaseInput input;
         private bool inCombat = false;
-        private Actor actor;
-        
+
         public event System.Action OnAttack;
         public event System.Action OnAttackEnd;
 
@@ -34,23 +43,16 @@ namespace Actors.Base
         public virtual void Init(Stats actorStats, BaseInput baseInput)
         {
             stats = actorStats;
-            SetInput(baseInput);
-            
+            curMAttackSpeed = meleeAttackSpeed;
+            curMAttackDelay = meleeAttackDelay;
+            curMAttackRadius = meleeAttackRaduis;
+            curMAttackDamageMultiplier = meleeAttackDamageMultiplier;
+            OnAttack = null;
+            OnAttackEnd = null;
             // TODO Rework 
             actor = GetComponent<Actor>();
         }
 
-
-        public virtual void SetInput(BaseInput baseInput)
-        {
-            if (input != null)
-            {
-                input.OnAttackPressed -= InputAttack;
-            }
-            
-            input = baseInput;
-            input.OnAttackPressed += InputAttack;
-        }
 
         public void SetTarget(Actor target)
         {
@@ -67,64 +69,68 @@ namespace Actors.Base
             return inCombat;
         }
         
-        private void Update()
+        protected virtual void Update()
         {
-            currentMeleeAttackCooldown -= Time.deltaTime;
-
-            if (Time.time - lastAttackTime > combatCooldown && inCombat)
+            float lastAttackDelta = Time.time - lastAttackTime; 
+            
+            if (lastAttackDelta > combatCooldown && inCombat)
             {
                 ExitCombat();
             }
-        }
-
-        protected virtual void InputAttack()
-        {
-            Debug.Log("Base");
+            
+            if (lastAttackDelta > (successAttackRowTime + curMAttackSpeed))
+            {
+                successAttackInRow = 0;
+            }
         }
         
-        protected virtual void MeleeAttack(List<Stats> targetStats)
+        public virtual void MeleeAttack(List<IHealthable> targetStats)
         {
             EnterCombat();
 
-            if (currentMeleeAttackCooldown > 0)
+            if (Time.time - lastAttackTime < curMAttackSpeed)
             {
                 return;
             }
 
-            StartCoroutine(DoDamage(targetStats));
+            StartCoroutine(DoMeleeDamage(targetStats));
 
-            currentMeleeAttackCooldown = meleeAttackSpeed;
             lastAttackTime = Time.time;
+            successAttackInRow++;
+
+            if (successAttackInRow == maxSuccessAttackInRow)
+            {
+                successAttackInRow = 0;
+            }
         }
 
-        public bool InMeleeRange(Transform target)
+        public bool InMeleeRange(Vector3 targetPosition)
         {
-            return Vector3.Distance(transform.position, target.position) <= meleeAttackRaduis;
+            return Vector3.Distance(transform.position, targetPosition) <= curMAttackRadius;
         }
         
         
-        protected IEnumerator DoDamage(List<Stats> targetStats)
+        protected virtual IEnumerator DoMeleeDamage(List<IHealthable> targetStats)
         {
             InvokeOnAttack();
 
-            yield return new WaitForSeconds(meleeAttackDelay);
+            yield return new WaitForSeconds(curMAttackDelay);
 
             for (int i = 0; i < targetStats.Count; i++)
             {
-                if (InMeleeRange(targetStats[i].transform))
+                if (InMeleeRange(targetStats[i].GetPosition()) && actor.vision.IsInViewAngle(targetStats[i].GetPosition()))
                 {
                     if (!stats.IsDead())
                     {
-                        Damage damage = new Damage(stats.GetDamageValue(), actor);
+                        Damage damage = new Damage(Mathf.FloorToInt(stats.GetDamageValue() * curMAttackDamageMultiplier), actor);
+
+//                        Debug.Log($"Attack in row :{successAttackInRow} damage: {damage.GetValue()}" );
                         targetStats[i].TakeDamage(damage);
                     }
                 }
             }
 
-            if (OnAttackEnd != null)
-            {
-                OnAttackEnd();
-            }
+            OnAttackEnd?.Invoke();
         }
         
         protected void InvokeOnAttack()
@@ -140,6 +146,11 @@ namespace Actors.Base
         protected void ExitCombat()
         {
             inCombat = false;
+        }
+
+        public int GetCurrentSuccessAttack()
+        {
+            return successAttackInRow;
         }
     }
 }
