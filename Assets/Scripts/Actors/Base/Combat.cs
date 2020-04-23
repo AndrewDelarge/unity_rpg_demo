@@ -157,5 +157,15 @@ namespace Actors.Base
         {
             return successAttackInRow;
         }
+        
+        public int GetMaxSuccessAttack()
+        {
+            return maxSuccessAttackInRow;
+        }
+
+        public float GetCurrentMeleeAttackSpeed()
+        {
+            return curMAttackSpeed;
+        }
     }
 }

@@ -11,6 +11,7 @@ namespace Actors.Player
 {
     public class PlayerActor : Actor
     {
+        public PlayerFX playerFx;
         private CameraController cameraController;
         
 //        protected override void Awake()
@@ -21,10 +22,12 @@ namespace Actors.Player
         public override void Init()
         {
             base.Init();
+            playerFx = GetComponent<PlayerFX>();
+            playerFx.Init(combat);
             // turnoff automatic vision update
             vision.isEnabled = false;
             cameraController = Camera.main.GetComponent<CameraController>();
-            combat.OnAttackEnd += () => StartCoroutine(cameraController.Shake(.1f, 1f));
+            combat.OnAttackEnd += ShakeCamera;
         }
         public override void MeleeAttack()
         {
@@ -50,5 +53,19 @@ namespace Actors.Player
             combat.MeleeAttack(attack);
         }
 
+
+        void ShakeCamera()
+        {
+            int current = combat.GetCurrentSuccessAttack();
+            int max = combat.GetMaxSuccessAttack();
+            Debug.Log(current + "  " + max);
+            int multyplier = 2;
+            if (0 == current)
+            {
+                multyplier *= 2;
+            }
+
+            StartCoroutine(cameraController.Shake(.1f * multyplier, 1f / 2));
+        }
     }
 }

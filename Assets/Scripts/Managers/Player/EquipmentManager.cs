@@ -101,7 +101,7 @@ namespace Managers.Player
         }
         
         
-        protected Transform GetEquipmentTransform(Equipment equipment)
+        public Transform GetEquipmentTransform(Equipment equipment)
         {
             string equipPath = "";
 

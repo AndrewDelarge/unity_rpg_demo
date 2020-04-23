@@ -41,7 +41,6 @@ public class GameController : MonoBehaviour
     {
         playerManager = GetComponentInChildren<PlayerManager>();
         uiManager = GetComponent<UIManager>();
-        actorsManager = new AIActorsManager();
         sceneController = GetComponentInChildren<SceneController>();
         sceneController.OnSceneLoaded += StartGame;
 
@@ -64,6 +63,7 @@ public class GameController : MonoBehaviour
     private void StartGame()
     {
         SpawnCamera();
+        actorsManager = new AIActorsManager();
         playerManager.Init();
         GameObject player = playerManager.SpawnPlayer(spawnPointId);
 

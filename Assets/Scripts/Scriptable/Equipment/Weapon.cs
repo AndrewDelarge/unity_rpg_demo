@@ -7,6 +7,8 @@ namespace Scriptable
     {
         public WeaponType type;
         public int damage = 1; 
+        public GameObject trail;
+        
         public override void Use()
         {
             GameController.instance.playerManager.equipmentManager.Equip(this);
