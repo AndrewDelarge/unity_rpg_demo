@@ -13,6 +13,11 @@ namespace GameInput
 
         private BehaviorState currentBstate;
         
+        private void Awake()
+        {
+            enabled = false;
+        }
+        
         public override void Init(Actor actor)
         {
             // TODO rework case to inspector select
@@ -25,6 +30,7 @@ namespace GameInput
             }
 
             behavior.Init(actor);
+            enabled = true;
         }
 
 

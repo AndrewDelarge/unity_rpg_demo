@@ -107,6 +107,7 @@
           <e p="Interactable.cs" t="Include" />
           <e p="ItemPickup.cs" t="Include" />
           <e p="Managers" t="Include">
+            <e p="AIActorsManager.cs" t="Include" />
             <e p="Player" t="Include">
               <e p="EquipmentManager.cs" t="Include" />
               <e p="InventoryManager.cs" t="Include" />

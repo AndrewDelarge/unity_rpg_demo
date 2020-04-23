@@ -21,6 +21,10 @@ namespace Actors.Base
         protected AnimatorOverrideController overrideController;
         protected AnimationClip[] currentAttackAnimSet;
 
+        private void Awake()
+        {
+            enabled = false;
+        }
 
         public virtual void Init(Combat actCombat, IControlable actMovement, Stats actStats)
         {
@@ -37,6 +41,7 @@ namespace Actors.Base
             combat.OnAttack += OnAttack;
             combat.OnAttackEnd += OnAttackEnd;
             stats.onGetDamage += OnGetHit;
+            enabled = true;
         }
 
         

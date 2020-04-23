@@ -17,11 +17,16 @@ namespace Actors.AI
         private Stats stats;
         private BaseInput input;
 
+        private void Awake()
+        {
+            enabled = false;
+        }
         public void Init(Stats actorStats, BaseInput baseInput)
         {
             agent = GetComponent<NavMeshAgent>();
             stats = actorStats;
             input = baseInput;
+            enabled = true;
         }
 
         private void FixedUpdate()
@@ -30,7 +35,7 @@ namespace Actors.AI
 
             if (target != null)
             {
-                FaceTarget();
+//                FaceTarget();
 
                 agent.SetDestination(target.transform.position);
             }
@@ -75,7 +80,7 @@ namespace Actors.AI
             agent.isStopped = false;
             target = newTarget;
             agent.stoppingDistance = stoppingDistance;
-            agent.updateRotation = false;
+            agent.updateRotation = true;
         }
 
         public void StopFollow()

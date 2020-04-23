@@ -28,11 +28,13 @@ namespace Actors.Player
         }
         public override void MeleeAttack()
         {
-            float oldView = vision.viewAngle; 
+            float oldView = vision.viewAngle;
             vision.viewAngle = 360f;
+            vision.viewRadius *= 2f;
             List<GameObject> objects = vision.FindVisibleColliders();
             
             vision.viewAngle = oldView;
+            vision.viewRadius /= 2f;
             List<IHealthable> attack = new List<IHealthable>();
             for (int i = 0; i < objects.Count; i++)
             {

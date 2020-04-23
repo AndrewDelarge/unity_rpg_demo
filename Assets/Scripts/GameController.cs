@@ -34,12 +34,14 @@ public class GameController : MonoBehaviour
     [HideInInspector] 
     public Camera camera;
 
+    public AIActorsManager actorsManager;
     protected int spawnPointId = 0;
     
     private void Start()
     {
         playerManager = GetComponentInChildren<PlayerManager>();
         uiManager = GetComponent<UIManager>();
+        actorsManager = new AIActorsManager();
         sceneController = GetComponentInChildren<SceneController>();
         sceneController.OnSceneLoaded += StartGame;
 

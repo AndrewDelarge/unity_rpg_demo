@@ -10,30 +10,48 @@ namespace Actors.AI
     [RequireComponent(typeof(AICombat))]
     public class AIActor : Actor
     {
-        public Collider collider{ get; protected set; }
+        public Collider actorColider{ get; protected set; }
 
-        protected virtual void Awake()
-        {
-            Init();
-        }
 
+        private Collider[] skilletColliders;
 
         public override void Init()
         {
             base.Init();
 
-            collider = GetComponent<Collider>();
+            actorColider = GetComponent<Collider>();
+            
+            skilletColliders = GetComponentsInChildren<Collider>();
+            
+            foreach (Collider collider in skilletColliders)
+            {
+                if (collider == actorColider)
+                {
+                    continue;
+                }
+                collider.isTrigger = true;
+            }
         }
 
         protected override void Die(GameObject go)
         {
             base.Die(go);
-            collider.enabled = false;
+            actorColider.enabled = false;
             Ragdoll();
         }
 
         void Ragdoll()
         {
+            foreach (Collider collider in skilletColliders)
+            {
+                if (collider == actorColider)
+                {
+                    continue;
+                }
+                
+                collider.isTrigger = false;
+            }
+            
             Rigidbody[] rigidbodies = GetComponentsInChildren<Rigidbody>();
             foreach (Rigidbody rigidbody in rigidbodies)
             {
@@ -42,13 +60,13 @@ namespace Actors.AI
                 
                 rigidbody.AddForce(- gameObject.transform.forward * 10, ForceMode.Impulse);
             }
-            
         }
 
         public override void MeleeAttack(Actor target)
         {
             if (combat.InMeleeRange(target.transform.position))
             {
+                movement.FaceTarget(target.transform.position);
                 List<IHealthable> attackList = new List<IHealthable>();
                 attackList.Add(target.stats);
                 

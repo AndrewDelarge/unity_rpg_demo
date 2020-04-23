@@ -26,6 +26,22 @@ namespace Actors.Player
             stats = actorStats;
         }
 
+
+        void OnControllerColliderHit(ControllerColliderHit hit)
+        {
+            Rigidbody body = hit.collider.attachedRigidbody;
+
+            // no rigidbody
+            if (body == null || body.isKinematic)
+                return;
+            
+            if (hit.moveDirection.y < -0.3f)
+                return;
+            
+            body.velocity = GetInputDirection() * 3;
+        }
+        
+        
         private void FixedUpdate()
         {
             Vector3 direction = Vector3.zero;
@@ -42,10 +58,7 @@ namespace Actors.Player
             
             if (input.IsSomeDirection())
             {
-                direction = new Vector3(input.horizontal, 0f, input.vertical);
-                direction = cam.transform.TransformDirection(direction);
-                direction.y = 0;
-
+                direction = GetInputDirection();
                 
                 direction = direction.normalized;
 
@@ -70,6 +83,16 @@ namespace Actors.Player
             Move(direction);
         }
 
+
+        Vector3 GetInputDirection()
+        {
+            Vector3 direction = new Vector3(input.horizontal, 0f, input.vertical);
+            direction = cam.transform.TransformDirection(direction);
+            direction.y = 0;
+
+            return direction;
+        }
+        
         public bool IsCanMove()
         {
             return characterController.isGrounded && !stopped;

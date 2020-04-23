@@ -38,7 +38,11 @@ namespace Actors.Base
         public event System.Action OnAttackEnd;
 
         public delegate void OnTargetChange(Actor target);
-        
+
+        private void Awake()
+        {
+            enabled = false;
+        }
 
         public virtual void Init(Stats actorStats, BaseInput baseInput)
         {
@@ -51,6 +55,7 @@ namespace Actors.Base
             OnAttackEnd = null;
             // TODO Rework 
             actor = GetComponent<Actor>();
+            enabled = true;
         }
 
 
