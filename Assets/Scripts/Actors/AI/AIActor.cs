@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Actors.Base;
 using Actors.Base.Interface;
@@ -11,26 +12,25 @@ namespace Actors.AI
     public class AIActor : Actor
     {
         public Collider actorColider{ get; protected set; }
-
-
         private Collider[] skilletColliders;
 
+        private AIActorFX actorFx;
+        
         public override void Init()
         {
             base.Init();
 
+            actorFx = GetComponent<AIActorFX>();
+            if (actorFx != null)
+            {
+                actorFx.Init();
+            }
+            
             actorColider = GetComponent<Collider>();
             
             skilletColliders = GetComponentsInChildren<Collider>();
             
-            foreach (Collider collider in skilletColliders)
-            {
-                if (collider == actorColider)
-                {
-                    continue;
-                }
-                collider.isTrigger = true;
-            }
+            SetSkilletColliderActivity(false);
         }
 
         protected override void Die(GameObject go)
@@ -42,15 +42,7 @@ namespace Actors.AI
 
         void Ragdoll()
         {
-            foreach (Collider collider in skilletColliders)
-            {
-                if (collider == actorColider)
-                {
-                    continue;
-                }
-                
-                collider.isTrigger = false;
-            }
+            SetSkilletColliderActivity(true);
             
             Rigidbody[] rigidbodies = GetComponentsInChildren<Rigidbody>();
             foreach (Rigidbody rigidbody in rigidbodies)
@@ -62,6 +54,19 @@ namespace Actors.AI
             }
         }
 
+        void SetSkilletColliderActivity(bool activity)
+        {
+            foreach (Collider collider in skilletColliders)
+            {
+                if (collider == actorColider)
+                {
+                    continue;
+                }
+                
+                collider.isTrigger = ! activity;
+            }
+        }
+        
         public override void MeleeAttack(Actor target)
         {
             if (combat.InMeleeRange(target.transform.position))

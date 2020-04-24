@@ -27,7 +27,7 @@ namespace Actors.Base
             FindVisibleTargets(defaultLayerMask);
         }
 
-        public List<GameObject> FindVisibleColliders()
+        public List<Collider> FindVisibleColliders()
         {
             return FindVisibleColliders(defaultLayerMask);
         }
@@ -45,7 +45,7 @@ namespace Actors.Base
             visibleTargets.Clear();
             actors.Clear();
 
-            List<GameObject> visibleObjects = FindVisibleColliders(mask);
+            List<Collider> visibleObjects = FindVisibleColliders(mask);
             
             for (int i = 0; i < visibleObjects.Count; i++)
             {
@@ -67,11 +67,11 @@ namespace Actors.Base
         }
 
 
-        public List<GameObject> FindVisibleColliders(LayerMask mask)
+        public List<Collider> FindVisibleColliders(LayerMask mask)
         {
             Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, mask);
             
-            List<GameObject> visibleObjects = new List<GameObject>();
+            List<Collider> visibleObjects = new List<Collider>();
             
             for (int i = 0; i < targetsInViewRadius.Length; i++)
             {
@@ -79,7 +79,7 @@ namespace Actors.Base
                 
                 if (IsInViewAngle(target.transform.position) && target.transform != transform)
                 {
-                    visibleObjects.Add(target);
+                    visibleObjects.Add(targetsInViewRadius[i]);
                 }
             }
             

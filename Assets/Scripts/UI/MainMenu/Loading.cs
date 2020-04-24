@@ -8,8 +8,7 @@ namespace UI.MainMenu
 {
     public class Loading : MonoBehaviour
     {
-        [SerializeField]
-        private RectTransform progressBar;
+        public RectTransform progressBar;
         private const float MAX_PROGRESS_SCALE = 1f;
         private Image progressBarImage;
 

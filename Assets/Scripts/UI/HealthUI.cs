@@ -22,6 +22,8 @@ namespace UI
         {
             stats = GetComponent<IHealthable>();
             
+            
+            
             if (Camera.main == null)
             {
                 return;
@@ -54,7 +56,7 @@ namespace UI
             }
             stats.OnHealthChange += SetHealth;
             
-            ui.gameObject.SetActive(true);
+            ui.gameObject.SetActive(false);
         }
         
         void SetHealth(object obj, EventArgs args)

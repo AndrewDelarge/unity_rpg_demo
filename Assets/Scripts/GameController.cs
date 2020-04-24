@@ -32,7 +32,7 @@ public class GameController : MonoBehaviour
     [HideInInspector] 
     public SceneController sceneController;
     [HideInInspector] 
-    public Camera camera;
+    public CameraController mainCamera;
 
     public AIActorsManager actorsManager;
     protected int spawnPointId = 0;
@@ -86,15 +86,15 @@ public class GameController : MonoBehaviour
     {
         if (Camera.main != null)
         {
-            camera = Camera.main;
+            mainCamera = Camera.main.GetComponent<CameraController>();
             return;
         }
-        camera = Instantiate(cameraPrefab).GetComponent<Camera>();
+        mainCamera = Instantiate(cameraPrefab).GetComponent<CameraController>();
     }
     
     void PrepareCamera(GameObject player)
     {
-        CameraController cameraController = camera.GetComponent<CameraController>();
+        CameraController cameraController = mainCamera.GetComponent<CameraController>();
         cameraController.target = player.transform;
     }
 

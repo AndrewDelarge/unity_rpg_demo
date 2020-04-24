@@ -31,7 +31,7 @@ namespace Player
             return maxHealth;
         }
 
-        public event EventHandler OnHealthChange;
+        public event EventHandler<HealthChangeEventArgs> OnHealthChange;
 
         public void TakeDamage(Damage damage)
         {
@@ -61,7 +61,7 @@ namespace Player
                 OnGetHit();
             }
 
-            OnHealthChange?.Invoke(this, EventArgs.Empty);
+            OnHealthChange?.Invoke(this, new HealthChangeEventArgs());
 
         }
 
@@ -71,7 +71,7 @@ namespace Player
 
             currentHealth += heal;
             
-            OnHealthChange?.Invoke(this, EventArgs.Empty);
+            OnHealthChange?.Invoke(this, new HealthChangeEventArgs());
         }
 
         public virtual void Die()

@@ -20,6 +20,11 @@ namespace Actors.Base.Interface
         
         int GetLevel();
 
-        event EventHandler OnHealthChange;
+        event EventHandler<HealthChangeEventArgs> OnHealthChange;
+    }
+    
+    public class HealthChangeEventArgs : EventArgs
+    {
+        public int healthChange = 0;
     }
 }

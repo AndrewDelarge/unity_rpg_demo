@@ -47,6 +47,7 @@
           <e p="Actors" t="Include">
             <e p="AI" t="Include">
               <e p="AIActor.cs" t="Include" />
+              <e p="AIActorFX.cs" t="Include" />
               <e p="AIAnimator.cs" t="Include" />
               <e p="AICombat.cs" t="Include" />
               <e p="AIMovement.cs" t="Include" />
@@ -79,6 +80,7 @@
               <e p="PlayerActor.cs" t="Include" />
               <e p="PlayerAnimator.cs" t="Include" />
               <e p="PlayerCombat.cs" t="Include" />
+              <e p="PlayerFX.cs" t="Include" />
               <e p="PlayerStats.cs" t="Include" />
             </e>
             <e p="Stat.cs" t="Include" />
@@ -93,6 +95,7 @@
           </e>
           <e p="GameCamera" t="Include">
             <e p="CameraController.cs" t="Include" />
+            <e p="FixedCameraZone.cs" t="Include" />
           </e>
           <e p="GameController.cs" t="Include" />
           <e p="GameInput" t="Include">

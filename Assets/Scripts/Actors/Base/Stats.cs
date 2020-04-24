@@ -9,7 +9,7 @@ namespace Actors.Base
 {
     public class Stats : MonoBehaviour, IHealthable
     {
-        public event EventHandler OnHealthChange;
+        public event EventHandler<HealthChangeEventArgs> OnHealthChange;
         protected const int STAMINA_COEF = 10;
         protected const int ATTACK_POWER_COEF = 2;
 
@@ -63,7 +63,8 @@ namespace Actors.Base
             currentHealth = GetMaxHealth();
             currentMaxHealth = GetMaxHealth();
             stamina.onChange += UpdateCurrentStats;
-            OnHealthChange?.Invoke(this, EventArgs.Empty);
+            
+            OnHealthChange?.Invoke(this, new HealthChangeEventArgs());
             if (isDead)
             {
                 onDied?.Invoke(gameObject);
@@ -150,13 +151,12 @@ namespace Actors.Base
                 Die();
             }
             
-            if (onGetDamage != null)
-            {
-                onGetDamage.Invoke(damage);
-            }
+            onGetDamage?.Invoke(damage);
 
 
-            OnHealthChange?.Invoke(this, EventArgs.Empty);
+            HealthChangeEventArgs args = new HealthChangeEventArgs();
+            args.healthChange = - damageValue;
+            OnHealthChange?.Invoke(this, args);
         }
         
         protected virtual void Die()
@@ -177,7 +177,11 @@ namespace Actors.Base
                 currentHealth = currentMaxHealth;
             }
             
-            OnHealthChange?.Invoke(this, EventArgs.Empty);
+            HealthChangeEventArgs args = new HealthChangeEventArgs();
+            
+            OnHealthChange?.Invoke(this, args);
         }
     }
+    
+
 }

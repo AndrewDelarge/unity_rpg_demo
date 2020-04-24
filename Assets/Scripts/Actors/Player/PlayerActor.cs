@@ -14,11 +14,6 @@ namespace Actors.Player
         public PlayerFX playerFx;
         private CameraController cameraController;
         
-//        protected override void Awake()
-//        {
-//            return;
-//        }
-
         public override void Init()
         {
             base.Init();
@@ -28,13 +23,14 @@ namespace Actors.Player
             vision.isEnabled = false;
             cameraController = Camera.main.GetComponent<CameraController>();
             combat.OnAttackEnd += ShakeCamera;
+            combat.OnAttackEnd += PushPhysicsObjects;
         }
         public override void MeleeAttack()
         {
             float oldView = vision.viewAngle;
             vision.viewAngle = 360f;
             vision.viewRadius *= 2f;
-            List<GameObject> objects = vision.FindVisibleColliders();
+            List<Collider> objects = vision.FindVisibleColliders();
             
             vision.viewAngle = oldView;
             vision.viewRadius /= 2f;
@@ -49,16 +45,29 @@ namespace Actors.Player
                 }
                 
             }
-
             combat.MeleeAttack(attack);
         }
 
 
+
+        void PushPhysicsObjects()
+        {
+            List<Collider> objects = vision.FindVisibleColliders();
+            for (int i = 0; i < objects.Count; i++)
+            {
+                Rigidbody rb = objects[i].attachedRigidbody;
+
+                if (rb != null)
+                {
+                    if (combat.InMeleeRange(objects[i].transform.position))
+                        rb.AddForce(transform.forward * 100, ForceMode.Impulse);
+                }
+            }
+        }
+
         void ShakeCamera()
         {
             int current = combat.GetCurrentSuccessAttack();
-            int max = combat.GetMaxSuccessAttack();
-            Debug.Log(current + "  " + max);
             int multyplier = 2;
             if (0 == current)
             {
