@@ -1,7 +1,7 @@
 using Actors.Player;
 using Exceptions.Game.Player;
+using Gameplay;
 using Managers.Player;
-using Player;
 using UnityEngine;
 
 namespace Managers

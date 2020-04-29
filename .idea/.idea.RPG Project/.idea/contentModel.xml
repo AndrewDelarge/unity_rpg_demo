@@ -11,11 +11,11 @@
           <e p="Actors" t="Include">
             <e p="FiledOfView.cs" t="Include" />
           </e>
-          <e p="Player" t="Include">
-            <e p="FiledOfView.cs" t="Include" />
-          </e>
           <e p="PropertyDrawer" t="Include">
             <e p="TagSelector.cs" t="Include" />
+          </e>
+          <e p="Quests" t="Include">
+            <e p="Quests.cs" t="Include" />
           </e>
         </e>
         <e p="External" t="Include">
@@ -50,11 +50,13 @@
               <e p="AIActorFX.cs" t="Include" />
               <e p="AIAnimator.cs" t="Include" />
               <e p="AICombat.cs" t="Include" />
+              <e p="AIDialog.cs" t="Include" />
               <e p="AIMovement.cs" t="Include" />
               <e p="Behavior" t="Include">
                 <e p="AiBehavior.cs" t="Include" />
                 <e p="AICompanionBehavior.cs" t="Include" />
                 <e p="BaseBehavior.cs" t="Include" />
+                <e p="Encounter.cs" t="Include" />
                 <e p="State" t="Include">
                   <e p="Base.cs" t="Include" />
                 </e>
@@ -68,12 +70,15 @@
               <e p="Interface" t="Include">
                 <e p="IControlable.cs" t="Include" />
                 <e p="IHealthable.cs" t="Include" />
+                <e p="ISpeakable.cs" t="Include" />
               </e>
               <e p="Stats.cs" t="Include" />
+              <e p="StatsStuff" t="Include">
+                <e p="BaseHealthModifier.cs" t="Include" />
+                <e p="Damage.cs" t="Include" />
+                <e p="Heal.cs" t="Include" />
+              </e>
               <e p="Vision.cs" t="Include" />
-            </e>
-            <e p="Combat" t="Include">
-              <e p="Damage.cs" t="Include" />
             </e>
             <e p="Player" t="Include">
               <e p="Movement.cs" t="Include" />
@@ -85,24 +90,62 @@
             </e>
             <e p="Stat.cs" t="Include" />
           </e>
-          <e p="Door.cs" t="Include" />
+          <e p="Env" t="Include">
+            <e p="Water.cs" t="Include" />
+          </e>
           <e p="Exceptions" t="Include">
             <e p="Game" t="Include">
               <e p="Player" t="Include">
                 <e p="CouldntSpawnPlayer.cs" t="Include" />
               </e>
+              <e p="UI" t="Include">
+                <e p="WorldspaceUiSpawnException.cs" t="Include" />
+              </e>
             </e>
           </e>
-          <e p="GameCamera" t="Include">
-            <e p="CameraController.cs" t="Include" />
+          <e p="Gameplay" t="Include">
             <e p="FixedCameraZone.cs" t="Include" />
+            <e p="Quests" t="Include">
+              <e p="ConditionBase.cs" t="Include" />
+              <e p="Conditions" t="Include">
+                <e p="KillNPC.cs" t="Include" />
+                <e p="KillNPCType.cs" t="Include" />
+                <e p="StepInTrigger.cs" t="Include" />
+                <e p="UseItem.cs" t="Include" />
+              </e>
+              <e p="Quest.cs" t="Include" />
+            </e>
+            <e p="Scenario" t="Include">
+              <e p="Actions" t="Include">
+                <e p="AIActors" t="Include">
+                  <e p="ActionMoving.cs" t="Include" />
+                  <e p="ActionSpeak.cs" t="Include" />
+                  <e p="KillHealthableAction.cs" t="Include" />
+                </e>
+                <e p="ScenarioAction.cs" t="Include" />
+                <e p="WithPlayer" t="Include">
+                  <e p="AddItemAction.cs" t="Include" />
+                </e>
+              </e>
+              <e p="Scenario.cs" t="Include" />
+            </e>
+            <e p="Teleport.cs" t="Include" />
+            <e p="Trigger.cs" t="Include" />
           </e>
-          <e p="GameController.cs" t="Include" />
-          <e p="GameInput" t="Include">
-            <e p="AIInput.cs" t="Include" />
-            <e p="BaseInput.cs" t="Include" />
-            <e p="JoystickInput.cs" t="Include" />
-            <e p="Keyboard.cs" t="Include" />
+          <e p="GameSystems" t="Include">
+            <e p="CameraController.cs" t="Include" />
+            <e p="GameController.cs" t="Include" />
+            <e p="Input" t="Include">
+              <e p="AIInput.cs" t="Include" />
+              <e p="BaseInput.cs" t="Include" />
+              <e p="JoystickInput.cs" t="Include" />
+              <e p="Keyboard.cs" t="Include" />
+            </e>
+            <e p="Languages" t="Include">
+              <e p="ITranslatable.cs" t="Include" />
+              <e p="Text.cs" t="Include" />
+              <e p="TextType.cs" t="Include" />
+            </e>
           </e>
           <e p="Helpers" t="Include">
             <e p="ConvertToRegularMesh.cs" t="Include" />
@@ -119,40 +162,6 @@
             <e p="SceneController.cs" t="Include" />
             <e p="UIManager.cs" t="Include" />
           </e>
-          <e p="NPC" t="Include">
-            <e p="ActorLookRadius.cs" t="Include" />
-            <e p="Encounter.cs" t="Include" />
-            <e p="Enemy.cs" t="Include" />
-            <e p="EnemyController.cs" t="Include" />
-            <e p="EnemyStats.cs" t="Include" />
-            <e p="NPCActor.cs" t="Include" />
-            <e p="NPCActorController.cs" t="Include" />
-            <e p="PlayerActor.cs" t="Include" />
-          </e>
-          <e p="Player" t="Include">
-            <e p="CharacterAnimator.cs" t="Include" />
-            <e p="CharacterCombat.cs" t="Include" />
-            <e p="CharacterFraction.cs" t="Include" />
-            <e p="CharacterStats.cs" t="Include" />
-            <e p="Inventory.cs" t="Include" />
-            <e p="PlayerAnimator.cs" t="Include" />
-            <e p="PlayerController.cs" t="Include" />
-            <e p="PlayerManager.cs" t="Include" />
-            <e p="PlayerMotor.cs" t="Include" />
-            <e p="PlayerStats.cs" t="Include" />
-            <e p="Stat.cs" t="Include" />
-            <e p="Trigger.cs" t="Include" />
-          </e>
-          <e p="Quests" t="Include">
-            <e p="ConditionBase.cs" t="Include" />
-            <e p="Conditions" t="Include">
-              <e p="KillNPC.cs" t="Include" />
-              <e p="KillNPCType.cs" t="Include" />
-              <e p="StepInTrigger.cs" t="Include" />
-              <e p="UseItem.cs" t="Include" />
-            </e>
-            <e p="Quest.cs" t="Include" />
-          </e>
           <e p="Scriptable" t="Include">
             <e p="Equipment" t="Include">
               <e p="Weapon.cs" t="Include" />
@@ -164,13 +173,24 @@
             <e p="Fraction.cs" t="Include" />
             <e p="GameActor.cs" t="Include" />
             <e p="Item.cs" t="Include" />
+            <e p="Items" t="Include">
+              <e p="Potion" t="Include">
+                <e p="HealPotion.cs" t="Include" />
+              </e>
+            </e>
             <e p="Quests" t="Include">
               <e p="ConditionInfo.cs" t="Include" />
               <e p="QuestInfo.cs" t="Include" />
             </e>
           </e>
-          <e p="Teleport.cs" t="Include" />
           <e p="UI" t="Include">
+            <e p="Base" t="Include">
+              <e p="HideableUi.cs" t="Include" />
+              <e p="WorldspaceUi.cs" t="Include" />
+            </e>
+            <e p="Dialog" t="Include">
+              <e p="Balloon.cs" t="Include" />
+            </e>
             <e p="HealthUI.cs" t="Include" />
             <e p="Hud" t="Include">
               <e p="ActionBar.cs" t="Include" />
@@ -182,6 +202,7 @@
             </e>
             <e p="Inventory" t="Include">
               <e p="Inventory.cs" t="Include" />
+              <e p="ItemReceived.cs" t="Include" />
               <e p="LootSlot.cs" t="Include" />
               <e p="Slot.cs" t="Include" />
               <e p="SlotInfo.cs" t="Include" />
@@ -191,6 +212,7 @@
               <e p="UI.cs" t="Include" />
             </e>
             <e p="Pointer.cs" t="Include" />
+            <e p="WorldUiCanvas.cs" t="Include" />
           </e>
         </e>
         <e p="Sprites" t="Include">
@@ -227,6 +249,7 @@
             <e p="EmojiOne Attribution.txt" t="Include" />
           </e>
         </e>
+        <e p="UICollision.cs" t="Include" />
       </e>
       <e p="Library" t="ExcludeRecursive" />
       <e p="obj" t="ExcludeRecursive" />

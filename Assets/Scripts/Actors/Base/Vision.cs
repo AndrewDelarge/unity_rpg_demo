@@ -109,5 +109,11 @@ namespace Actors.Base
             return false;
         }
         
+        public bool IsInViewAngle(Transform target)
+        {
+            return IsInViewAngle(target.position);
+        }
+        
+        
     }
 }

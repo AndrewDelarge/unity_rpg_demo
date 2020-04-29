@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
 using Actors.Base;
 using Actors.Base.Interface;
-using GameInput;
-using Scriptable;
+using Actors.Base.StatsStuff;
 using UnityEngine;
 
 namespace Actors.AI
@@ -31,8 +29,29 @@ namespace Actors.AI
             skilletColliders = GetComponentsInChildren<Collider>();
             
             SetSkilletColliderActivity(false);
+
+            stats.onGetDamage += PushBack;
         }
 
+        void PushBack(Damage damage)
+        {
+            float power = .1f;
+            if (damage.IsCrit())
+            {
+                power *= .5f;
+            }
+
+            Vector3 pos = transform.forward;
+            
+            Actor owner = damage.GetOwner();
+
+            if (owner != null)
+            {
+                pos = transform.InverseTransformPoint(owner.transform.position);
+            }
+            transform.position = transform.TransformPoint((-pos + Vector3.up) * power);
+        }
+        
         protected override void Die(GameObject go)
         {
             base.Die(go);
@@ -67,30 +86,16 @@ namespace Actors.AI
             }
         }
         
-        public override void MeleeAttack(Actor target)
+        public override void MeleeAttack(IHealthable target)
         {
-            if (combat.InMeleeRange(target.transform.position))
+            if (combat.InMeleeRange(target.GetTransform()))
             {
-                movement.FaceTarget(target.transform.position);
+                movement.FaceTarget(target.GetTransform().position);
                 List<IHealthable> attackList = new List<IHealthable>();
-                attackList.Add(target.stats);
+                attackList.Add(target);
                 
                 combat.MeleeAttack(attackList);
             }
-        }
-
-        public override void SetActorTarget(Actor newTarget)
-        {
-            base.SetActorTarget(newTarget);
-            
-            combat.SetTarget(newTarget);
-        }
-
-        public override void SetTransformTarget(Transform newTarget)
-        {
-            base.SetTransformTarget(newTarget);
-            
-            movement.SetTarget(newTarget);
         }
     }
 }

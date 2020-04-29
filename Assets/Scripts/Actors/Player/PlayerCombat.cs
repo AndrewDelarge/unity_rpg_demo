@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Actors.Base;
 using Actors.Base.Interface;
-using GameInput;
+using GameSystems;
+using GameSystems.Input;
 using Managers.Player;
 using Scriptable;
 using UnityEngine;
@@ -50,7 +51,6 @@ namespace Actors.Player
             curMAttackRadius = currentWeaponComboHitParams.GetRaduis(successAttackInRow);
             curMAttackDamageMultiplier = currentWeaponComboHitParams.GetFinalDamage(successAttackInRow);
             
-//            actor.movement.SetSpeed(0.1f);
             base.MeleeAttack(targetStats);
         }
 

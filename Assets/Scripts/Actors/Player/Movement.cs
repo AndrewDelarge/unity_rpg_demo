@@ -1,6 +1,7 @@
 using Actors.Base;
 using Actors.Base.Interface;
-using GameInput;
+using GameSystems;
+using GameSystems.Input;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -16,7 +17,7 @@ namespace Actors.Player
         private Camera cam;
         public Transform target { get; private set; }
         private bool stopped = false;
-        private bool jump = false;
+
 
         public void Init(Stats actorStats, BaseInput input)
         {
@@ -100,7 +101,7 @@ namespace Actors.Player
 
         public void Jump()
         {
-            this.jump = true;
+            return;
         }
 
         public float GetSpeed()
@@ -173,6 +174,16 @@ namespace Actors.Player
         public void SetSpeed(float multiplier)
         {
             speedMultiplier = multiplier;
+        }
+        
+        public Transform GetTransform()
+        {
+            return transform;
+        }
+        
+        public bool IsMoving()
+        {
+            return GetCurrentMagnitude() > 0;
         }
     }
 }

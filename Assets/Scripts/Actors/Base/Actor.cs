@@ -1,7 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Actors.Base.Interface;
-using GameInput;
+using GameSystems.Input;
 using Scriptable;
 using UnityEngine;
 
@@ -17,17 +18,8 @@ namespace Actors.Base
         public Vision vision{ get; protected set; }
         public BaseInput input{ get; protected set; }
         
-        
-        protected Actor actorTarget;
-        protected Transform transformTarget;
-
-        
         public IControlable movement { get; protected set; }
 
-//        protected virtual void Awake()
-//        {
-//            Init();
-//        }
 
         public virtual void Init()
         {
@@ -45,17 +37,6 @@ namespace Actors.Base
             animator.Init(combat, movement, stats);
 
             stats.onDied += Die;
-        }
-
-
-        public virtual void SetActorTarget(Actor newTarget)
-        {
-            actorTarget = newTarget;
-        }
-        
-        public virtual void SetTransformTarget(Transform newTarget)
-        {
-            transformTarget = newTarget;
         }
         
         protected virtual void Die(GameObject go)
@@ -91,9 +72,14 @@ namespace Actors.Base
             throw new NotImplementedException("Implement Melee Attack method!");
         }
         
-        public virtual void MeleeAttack(Actor actor)
+        public virtual void MeleeAttack(IHealthable actor)
         {
             throw new NotImplementedException("Implement Melee Attack method!");
+        }
+
+        public virtual void Dash()
+        {
+            throw new NotImplementedException("Implement Dash method!");
         }
     }
 }

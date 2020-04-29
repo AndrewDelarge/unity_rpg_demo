@@ -1,7 +1,4 @@
-﻿using Player;
-using UnityEngine;
-using UnityEngine.Events;
-
+﻿using UnityEngine;
 
 namespace Scriptable.Quests
 {

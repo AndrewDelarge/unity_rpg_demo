@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Actors.Base;
-using GameInput;
+using GameSystems.Input;
 using UnityEngine;
 
 namespace Actors.AI

@@ -1,5 +1,5 @@
 using System;
-using Actors.Combat;
+using Actors.Base.StatsStuff;
 using UnityEngine;
 
 namespace Actors.Base.Interface
@@ -10,9 +10,11 @@ namespace Actors.Base.Interface
 
         void TakeDamage(Damage damage);
 
+        void Heal(Heal heal);
+
         int GetHealth();
 
-        Vector3 GetPosition();
+        Transform GetTransform();
 
         int GetMaxHealth();
 

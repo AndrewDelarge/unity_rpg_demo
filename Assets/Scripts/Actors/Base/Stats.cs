@@ -1,9 +1,7 @@
 using System;
 using Actors.Base.Interface;
-using Actors.Combat;
-using Player;
+using Actors.Base.StatsStuff;
 using UnityEngine;
-using Random = System.Random;
 
 namespace Actors.Base
 {
@@ -20,7 +18,6 @@ namespace Actors.Base
         protected const float ARMOR_CAP = 100;
         protected const float CRIT_MULTIPLIER = 1.5f;
 
-        
         [SerializeField]
         private int level = 1;
         [SerializeField]
@@ -44,11 +41,6 @@ namespace Actors.Base
         public OnDied onDied;
         public OnGetDamage onGetDamage;
 
-        public Vector3 GetPosition()
-        {
-            return transform.position;
-        }
-
         public virtual void Init()
         {
             // Lvl coefs
@@ -70,39 +62,8 @@ namespace Actors.Base
                 onDied?.Invoke(gameObject);
             }
         }
-
-        public float GetArmorMultiplier()
-        {
-            return 1 - armor.GetValue() / ARMOR_CAP;
-        }
-
-        public float GetCriticalChance()
-        {
-            return (criticalChancePoints.GetValue() / CRIT_CAP) * 100;
-        }
         
-        private int StaminaToHealth(Stat stamina)
-        {
-            return stamina.GetValue() * STAMINA_COEF;
-        }
-
-        public int GetMaxHealth()
-        {
-            return baseMaxHealth + StaminaToHealth(stamina);
-        }
-
-        public float GetMovementSpeed()
-        {
-            return movementSpeed;
-        }
-        
-        
-        protected int ConvertAPToDamage(Stat ap)
-        {
-            return ap.GetValue() / ATTACK_POWER_COEF;
-        }
-        
-        public virtual int GetDamageValue()
+        public virtual Damage GetDamageValue()
         {
             int damage = ConvertAPToDamage(attackPower);
             int chance = Mathf.FloorToInt(GetCriticalChance());
@@ -116,27 +77,7 @@ namespace Actors.Base
             // Damage Randomising 
             damage = Mathf.FloorToInt(damage * UnityEngine.Random.Range(.9f, 1.1f));
 
-            return damage;
-        }
-
-        public bool IsHasLevel()
-        {
-            return true;
-        }
-
-        public int GetLevel()
-        {
-            return level;
-        }
-
-        public bool IsDead()
-        {
-            return isDead;
-        }
-
-        public int GetHealth()
-        {
-            return currentHealth;
+            return new Damage(damage, null, throwed <= chance);
         }
         
         public virtual void TakeDamage(Damage damage)
@@ -179,6 +120,82 @@ namespace Actors.Base
             
             HealthChangeEventArgs args = new HealthChangeEventArgs();
             
+            OnHealthChange?.Invoke(this, args);
+        }
+
+        public bool IsHasLevel()
+        {
+            return true;
+        }
+
+        public int GetLevel()
+        {
+            return level;
+        }
+
+        public bool IsDead()
+        {
+            return isDead;
+        }
+
+        public int GetHealth()
+        {
+            return currentHealth;
+        }
+        
+        public float GetArmorMultiplier()
+        {
+            return 1 - armor.GetValue() / ARMOR_CAP;
+        }
+
+        public float GetCriticalChance()
+        {
+            return (criticalChancePoints.GetValue() / CRIT_CAP) * 100;
+        }
+        
+        private int StaminaToHealth(Stat stamina)
+        {
+            return stamina.GetValue() * STAMINA_COEF;
+        }
+
+        public int GetMaxHealth()
+        {
+            return baseMaxHealth + StaminaToHealth(stamina);
+        }
+
+        public float GetMovementSpeed()
+        {
+            return movementSpeed;
+        }
+        
+        
+        protected int ConvertAPToDamage(Stat ap)
+        {
+            return ap.GetValue() / ATTACK_POWER_COEF;
+        }
+        
+        public void SetMovementSpeed(float speed)
+        {
+            movementSpeed = speed;
+        }
+        
+        public Transform GetTransform()
+        {
+            return transform;
+        }
+
+        public void Heal(Heal heal)
+        {
+            float healAmount = heal.GetValue() / 100f * GetMaxHealth();
+            currentHealth += Mathf.FloorToInt(healAmount);
+
+            if (currentHealth > currentMaxHealth)
+            {
+                currentHealth = currentMaxHealth;
+            }
+            
+            HealthChangeEventArgs args = new HealthChangeEventArgs();
+            args.healthChange = Mathf.FloorToInt(healAmount);
             OnHealthChange?.Invoke(this, args);
         }
     }

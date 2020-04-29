@@ -1,4 +1,6 @@
 using Actors.Base;
+using Actors.Base.StatsStuff;
+using GameSystems;
 using Managers.Player;
 using Scriptable;
 using UnityEngine;
@@ -33,9 +35,8 @@ namespace Actors.Player
         }
 
 
-        public override int GetDamageValue()
+        public override Damage GetDamageValue()
         {
-
             int damage = GetWeaponDamage();
             damage += ConvertAPToDamage(attackPower);
             int chance = Mathf.FloorToInt(GetCriticalChance());
@@ -47,9 +48,9 @@ namespace Actors.Player
             }
 
             // Damage Randomising 
-            damage = Mathf.FloorToInt(damage * UnityEngine.Random.Range(.9f, 1.1f));
+            damage = Mathf.FloorToInt(damage * Random.Range(.9f, 1.1f));
 
-            return damage;
+            return new Damage(damage, null, throwed <= chance);;
         }
 
 

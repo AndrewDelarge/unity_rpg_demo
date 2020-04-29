@@ -1,7 +1,6 @@
-﻿using Player;
+﻿using GameSystems;
 using UI.MainMenu;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace UI.Hud
 {

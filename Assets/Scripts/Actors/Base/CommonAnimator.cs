@@ -1,6 +1,5 @@
 using Actors.Base.Interface;
-using Actors.Combat;
-using Actors.Player;
+using Actors.Base.StatsStuff;
 using UnityEngine;
 
 namespace Actors.Base
@@ -91,6 +90,12 @@ namespace Actors.Base
             }
             
             return Random.Range(0, currentAttackAnimSet.Length);
+        }
+
+
+        public void Trigger(string triggerName)
+        {
+            animator.SetTrigger(triggerName);
         }
     }
 }

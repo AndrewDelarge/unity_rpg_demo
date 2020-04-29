@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using Actors.Base.Interface;
-using Actors.Combat;
-using GameInput;
+using Actors.Base.StatsStuff;
+
+using GameSystems.Input;
 using UnityEngine;
 
 namespace Actors.Base
@@ -11,6 +12,8 @@ namespace Actors.Base
     [RequireComponent(typeof(Stats))]
     public class Combat : MonoBehaviour
     {
+        
+        
         [SerializeField]
         private float combatCooldown = 6;
         protected float lastAttackTime;
@@ -23,6 +26,7 @@ namespace Actors.Base
         public float meleeAttackDelay = 0f;
         public float meleeAttackRaduis = 2f;
         public float meleeAttackDamageMultiplier = 1f;
+        public float commonCombatSpeedMultiplier = 1f;
 
 
         protected float curMAttackSpeed;
@@ -74,7 +78,7 @@ namespace Actors.Base
             return inCombat;
         }
         
-        protected virtual void Update()
+        protected virtual void FixedUpdate()
         {
             float lastAttackDelta = Time.time - lastAttackTime; 
             
@@ -83,7 +87,7 @@ namespace Actors.Base
                 ExitCombat();
             }
             
-            if (lastAttackDelta > (successAttackRowTime + curMAttackSpeed))
+            if (lastAttackDelta > (successAttackRowTime + GetCurrentMeleeAttackSpeed()))
             {
                 successAttackInRow = 0;
             }
@@ -93,14 +97,14 @@ namespace Actors.Base
         {
             EnterCombat();
 
-            if (Time.time - lastAttackTime < curMAttackSpeed)
+            if (Time.time - lastAttackTime < GetCurrentMeleeAttackSpeed())
             {
                 return;
             }
-
+            
+            lastAttackTime = Time.time;
             StartCoroutine(DoMeleeDamage(targetStats));
 
-            lastAttackTime = Time.time;
             successAttackInRow++;
 
             if (successAttackInRow == maxSuccessAttackInRow)
@@ -114,20 +118,27 @@ namespace Actors.Base
             return Vector3.Distance(transform.position, targetPosition) <= curMAttackRadius;
         }
         
+        public bool InMeleeRange(Transform targetTransform)
+        {
+            return InMeleeRange(targetTransform.position);
+        }
+        
         
         protected virtual IEnumerator DoMeleeDamage(List<IHealthable> targetStats)
         {
+            Debug.Log("Courtine, attack in row: " + successAttackInRow);
             InvokeOnAttack();
 
-            yield return new WaitForSeconds(curMAttackDelay);
+            yield return new WaitForSeconds(curMAttackDelay * commonCombatSpeedMultiplier);
 
             for (int i = 0; i < targetStats.Count; i++)
             {
-                if (InMeleeRange(targetStats[i].GetPosition()) && actor.vision.IsInViewAngle(targetStats[i].GetPosition()))
+                if (InMeleeRange(targetStats[i].GetTransform()) && actor.vision.IsInViewAngle(targetStats[i].GetTransform()))
                 {
                     if (!stats.IsDead())
                     {
-                        Damage damage = new Damage(Mathf.FloorToInt(stats.GetDamageValue() * curMAttackDamageMultiplier), actor);
+                        Damage tmpDmg = stats.GetDamageValue();
+                        Damage damage = new Damage(Mathf.FloorToInt(tmpDmg.GetValue() * curMAttackDamageMultiplier), actor, tmpDmg.IsCrit());
 
 //                        Debug.Log($"Attack in row :{successAttackInRow} damage: {damage.GetValue()}" );
                         targetStats[i].TakeDamage(damage);
@@ -165,7 +176,7 @@ namespace Actors.Base
 
         public float GetCurrentMeleeAttackSpeed()
         {
-            return curMAttackSpeed;
+            return curMAttackSpeed / commonCombatSpeedMultiplier;
         }
     }
 }

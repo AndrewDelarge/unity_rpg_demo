@@ -1,3 +1,5 @@
+using Actors.Base;
+using GameSystems;
 using UnityEngine;
 
 namespace Scriptable
@@ -9,9 +11,13 @@ namespace Scriptable
         public int damage = 1; 
         public GameObject trail;
         
-        public override void Use()
+        public override void Use(Actor actor)
         {
-            GameController.instance.playerManager.equipmentManager.Equip(this);
+            // TODO hardcoded tag
+            if (actor.CompareTag("Player"))
+            {
+                GameController.instance.playerManager.equipmentManager.Equip(this);
+            }
         }
     }
 }

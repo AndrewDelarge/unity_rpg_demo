@@ -1,4 +1,5 @@
-﻿using Player;
+﻿using Actors.Base;
+using Managers.Player;
 using UnityEngine;
 
 namespace Scriptable
@@ -11,14 +12,9 @@ namespace Scriptable
         public Sprite icon = null;
         public GameObject gameObject;
 
-        public virtual void Use()
+        public virtual void Use(Actor actor)
         {
             Debug.Log("Using " + name);
-        }
-
-        public void RemoveFromInventory()
-        {
-            Inventory.instance.Remove(this);
         }
     }
 }

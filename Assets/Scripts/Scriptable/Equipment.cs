@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Actors.Base;
+using GameSystems;
+using UnityEngine;
 
 namespace Scriptable
 {
@@ -14,9 +16,9 @@ namespace Scriptable
         public SkinnedMeshRenderer mesh;
         public EquipmentMeshRegion[] coveredMeshRegion;
         
-        public override void Use()
+        public override void Use(Actor actor)
         {
-            base.Use();
+            base.Use(actor);
             
             GameController.instance.playerManager.equipmentManager.Equip(this);
 //            RemoveFromInventory();

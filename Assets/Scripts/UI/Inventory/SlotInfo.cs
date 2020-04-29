@@ -1,5 +1,4 @@
 ﻿using Managers.Player;
-using Player;
 using Scriptable;
 using UnityEngine;
 using UnityEngine.UI;

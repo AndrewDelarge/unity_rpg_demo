@@ -1,4 +1,4 @@
-using Quests;
+using Gameplay.Quests;
 using UnityEngine;
 using UnityEngine.UI;
 

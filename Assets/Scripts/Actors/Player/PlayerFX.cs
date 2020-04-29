@@ -1,4 +1,5 @@
 using System.Collections;
+using GameSystems;
 using Managers.Player;
 using Scriptable;
 using UnityEngine;
@@ -10,6 +11,8 @@ namespace Actors.Player
         protected TrailRenderer currentTrail;
         private float trailTime;
         private Base.Combat combat;
+        public GameObject healParticle;
+        
         
         private EquipmentManager equipmentManager;
         public void Init(Base.Combat combat)

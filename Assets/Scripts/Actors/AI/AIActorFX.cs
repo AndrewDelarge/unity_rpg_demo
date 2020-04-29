@@ -1,7 +1,5 @@
 using System.Collections;
-using Actors.Base;
 using Actors.Base.Interface;
-using Actors.Combat;
 using UnityEngine;
 
 namespace Actors.AI

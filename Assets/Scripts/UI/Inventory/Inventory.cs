@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using GameSystems;
 using Managers.Player;
-using Player;
 using Scriptable;
 using UnityEngine;
 
@@ -12,7 +12,8 @@ namespace UI.Inventory
         public GameObject lootUI;
         public Transform slotsHub;
         public Transform lootSlotsHub;
-
+        public ItemReceived itemReceived; 
+        
         public SlotInfo slotInfo;
 
         private InventoryManager inventory;
@@ -25,7 +26,7 @@ namespace UI.Inventory
         public void Init()
         {
             inventory = GameController.instance.playerManager.inventoryManager;
-            inventory.onItemChangedCallback += UpdateUI;
+            inventory.onItemsChangedCallback += UpdateUI;
 
             inventorySlots = slotsHub.GetComponentsInChildren<Slot>();
             lootSlots = lootSlotsHub.GetComponentsInChildren<LootSlot>();
@@ -33,22 +34,11 @@ namespace UI.Inventory
             inventory.onLoot += ShowLoot;
             inventory.onLootEnd += HideLoot;
 
+            itemReceived.Init();
+
+            inventory.onItemAddWithVisual += itemReceived.ShowItem;
+            
             UpdateUI();
-        }
-
-        void FixedUpdate()
-        {
-            if (Input.GetButtonDown("Inventory"))
-            {
-                inventoryUI.SetActive(!inventoryUI.activeSelf);
-            }
-
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                inventoryUI.SetActive(false);
-                lootUI.SetActive(false);
-                PlayerManager.instance.Pause(false);
-            }
         }
 
         public void ToggleInventory()

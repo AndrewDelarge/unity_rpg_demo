@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Actors.Base;
 using Actors.Base.Interface;
+using GameSystems;
 using Scriptable;
 using UnityEngine;
 
@@ -34,7 +35,7 @@ namespace Actors.Player
              {
                  currentAttackAnimSet = weaponAnimationDict[equipment.type].clips;
                  overrideController[defaultCombatIdleAnim.name] = weaponAnimationDict[equipment.type].idle;
-                 animator.SetFloat("attackSpeedMultiplier", weaponAnimationDict[equipment.type].animationSpeed);
+                 animator.SetFloat("attackSpeedMultiplier", combat.commonCombatSpeedMultiplier);
              }
         }
 

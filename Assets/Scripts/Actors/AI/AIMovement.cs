@@ -1,6 +1,6 @@
 using Actors.Base;
 using Actors.Base.Interface;
-using GameInput;
+using GameSystems.Input;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -137,6 +137,17 @@ namespace Actors.AI
         public void SetSpeed(float multiplier)
         {
             speedMultiplier = multiplier;
+        }
+        
+        public Transform GetTransform()
+        {
+            return transform;
+        }
+
+
+        public bool IsMoving()
+        {
+            return GetCurrentMagnitude() > 0;
         }
     }
 }

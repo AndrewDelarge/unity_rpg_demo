@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Actors.AI;
-using GameInput;
 using UnityEngine;
 
 namespace Managers
@@ -15,6 +14,7 @@ namespace Managers
         {
             AIActor[] actors = GameObject.FindObjectsOfType<AIActor>();
             aliveActors = new List<AIActor>();
+            
             
             for (int i = 0; i < actors.Length; i++)
             {

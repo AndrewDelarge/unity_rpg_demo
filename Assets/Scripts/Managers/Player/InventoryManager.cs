@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using GameSystems;
 using Scriptable;
 using UnityEngine;
 
@@ -24,13 +25,15 @@ namespace Managers.Player
         #endregion
 
         public delegate void OnItemChanged();
+        public delegate void OnItemAddWithVisual(Item item);
 
         public delegate void OnItemUse(Item item);
         public delegate void OnLoot(Interactable lootTarget);
 
         public OnItemUse onItemUse;
         public OnLoot onLoot;
-        public OnItemChanged onItemChangedCallback;
+        public OnItemChanged onItemsChangedCallback;
+        public OnItemAddWithVisual onItemAddWithVisual;
         public System.Action onLootEnd;
 
         public int space = 20;
@@ -46,13 +49,13 @@ namespace Managers.Player
 
             onItemUse = null;
             onLoot = null;
-            onItemChangedCallback = null;
+            onItemsChangedCallback = null;
             onLootEnd = null;
             
             defaultItemGameObject = Resources.Load<GameObject>("Equipments/EmptyItem");
         }
 
-        public bool Add(Item item)
+        public bool Add(Item item, bool visual = false)
         {
             if (items.Count >= space)
             {
@@ -61,10 +64,12 @@ namespace Managers.Player
             }
             items.Add(item);
 
-            if (onItemChangedCallback != null)
+            if (visual)
             {
-                onItemChangedCallback.Invoke();
+                onItemAddWithVisual?.Invoke(item);
             }
+            
+            onItemsChangedCallback?.Invoke();
             
             return true;
         }
@@ -80,10 +85,8 @@ namespace Managers.Player
         public void Remove(Item item)
         {
             items.Remove(item);
-            if (onItemChangedCallback != null)
-            {
-                onItemChangedCallback.Invoke();
-            }
+            
+            onItemsChangedCallback?.Invoke();
         }
 
         public void Loot()
@@ -99,18 +102,13 @@ namespace Managers.Player
         
         public void Loot(Interactable lootTarget)
         {
-            if (onLoot != null)
-            {
-                onLoot.Invoke(lootTarget);
-            }
+            onLoot?.Invoke(lootTarget);
+            
         }
 
         public void StopLoot()
         {
-            if (onLootEnd != null)
-            {
-                onLootEnd();
-            }
+            onLootEnd?.Invoke();
         }
         
         public void Drop(Item item)
@@ -125,7 +123,7 @@ namespace Managers.Player
 
         public void Use(Item item)
         {
-            item.Use();
+            item.Use(GameController.instance.playerManager.GetPlayer());
 
             onItemUse?.Invoke(item);
         }

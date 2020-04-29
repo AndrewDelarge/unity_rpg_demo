@@ -1,6 +1,7 @@
 using System.Collections;
 using Actors.Base;
-using GameInput;
+using Actors.Base.Interface;
+using GameSystems.Input;
 using UnityEngine;
 
 namespace Actors.AI.Behavior
@@ -12,14 +13,14 @@ namespace Actors.AI.Behavior
 
     public enum BehaviorState
     {
-        Idle, Patrol, Attack, Fear, Stan, Dead
+        Idle, Patrol, Attack, Fear, Stan, Dead, ReturnToIdle
     }
     
     public abstract class BaseBehavior
     {
         protected Actor actor;
         protected BaseInput input;
-        protected Actor attackTarget;
+        protected IHealthable attackTarget;
         protected BehaviorState state;
         
         public virtual void Init(Actor baseActor)
@@ -34,16 +35,12 @@ namespace Actors.AI.Behavior
         {
             if (! actor.InCombat())
             {
-                SetAttackTarget(attackedBy);
+                SetAttackTarget(attackedBy.stats);
             }
         }
 
-        public void SetAttackTarget(Actor target)
+        public void SetAttackTarget(IHealthable target)
         {
-            if (target.IsDead())
-            {
-                return;
-            }
             attackTarget = target;
             state = BehaviorState.Attack;
         }
@@ -74,7 +71,8 @@ namespace Actors.AI.Behavior
             return null;
         }
 
-        protected abstract void Idle();
+        public abstract void Idle();
+        public abstract void ReturnToIdle();
 
         protected abstract void Patrol(Vector3[] points = null);
 

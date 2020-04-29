@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Player;
+﻿using Managers.Player;
 using Scriptable;
 using UnityEngine;
 
@@ -8,12 +6,15 @@ public class ItemPickup : Interactable
 {
     public Item item;
 
+
+    private InventoryManager inventoryManager;
     private GameObject itemNameTextTemplate;
     private GameObject itemNameTextObject;
 
     protected override void Start()
     {
         base.Start();
+        inventoryManager = InventoryManager.instance;
         itemNameTextTemplate = Resources.Load<GameObject>("UI/ItemNameText");
     }
 
@@ -25,7 +26,7 @@ public class ItemPickup : Interactable
 
     public void PickUp()
     {
-        if (Inventory.instance.Add(item))
+        if (inventoryManager.Add(item))
         {
             Debug.Log("Item picked: " + item.name);
             Destroy(gameObject);

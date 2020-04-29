@@ -1,4 +1,5 @@
-﻿using Scriptable;
+﻿using Managers.Player;
+using Scriptable;
 
 namespace UI.Inventory
 {
@@ -24,7 +25,7 @@ namespace UI.Inventory
         {
             if (item != null)
             {
-                if (Player.Inventory.instance.Add(item))
+                if (InventoryManager.instance.Add(item))
                 {
                     inventoryUI.lootTarget.RemoveFromLoot(item);
                 }

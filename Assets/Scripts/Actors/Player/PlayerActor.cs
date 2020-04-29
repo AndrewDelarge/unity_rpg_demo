@@ -1,8 +1,9 @@
 
+using System.Collections;
 using System.Collections.Generic;
 using Actors.Base;
 using Actors.Base.Interface;
-using GameCamera;
+using GameSystems;
 using Managers.Player;
 using Scriptable;
 using UnityEngine;
@@ -13,6 +14,10 @@ namespace Actors.Player
     {
         public PlayerFX playerFx;
         private CameraController cameraController;
+
+        private bool dashing = false;
+        private float dashingColdownd = 1f;
+        private float dashingTime;
         
         public override void Init()
         {
@@ -25,8 +30,15 @@ namespace Actors.Player
             combat.OnAttackEnd += ShakeCamera;
             combat.OnAttackEnd += PushPhysicsObjects;
         }
+        
+        
         public override void MeleeAttack()
         {
+            if (dashing)
+            {
+                return;
+            }
+            
             float oldView = vision.viewAngle;
             vision.viewAngle = 360f;
             vision.viewRadius *= 2f;
@@ -49,7 +61,33 @@ namespace Actors.Player
         }
 
 
+        public override void Dash()
+        {
+            if (CanDash())
+            {
+                StartCoroutine(Dashing());
+            }
+        }
 
+        public IEnumerator Dashing()
+        {
+            // TODO hardcode
+            if (!CanDash())
+            {
+                yield break;
+            }
+            dashingTime = Time.time;
+            dashing = true;
+            animator.Trigger("dash");
+            movement.SetSpeed(3.5f);
+            yield return new WaitForSeconds(.15f);
+            movement.SetSpeed(2);
+            yield return new WaitForSeconds(.3f);
+            
+            movement.SetSpeed(1);
+            dashing = false;
+        }
+        
         void PushPhysicsObjects()
         {
             List<Collider> objects = vision.FindVisibleColliders();
@@ -75,6 +113,17 @@ namespace Actors.Player
             }
 
             StartCoroutine(cameraController.Shake(.1f * multyplier, 1f / 2));
+        }
+
+
+        bool CanDash()
+        {
+            if (Time.time - dashingTime >= dashingColdownd)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

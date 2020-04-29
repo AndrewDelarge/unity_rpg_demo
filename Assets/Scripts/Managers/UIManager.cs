@@ -37,6 +37,11 @@ namespace Managers
         {
             return uiHud.actionBar;
         }
+        
+        public QuestPanel GetQuestPanel()
+        {
+            return uiHud.questPanel;
+        }
 
 
         public Loading GetLoadScreen()

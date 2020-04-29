@@ -1,7 +1,6 @@
 using System.Collections;
 using Actors.Base;
-using Actors.Combat;
-using GameInput;
+using Actors.Base.StatsStuff;
 using UnityEngine;
 
 namespace Actors.AI.Behavior
@@ -48,33 +47,62 @@ namespace Actors.AI.Behavior
             }
         }
         
-        protected override void Idle()
+        public override void Idle()
         {
             Actor newTarget = GetNextEnemy();
+
             if (newTarget != null)
             {
-                SetAttackTarget(newTarget);
+                SetAttackTarget(newTarget.stats);
+                
+                Actor friend = GetClosestFriend();
+                if (friend != null && !friend.movement.IsMoving())
+                {
+                    friend.movement.SetTarget(newTarget.transform);
+                }
             }
         }
 
         protected override void Attack()
         {
-            if (attackTarget == null 
-                || attackTarget.IsDead()
-                || Vector3.Distance(attackTarget.transform.position, actor.transform.position) > actor.vision.viewRadius)
+            if (! TargetExists() || GetDistanceToTarget() > actor.vision.viewRadius)
             {
-                attackTarget = null;
-                state = BehaviorState.Idle;
-                actor.movement.StopFollow();
-                actor.movement.MoveTo(lastIdlePosition);
+                ReturnToIdle();
                 return;
             }
             
-            actor.movement.Follow(attackTarget.transform);
+            actor.movement.Follow(attackTarget.GetTransform());
             actor.MeleeAttack(attackTarget);
         }
 
+        public override void ReturnToIdle()
+        {
+            if (Vector3.Distance(lastIdlePosition, actor.transform.position) <= 1)
+            {
+                state = BehaviorState.Idle;
+            }
 
+            if (state == BehaviorState.ReturnToIdle) {
+                return;
+            }
+
+            attackTarget = null;
+            state = BehaviorState.ReturnToIdle;
+            actor.movement.StopFollow();
+            actor.movement.MoveTo(lastIdlePosition);
+        }
+
+
+        float GetDistanceToTarget()
+        {
+            return Vector3.Distance(attackTarget.GetTransform().position, actor.transform.position);
+        }
+
+        bool TargetExists()
+        {
+            return attackTarget != null && ! attackTarget.IsDead();
+        }
+        
         protected void FollowTarget(Transform transform)
         {
             

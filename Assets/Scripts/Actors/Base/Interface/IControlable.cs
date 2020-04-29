@@ -1,4 +1,4 @@
-using GameInput;
+using GameSystems.Input;
 using UnityEngine;
 
 namespace Actors.Base.Interface
@@ -31,6 +31,8 @@ namespace Actors.Base.Interface
         void Enable();
 
         void SetSpeed(float multiplier);
+        Transform GetTransform();
 
+        bool IsMoving();
     }
 }

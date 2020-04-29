@@ -1,7 +1,5 @@
 ﻿using System;
 using Actors.Base.Interface;
-using NPC;
-using Player;
 using UnityEngine;
 using UnityEngine.UI;
 
