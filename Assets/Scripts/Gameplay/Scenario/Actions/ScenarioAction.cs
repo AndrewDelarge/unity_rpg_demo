@@ -34,7 +34,6 @@ namespace Gameplay.Scenario.Actions
             
             if (Time.time - startTime >= maxTime)
             {
-                Debug.Log($"{name} action Done");
                 doing = false;
                 onComplete?.Invoke();
             }

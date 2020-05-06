@@ -14,10 +14,10 @@ namespace UI
         private IHealthable stats;
         private bool showed = false;
         
-        protected override void Start()
+        public override void Init()
         {
             type = WorldUiType.Healthbars;
-            base.Start();
+            base.Init();
             stats = GetComponent<IHealthable>();
 
             healthImage = curElement.transform.GetChild(0).GetComponent<Image>();

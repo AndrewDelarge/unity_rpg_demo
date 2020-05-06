@@ -47,13 +47,13 @@ namespace GameSystems
             uiManager = GetComponent<UIManager>();
             sceneController = GetComponentInChildren<SceneController>();
             sceneController.OnSceneLoaded += StartGame;
-            SpawnWorldUiCanvas();
 
             uiManager.Spawn(transform);
             uiManager.HideHud();
             sceneController.Init();
         
 #if (UNITY_EDITOR)
+            SpawnWorldUiCanvas();
             StartGame();
 #endif
         
@@ -70,6 +70,7 @@ namespace GameSystems
         private void StartGame()
         {
             SpawnCamera();
+            SpawnWorldUiCanvas();
             actorsManager = new AIActorsManager();
             playerManager.Init();
             GameObject player = playerManager.SpawnPlayer(spawnPointId);

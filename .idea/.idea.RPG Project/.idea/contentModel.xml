@@ -105,6 +105,12 @@
           </e>
           <e p="Gameplay" t="Include">
             <e p="FixedCameraZone.cs" t="Include" />
+            <e p="Player" t="Include">
+              <e p="SpawnPoint.cs" t="Include" />
+              <e p="Teleport.cs" t="Include" />
+              <e p="TeleportToScene.cs" t="Include" />
+              <e p="TeleportToSpawnpoint.cs" t="Include" />
+            </e>
             <e p="Quests" t="Include">
               <e p="ConditionBase.cs" t="Include" />
               <e p="Conditions" t="Include">
@@ -129,11 +135,13 @@
               </e>
               <e p="Scenario.cs" t="Include" />
             </e>
-            <e p="Teleport.cs" t="Include" />
             <e p="Trigger.cs" t="Include" />
           </e>
           <e p="GameSystems" t="Include">
             <e p="CameraController.cs" t="Include" />
+            <e p="FX" t="Include">
+              <e p="ParticleSpawner.cs" t="Include" />
+            </e>
             <e p="GameController.cs" t="Include" />
             <e p="Input" t="Include">
               <e p="AIInput.cs" t="Include" />

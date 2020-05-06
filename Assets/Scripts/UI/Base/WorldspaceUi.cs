@@ -19,7 +19,7 @@ namespace UI.Base
         
         
         
-        protected override void Start()
+        public override void Init()
         {
             cam = GameController.instance.mainCamera;
             worldUiCanvas = GameController.instance.worldUiCanvas;

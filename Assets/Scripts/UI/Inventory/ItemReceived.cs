@@ -18,13 +18,12 @@ namespace UI.Inventory
         protected List<Item> itemsToShow;
         private Animator itemAnimator;
 
-        public void Init()
+        public override void Init()
         {
             curElement = gameObject;
             itemAnimator = GetComponentInChildren<Animator>();
             textHolder.text = text.GetText();
             icon.enabled = false;
-            Hide();
         }
 
         public void ShowItem(Item item)

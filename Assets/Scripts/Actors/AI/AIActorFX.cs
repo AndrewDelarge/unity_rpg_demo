@@ -1,10 +1,11 @@
 using System.Collections;
 using Actors.Base.Interface;
+using GameSystems.FX;
 using UnityEngine;
 
 namespace Actors.AI
 {
-    public class AIActorFX : MonoBehaviour
+    public class AIActorFX : ParticleSpawner
     {
 
         public GameObject hitParticle;
@@ -31,34 +32,13 @@ namespace Actors.AI
         {
             if (args.healthChange > 0)
             {
-                StartCoroutine(SpawnParticle(healParticle));
+                StartCoroutine(SpawnParticle(healParticle, target, particleLifetime));
             }
             else if (args.healthChange < 0)
             {
-                StartCoroutine(SpawnParticle(hitParticle));
+                StartCoroutine(SpawnParticle(hitParticle, target, particleLifetime));
             }
         }
-        
-        
-        IEnumerator SpawnParticle(GameObject particle)
-        {
-            if (particle == null)
-            {
-                yield break;
-            }
-            
-            Vector3 pos = target.position;
-            pos.y += 1;
-            
-            GameObject currentParticle = Instantiate(particle, pos, new Quaternion(), target);
-
-            currentParticle.transform.localScale = transform.localScale;
-            
-            yield return new WaitForSeconds(particleLifetime);
-            
-            Destroy(currentParticle);
-        }
-
     }
     
     

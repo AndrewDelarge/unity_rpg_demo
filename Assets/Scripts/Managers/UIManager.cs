@@ -23,8 +23,8 @@ namespace Managers
             GameObject ui = Instantiate(UIPrefab, parent);
 
             uiHud = ui.GetComponent<UI.Hud.UI>();
-//            uiHud.Init();
             isSpawned = true;
+            HideHud();
         }
 
         public void SetPlayer(GameObject player)

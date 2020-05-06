@@ -1,6 +1,7 @@
 using Actors.Player;
 using Exceptions.Game.Player;
 using Gameplay;
+using Gameplay.Player;
 using Managers.Player;
 using UnityEngine;
 
@@ -18,10 +19,11 @@ namespace Managers
         public EquipmentManager equipmentManager;
         [HideInInspector]
         public InventoryManager inventoryManager;
-
+        public SpawnPoint[] spawnPoints;
 
         public void Init()
         {
+            spawnPoints = FindObjectsOfType<SpawnPoint>();
             equipmentManager = GetComponent<EquipmentManager>();
             inventoryManager = GetComponent<InventoryManager>();
             equipmentManager.Init();
@@ -58,27 +60,35 @@ namespace Managers
             currentPlayer.Init();
         }
         
-        
-        
         GameObject FindSpawnPoint(int spawnPointId)
         {
-            GameObject[] gos = GameObject.FindGameObjectsWithTag(spawnTag);
 
-            if (gos.Length < spawnPointId + 1 || gos.Length == 0)
+            for (int i = 0; i < spawnPoints.Length; i++)
             {
-                return null;
+                if (spawnPoints[i].id == spawnPointId)
+                {
+                    return spawnPoints[i].gameObject;
+                }
             }
-            
-            return gos[spawnPointId];
+
+            return null;
         }
 
-
+        public void TeleportToPoint(int spawnPointId)
+        {
+            GameObject point = FindSpawnPoint(spawnPointId);
+            if (point != null)
+            {
+                ChangePlayerPos(point.transform.position);
+            }
+        }
+        
         public PlayerActor GetPlayer()
         {
             return currentPlayer;
         }
 
-        public void ChangePlayerPos(Vector3 pos)
+        private void ChangePlayerPos(Vector3 pos)
         {
             currentPlayer.transform.position = pos;
         }

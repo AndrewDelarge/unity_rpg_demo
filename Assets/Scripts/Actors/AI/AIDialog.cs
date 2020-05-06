@@ -12,13 +12,6 @@ namespace Actors.AI
         private float curTime;
 
 
-        protected override void Start()
-        {
-            base.Start();
-            
-            
-        }
-
         public void Say(Text text, float time)
         {
             curText = text;

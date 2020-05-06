@@ -44,6 +44,7 @@ namespace UI.Hud
             healthBar.gameObject.SetActive(false);
             upperPanel.gameObject.SetActive(false);
             questPanel.gameObject.SetActive(false);
+            inventory.itemReceived.gameObject.SetActive(false);
         }
         
         

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Actors.Base;
 using Actors.Base.Interface;
 using Actors.Base.StatsStuff;
+using UI;
 using UnityEngine;
 
 namespace Actors.AI
@@ -13,6 +14,7 @@ namespace Actors.AI
         private Collider[] skilletColliders;
 
         private AIActorFX actorFx;
+        private AIDialog dialog;
         
         public override void Init()
         {
@@ -23,6 +25,19 @@ namespace Actors.AI
             {
                 actorFx.Init();
             }
+            
+            dialog = GetComponent<AIDialog>();
+            if (dialog != null)
+            {
+                dialog.Init();
+            }
+            
+            HealthUI healthUi = GetComponent<HealthUI>();
+            if (healthUi != null)
+            {
+                healthUi.Init();
+            }
+            
             
             actorColider = GetComponent<Collider>();
             

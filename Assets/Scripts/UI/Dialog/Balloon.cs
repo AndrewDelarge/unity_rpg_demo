@@ -8,11 +8,11 @@ namespace UI.Dialog
     {
         private Text text;
         
-        protected override void Start()
+        public override void Init()
         {
             type = WorldUiType.Dialog;
 
-            base.Start();
+            base.Init();
 
             text = curElement.GetComponentInChildren<Text>();
             Hide();

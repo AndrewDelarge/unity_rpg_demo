@@ -1,20 +1,28 @@
 using System.Collections;
+using Actors.Base.Interface;
 using GameSystems;
+using GameSystems.FX;
 using Managers.Player;
 using Scriptable;
 using UnityEngine;
 
 namespace Actors.Player
 {
-    public class PlayerFX : MonoBehaviour
+    public class PlayerFX : ParticleSpawner
     {
+        public GameObject healParticle;
+        public GameObject hitParticle;
+        public float particleLifetime;
+        
+        
         protected TrailRenderer currentTrail;
+        
         private float trailTime;
         private Base.Combat combat;
-        public GameObject healParticle;
-        
-        
         private EquipmentManager equipmentManager;
+        private Transform target;
+        private IHealthable stats;
+        
         public void Init(Base.Combat combat)
         {
             equipmentManager = GameController.instance.playerManager.equipmentManager;
@@ -22,8 +30,30 @@ namespace Actors.Player
             equipmentManager.onWeaponEquip += SpawnTrail;
             equipmentManager.onWeaponUnequip += DestroyTrail;
             combat.OnAttack += () => StartCoroutine(ShowTrail());
+            
+            stats = GetComponent<IHealthable>();
+            stats.OnHealthChange += ShowHealChange;
+            target = transform;
+            Transform targetRend = GetComponentInChildren<Transform>();
+            if (targetRend != null)
+            {
+                target = targetRend.transform;
+            }
+            
         }
 
+        void ShowHealChange(object healthable, HealthChangeEventArgs args)
+        {
+            if (args.healthChange > 0)
+            {
+                StartCoroutine(SpawnParticle(healParticle, transform, particleLifetime));
+            }
+            else if (args.healthChange < 0)
+            {
+                StartCoroutine(SpawnParticle(hitParticle, transform, particleLifetime));
+            }
+        }
+        
 
         IEnumerator ShowTrail()
         {
