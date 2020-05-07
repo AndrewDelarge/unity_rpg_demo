@@ -10,6 +10,7 @@ namespace Actors.Base
         public AnimationClip replaceableAttackClip;
         public AnimationClip[] defaultAttackAnimSet;
         public string attackLayerName = "Attack";
+        public string attackInRunLayerName = "AttackInRun";
 
 
         protected Combat combat;
@@ -19,7 +20,7 @@ namespace Actors.Base
         protected Animator animator;
         protected AnimatorOverrideController overrideController;
         protected AnimationClip[] currentAttackAnimSet;
-
+        
         private void Awake()
         {
             enabled = false;
@@ -48,7 +49,8 @@ namespace Actors.Base
         {
             float speedPercent = movement.GetCurrentMagnitude() / stats.GetMovementSpeed();
             animator.SetFloat("speedPercent", speedPercent, locomotionAnimationSmoothTime, Time.deltaTime);
-        
+
+            ToggleAttackLayers(speedPercent);
             animator.SetBool("inCombat", combat.InCombat());
         }
 
@@ -65,7 +67,7 @@ namespace Actors.Base
         protected virtual void OnAttack()
         {
             animator.SetTrigger("attack");
-
+            
             int animIndex = GetCurrentAttackAnimationIndex();
 
             overrideController[replaceableAttackClip.name] = currentAttackAnimSet[animIndex];
@@ -97,5 +99,27 @@ namespace Actors.Base
         {
             animator.SetTrigger(triggerName);
         }
+
+        void ToggleAttackLayers(float speed)
+        {
+            int index = animator.GetLayerIndex(attackLayerName);
+            int indexRun = animator.GetLayerIndex(attackInRunLayerName);
+
+            if (indexRun == -1 || index == -1)
+            {
+                return;
+            }
+
+            if (speed > 0)
+            {
+                animator.SetLayerWeight(index, 0f);
+                animator.SetLayerWeight(indexRun, 1f);
+                return;
+            }
+            
+            animator.SetLayerWeight(index, 1f);
+            animator.SetLayerWeight(indexRun, 0f);
+        }
+        
     }
 }

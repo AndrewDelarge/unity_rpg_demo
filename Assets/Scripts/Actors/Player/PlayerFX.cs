@@ -15,7 +15,7 @@ namespace Actors.Player
         public float particleLifetime;
         
         
-        protected TrailRenderer currentTrail;
+        protected ParticleSystem currentTrail;
         
         private float trailTime;
         private Base.Combat combat;
@@ -25,8 +25,8 @@ namespace Actors.Player
         
         public void Init(Base.Combat combat)
         {
-            equipmentManager = GameController.instance.playerManager.equipmentManager;
             this.combat = combat;
+            equipmentManager = GameController.instance.playerManager.equipmentManager;
             equipmentManager.onWeaponEquip += SpawnTrail;
             equipmentManager.onWeaponUnequip += DestroyTrail;
             combat.OnAttack += () => StartCoroutine(ShowTrail());
@@ -59,11 +59,11 @@ namespace Actors.Player
         {
             if (currentTrail != null)
             {
-                currentTrail.enabled = true;
+                currentTrail.Play();
                 
                 yield return new WaitForSeconds(combat.GetCurrentMeleeAttackSpeed());
                 
-                currentTrail.enabled = false;
+                currentTrail.Stop();
             }
         }
 
@@ -72,7 +72,7 @@ namespace Actors.Player
         {
             if (currentTrail != null)
             {
-                currentTrail.enabled = false;
+                currentTrail.Stop();
             }
         }
 
@@ -89,9 +89,14 @@ namespace Actors.Player
             
             Vector3 pos = new Vector3(0.002f, -0.015f, 0.0036f);
 
-            currentTrail = Instantiate(trail, weaponTransform).GetComponent<TrailRenderer>();
+            currentTrail = Instantiate(trail, weaponTransform).GetComponent<ParticleSystem>();
+            if (currentTrail == null)
+            {
+                return;
+            }
+            currentTrail.Stop();
 //            currentTrail.transform.position = pos;
-            currentTrail.enabled = false;
+//            currentTrail.enabled = false;
             trailTime = currentTrail.time;
         }
 

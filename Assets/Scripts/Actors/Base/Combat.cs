@@ -126,10 +126,10 @@ namespace Actors.Base
         
         protected virtual IEnumerator DoMeleeDamage(List<IHealthable> targetStats)
         {
-//            Debug.Log("Courtine, attack in row: " + successAttackInRow);
+            Debug.Log("Courtine, attack in row: " + successAttackInRow);
             InvokeOnAttack();
 
-            yield return new WaitForSeconds(curMAttackDelay * commonCombatSpeedMultiplier);
+            yield return new WaitForSeconds(curMAttackDelay / commonCombatSpeedMultiplier);
 
             for (int i = 0; i < targetStats.Count; i++)
             {
@@ -140,7 +140,6 @@ namespace Actors.Base
                         Damage tmpDmg = stats.GetDamageValue();
                         Damage damage = new Damage(Mathf.FloorToInt(tmpDmg.GetValue() * curMAttackDamageMultiplier), actor, tmpDmg.IsCrit());
 
-//                        Debug.Log($"Attack in row :{successAttackInRow} damage: {damage.GetValue()}" );
                         targetStats[i].TakeDamage(damage);
                     }
                 }

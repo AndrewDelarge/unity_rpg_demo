@@ -36,6 +36,13 @@ namespace Actors.AI
             }
             else if (args.healthChange < 0)
             {
+                if (args.initiator != null)
+                {
+                    Quaternion quaternion = new Quaternion();
+                    quaternion.SetLookRotation(args.initiator.transform.position);
+                    StartCoroutine(SpawnParticle(hitParticle, target, particleLifetime, quaternion));
+                    return;
+                }
                 StartCoroutine(SpawnParticle(hitParticle, target, particleLifetime));
             }
         }

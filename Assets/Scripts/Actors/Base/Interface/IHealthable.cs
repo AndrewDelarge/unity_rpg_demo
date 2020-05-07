@@ -28,5 +28,6 @@ namespace Actors.Base.Interface
     public class HealthChangeEventArgs : EventArgs
     {
         public int healthChange = 0;
+        public Actor initiator;
     }
 }

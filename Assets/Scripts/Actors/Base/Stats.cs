@@ -97,6 +97,8 @@ namespace Actors.Base
 
             HealthChangeEventArgs args = new HealthChangeEventArgs();
             args.healthChange = - damageValue;
+            args.initiator = damage.GetOwner();
+            
             OnHealthChange?.Invoke(this, args);
         }
         
