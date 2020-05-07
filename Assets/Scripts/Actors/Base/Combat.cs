@@ -126,7 +126,6 @@ namespace Actors.Base
         
         protected virtual IEnumerator DoMeleeDamage(List<IHealthable> targetStats)
         {
-            Debug.Log("Courtine, attack in row: " + successAttackInRow);
             InvokeOnAttack();
 
             yield return new WaitForSeconds(curMAttackDelay / commonCombatSpeedMultiplier);
