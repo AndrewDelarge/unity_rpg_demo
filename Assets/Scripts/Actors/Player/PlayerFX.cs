@@ -88,16 +88,19 @@ namespace Actors.Player
                 return;
             }
             
-            Vector3 pos = new Vector3(0.002f, -0.015f, 0.0036f);
+            Vector3 pos = new Vector3(0.0025f, -0.01745f, -0.0013f);
 
-            currentTrail = Instantiate(trail, weaponTransform).GetComponent<ParticleSystem>();
+            currentTrail = Instantiate(trail, weaponTransform, false).GetComponent<ParticleSystem>();
             if (currentTrail == null)
             {
                 return;
             }
             currentTrail.Stop();
-//            currentTrail.transform.position = pos;
-//            currentTrail.enabled = false;
+            currentTrail.transform.localPosition = weapon.trailSpawnLocalPos;
+            currentTrail.transform.localScale = weapon.trailSpawnLocalScale;
+            currentTrail.transform.localRotation = Quaternion.Euler(
+                weapon.trailSpawnLocalRotation.x, weapon.trailSpawnLocalRotation.y, weapon.trailSpawnLocalRotation.z);
+            
             trailTime = currentTrail.time;
         }
 
