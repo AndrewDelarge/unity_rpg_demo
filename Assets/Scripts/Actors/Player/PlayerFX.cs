@@ -82,6 +82,7 @@ namespace Actors.Player
             Transform weaponTransform = equipmentManager.GetEquipmentTransform(weapon);
             GameObject trail = weapon.trail;
             
+            
             if (trail == null)
             {
                 return;
