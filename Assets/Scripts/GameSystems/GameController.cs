@@ -56,7 +56,6 @@ namespace GameSystems
             SpawnWorldUiCanvas();
             StartGame();
 #endif
-        
         }
 
 

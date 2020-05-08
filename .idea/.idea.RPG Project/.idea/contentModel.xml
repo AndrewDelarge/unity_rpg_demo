@@ -199,6 +199,7 @@
             <e p="Dialog" t="Include">
               <e p="Balloon.cs" t="Include" />
             </e>
+            <e p="FloatingHealthChange.cs" t="Include" />
             <e p="HealthUI.cs" t="Include" />
             <e p="Hud" t="Include">
               <e p="ActionBar.cs" t="Include" />
@@ -210,6 +211,7 @@
             </e>
             <e p="Inventory" t="Include">
               <e p="Inventory.cs" t="Include" />
+              <e p="InventoryStatsView.cs" t="Include" />
               <e p="ItemReceived.cs" t="Include" />
               <e p="LootSlot.cs" t="Include" />
               <e p="Slot.cs" t="Include" />

@@ -1,3 +1,4 @@
+using System;
 using Actors.Player;
 using Exceptions.Game.Player;
 using Gameplay;
@@ -21,6 +22,8 @@ namespace Managers
         public InventoryManager inventoryManager;
         public SpawnPoint[] spawnPoints;
 
+        public Action onPlayerInited;
+        
         public void Init()
         {
             spawnPoints = FindObjectsOfType<SpawnPoint>();
@@ -58,6 +61,7 @@ namespace Managers
         public void InitPlayer()
         {
             currentPlayer.Init();
+            onPlayerInited?.Invoke();
         }
         
         GameObject FindSpawnPoint(int spawnPointId)

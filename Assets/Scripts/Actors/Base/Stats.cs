@@ -63,19 +63,23 @@ namespace Actors.Base
             }
         }
         
-        public virtual Damage GetDamageValue()
+        public virtual Damage GetDamageValue(bool throwCrit = true, bool randomize = true)
         {
             int damage = ConvertAPToDamage(attackPower);
             int chance = Mathf.FloorToInt(GetCriticalChance());
             int throwed = UnityEngine.Random.Range(0, 99);
 
-            if (throwed <= chance)
+            if (throwed <= chance && throwCrit)
             {
                 damage = Mathf.FloorToInt(damage * CRIT_MULTIPLIER);
             }
 
             // Damage Randomising 
-            damage = Mathf.FloorToInt(damage * UnityEngine.Random.Range(.9f, 1.1f));
+
+            if (randomize)
+            {
+                damage = Mathf.FloorToInt(damage * UnityEngine.Random.Range(.9f, 1.1f));
+            }
 
             return new Damage(damage, null, throwed <= chance);
         }
@@ -98,6 +102,7 @@ namespace Actors.Base
             HealthChangeEventArgs args = new HealthChangeEventArgs();
             args.healthChange = - damageValue;
             args.initiator = damage.GetOwner();
+            args.modifier = damage;
             
             OnHealthChange?.Invoke(this, args);
         }
@@ -198,6 +203,7 @@ namespace Actors.Base
             
             HealthChangeEventArgs args = new HealthChangeEventArgs();
             args.healthChange = Mathf.FloorToInt(healAmount);
+            args.modifier = heal;
             OnHealthChange?.Invoke(this, args);
         }
     }

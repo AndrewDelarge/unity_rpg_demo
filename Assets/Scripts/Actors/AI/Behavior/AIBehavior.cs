@@ -34,6 +34,9 @@ namespace Actors.AI.Behavior
                 case BehaviorState.Attack:
                     Attack();
                     break;
+                case BehaviorState.ReturnToIdle:
+                    ReturnToIdle();
+                    break;
             }
 
             yield return null;

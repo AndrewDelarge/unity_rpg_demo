@@ -1,6 +1,6 @@
 namespace Actors.Base.StatsStuff
 {
-    public abstract class BaseHealthModifier 
+    public abstract class BaseHealthModifier
     {
         private Actor owner;
         private int value;

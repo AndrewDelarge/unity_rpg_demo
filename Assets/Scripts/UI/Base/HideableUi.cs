@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Exceptions.Game.UI;
 using GameSystems;
@@ -9,6 +10,10 @@ namespace UI.Base
     {
         public float showSpeedTime = 1f;
         protected GameObject curElement;
+
+
+        public Action onHided;
+        
         public virtual void Init()
         {
             curElement.SetActive(false);
@@ -45,6 +50,12 @@ namespace UI.Base
                 }
 
                 yield return null;
+            }
+
+
+            if (! visible)
+            {
+                onHided?.Invoke();
             }
         }
     }

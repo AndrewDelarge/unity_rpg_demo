@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using GameSystems;
+using Managers;
 using Managers.Player;
 using Scriptable;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace UI.Inventory
         public Transform slotsHub;
         public Transform lootSlotsHub;
         public ItemReceived itemReceived; 
+        public InventoryStatsView inventoryStatsView; 
         
         public SlotInfo slotInfo;
 
@@ -25,18 +27,20 @@ namespace UI.Inventory
         // Start is called before the first frame update
         public void Init()
         {
-            inventory = GameController.instance.playerManager.inventoryManager;
-            inventory.onItemsChangedCallback += UpdateUI;
-
-            inventorySlots = slotsHub.GetComponentsInChildren<Slot>();
-            lootSlots = lootSlotsHub.GetComponentsInChildren<LootSlot>();
+            PlayerManager playerManager = GameController.instance.playerManager;
+            inventory = playerManager.inventoryManager;
             
+            inventory.onItemsChangedCallback += UpdateUI;
+            inventory.onItemAddWithVisual += itemReceived.ShowItem;
             inventory.onLoot += ShowLoot;
             inventory.onLootEnd += HideLoot;
+            
+            
+            inventorySlots = slotsHub.GetComponentsInChildren<Slot>();
+            lootSlots = lootSlotsHub.GetComponentsInChildren<LootSlot>();
 
             itemReceived.Init();
-
-            inventory.onItemAddWithVisual += itemReceived.ShowItem;
+            playerManager.onPlayerInited = () => inventoryStatsView.Init(playerManager);
             
             UpdateUI();
         }

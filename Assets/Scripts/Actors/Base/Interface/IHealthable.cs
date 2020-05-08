@@ -29,5 +29,6 @@ namespace Actors.Base.Interface
     {
         public int healthChange = 0;
         public Actor initiator;
+        public BaseHealthModifier modifier;
     }
 }

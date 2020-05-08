@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace UI
 {
@@ -7,6 +8,7 @@ namespace UI
         public GameObject dialogBalloons;
         public GameObject healthbars;
 
+        public WorldUiObjects worldUiObjects;
 
         public GameObject SpawnUi(GameObject gameObject, WorldUiType type)
         {
@@ -30,8 +32,16 @@ namespace UI
             return Instantiate(gameObject, targetToSpawn.transform);
         }
         
+        
+        
     }
 
+    [Serializable]
+    public struct WorldUiObjects
+    {
+        public GameObject damageTextFeed;
+    }
+    
     public enum WorldUiType
     {
         Dialog, Healthbars
