@@ -54,7 +54,7 @@ namespace UI.Hud
             actionBar.joystick.gameObject.SetActive(true);
             healthBar.gameObject.SetActive(true);
             upperPanel.gameObject.SetActive(true);
-            questPanel.gameObject.SetActive(true);
+//            questPanel.gameObject.SetActive(true);
         }
         
         public void ShowEndScreen()

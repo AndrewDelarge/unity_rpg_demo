@@ -100,6 +100,25 @@ namespace Managers.Player
             currentMeshes[itemIndex] = newMesh;
         }
         
+        protected void ShowEquipmentDump(Weapon equipment)
+        {
+            int itemIndex = (int) equipment.equipmentSlot;
+
+            Transform itemTransform = targetMesh.transform.Find("Model/Rig/Hips/Spine/Chest/Shoulder.R/Upper Arm.R/Lower Arm.R/Hand.R/HandHold.R");
+            
+            if (itemTransform == null)
+            {
+                Debug.Log("You cant equip " + equipment.name + "; Not set skin name or skin with this name not exist!");
+                return;
+            }
+            
+            GameObject mesh = Instantiate(equipment.weaponModel, itemTransform);
+            
+            Renderer newMesh = mesh.GetComponent<Renderer>();
+            newMesh.enabled = true;
+            currentMeshes[itemIndex] = newMesh;
+        }
+        
         
         public Transform GetEquipmentTransform(Equipment equipment)
         {
@@ -128,6 +147,9 @@ namespace Managers.Player
             
             return targetMesh.transform.Find(equipPath);
         }
+        
+        
+        
         
         
         public void Unequip(int slot)

@@ -7,7 +7,7 @@ namespace Actors.Base.Interface
     {
         Transform target { get; }
         void Init(Stats actorStats, BaseInput input);
-        float GetSpeed();
+        float GetSpeedMultiplier();
 
         float GetCurrentMagnitude();
 
@@ -30,7 +30,7 @@ namespace Actors.Base.Interface
         void Disable();
         void Enable();
 
-        void SetSpeed(float multiplier);
+        void SetSpeedMultiplier(float multiplier);
         Transform GetTransform();
 
         bool IsMoving();

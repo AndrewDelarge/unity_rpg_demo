@@ -22,7 +22,7 @@ namespace Env
         {
             for (int i = 0; i < actors.Count; i++)
             {
-                actors[i].movement.SetSpeed(0.6f);
+                actors[i].movement.SetSpeedMultiplier(0.6f);
             }
         }
 
@@ -33,7 +33,7 @@ namespace Env
             if (actor != null)
             {
                 actors.Remove(actor);
-                actor.movement.SetSpeed(1f);
+                actor.movement.SetSpeedMultiplier(1f);
             }
         }
     }

@@ -83,6 +83,7 @@ namespace Actors.AI.Behavior
             if (Vector3.Distance(lastIdlePosition, actor.transform.position) <= 1)
             {
                 state = BehaviorState.Idle;
+                return;
             }
 
             if (state == BehaviorState.ReturnToIdle) {

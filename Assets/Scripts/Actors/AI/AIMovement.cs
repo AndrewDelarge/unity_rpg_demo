@@ -51,9 +51,9 @@ namespace Actors.AI
             }
         }
 
-        public float GetSpeed()
+        public float GetSpeedMultiplier()
         {
-            return agent.speed;
+            return speedMultiplier;
         }
 
         public float GetCurrentMagnitude()
@@ -108,7 +108,6 @@ namespace Actors.AI
             if (direction != Vector3.zero)
             {
                 Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
-
                 transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 10f);
             }
         }
@@ -134,7 +133,7 @@ namespace Actors.AI
             return;
         }
         
-        public void SetSpeed(float multiplier)
+        public void SetSpeedMultiplier(float multiplier)
         {
             speedMultiplier = multiplier;
         }

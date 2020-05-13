@@ -49,6 +49,7 @@ namespace Actors.Base
         {
             float speedPercent = movement.GetCurrentMagnitude() / stats.GetMovementSpeed();
             animator.SetFloat("speedPercent", speedPercent, locomotionAnimationSmoothTime, Time.deltaTime);
+            animator.SetFloat("movementMultiplier", movement.GetSpeedMultiplier());
 
             ToggleAttackLayers(speedPercent);
             animator.SetBool("inCombat", combat.InCombat());

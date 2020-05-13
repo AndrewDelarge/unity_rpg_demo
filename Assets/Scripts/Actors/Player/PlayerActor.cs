@@ -79,12 +79,12 @@ namespace Actors.Player
             dashingTime = Time.time;
             dashing = true;
             animator.Trigger("dash");
-            movement.SetSpeed(3.5f);
+            movement.SetSpeedMultiplier(3.5f);
             yield return new WaitForSeconds(.15f);
-            movement.SetSpeed(2);
+            movement.SetSpeedMultiplier(2);
             yield return new WaitForSeconds(.3f);
             
-            movement.SetSpeed(1);
+            movement.SetSpeedMultiplier(1);
             dashing = false;
         }
         

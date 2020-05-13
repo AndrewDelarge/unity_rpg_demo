@@ -20,6 +20,7 @@ namespace UI
         
         public void Init(Transform targetTransform, string textOrCode, bool isCrit)
         {
+            showSpeedTime = 4f;
             animator.speed = 0;
             curElement = gameObject;
             onHided += () => Destroy(this);
@@ -41,9 +42,12 @@ namespace UI
 
         IEnumerator Lifetime()
         {
-            animator.speed = UnityEngine.Random.Range(0.15f, 0.25f);
-            yield return new WaitForSeconds(lifetime);
+            animator.speed = UnityEngine.Random.Range(0.25f, 0.35f);
+            yield return new WaitForSeconds(lifetime / 2);
             Hide();
+            yield return new WaitForSeconds(showSpeedTime);
+            //TODO Destroy does not work!
+            Destroy(curElement);
         }
         
         void FixedUpdate()

@@ -63,7 +63,7 @@ namespace Actors.Player
                 
                 direction = direction.normalized;
 
-                direction *= GetSpeed();
+                direction *= stats.GetMovementSpeed() * speedMultiplier;
                 
                 float speedMultiply;
                 
@@ -104,9 +104,9 @@ namespace Actors.Player
             return;
         }
 
-        public float GetSpeed()
+        public float GetSpeedMultiplier()
         {
-            return stats.GetMovementSpeed() * speedMultiplier;
+            return speedMultiplier;
         }
 
         public float GetCurrentMagnitude()
@@ -143,16 +143,23 @@ namespace Actors.Player
         public void FaceTarget(Vector3 target)
         {
             Vector3 direction = (target - transform.position).normalized;
-
-            Quaternion targetRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
-            gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, targetRotation, 15f * Time.deltaTime);
+            if (direction != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
+                gameObject.transform.rotation =
+                    Quaternion.Lerp(gameObject.transform.rotation, targetRotation, 15f * Time.deltaTime);
+            }
         }
         
         
         public void FaceDirection(Vector3 direction)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
-            gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, targetRotation, 15f * Time.deltaTime);
+            if (direction != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
+                gameObject.transform.rotation = 
+                    Quaternion.Lerp(gameObject.transform.rotation, targetRotation, 15f * Time.deltaTime);
+            }
         }
 
 
@@ -171,7 +178,7 @@ namespace Actors.Player
             enabled = true;
         }
 
-        public void SetSpeed(float multiplier)
+        public void SetSpeedMultiplier(float multiplier)
         {
             speedMultiplier = multiplier;
         }

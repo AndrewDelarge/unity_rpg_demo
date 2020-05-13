@@ -9,6 +9,7 @@ namespace Scriptable
     {
         [Header("Weapon Settings")]
 
+        public GameObject weaponModel;
         public WeaponType type;
         public int damage = 1; 
         
