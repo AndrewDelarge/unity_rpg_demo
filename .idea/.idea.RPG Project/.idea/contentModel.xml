@@ -96,6 +96,7 @@
           <e p="Exceptions" t="Include">
             <e p="Game" t="Include">
               <e p="Player" t="Include">
+                <e p="CameraControllerNotFound.cs" t="Include" />
                 <e p="CouldntSpawnPlayer.cs" t="Include" />
               </e>
               <e p="UI" t="Include">

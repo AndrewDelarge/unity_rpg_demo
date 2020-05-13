@@ -1,3 +1,4 @@
+using Exceptions.Game.Player;
 using Managers;
 using UI;
 using UnityEngine;
@@ -91,12 +92,24 @@ namespace GameSystems
     
         void SpawnCamera()
         {
-            if (Camera.main != null)
+            if (mainCamera != null)
             {
-                mainCamera = Camera.main.GetComponent<CameraController>();
+                Debug.Log("Camera already exists");
                 return;
             }
+            
             mainCamera = Instantiate(cameraPrefab).GetComponent<CameraController>();
+            
+            if (mainCamera == null)
+            {
+                // Assigned camera dont have controller
+                throw new CameraControllerNotFound();
+            }
+
+            if (Camera.main != mainCamera.GetCamera())
+            {
+                Camera.main.enabled = false;
+            }
         }
 
 
