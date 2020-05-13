@@ -8,8 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: WAll_01
-    second: {fileID: -876546973899608171, guid: 963d8ce1cfe155f4e897b8ec8de66cf8,
-      type: 3}
+    second: {fileID: 2100000, guid: 94a6504693340374e90fa1fbde4be33f, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -49,7 +48,7 @@ ModelImporter:
     importCameras: 1
     importLights: 1
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1
