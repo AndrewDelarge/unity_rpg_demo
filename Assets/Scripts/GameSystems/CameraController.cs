@@ -13,21 +13,19 @@ namespace GameSystems
         private float lastRotation;
         private float lastPointerActive;
 
-        private Camera mainCamera;
+        private Camera currentCamera;
         private Camera defaultCamera;
         private bool positionFreezzed = false;
         
-        
-        
         private void Start()
         {
-            mainCamera = Camera.main;
+            currentCamera = GetComponent<Camera>();
             defaultCamera = Camera.main;
             
             if (target != null)
             {
-                mainCamera.transform.position = target.position - offset * currentZoom;
-                mainCamera.transform.LookAt(target.position + Vector3.up * pitch);
+                currentCamera.transform.position = target.position - offset * currentZoom;
+                currentCamera.transform.LookAt(target.position + Vector3.up * pitch);
             }
             
         }
@@ -36,7 +34,7 @@ namespace GameSystems
         {
             if (Time.timeScale > 0f && target != null)
             {
-                StartCoroutine(MoveCamera(mainCamera.transform.position, target.position));
+                StartCoroutine(MoveCamera(currentCamera.transform.position, target.position));
             }
             
         }
@@ -53,34 +51,34 @@ namespace GameSystems
                 
                 if (!positionFreezzed)
                 {
-                    mainCamera.transform.position = Vector3.Slerp(offsetCamPos, offsetTargetPos, t * 2);
+                    currentCamera.transform.position = Vector3.Slerp(offsetCamPos, offsetTargetPos, t * 2);
                 }
-                mainCamera.transform.LookAt(Vector3.Slerp(targetPos + Vector3.up * pitch, target.position + Vector3.up * pitch, t * 2));
+                currentCamera.transform.LookAt(Vector3.Slerp(targetPos + Vector3.up * pitch, target.position + Vector3.up * pitch, t * 2));
                 yield return null;
             }
         }
 
         public IEnumerator Shake(float power = 1f, float speed = .1f)
         {
-            float oldSize = mainCamera.orthographicSize;
-            mainCamera.orthographicSize += power;
+            float oldSize = currentCamera.orthographicSize;
+            currentCamera.orthographicSize += power;
             float t = oldSize;
             
-            while (t < mainCamera.orthographicSize)
+            while (t < currentCamera.orthographicSize)
             {
                 if (power >= 0)
                 {
-                    mainCamera.orthographicSize -= Time.deltaTime / speed;
+                    currentCamera.orthographicSize -= Time.deltaTime / speed;
                 }
                 else
                 {
-                    mainCamera.orthographicSize += Time.deltaTime / speed;
+                    currentCamera.orthographicSize += Time.deltaTime / speed;
                 }
                 
                 yield return null;
             }
 
-            mainCamera.orthographicSize = oldSize;
+            currentCamera.orthographicSize = oldSize;
         }
 
         public void SetCamera(Camera camera, bool freezed = false)
@@ -96,9 +94,9 @@ namespace GameSystems
                 yield break;
             }
             positionFreezzed = freezed;
-            mainCamera.enabled = false;
+            currentCamera.enabled = false;
             camera.enabled = true;
-            mainCamera = camera;
+            currentCamera = camera;
         }
         
         public void SetCamFreeze(bool freeze)
@@ -114,7 +112,7 @@ namespace GameSystems
 
         public Camera GetCamera()
         {
-            return mainCamera;
+            return currentCamera;
         }
         
     }

@@ -26,7 +26,7 @@ namespace Actors.Player
             playerFx.Init(combat);
             // turnoff automatic vision update
             vision.isEnabled = false;
-            cameraController = Camera.main.GetComponent<CameraController>();
+            cameraController = GameController.instance.mainCamera;
             combat.OnAttackEnd += ShakeCamera;
             combat.OnAttackEnd += PushPhysicsObjects;
         }

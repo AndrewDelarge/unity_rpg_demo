@@ -105,11 +105,6 @@ namespace GameSystems
                 // Assigned camera dont have controller
                 throw new CameraControllerNotFound();
             }
-
-            if (Camera.main != mainCamera.GetCamera())
-            {
-                Camera.main.enabled = false;
-            }
         }
 
 
