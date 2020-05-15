@@ -10,6 +10,13 @@ namespace GameSystems
         public float pitch = 2f;
 
         public float currentZoom = 10f;
+        
+        [Range(0.1f, 25)]
+        public float cameraFollowSpeed = 1f;
+        [Range(0.01f, 25)]
+        public float cameraRotationSpeed = 1f;
+        
+        
         private float lastRotation;
         private float lastPointerActive;
 
@@ -17,47 +24,36 @@ namespace GameSystems
         private Camera defaultCamera;
         private bool positionFreezzed = false;
 
-        private GameObject cameraTargetPoint;
-        
         private void Start()
         {
             currentCamera = GetComponent<Camera>();
             defaultCamera = Camera.main;
 
-            cameraTargetPoint = (GameObject) Instantiate(Resources.Load("System/Point"));
-            
             if (target != null)
             {
-                
                 currentCamera.transform.position = target.position - offset * currentZoom;
                 currentCamera.transform.LookAt(target.position + Vector3.up * pitch);
             }
             
         }
         
-        void LateUpdate()
+        void FixedUpdate()
         {
             if (Time.timeScale > 0f && target != null)
             {
-                Vector3 pos = Vector3.Slerp(currentCamera.transform.position, target.position - offset * currentZoom, .1f);
+                Vector3 pos = Vector3.Slerp(currentCamera.transform.position, target.position - offset * currentZoom, cameraFollowSpeed * Time.deltaTime);
                 
                 
                 if (!positionFreezzed)
                 {
                     currentCamera.transform.position = pos;
-                    cameraTargetPoint.transform.position = pos + offset * currentZoom;
                 }
 
 
 
                 
                 Quaternion targetRotation = Quaternion.LookRotation(target.position - currentCamera.transform.position + Vector3.up * pitch, target.up);
-
-                currentCamera.transform.rotation = Quaternion.Lerp(currentCamera.transform.rotation, targetRotation, .1f);
-                
-//                currentCamera.transform.Rotate(Vector3.Angle(currentCamera.transform.position, target.position + Vector3.up * pitch));
-//                currentCamera.transform.LookAt(target.position + Vector3.up * pitch);
-
+                currentCamera.transform.rotation = Quaternion.Slerp(currentCamera.transform.rotation, targetRotation, cameraRotationSpeed * Time.deltaTime);
             }
             
         }
