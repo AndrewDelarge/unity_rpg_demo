@@ -32,7 +32,6 @@ namespace Actors.Base
             movement = actMovement;
             stats = actStats;
             animator = GetComponentInChildren<Animator>();
-            
             overrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
             animator.runtimeAnimatorController = overrideController;
 

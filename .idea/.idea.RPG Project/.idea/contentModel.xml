@@ -115,6 +115,9 @@
             </e>
             <e p="Stat.cs" t="Include" />
           </e>
+          <e p="Animation" t="Include">
+            <e p="BaseAnimator.cs" t="Include" />
+          </e>
           <e p="Env" t="Include">
             <e p="Water.cs" t="Include" />
           </e>

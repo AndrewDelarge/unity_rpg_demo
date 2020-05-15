@@ -9,53 +9,57 @@ namespace GameSystems
         public Vector3 offset;
         public float pitch = 2f;
 
-        private float currentZoom = 10f;
+        public float currentZoom = 10f;
         private float lastRotation;
         private float lastPointerActive;
 
         private Camera currentCamera;
         private Camera defaultCamera;
         private bool positionFreezzed = false;
+
+        private GameObject cameraTargetPoint;
         
         private void Start()
         {
             currentCamera = GetComponent<Camera>();
             defaultCamera = Camera.main;
+
+            cameraTargetPoint = (GameObject) Instantiate(Resources.Load("System/Point"));
             
             if (target != null)
             {
+                
                 currentCamera.transform.position = target.position - offset * currentZoom;
                 currentCamera.transform.LookAt(target.position + Vector3.up * pitch);
             }
             
         }
         
-        void FixedUpdate()
+        void LateUpdate()
         {
             if (Time.timeScale > 0f && target != null)
             {
-                StartCoroutine(MoveCamera(currentCamera.transform.position, target.position));
-            }
-            
-        }
-
-        private IEnumerator MoveCamera(Vector3 camPos, Vector3 targetPos)
-        {
-            Vector3 offsetTargetPos = targetPos - offset * currentZoom;
-            Vector3 offsetCamPos = camPos - offset * currentZoom;
-            
-            float t = 0;
-            while (t < 1)
-            {
-                t += Time.deltaTime / .1f;
+                Vector3 pos = Vector3.Slerp(currentCamera.transform.position, target.position - offset * currentZoom, .1f);
+                
                 
                 if (!positionFreezzed)
                 {
-                    currentCamera.transform.position = Vector3.Slerp(offsetCamPos, offsetTargetPos, t * 2);
+                    currentCamera.transform.position = pos;
+                    cameraTargetPoint.transform.position = pos + offset * currentZoom;
                 }
-                currentCamera.transform.LookAt(Vector3.Slerp(targetPos + Vector3.up * pitch, target.position + Vector3.up * pitch, t * 2));
-                yield return null;
+
+
+
+                
+                Quaternion targetRotation = Quaternion.LookRotation(pos + offset * currentZoom - currentCamera.transform.position + Vector3.up * pitch, target.up);
+
+                currentCamera.transform.rotation = Quaternion.Lerp(currentCamera.transform.rotation, targetRotation, .1f);
+                
+//                currentCamera.transform.Rotate(Vector3.Angle(currentCamera.transform.position, target.position + Vector3.up * pitch));
+//                currentCamera.transform.LookAt(target.position + Vector3.up * pitch);
+
             }
+            
         }
 
         public IEnumerator Shake(float power = 1f, float speed = .1f)
