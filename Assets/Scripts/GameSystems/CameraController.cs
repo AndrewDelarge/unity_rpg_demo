@@ -51,7 +51,7 @@ namespace GameSystems
 
 
                 
-                Quaternion targetRotation = Quaternion.LookRotation(pos + offset * currentZoom - currentCamera.transform.position + Vector3.up * pitch, target.up);
+                Quaternion targetRotation = Quaternion.LookRotation(target.position - currentCamera.transform.position + Vector3.up * pitch, target.up);
 
                 currentCamera.transform.rotation = Quaternion.Lerp(currentCamera.transform.rotation, targetRotation, .1f);
                 

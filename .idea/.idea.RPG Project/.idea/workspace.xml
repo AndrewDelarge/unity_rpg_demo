@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="52985363-2da5-45a6-b22a-fe9f01019dd2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Animation.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Animation/BaseAnimator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Animation/BaseAnimator.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.RPG Project/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RPG Project/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RPG Project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RPG Project/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Characters/Materials/Henry/Henry3.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Characters/Materials/Henry/Henry3.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Levels/Tests/NewTestZone.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Levels/Tests/NewTestZone.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Levels/Tests/Terrain2.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Actors/Base/CommonAnimator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Actors/Base/CommonAnimator.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameSystems/CameraController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameSystems/CameraController.cs" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -67,27 +59,27 @@
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/GameSystems/CameraController.cs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="400">
-              <caret line="53" column="94" selection-start-line="53" selection-start-column="94" selection-end-line="53" selection-end-column="94" />
+              <caret line="53" column="68" lean-forward="true" selection-start-line="53" selection-start-column="68" selection-end-line="53" selection-end-column="83" />
               <folding>
-                <marker date="1589546187944" expanded="false" signature="6:44" ph="..." />
-                <marker date="1589546187944" expanded="true" signature="67:3709" ph="{...}" />
-                <marker date="1589546187944" expanded="true" signature="119:3707" ph="{...}" />
-                <marker date="1589546187944" expanded="true" signature="549:1033" ph="{...}" />
-                <marker date="1589546187944" expanded="true" signature="788:1010" ph="{...}" />
-                <marker date="1589546187944" expanded="true" signature="1068:2115" ph="{...}" />
-                <marker date="1589546187944" expanded="true" signature="1133:2092" ph="{...}" />
-                <marker date="1589546187944" expanded="true" signature="1344:1527" ph="{...}" />
-                <marker date="1589546187944" expanded="true" signature="1853:2077" ph="/* currentCamera.transform.Rotate(Vector3.Angle(currentCamera.transform.position, target.position + Vector3.up *  ... */" />
-                <marker date="1589546187944" expanded="true" signature="2186:2834" ph="{...}" />
-                <marker date="1589546187944" expanded="true" signature="2408:2769" ph="{...}" />
-                <marker date="1589546187944" expanded="true" signature="2454:2568" ph="{...}" />
-                <marker date="1589546187944" expanded="true" signature="2589:2703" ph="{...}" />
-                <marker date="1589546187944" expanded="true" signature="2902:2981" ph="{...}" />
-                <marker date="1589546187944" expanded="true" signature="3044:3356" ph="{...}" />
-                <marker date="1589546187944" expanded="true" signature="3135:3192" ph="{...}" />
-                <marker date="1589546187944" expanded="true" signature="3411:3475" ph="{...}" />
-                <marker date="1589546187944" expanded="true" signature="3518:3602" ph="{...}" />
-                <marker date="1589546187944" expanded="true" signature="3638:3692" ph="{...}" />
+                <marker date="1589546495448" expanded="false" signature="6:44" ph="..." />
+                <marker date="1589546495448" expanded="true" signature="67:3698" ph="{...}" />
+                <marker date="1589546495448" expanded="true" signature="119:3696" ph="{...}" />
+                <marker date="1589546495448" expanded="true" signature="549:1033" ph="{...}" />
+                <marker date="1589546495448" expanded="true" signature="788:1010" ph="{...}" />
+                <marker date="1589546495448" expanded="true" signature="1068:2104" ph="{...}" />
+                <marker date="1589546495448" expanded="true" signature="1133:2081" ph="{...}" />
+                <marker date="1589546495448" expanded="true" signature="1344:1527" ph="{...}" />
+                <marker date="1589546495448" expanded="true" signature="1842:2066" ph="/* currentCamera.transform.Rotate(Vector3.Angle(currentCamera.transform.position, target.position + Vector3.up *  ... */" />
+                <marker date="1589546495448" expanded="true" signature="2175:2823" ph="{...}" />
+                <marker date="1589546495448" expanded="true" signature="2397:2758" ph="{...}" />
+                <marker date="1589546495448" expanded="true" signature="2443:2557" ph="{...}" />
+                <marker date="1589546495448" expanded="true" signature="2578:2692" ph="{...}" />
+                <marker date="1589546495448" expanded="true" signature="2891:2970" ph="{...}" />
+                <marker date="1589546495448" expanded="true" signature="3033:3345" ph="{...}" />
+                <marker date="1589546495448" expanded="true" signature="3124:3181" ph="{...}" />
+                <marker date="1589546495448" expanded="true" signature="3400:3464" ph="{...}" />
+                <marker date="1589546495448" expanded="true" signature="3507:3591" ph="{...}" />
+                <marker date="1589546495448" expanded="true" signature="3627:3681" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -385,6 +377,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/MainMenu/Loading.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/C7033418-969C-409C-8CD1-4950555A0E6C/90/8c09ac08/Resources.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/Hud/ActionBar.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Resources/System/Point.prefab" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/Inventory/LootSlot.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2094A731-351D-475D-BA68-F5920DE30ED8/a5/3c2b103d/GameObject.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Editor/Quests/Quests.cs" root0="FORCE_HIGHLIGHTING" />
@@ -726,7 +719,7 @@
       <workItem from="1589268513755" duration="3767000" />
       <workItem from="1589362970058" duration="11681000" />
       <workItem from="1589449914737" duration="1251000" />
-      <workItem from="1589535970394" duration="9387000" />
+      <workItem from="1589535970394" duration="9694000" />
     </task>
     <task id="LOCAL-00001" summary="Новые модельки, анимации&#10;Шейдер для контуров&#10;Регдол&#10;Статы персонажа и нпс&#10;AI, фракции">
       <created>1562165446903</created>
@@ -931,11 +924,18 @@
       <option name="project" value="LOCAL" />
       <updated>1589477736927</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Camera smoothing">
+      <created>1589546383635</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1589546383635</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="755701000" />
+    <option name="totallyTimeSpent" value="756008000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1011,7 +1011,8 @@
     <MESSAGE value="grass" />
     <MESSAGE value="Camera fix" />
     <MESSAGE value="Project cleanup&#10;Fixes and features" />
-    <option name="LAST_COMMIT_MESSAGE" value="Project cleanup&#10;Fixes and features" />
+    <MESSAGE value="Camera smoothing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Camera smoothing" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -2041,27 +2042,27 @@
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/GameSystems/CameraController.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="400">
-          <caret line="53" column="94" selection-start-line="53" selection-start-column="94" selection-end-line="53" selection-end-column="94" />
+          <caret line="53" column="68" lean-forward="true" selection-start-line="53" selection-start-column="68" selection-end-line="53" selection-end-column="83" />
           <folding>
-            <marker date="1589546187944" expanded="false" signature="6:44" ph="..." />
-            <marker date="1589546187944" expanded="true" signature="67:3709" ph="{...}" />
-            <marker date="1589546187944" expanded="true" signature="119:3707" ph="{...}" />
-            <marker date="1589546187944" expanded="true" signature="549:1033" ph="{...}" />
-            <marker date="1589546187944" expanded="true" signature="788:1010" ph="{...}" />
-            <marker date="1589546187944" expanded="true" signature="1068:2115" ph="{...}" />
-            <marker date="1589546187944" expanded="true" signature="1133:2092" ph="{...}" />
-            <marker date="1589546187944" expanded="true" signature="1344:1527" ph="{...}" />
-            <marker date="1589546187944" expanded="true" signature="1853:2077" ph="/* currentCamera.transform.Rotate(Vector3.Angle(currentCamera.transform.position, target.position + Vector3.up *  ... */" />
-            <marker date="1589546187944" expanded="true" signature="2186:2834" ph="{...}" />
-            <marker date="1589546187944" expanded="true" signature="2408:2769" ph="{...}" />
-            <marker date="1589546187944" expanded="true" signature="2454:2568" ph="{...}" />
-            <marker date="1589546187944" expanded="true" signature="2589:2703" ph="{...}" />
-            <marker date="1589546187944" expanded="true" signature="2902:2981" ph="{...}" />
-            <marker date="1589546187944" expanded="true" signature="3044:3356" ph="{...}" />
-            <marker date="1589546187944" expanded="true" signature="3135:3192" ph="{...}" />
-            <marker date="1589546187944" expanded="true" signature="3411:3475" ph="{...}" />
-            <marker date="1589546187944" expanded="true" signature="3518:3602" ph="{...}" />
-            <marker date="1589546187944" expanded="true" signature="3638:3692" ph="{...}" />
+            <marker date="1589546495448" expanded="false" signature="6:44" ph="..." />
+            <marker date="1589546495448" expanded="true" signature="67:3698" ph="{...}" />
+            <marker date="1589546495448" expanded="true" signature="119:3696" ph="{...}" />
+            <marker date="1589546495448" expanded="true" signature="549:1033" ph="{...}" />
+            <marker date="1589546495448" expanded="true" signature="788:1010" ph="{...}" />
+            <marker date="1589546495448" expanded="true" signature="1068:2104" ph="{...}" />
+            <marker date="1589546495448" expanded="true" signature="1133:2081" ph="{...}" />
+            <marker date="1589546495448" expanded="true" signature="1344:1527" ph="{...}" />
+            <marker date="1589546495448" expanded="true" signature="1842:2066" ph="/* currentCamera.transform.Rotate(Vector3.Angle(currentCamera.transform.position, target.position + Vector3.up *  ... */" />
+            <marker date="1589546495448" expanded="true" signature="2175:2823" ph="{...}" />
+            <marker date="1589546495448" expanded="true" signature="2397:2758" ph="{...}" />
+            <marker date="1589546495448" expanded="true" signature="2443:2557" ph="{...}" />
+            <marker date="1589546495448" expanded="true" signature="2578:2692" ph="{...}" />
+            <marker date="1589546495448" expanded="true" signature="2891:2970" ph="{...}" />
+            <marker date="1589546495448" expanded="true" signature="3033:3345" ph="{...}" />
+            <marker date="1589546495448" expanded="true" signature="3124:3181" ph="{...}" />
+            <marker date="1589546495448" expanded="true" signature="3400:3464" ph="{...}" />
+            <marker date="1589546495448" expanded="true" signature="3507:3591" ph="{...}" />
+            <marker date="1589546495448" expanded="true" signature="3627:3681" ph="{...}" />
           </folding>
         </state>
       </provider>
