@@ -9,6 +9,16 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: WAll_01
     second: {fileID: 2100000, guid: 94a6504693340374e90fa1fbde4be33f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: WAll_01.002
+    second: {fileID: 2100000, guid: 94a6504693340374e90fa1fbde4be33f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: WAll_01.003
+    second: {fileID: 2100000, guid: 94a6504693340374e90fa1fbde4be33f, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

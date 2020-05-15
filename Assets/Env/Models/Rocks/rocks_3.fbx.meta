@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 33dc0b49aeaf53146a871ddf7391aaea
+guid: 64e607e2f5bb03e4896970fcc459e227
 ModelImporter:
   serializedVersion: 25
   internalIDToNameTable: []
@@ -7,13 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Material
+      name: WAll_01.002
     second: {fileID: 2100000, guid: 94a6504693340374e90fa1fbde4be33f, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.001
-    second: {fileID: 2100000, guid: 8265f3d4f80f3b1478512a9ab6cece88, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
