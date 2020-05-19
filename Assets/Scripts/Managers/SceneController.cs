@@ -68,10 +68,10 @@ namespace Managers
         {
             loadingScreen.Hide();
             isLoading = false;
-            OnSceneLoaded?.Invoke();
             spawnPoints = FindObjectsOfType<SpawnPoint>();
             sceneSettings = FindObjectOfType<SceneSettings>();
             triggersManager = new TriggersManager(FindObjectsOfType<Trigger>());
+            OnSceneLoaded?.Invoke();
         }
         
 
@@ -100,6 +100,12 @@ namespace Managers
             }
 
             return null;
+        }
+
+
+        public bool SceneIsPlayable()
+        {
+            return sceneSettings != null;
         }
     }
 }

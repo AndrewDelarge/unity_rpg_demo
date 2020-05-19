@@ -56,7 +56,42 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: 
+    animationImportWarnings: "\nClip 'Rig|Atk_01' has import animation warnings that
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar to
+      improve retargeting quality.\n\t'Shoulder.L' has translation animation that
+      will be discarded.\n\t'Shoulder.R' has translation animation that will be discarded.\n\t'HandHold.R'
+      has translation animation that will be discarded.\n\nClip 'Rig|Atk_02' has import
+      animation warnings that might lower retargeting quality:\nNote: Activate translation
+      DOF on avatar to improve retargeting quality.\n\t'Shoulder.L' has translation
+      animation that will be discarded.\n\t'Shoulder.R' has translation animation
+      that will be discarded.\n\t'HandHold.R' has translation animation that will
+      be discarded.\n\nClip 'Rig|Atk_03' has import animation warnings that might
+      lower retargeting quality:\nNote: Activate translation DOF on avatar to improve
+      retargeting quality.\n\t'Shoulder.L' has translation animation that will be
+      discarded.\n\t'Shoulder.R' has translation animation that will be discarded.\n\t'HandHold.R'
+      has translation animation that will be discarded.\n\nClip 'Rig|Atk_Idle_01'
+      has import animation warnings that might lower retargeting quality:\nNote: Activate
+      translation DOF on avatar to improve retargeting quality.\n\t'Shoulder.R' has
+      translation animation that will be discarded.\n\nClip 'Rig|Atk_Melee_01' has
+      import animation warnings that might lower retargeting quality:\nNote: Activate
+      translation DOF on avatar to improve retargeting quality.\n\t'Shoulder.L' has
+      translation animation that will be discarded.\n\t'Shoulder.R' has translation
+      animation that will be discarded.\n\nClip 'Rig|Atk_Melee_02' has import animation
+      warnings that might lower retargeting quality:\nNote: Activate translation DOF
+      on avatar to improve retargeting quality.\n\t'Shoulder.L' has translation animation
+      that will be discarded.\n\t'Shoulder.R' has translation animation that will
+      be discarded.\n\nClip 'Rig|Idle_01' has import animation warnings that might
+      lower retargeting quality:\nNote: Activate translation DOF on avatar to improve
+      retargeting quality.\n\t'Shoulder.R' has translation animation that will be
+      discarded.\n\nClip 'Rig|Idle_02' has import animation warnings that might lower
+      retargeting quality:\nNote: Activate translation DOF on avatar to improve retargeting
+      quality.\n\t'HandHold.R' has translation animation that will be discarded.\n\nClip
+      'Rig|Run' has import animation warnings that might lower retargeting quality:\nNote:
+      Activate translation DOF on avatar to improve retargeting quality.\n\t'Shoulder.L'
+      has translation animation that will be discarded.\n\t'Shoulder.R' has translation
+      animation that will be discarded.\n\t'Upper Leg.L' has translation animation
+      that will be discarded.\n\t'Upper Leg.R' has translation animation that will
+      be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -475,31 +510,6 @@ ModelImporter:
       position: {x: 2.3283064e-12, y: -0.06511807, z: 0.0029944459}
       rotation: {x: 0.000000029352956, y: -4.4152942e-10, z: -1.8119109e-11, w: 1}
       scale: {x: 6.425003, y: 6.425003, z: 6.425003}
-    - name: mainEyeCTRL
-      parentName: Eyes
-      position: {x: -2.730239e-18, y: 0.012295904, z: 0.002687965}
-      rotation: {x: 0.7071068, y: 0, z: -0, w: 0.7071067}
-      scale: {x: 1, y: 1, z: 1}
-    - name: eyeCTRL_l
-      parentName: mainEyeCTRL
-      position: {x: -0.0010947234, y: 0.00015739798, z: 0.0000010299682}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: eyeCTRL_l_end
-      parentName: eyeCTRL_l
-      position: {x: -0, y: 0.0011992145, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: eyeCTRL_r
-      parentName: mainEyeCTRL
-      position: {x: 0.0010947234, y: 0.00015739798, z: 0.0000010299682}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: eyeCTRL_r_end
-      parentName: eyeCTRL_r
-      position: {x: -0, y: 0.0011992145, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
     - name: eye_l
       parentName: Eyes
       position: {x: -0.0010947231, y: 0.012294874, z: 0.00040627876}
@@ -527,6 +537,31 @@ ModelImporter:
       scale: {x: 0.071649715, y: 0.071649715, z: 0.071649715}
     - name: eye_r_end
       parentName: eye_r
+      position: {x: -0, y: 0.0011992145, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mainEyeCTRL
+      parentName: Eyes
+      position: {x: -2.730239e-18, y: 0.012295904, z: 0.002687965}
+      rotation: {x: 0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 1, y: 1, z: 1}
+    - name: eyeCTRL_l
+      parentName: mainEyeCTRL
+      position: {x: -0.0010947234, y: 0.00015739798, z: 0.0000010299682}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: eyeCTRL_l_end
+      parentName: eyeCTRL_l
+      position: {x: -0, y: 0.0011992145, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: eyeCTRL_r
+      parentName: mainEyeCTRL
+      position: {x: 0.0010947234, y: 0.00015739798, z: 0.0000010299682}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: eyeCTRL_r_end
+      parentName: eyeCTRL_r
       position: {x: -0, y: 0.0011992145, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
@@ -578,7 +613,7 @@ ModelImporter:
     - name: Lower Arm.R
       parentName: Upper Arm.R
       position: {x: 2.9802322e-10, y: 0.013243428, z: -4.4703483e-10}
-      rotation: {x: -0.002622328, y: -0.9992149, z: -0.018493267, w: 0.03493869}
+      rotation: {x: -0.0026223282, y: -0.9992149, z: -0.018493269, w: 0.03493869}
       scale: {x: 1.0000004, y: 0.9999999, z: 1.0000004}
     - name: Hand.R
       parentName: Lower Arm.R
@@ -590,16 +625,16 @@ ModelImporter:
       position: {x: 0.00015741996, y: 0.0032573193, z: -0.00046740792}
       rotation: {x: 0.13591526, y: 0.09874856, z: 0.44445017, w: 0.87990904}
       scale: {x: 1.000001, y: 1, z: 1.0000012}
-    - name: Plane
-      parentName: HandHold.R
-      position: {x: 0.000000007152557, y: 0.000000006556511, z: 0}
-      rotation: {x: -0.233102, y: 0.72864074, z: 0.6297769, w: -0.13463752}
-      scale: {x: 0.4645084, y: 2.0359714, z: 1.0048082}
     - name: HandHold.R_end
       parentName: HandHold.R
       position: {x: -0, y: 0.0058418172, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
+    - name: Plane
+      parentName: HandHold.R
+      position: {x: 0.000000007152557, y: 0.000000006556511, z: 0}
+      rotation: {x: -0.233102, y: 0.72864074, z: 0.6297769, w: -0.13463752}
+      scale: {x: 0.4645084, y: 2.0359714, z: 1.0048082}
     - name: Upper Leg.L
       parentName: Hips
       position: {x: -0.007734339, y: 0.0019428321, z: 0.0008636315}
@@ -650,16 +685,6 @@ ModelImporter:
       position: {x: -0, y: 0.006539663, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: Pole Target.L
-      parentName: Rig
-      position: {x: -0.009892393, y: -0.008711103, z: -0.0085039595}
-      rotation: {x: -6.123233e-17, y: -0, z: 1, w: 9.926167e-24}
-      scale: {x: 1, y: 0.99999946, z: 0.99999946}
-    - name: Pole Target.L_end
-      parentName: Pole Target.L
-      position: {x: -0, y: 0.009401945, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
     - name: Leg IK.R
       parentName: Rig
       position: {x: 0.012094988, y: -0.0025660344, z: -0.01858381}
@@ -668,6 +693,16 @@ ModelImporter:
     - name: Leg IK.R_end
       parentName: Leg IK.R
       position: {x: -0, y: 0.006539663, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Pole Target.L
+      parentName: Rig
+      position: {x: -0.009892393, y: -0.008711103, z: -0.0085039595}
+      rotation: {x: -6.123233e-17, y: -0, z: 1, w: 9.926167e-24}
+      scale: {x: 1, y: 0.99999946, z: 0.99999946}
+    - name: Pole Target.L_end
+      parentName: Pole Target.L
+      position: {x: -0, y: 0.009401945, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Pole Target.R

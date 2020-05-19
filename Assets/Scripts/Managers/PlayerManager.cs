@@ -41,7 +41,6 @@ namespace Managers
 
             if (point == null)
             {
-                return null;
                 throw new CouldntSpawnPlayer();
             }
             

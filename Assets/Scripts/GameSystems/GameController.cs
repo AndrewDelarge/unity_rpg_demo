@@ -73,13 +73,15 @@ namespace GameSystems
             SpawnWorldUiCanvas();
             actorsManager = new AIActorsManager();
             playerManager.Init();
-            GameObject player = playerManager.SpawnPlayer(spawnPointId);
-
-            if (player == null)
+            
+            if (! sceneController.SceneIsPlayable())
             {
+                Debug.Log("Loaded not playable scene");
                 uiManager.HideHud();
                 return;
             }
+            
+            GameObject player = playerManager.SpawnPlayer(spawnPointId);
         
             uiManager.SetPlayer(player);
             playerManager.InitPlayer();

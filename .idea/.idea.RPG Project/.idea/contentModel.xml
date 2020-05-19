@@ -163,6 +163,9 @@
                   <e p="ActionSpeak.cs" t="Include" />
                   <e p="KillHealthableAction.cs" t="Include" />
                 </e>
+                <e p="Common" t="Include">
+                  <e p="PlayAnimationAction.cs" t="Include" />
+                </e>
                 <e p="ScenarioAction.cs" t="Include" />
                 <e p="Tutorial" t="Include">
                   <e p="AttackShow.cs" t="Include" />

@@ -1,11 +1,12 @@
 using Actors.Base.Interface;
 using Actors.Base.StatsStuff;
+using Animation;
 using UnityEngine;
 
 namespace Actors.Base
 {
     [RequireComponent(typeof(Stats))]
-    public abstract class CommonAnimator : MonoBehaviour
+    public abstract class CommonAnimator : BaseAnimator
     {
         public AnimationClip replaceableAttackClip;
         public AnimationClip[] defaultAttackAnimSet;
@@ -17,8 +18,6 @@ namespace Actors.Base
         protected IControlable movement;
         protected Stats stats;
         protected const float locomotionAnimationSmoothTime = .1f;
-        protected Animator animator;
-        protected AnimatorOverrideController overrideController;
         protected AnimationClip[] currentAttackAnimSet;
         
         private void Awake()
@@ -28,15 +27,11 @@ namespace Actors.Base
 
         public virtual void Init(Combat actCombat, IControlable actMovement, Stats actStats)
         {
+            base.Init();
             combat = actCombat;
             movement = actMovement;
             stats = actStats;
-            animator = GetComponentInChildren<Animator>();
-            overrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
-            animator.runtimeAnimatorController = overrideController;
-
             currentAttackAnimSet = defaultAttackAnimSet;
-
             combat.OnAttack += OnAttack;
             combat.OnAttackEnd += OnAttackEnd;
             stats.onGetDamage += OnGetHit;
