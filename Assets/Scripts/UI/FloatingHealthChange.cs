@@ -25,7 +25,7 @@ namespace UI
             curElement = gameObject;
             onHided += () => Destroy(this);
             Show();
-            cam = GameController.instance.mainCamera;
+            cam = GameController.instance.cameraController;
             target = targetTransform;
             text.textCode = textOrCode;
             value.text = text.GetText();

@@ -22,7 +22,7 @@ namespace Actors.Player
         public void Init(Stats actorStats, BaseInput input)
         {
             this.input = input;
-            cam = GameController.instance.mainCamera.GetCamera();
+            cam = GameController.instance.cameraController.GetCamera();
             characterController = GetComponent<CharacterController>();
             stats = actorStats;
         }
@@ -39,7 +39,8 @@ namespace Actors.Player
             if (hit.moveDirection.y < -0.3f)
                 return;
             
-            body.velocity = GetInputDirection() * 3;
+//            body.AddForce(GetInputDirection(), ForceMode.Impulse);
+            body.velocity = GetInputDirection() * 3 / body.mass;
         }
         
         
@@ -88,7 +89,7 @@ namespace Actors.Player
         Vector3 GetInputDirection()
         {
             Vector3 direction = new Vector3(input.horizontal, 0f, input.vertical);
-            direction = GameController.instance.mainCamera.GetCamera().transform.TransformDirection(direction);
+            direction = GameController.instance.cameraController.GetCamera().transform.TransformDirection(direction);
             direction.y = 0;
 
             return direction;

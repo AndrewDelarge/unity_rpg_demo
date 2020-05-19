@@ -16,9 +16,6 @@ namespace GameSystems
         [Range(0.01f, 25)]
         public float cameraRotationSpeed = 1f;
         
-        
-        private float lastRotation;
-        private float lastPointerActive;
 
         private Camera currentCamera;
         private Camera defaultCamera;
@@ -43,15 +40,11 @@ namespace GameSystems
             {
                 Vector3 pos = Vector3.Slerp(currentCamera.transform.position, target.position - offset * currentZoom, cameraFollowSpeed * Time.deltaTime);
                 
-                
                 if (!positionFreezzed)
                 {
                     currentCamera.transform.position = pos;
                 }
 
-
-
-                
                 Quaternion targetRotation = Quaternion.LookRotation(target.position - currentCamera.transform.position + Vector3.up * pitch, target.up);
                 currentCamera.transform.rotation = Quaternion.Slerp(currentCamera.transform.rotation, targetRotation, cameraRotationSpeed * Time.deltaTime);
             }

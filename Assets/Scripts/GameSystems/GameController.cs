@@ -34,7 +34,7 @@ namespace GameSystems
         [HideInInspector] 
         public SceneController sceneController;
         [HideInInspector] 
-        public CameraController mainCamera;
+        public CameraController cameraController;
         [HideInInspector] 
         public WorldUiCanvas worldUiCanvas;
         
@@ -54,7 +54,7 @@ namespace GameSystems
             sceneController.Init();
         
 #if (UNITY_EDITOR)
-            SpawnWorldUiCanvas();
+//            SpawnWorldUiCanvas();
             StartGame();
 #endif
         }
@@ -86,21 +86,23 @@ namespace GameSystems
             playerManager.equipmentManager.Reequip();
             PrepareCamera(player);
             uiManager.ShowHud();
+            sceneController.InitTriggers();
+            sceneController.ApplySceneSettings(this);
         }
     
     
     
         void SpawnCamera()
         {
-            if (mainCamera != null)
+            if (cameraController != null)
             {
                 Debug.Log("Camera already exists");
                 return;
             }
             
-            mainCamera = Instantiate(cameraPrefab).GetComponent<CameraController>();
+            cameraController = Instantiate(cameraPrefab).GetComponent<CameraController>();
             
-            if (mainCamera == null)
+            if (cameraController == null)
             {
                 // Assigned camera dont have controller
                 throw new CameraControllerNotFound();
@@ -115,7 +117,7 @@ namespace GameSystems
         
         void PrepareCamera(GameObject player)
         {
-            CameraController cameraController = mainCamera.GetComponent<CameraController>();
+            CameraController cameraController = this.cameraController.GetComponent<CameraController>();
             cameraController.target = player.transform;
         }
 

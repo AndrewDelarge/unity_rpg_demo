@@ -7,11 +7,17 @@ namespace Gameplay
     {
         [TagSelector]
         public string activeTag;
+        public bool disableAfterTrigger = false;
         [SerializeField]
         public UnityEvent OnEnter;
         [SerializeField]
         public UnityEvent OnExit;
 
+        public void Init()
+        {
+            gameObject.SetActive(true);
+        }
+        
         private void OnTriggerEnter(Collider other)
         {
             if (! IsTagAllowed(other.gameObject))
@@ -19,9 +25,11 @@ namespace Gameplay
                 return;
             }
 
-            if (OnEnter != null)
+            OnEnter?.Invoke();
+            
+            if (disableAfterTrigger)
             {
-                OnEnter.Invoke();
+                gameObject.SetActive(false);
             }
         }
         
@@ -32,10 +40,7 @@ namespace Gameplay
                 return;
             }
 
-            if (OnExit != null)
-            {
-                OnExit.Invoke();
-            }
+            OnExit?.Invoke();
         }
 
         bool IsTagAllowed(GameObject gameObject)

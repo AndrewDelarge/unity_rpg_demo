@@ -58,5 +58,26 @@ namespace Managers
         {
             uiHud.ShowHud();
         }
+
+        public void SetPointTarget(Transform target)
+        {
+            uiHud.uiTarget.SetTarget(target);
+        }
+        
+        public void SetPointTargetComplete()
+        {
+            uiHud.uiTarget.Done();
+        }
+
+        public TutorialFinger GetTutorialFinger()
+        {
+            return uiHud.tutorialFinger;
+        }
+        
+        public void HidePointTarget()
+        {
+            uiHud.uiTarget.Hide();
+        }
+        
     }
 }

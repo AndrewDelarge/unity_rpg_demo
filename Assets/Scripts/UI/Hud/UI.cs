@@ -1,4 +1,5 @@
-﻿using UI.MainMenu;
+﻿using GameSystems;
+using UI.MainMenu;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,8 @@ namespace UI.Hud
         public GameObject endScreen;
         public Text FPSTracker;
         public Loading loadingScreen;
+        public UITarget uiTarget;
+        public TutorialFinger tutorialFinger;
         
         
         private float deltaTime;
@@ -23,6 +26,8 @@ namespace UI.Hud
             healthBar.Init();
             inventory.Init();
             actionBar.Init();
+            uiTarget.Init();
+            tutorialFinger.Init();
             upperPanel.onInventoryButtonClick = null;
             upperPanel.onInventoryButtonClick += inventory.ToggleInventory;
         }

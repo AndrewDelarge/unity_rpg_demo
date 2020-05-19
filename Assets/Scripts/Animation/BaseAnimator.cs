@@ -12,7 +12,7 @@ namespace Animation
         {
             animator = GetComponentInChildren<Animator>();
             
-           
+            
         }
     }
 }

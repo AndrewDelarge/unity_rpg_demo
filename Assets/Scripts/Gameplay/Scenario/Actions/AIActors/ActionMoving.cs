@@ -34,19 +34,12 @@ namespace Gameplay.Scenario.Actions.AIActors
             controlable.Follow(targetPoint, 1.2f);
         }
 
-        protected override void FixedUpdate()
+
+        public override void CheckDoing()
         {
-            base.FixedUpdate();
-
-            if (! doing)
-            {
-                return;
-            }
-
             if (Vector3.Distance(controlable.GetTransform().position, targetPoint.position) <= 2f)
             {
                 controlable.StopFollow();
-                onComplete?.Invoke();
                 doing = false;
             }
         }

@@ -176,5 +176,10 @@ namespace Actors.Base
         {
             return curMAttackSpeed / commonCombatSpeedMultiplier;
         }
+
+        public bool IsAttacking()
+        {
+            return Time.time - lastAttackTime <= GetCurrentMeleeAttackSpeed();
+        }
     }
 }

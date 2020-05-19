@@ -26,7 +26,7 @@ namespace Actors.Player
             playerFx.Init(combat);
             // turnoff automatic vision update
             vision.isEnabled = false;
-            cameraController = GameController.instance.mainCamera;
+            cameraController = GameController.instance.cameraController;
             combat.OnAttackEnd += ShakeCamera;
             combat.OnAttackEnd += PushPhysicsObjects;
         }
@@ -43,10 +43,11 @@ namespace Actors.Player
             vision.viewAngle = 360f;
             vision.viewRadius *= 2f;
             List<Collider> objects = vision.FindVisibleColliders();
-            
+
             vision.viewAngle = oldView;
             vision.viewRadius /= 2f;
             List<IHealthable> attack = new List<IHealthable>();
+            
             for (int i = 0; i < objects.Count; i++)
             {
                 IHealthable healthableObject = objects[i].GetComponent<IHealthable>();

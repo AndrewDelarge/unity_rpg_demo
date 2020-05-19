@@ -30,6 +30,11 @@ namespace Gameplay.Scenario.Actions.AIActors
         }
 
 
+        public override void CheckDoing()
+        {
+            return;
+        }
+
         public override void Stop()
         {
             speakable.StopSay();

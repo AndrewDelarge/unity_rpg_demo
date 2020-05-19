@@ -16,6 +16,11 @@ namespace Gameplay.Scenario.Actions.WithPlayer
             doing = true;
         }
 
+        public override void CheckDoing()
+        {
+            return;
+        }
+
         public override void Stop()
         {
             return;

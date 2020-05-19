@@ -21,7 +21,7 @@ namespace UI.Base
         
         public override void Init()
         {
-            cam = GameController.instance.mainCamera;
+            cam = GameController.instance.cameraController;
             worldUiCanvas = GameController.instance.worldUiCanvas;
             scale = 1;
 

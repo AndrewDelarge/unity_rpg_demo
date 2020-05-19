@@ -17,6 +17,9 @@
           <e p="Quests" t="Include">
             <e p="Quests.cs" t="Include" />
           </e>
+          <e p="Scene" t="Include">
+            <e p="Quests.cs" t="Include" />
+          </e>
         </e>
         <e p="External" t="Include">
           <e p="Description.txt" t="Include" />
@@ -134,6 +137,9 @@
           </e>
           <e p="Gameplay" t="Include">
             <e p="FixedCameraZone.cs" t="Include" />
+            <e p="Objects" t="Include">
+              <e p="Destroyable.cs" t="Include" />
+            </e>
             <e p="Player" t="Include">
               <e p="SpawnPoint.cs" t="Include" />
               <e p="Teleport.cs" t="Include" />
@@ -158,6 +164,11 @@
                   <e p="KillHealthableAction.cs" t="Include" />
                 </e>
                 <e p="ScenarioAction.cs" t="Include" />
+                <e p="Tutorial" t="Include">
+                  <e p="AttackShow.cs" t="Include" />
+                  <e p="GoToPoint.cs" t="Include" />
+                  <e p="MovementShow.cs" t="Include" />
+                </e>
                 <e p="WithPlayer" t="Include">
                   <e p="AddItemAction.cs" t="Include" />
                 </e>
@@ -183,6 +194,7 @@
               <e p="Text.cs" t="Include" />
               <e p="TextType.cs" t="Include" />
             </e>
+            <e p="SceneSettings.cs" t="Include" />
           </e>
           <e p="Helpers" t="Include">
             <e p="ConvertToRegularMesh.cs" t="Include" />
@@ -197,6 +209,7 @@
             </e>
             <e p="PlayerManager.cs" t="Include" />
             <e p="SceneController.cs" t="Include" />
+            <e p="TriggersManager.cs" t="Include" />
             <e p="UIManager.cs" t="Include" />
           </e>
           <e p="Scriptable" t="Include">
@@ -235,7 +248,9 @@
               <e p="HealthBar.cs" t="Include" />
               <e p="PauseMenu.cs" t="Include" />
               <e p="QuestPanel.cs" t="Include" />
+              <e p="TutorialFinger.cs" t="Include" />
               <e p="UI.cs" t="Include" />
+              <e p="UITarget.cs" t="Include" />
               <e p="UpperPanel.cs" t="Include" />
             </e>
             <e p="Inventory" t="Include">
@@ -254,12 +269,13 @@
             <e p="WorldUiCanvas.cs" t="Include" />
           </e>
         </e>
+        <e p="Shaders" t="Include">
+          <e p="Decal.shader" t="Include" />
+        </e>
         <e p="Sprites" t="Include">
-          <e p="UI" t="Include">
-            <e p="Fonts" t="Include">
-              <e p="Archivo_Black" t="Include">
-                <e p="OFL.txt" t="Include" />
-              </e>
+          <e p="Fonts" t="Include">
+            <e p="Archivo_Black" t="Include">
+              <e p="OFL.txt" t="Include" />
             </e>
           </e>
         </e>

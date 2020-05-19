@@ -34,21 +34,13 @@ namespace Gameplay.Scenario.Actions.AIActors
             doing = false;
         }
 
-        protected override void FixedUpdate()
+
+        public override void CheckDoing()
         {
-            base.FixedUpdate();
-
-            if (!doing)
-            {
-                return;
-            }
-
             if (healthable.IsDead())
             {
                 doing = false;
-                onComplete?.Invoke();
             }
-            
         }
     }
 }

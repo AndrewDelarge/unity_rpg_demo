@@ -1,4 +1,6 @@
 using System;
+using Gameplay;
+using Gameplay.Player;
 using GameSystems;
 using UI.MainMenu;
 using UnityEngine;
@@ -14,6 +16,12 @@ namespace Managers
         private AsyncOperation sceneLoadingOperation;
         private Loading loadingScreen;
         private bool isLoading;
+
+        private TriggersManager triggersManager;
+        private SceneSettings sceneSettings;
+        private SpawnPoint[] spawnPoints;
+
+        
         public event Action OnSceneLoaded;
         
         
@@ -30,6 +38,10 @@ namespace Managers
             {
                 SceneManager.LoadScene(MAIN_MENU_SCENE_INDEX, new LoadSceneParameters(LoadSceneMode.Single));
             }
+
+            spawnPoints = FindObjectsOfType<SpawnPoint>();
+            sceneSettings = FindObjectOfType<SceneSettings>();
+            triggersManager = new TriggersManager(FindObjectsOfType<Trigger>());
 #endif
 
         }
@@ -57,16 +69,34 @@ namespace Managers
             loadingScreen.Hide();
             isLoading = false;
             OnSceneLoaded?.Invoke();
+            spawnPoints = FindObjectsOfType<SpawnPoint>();
+            sceneSettings = FindObjectOfType<SceneSettings>();
+            triggersManager = new TriggersManager(FindObjectsOfType<Trigger>());
+        }
+        
+
+        public void InitTriggers()
+        {
+            triggersManager?.Init();
         }
 
 
-        public GameObject GetSpawnPoint(int id = 1)
+        public void ApplySceneSettings(GameController controller)
         {
-            GameObject[] gos = currentScene.GetRootGameObjects();
-
-            if (gos.Length == 0)
+            if (sceneSettings != null)
             {
-                return null;
+                sceneSettings.Apply(controller);
+            }
+        }
+        
+        public GameObject FindSpawnPoint(int spawnPointId)
+        {
+            for (int i = 0; i < spawnPoints.Length; i++)
+            {
+                if (spawnPoints[i].id == spawnPointId)
+                {
+                    return spawnPoints[i].gameObject;
+                }
             }
 
             return null;

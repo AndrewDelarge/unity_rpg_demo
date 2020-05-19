@@ -7,26 +7,33 @@ namespace Gameplay.Scenario
     public class Scenario : MonoBehaviour
     {
         public ScenarioAction[] actions;
-
         private ScenarioAction currentAction;
+
+        private bool started = false;
+        
+        public float startDelay = 0f;
         private void Start()
         {
             if (actions.Length == 0)
             {
                 actions = GetComponentsInChildren<ScenarioAction>();
             }
-            
-            StartScenario();
-        }
+         }
 
         public void StartScenario()
         {
-            StartCoroutine(StartActions());
+            if (!started)
+            {
+                StartCoroutine(StartActions());
+                started = true;
+            }
         }
 
 
         IEnumerator StartActions()
         {
+            yield return new WaitForSeconds(startDelay);
+
             for (int i = 0; i < actions.Length; i++)
             {
                 actions[i].Do();
@@ -44,10 +51,13 @@ namespace Gameplay.Scenario
                 }
                 
             }
+
+            started = false;
         }
 
         public void StopScenario()
         {
+            started = false;
             StopCoroutine(StartActions());
         }
     }

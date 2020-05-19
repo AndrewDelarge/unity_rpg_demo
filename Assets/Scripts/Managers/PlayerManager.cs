@@ -3,6 +3,7 @@ using Actors.Player;
 using Exceptions.Game.Player;
 using Gameplay;
 using Gameplay.Player;
+using GameSystems;
 using Managers.Player;
 using UnityEngine;
 
@@ -11,24 +12,20 @@ namespace Managers
     public class PlayerManager : MonoBehaviour
     {
         public GameObject playerPrefab;
-
-        [TagSelector]
-        public string spawnTag;
-        
-        private PlayerActor currentPlayer;
         [HideInInspector]
         public EquipmentManager equipmentManager;
         [HideInInspector]
         public InventoryManager inventoryManager;
-        public SpawnPoint[] spawnPoints;
-
         public Action onPlayerInited;
+
+        private SceneController sceneController;
+        private PlayerActor currentPlayer;
         
         public void Init()
         {
-            spawnPoints = FindObjectsOfType<SpawnPoint>();
             equipmentManager = GetComponent<EquipmentManager>();
             inventoryManager = GetComponent<InventoryManager>();
+            sceneController = GameController.instance.sceneController;
             equipmentManager.Init();
             inventoryManager.Init();
         }
@@ -40,7 +37,7 @@ namespace Managers
                 return currentPlayer.gameObject;
             }
             
-            GameObject point = FindSpawnPoint(spawnPointId);
+            GameObject point = sceneController.FindSpawnPoint(spawnPointId);
 
             if (point == null)
             {
@@ -54,7 +51,6 @@ namespace Managers
             
             equipmentManager.targetMesh = currentPlayer.gameObject;
             equipmentManager.EquipDefault();
-            Destroy(point);
             return currentPlayer.gameObject;
         }
 
@@ -64,23 +60,11 @@ namespace Managers
             onPlayerInited?.Invoke();
         }
         
-        GameObject FindSpawnPoint(int spawnPointId)
-        {
 
-            for (int i = 0; i < spawnPoints.Length; i++)
-            {
-                if (spawnPoints[i].id == spawnPointId)
-                {
-                    return spawnPoints[i].gameObject;
-                }
-            }
-
-            return null;
-        }
 
         public void TeleportToPoint(int spawnPointId)
         {
-            GameObject point = FindSpawnPoint(spawnPointId);
+            GameObject point = sceneController.FindSpawnPoint(spawnPointId);
             if (point != null)
             {
                 ChangePlayerPos(point.transform.position);

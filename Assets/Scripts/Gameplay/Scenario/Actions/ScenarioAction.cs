@@ -31,15 +31,22 @@ namespace Gameplay.Scenario.Actions
                 return;
             }
             
-            
+            CheckDoing();
+
             if (Time.time - startTime >= maxTime)
             {
                 doing = false;
+            }
+            
+            if (! doing)
+            {
                 onComplete?.Invoke();
             }
         }
 
 
+        public abstract void CheckDoing();
+        
         public bool IsDoing()
         {
             return doing;
