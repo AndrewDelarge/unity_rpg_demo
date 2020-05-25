@@ -75,7 +75,7 @@ namespace Actors.Player
         public override void Aim(Vector3 point)
         {
             //Revert 
-//            point = -point;
+            point = -point;
             aimTime += Time.deltaTime;
             animator.isLookAtEnabled = true;
             point = transform.position - point;
