@@ -18,7 +18,7 @@ namespace Actors.Player
         public Transform target { get; private set; }
         private bool stopped = false;
 
-
+        private bool rotating = true;
         public void Init(Stats actorStats, BaseInput input)
         {
             this.input = input;
@@ -77,9 +77,11 @@ namespace Actors.Player
                     speedMultiply = .4f;
                 }
                 direction *= speedMultiply;
-                
-                
-                FaceDirection(direction);
+
+                if (rotating)
+                {
+                    FaceDirection(direction);
+                }
             }
             
             Move(direction);
@@ -192,6 +194,12 @@ namespace Actors.Player
         public bool IsMoving()
         {
             return GetCurrentMagnitude() > 0;
+        }
+
+
+        public void Rotating(bool enabled)
+        {
+            rotating = enabled;
         }
     }
 }

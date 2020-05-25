@@ -16,7 +16,9 @@ namespace Actors.AI
         
         private Stats stats;
         private BaseInput input;
-
+        private bool rotating = true;
+        
+        
         private void Awake()
         {
             enabled = false;
@@ -32,7 +34,7 @@ namespace Actors.AI
         private void FixedUpdate()
         {
             agent.speed = stats.GetMovementSpeed() * speedMultiplier;
-
+            agent.updateRotation = rotating;
             if (target != null)
             {
 //                FaceTarget();
@@ -147,6 +149,11 @@ namespace Actors.AI
         public bool IsMoving()
         {
             return GetCurrentMagnitude() > 0;
+        }
+
+        public void Rotating(bool enabled)
+        {
+            rotating = enabled;
         }
     }
 }

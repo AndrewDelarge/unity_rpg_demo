@@ -77,6 +77,21 @@ namespace Actors.Base
             throw new NotImplementedException("Implement Melee Attack method!");
         }
 
+        public virtual void Aim(Vector3 point)
+        {
+            throw new NotImplementedException("Implement Aim method!");
+        }
+
+        public virtual void StopAim()
+        {
+            throw new NotImplementedException("Implement StopAim method!");
+        }
+
+        public virtual void RangeAttack()
+        {
+            throw new NotImplementedException("Implement RangeAttack method!");
+        }
+        
         public virtual void Dash()
         {
             throw new NotImplementedException("Implement Dash method!");

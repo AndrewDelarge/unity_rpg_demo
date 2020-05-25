@@ -9,7 +9,17 @@
       <e p="Assets" t="Include">
         <e p="Editor" t="Include">
           <e p="Actors" t="Include">
+            <e p="CommonAnimator.cs" t="Include" />
             <e p="FiledOfView.cs" t="Include" />
+          </e>
+          <e p="NavMesh" t="Include">
+            <e p="NavMeshAssetManager.cs" t="Include" />
+            <e p="NavMeshComponentsEditor.asmdef" t="Include" />
+            <e p="NavMeshComponentsGUIUtility.cs" t="Include" />
+            <e p="NavMeshLinkEditor.cs" t="Include" />
+            <e p="NavMeshModifierEditor.cs" t="Include" />
+            <e p="NavMeshModifierVolumeEditor.cs" t="Include" />
+            <e p="NavMeshSurfaceEditor.cs" t="Include" />
           </e>
           <e p="PropertyDrawer" t="Include">
             <e p="TagSelector.cs" t="Include" />
@@ -130,6 +140,9 @@
                 <e p="CameraControllerNotFound.cs" t="Include" />
                 <e p="CouldntSpawnPlayer.cs" t="Include" />
               </e>
+              <e p="Projectile" t="Include">
+                <e p="CouldntSpawnPlayer.cs" t="Include" />
+              </e>
               <e p="UI" t="Include">
                 <e p="WorldspaceUiSpawnException.cs" t="Include" />
               </e>
@@ -145,6 +158,10 @@
               <e p="Teleport.cs" t="Include" />
               <e p="TeleportToScene.cs" t="Include" />
               <e p="TeleportToSpawnpoint.cs" t="Include" />
+            </e>
+            <e p="Projectile" t="Include">
+              <e p="Arrow.cs" t="Include" />
+              <e p="BaseProjectile.cs" t="Include" />
             </e>
             <e p="Quests" t="Include">
               <e p="ConditionBase.cs" t="Include" />
@@ -197,6 +214,13 @@
               <e p="Text.cs" t="Include" />
               <e p="TextType.cs" t="Include" />
             </e>
+            <e p="NavMesh" t="Include">
+              <e p="NavMeshComponents.asmdef" t="Include" />
+              <e p="NavMeshLink.cs" t="Include" />
+              <e p="NavMeshModifier.cs" t="Include" />
+              <e p="NavMeshModifierVolume.cs" t="Include" />
+              <e p="NavMeshSurface.cs" t="Include" />
+            </e>
             <e p="SceneSettings.cs" t="Include" />
           </e>
           <e p="Helpers" t="Include">
@@ -217,6 +241,7 @@
           </e>
           <e p="Scriptable" t="Include">
             <e p="Equipment" t="Include">
+              <e p="RangeWeapon.cs" t="Include" />
               <e p="Weapon.cs" t="Include" />
               <e p="WeaponType.cs" t="Include" />
             </e>
@@ -284,6 +309,8 @@
         </e>
       </e>
       <e p="Library" t="ExcludeRecursive" />
+      <e p="NavMeshComponents.csproj" t="IncludeRecursive" />
+      <e p="NavMeshComponentsEditor.csproj" t="IncludeRecursive" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="packages" t="ExcludeRecursive" />
       <e p="RPG Project.sln" t="IncludeFlat" />

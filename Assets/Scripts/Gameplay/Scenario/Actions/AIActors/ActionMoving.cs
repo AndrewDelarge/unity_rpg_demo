@@ -1,4 +1,5 @@
 using System;
+using Actors.Base;
 using Actors.Base.Interface;
 using GameSystems;
 using UnityEngine;
@@ -26,7 +27,13 @@ namespace Gameplay.Scenario.Actions.AIActors
 
             if (targetIsPlayer)
             {
-                targetPoint = GameController.instance.playerManager.GetPlayer().transform;
+                Actor player = GameController.instance.playerManager.GetPlayer();
+                if (player == null)
+                {
+                    doing = false;
+                    return;
+                }
+                targetPoint = player.transform;
             }
 
             startTime = Time.time;

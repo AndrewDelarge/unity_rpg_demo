@@ -11,11 +11,14 @@ namespace Gameplay.Scenario.Actions.Common
 
         public int loops = 1;
 
+
+        public bool loop;
         private BaseAnimator animator;
         public override void Do()
         {
             base.Do();
             animator = animatedObject.GetComponent<BaseAnimator>();
+
 
             if (animator != null)
             {

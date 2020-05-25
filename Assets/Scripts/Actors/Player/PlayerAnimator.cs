@@ -14,6 +14,10 @@ namespace Actors.Player
         public float defaultAttackSpeed = 1f;
         Dictionary<WeaponType, WeaponAnimation> weaponAnimationDict;
         
+        
+
+        
+        
         public override void Init(Base.Combat actCombat, IControlable actMovement, Stats actStats)
         {
             base.Init(actCombat, actMovement, actStats);
@@ -26,8 +30,10 @@ namespace Actors.Player
             {
                 weaponAnimationDict.Add(anim.weapon, anim);
             }
-            
         }
+
+
+
 
         void OnWeaponEquip(Weapon equipment)
         {

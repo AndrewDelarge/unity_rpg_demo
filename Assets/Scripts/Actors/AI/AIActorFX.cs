@@ -73,7 +73,7 @@ namespace Actors.AI
                 return;
             }
             
-            GameObject damageText = worldUiCanvas.SpawnUi(worldUiCanvas.worldUiObjects.damageTextFeed, WorldUiType.Healthbars);
+            GameObject damageText = worldUiCanvas.SpawnUi(worldUiCanvas.worldUiObjects.damageTextFeed, WorldUiType.DamageFeed);
 
             FloatingHealthChange healthChange = damageText.GetComponent<FloatingHealthChange>();
 

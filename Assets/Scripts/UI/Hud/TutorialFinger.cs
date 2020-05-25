@@ -5,7 +5,7 @@ namespace UI.Hud
 {
     public class TutorialFinger : HideableUi
     {
-        private const string SHOW_JOESTICK_STATE = "FingerShowJoestick";
+        private const string SHOW_JOYSTICK_STATE = "FingerShowJoestick";
         private const string SHOW_ATTACK_STATE = "AttackButtonClick";
         private const string SHOW_NONE_STATE = "None";
         
@@ -21,11 +21,11 @@ namespace UI.Hud
         }
 
 
-        public void ShowJoestick()
+        public void ShowJoystick()
         {
             Show();
             animator.gameObject.SetActive(true);
-            animator.Play(SHOW_JOESTICK_STATE);
+            animator.Play(SHOW_JOYSTICK_STATE);
         }
         
         public void ShowAttack()

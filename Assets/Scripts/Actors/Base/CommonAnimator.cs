@@ -1,6 +1,8 @@
+
 using Actors.Base.Interface;
 using Actors.Base.StatsStuff;
 using Animation;
+using UnityEditor;
 using UnityEngine;
 
 namespace Actors.Base
@@ -19,6 +21,18 @@ namespace Actors.Base
         protected Stats stats;
         protected const float locomotionAnimationSmoothTime = .1f;
         protected AnimationClip[] currentAttackAnimSet;
+
+        [Header("Pseudo IK")] 
+        public bool isLookAtEnabled = false;
+        public Transform lookPoint; 
+        public Transform neckBone; 
+        public Transform chestBone; 
+        public Transform neckPos;
+        [HideInInspector] 
+        public float excessAngle;
+
+        private float angleChestHorz;
+        private float angleNeckVert;
         
         private void Awake()
         {
@@ -38,6 +52,30 @@ namespace Actors.Base
             enabled = true;
         }
 
+        private void LateUpdate()
+        {
+            if (!isLookAtEnabled)
+            {
+                return;
+            }
+
+            if (lookPoint == null || stats.IsDead())
+            {
+                return;
+            }
+
+            if (movement.target != null)
+            {
+                Vector3 position = movement.target.position;
+                lookPoint.transform.position = new Vector3(position.x,
+                    position.y +1, position.z);
+            }
+            
+            
+            CalculateBodyRotation(lookPoint);
+        }
+        
+        
         
         void Update()
         {
@@ -115,6 +153,36 @@ namespace Actors.Base
             animator.SetLayerWeight(index, 1f);
             animator.SetLayerWeight(indexRun, 0f);
         }
-        
+
+
+        protected virtual void CalculateBodyRotation(Transform lookAt)
+        {
+            Vector3 localPosition = lookAt.localPosition;
+            Vector3 lookPos = new Vector3(localPosition.x, 0, localPosition.z);
+            Vector3 lookPosVert = new Vector3(0, localPosition.y, 1);
+            
+            Vector3 neckBoneLocalPosition = new Vector3(0, neckPos.localPosition.y, 1);
+            
+            angleChestHorz = Vector3.SignedAngle(Vector3.forward,lookPos, Vector3.up);
+            angleNeckVert = Vector3.SignedAngle(neckBoneLocalPosition, lookPosVert, Vector3.right);
+
+            excessAngle = angleChestHorz > 0 ? Mathf.Max(angleChestHorz - 40, 0) : Mathf.Min(angleChestHorz + 40, 0);
+            
+            //Max chest rotation angle
+            angleChestHorz = angleChestHorz > 0 ? Mathf.Min(angleChestHorz, 40f) : Mathf.Max(angleChestHorz, -40f);
+            //Max neck rotation angle
+            angleNeckVert = angleNeckVert > 0 ? Mathf.Min(angleNeckVert, 20f) : Mathf.Max(angleNeckVert, -20f);
+            
+            chestBone.Rotate(0, angleChestHorz, 0);
+            neckBone.Rotate(angleNeckVert, 0, 0);
+        }
+
+        private void RotateBody()
+        {
+            chestBone.Rotate(0, angleChestHorz, 0);
+            neckBone.Rotate(angleNeckVert, 0, 0);
+        }
     }
+    
+    
 }

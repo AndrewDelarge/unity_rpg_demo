@@ -33,6 +33,12 @@ namespace Managers
             uiHud.healthBar.SetHealthable(player.GetComponent<IHealthable>());
         }
 
+
+        public GameObject GetHudGameObject()
+        {
+            return uiHud.gameObject;
+        }
+        
         public ActionBar GetActionBar()
         {
             return uiHud.actionBar;

@@ -34,5 +34,7 @@ namespace Actors.Base.Interface
         Transform GetTransform();
 
         bool IsMoving();
+
+        void Rotating(bool enabled);
     }
 }

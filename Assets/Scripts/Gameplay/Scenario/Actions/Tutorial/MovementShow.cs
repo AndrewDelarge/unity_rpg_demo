@@ -16,7 +16,7 @@ namespace Gameplay.Scenario.Actions.Tutorial
         {
             base.Do();
             tutorialFingerHud = GameController.instance.uiManager.GetTutorialFinger();
-            tutorialFingerHud.ShowJoestick();
+            tutorialFingerHud.ShowJoystick();
             doing = true;
         }
 

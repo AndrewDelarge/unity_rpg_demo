@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace GameSystems
 {
@@ -11,8 +12,10 @@ namespace GameSystems
         public float cameraFollowSpeed = 3f;
         [Range(0.01f, 25)]
         public float cameraRotationSpeed = 4f;
+
+        public bool spawnPlayer = true;
         
-        
+        public UnityEvent onStart;
         
         public void Apply(GameController controller)
         {
@@ -20,6 +23,16 @@ namespace GameSystems
             controller.cameraController.currentZoom = cameraZoom;
             controller.cameraController.cameraFollowSpeed = cameraFollowSpeed;
             controller.cameraController.cameraRotationSpeed = cameraRotationSpeed;
+            
+            
+            onStart?.Invoke();
         }
+        
+        
+        
+        
+        
+        
+        
     }
 }

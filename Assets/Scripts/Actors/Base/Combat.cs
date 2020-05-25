@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Actors.Base.Interface;
 using Actors.Base.StatsStuff;
-
+using Gameplay.Projectile;
 using GameSystems.Input;
 using UnityEngine;
 
@@ -61,22 +61,6 @@ namespace Actors.Base
             actor = GetComponent<Actor>();
             enabled = true;
         }
-
-
-        public void SetTarget(Actor target)
-        {
-            targetActor = target;
-        }
-        
-        public Actor GetTarget()
-        {
-            return targetActor;
-        }
-        
-        public bool InCombat()
-        {
-            return inCombat;
-        }
         
         protected virtual void FixedUpdate()
         {
@@ -113,15 +97,27 @@ namespace Actors.Base
             }
         }
 
-        public bool InMeleeRange(Vector3 targetPosition)
+        public virtual void RangeAttack(Vector3 point, float aimTime = 0f)
         {
-            return Vector3.Distance(transform.position, targetPosition) <= curMAttackRadius;
+            //TODO rework
+            // Get range weapon
+            // Get weapon projectile
+            float rangeWeaponDamage = 14f;
+
+            aimTime = Mathf.Min(aimTime, 1);
+            Vector3 pos = transform.position;
+            pos.y += 1;
+            GameObject gameObject = (GameObject) Instantiate(Resources.Load("Projectiles/Arrow"), pos, Quaternion.identity);
+            gameObject.transform.LookAt(point);
+            BaseProjectile projectile = gameObject.GetComponent<BaseProjectile>();
+            
+            Damage damage = new Damage(Mathf.CeilToInt(rangeWeaponDamage * aimTime), actor, false);
+            
+            projectile.angleSpeed = 1 - aimTime;
+            projectile.ignorePlayer = true;
+            projectile.Launch(damage);
         }
-        
-        public bool InMeleeRange(Transform targetTransform)
-        {
-            return InMeleeRange(targetTransform.position);
-        }
+
         
         
         protected virtual IEnumerator DoMeleeDamage(List<IHealthable> targetStats)
@@ -146,6 +142,8 @@ namespace Actors.Base
 
             OnAttackEnd?.Invoke();
         }
+        
+        
         
         protected void InvokeOnAttack()
         {
@@ -177,9 +175,34 @@ namespace Actors.Base
             return curMAttackSpeed / commonCombatSpeedMultiplier;
         }
 
+        public bool InMeleeRange(Vector3 targetPosition)
+        {
+            return Vector3.Distance(transform.position, targetPosition) <= curMAttackRadius;
+        }
+        
+        public bool InMeleeRange(Transform targetTransform)
+        {
+            return InMeleeRange(targetTransform.position);
+        }
+        
         public bool IsAttacking()
         {
             return Time.time - lastAttackTime <= GetCurrentMeleeAttackSpeed();
+        }
+        
+        public void SetTarget(Actor target)
+        {
+            targetActor = target;
+        }
+        
+        public Actor GetTarget()
+        {
+            return targetActor;
+        }
+        
+        public bool InCombat()
+        {
+            return inCombat;
         }
     }
 }

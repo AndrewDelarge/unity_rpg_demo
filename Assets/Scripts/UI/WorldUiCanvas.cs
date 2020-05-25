@@ -1,4 +1,5 @@
 ﻿using System;
+using GameSystems;
 using UnityEngine;
 
 namespace UI
@@ -24,6 +25,10 @@ namespace UI
                 case WorldUiType.Healthbars:
                     targetToSpawn = healthbars;
                     break;
+                // TODO make go for damage feed in user hud
+                case WorldUiType.DamageFeed:
+                    targetToSpawn = GameController.instance.uiManager.GetHudGameObject();
+                    break;
                 default:
                     targetToSpawn = this.gameObject;
                     break;
@@ -44,6 +49,6 @@ namespace UI
     
     public enum WorldUiType
     {
-        Dialog, Healthbars
+        Dialog, Healthbars, DamageFeed
     }
 }

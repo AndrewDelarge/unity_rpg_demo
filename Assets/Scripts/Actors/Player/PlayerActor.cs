@@ -18,6 +18,7 @@ namespace Actors.Player
         private bool dashing = false;
         private float dashingColdownd = 1f;
         private float dashingTime;
+        private float aimTime;
         
         public override void Init()
         {
@@ -70,9 +71,47 @@ namespace Actors.Player
             }
         }
 
+
+        public override void Aim(Vector3 point)
+        {
+            //Revert 
+//            point = -point;
+            aimTime += Time.deltaTime;
+            animator.isLookAtEnabled = true;
+            point = transform.position - point;
+            point.y = animator.lookPoint.position.y;
+            animator.lookPoint.position = point;
+
+            if (animator.excessAngle != 0)
+            {
+                movement.Rotating(false);
+                transform.Rotate(0, animator.excessAngle * Time.deltaTime * 3f, 0);
+            }
+            
+            Debug.DrawLine(transform.position, point);
+        }
+
+        public override void RangeAttack()
+        {
+            combat.RangeAttack(animator.lookPoint.position, aimTime);
+        }
+
+        public override void StopAim()
+        {
+            movement.Rotating(true);
+
+            animator.isLookAtEnabled = false;
+            
+            if (aimTime > 0)
+            {
+                RangeAttack();
+            }
+            aimTime = 0;
+        }
+
         public IEnumerator Dashing()
         {
-            // TODO hardcode
+            // TODO remove hardcode dashing?
             if (!CanDash())
             {
                 yield break;
@@ -121,9 +160,19 @@ namespace Actors.Player
         {
             if (Time.time - dashingTime >= dashingColdownd)
             {
+                if (combat.IsAttacking())
+                {
+                    return false;
+                }
+
+                if (aimTime > 0)
+                {
+                    return false;
+                }
+                
                 return true;
             }
-
+            
             return false;
         }
     }

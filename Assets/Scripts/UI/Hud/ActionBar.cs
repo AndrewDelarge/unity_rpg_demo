@@ -6,6 +6,7 @@ namespace UI.Hud
     {
         
         public Joystick joystick;
+        public Joystick bowControlStick;
 
         
         public delegate void OnActionKeyClick();

@@ -80,13 +80,16 @@ namespace GameSystems
                 uiManager.HideHud();
                 return;
             }
+
+            if (sceneController.IsNeedToSpawnPlayer())
+            {
+                GameObject player = playerManager.SpawnPlayer(spawnPointId);
+                uiManager.SetPlayer(player);
+                playerManager.InitPlayer();
+                playerManager.equipmentManager.Reequip();
+                PrepareCamera(player);
+            }
             
-            GameObject player = playerManager.SpawnPlayer(spawnPointId);
-        
-            uiManager.SetPlayer(player);
-            playerManager.InitPlayer();
-            playerManager.equipmentManager.Reequip();
-            PrepareCamera(player);
             uiManager.ShowHud();
             sceneController.InitTriggers();
             sceneController.ApplySceneSettings(this);

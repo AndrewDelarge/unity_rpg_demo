@@ -16,7 +16,7 @@ namespace UI.Base
         protected CameraController cam;
         protected WorldUiCanvas worldUiCanvas;
         protected float scale = 1;
-        
+        protected bool inited = false;
         
         
         public override void Init()
@@ -42,12 +42,17 @@ namespace UI.Base
                 // Try to up over head
                 scale *= 2.3f;
             }
-            
+
+            inited = true;
             curElement.SetActive(false);
         }
         
         void FixedUpdate()
         {
+            if (!inited)
+            {
+                return;
+            }
             curElement.transform.position = new Vector3(target.position.x, target.position.y + (scale), target.position.z);
             curElement.transform.forward = -cam.GetCamera().transform.forward;
         }

@@ -16,6 +16,9 @@ namespace GameSystems.Input
         private Actor actor;
 
         private bool inited = false;
+
+        private float bowPulledTime;
+        
         public override void Init(Actor actor)
         {
             this.actor = actor;
@@ -24,6 +27,13 @@ namespace GameSystems.Input
             actionBar.onSecKeyClick += actor.Dash;
 
             inited = true;
+        }
+
+
+        private void LateUpdate()
+        {
+            
+            
         }
 
         private void FixedUpdate()
@@ -36,11 +46,28 @@ namespace GameSystems.Input
             horizontal = UnityEngine.Input.GetAxis("Horizontal");
             vertical   = UnityEngine.Input.GetAxis("Vertical");
 
-            if (!IsKeyboard())
+            if (! IsKeyboard())
             {
                 horizontal = actionBar.joystick.Horizontal;
                 vertical = actionBar.joystick.Vertical;
             }
+
+            if (! inited)
+            {
+                return;
+            }
+            
+            Vector3 bowAimDir = GetBowStickValues();
+
+            if (bowAimDir == Vector3.zero)
+            {
+                actor.StopAim();
+            }
+            else
+            {
+                actor.Aim(bowAimDir);
+            }
+            
             
             if (UnityEngine.Input.GetKeyDown(actionKey))
             {
@@ -61,6 +88,12 @@ namespace GameSystems.Input
         bool IsKeyboard()
         {
             return UnityEngine.Input.GetAxis("Horizontal") != 0 || UnityEngine.Input.GetAxis("Vertical") != 0;
+        }
+
+
+        Vector3 GetBowStickValues()
+        {
+            return new Vector3(actionBar.bowControlStick.Horizontal, 0, actionBar.bowControlStick.Vertical);
         }
     }
     

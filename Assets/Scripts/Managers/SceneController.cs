@@ -107,5 +107,11 @@ namespace Managers
         {
             return sceneSettings != null;
         }
+        
+        public bool IsNeedToSpawnPlayer()
+        {
+            return sceneSettings.spawnPlayer;
+        }
+        
     }
 }
