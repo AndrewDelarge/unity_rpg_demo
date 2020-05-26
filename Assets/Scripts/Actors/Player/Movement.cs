@@ -53,10 +53,10 @@ namespace Actors.Player
                 return;
             }
             
-            if (target != null)
-            {
-                direction = (transform.position - target.transform.position).normalized;
-            }
+//            if (target != null)
+//            {
+//                direction = (transform.position - target.transform.position).normalized;
+//            }
             
             if (input.IsSomeDirection())
             {

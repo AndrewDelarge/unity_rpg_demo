@@ -31,6 +31,13 @@ namespace Actors.Base
         [HideInInspector] 
         public float excessAngle;
 
+        [Header("Hands Bones")] 
+        public bool isRepeaterEnabled = false;
+        public Transform handholdBone;
+        public Transform handholdBoneRepeater;
+        
+        
+        
         private float angleChestHorz;
         private float angleNeckVert;
         
@@ -46,13 +53,27 @@ namespace Actors.Base
             movement = actMovement;
             stats = actStats;
             currentAttackAnimSet = defaultAttackAnimSet;
-            combat.OnAttack += OnAttack;
-            combat.OnAttackEnd += OnAttackEnd;
-            stats.onGetDamage += OnGetHit;
+            
+            RegisterEvents();
             enabled = true;
         }
 
+        private void RegisterEvents()
+        {
+            combat.OnAttack += OnAttack;
+            combat.OnAttackEnd += OnAttackEnd;
+            stats.onGetDamage += OnGetHit;
+            combat.OnAimStart += OnAimStart;
+            combat.OnAimEnd += OnAimEnd;
+        }
+        
         private void LateUpdate()
+        {
+            LookAtCalculation();
+            ChangeHandRepeaterPos();
+        }
+
+        private void LookAtCalculation()
         {
             if (!isLookAtEnabled)
             {
@@ -75,7 +96,15 @@ namespace Actors.Base
             CalculateBodyRotation(lookPoint);
         }
         
-        
+        private void ChangeHandRepeaterPos()
+        {
+            if (!isRepeaterEnabled)
+            {
+                return;
+            }
+            handholdBoneRepeater.position = handholdBone.position;
+            handholdBoneRepeater.rotation = handholdBone.rotation;
+        }
         
         void Update()
         {
@@ -106,6 +135,16 @@ namespace Actors.Base
             overrideController[replaceableAttackClip.name] = currentAttackAnimSet[animIndex];
         }
 
+        protected virtual void OnAimStart()
+        {
+            animator.SetTrigger("aimStart");
+        }
+
+        protected virtual void OnAimEnd()
+        {
+            animator.SetTrigger("aimEnd");
+        }
+        
         protected virtual void OnAttackEnd()
         {
         }

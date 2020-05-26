@@ -79,6 +79,9 @@
           </e>
         </e>
         <e p="Info" t="Include">
+          <e p="Actors" t="Include">
+            <e p="Creating new Actor.txt" t="Include" />
+          </e>
           <e p="adb.txt" t="Include" />
         </e>
         <e p="Scripts" t="Include">
@@ -241,6 +244,7 @@
           </e>
           <e p="Scriptable" t="Include">
             <e p="Equipment" t="Include">
+              <e p="MeleeWeapon.cs" t="Include" />
               <e p="RangeWeapon.cs" t="Include" />
               <e p="Weapon.cs" t="Include" />
               <e p="WeaponType.cs" t="Include" />

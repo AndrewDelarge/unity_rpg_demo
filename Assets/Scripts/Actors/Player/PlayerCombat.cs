@@ -36,8 +36,8 @@ namespace Actors.Player
             }
 
             currentWeaponComboHitParams = GetDefaultComboParams();
-            equipmentManager.onWeaponEquip += SetComboHitByWeapon;
-            equipmentManager.onWeaponUnequip += SetDefaultWeaponCombo;
+            equipmentManager.onMeleeWeaponEquip += SetComboHitByWeapon;
+            equipmentManager.onMeleeWeaponUnequip += SetDefaultWeaponCombo;
         }
 
         public override void MeleeAttack(List<IHealthable> targetStats)

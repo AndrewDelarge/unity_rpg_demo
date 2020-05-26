@@ -17,13 +17,13 @@ namespace Gameplay.Projectile
         private void OnHealthableHit(GameObject hitted)
         {
             Stop();
-
             gameObject.transform.parent = hitted.transform;
-            IHealthable healthable = hitted.GetComponent<IHealthable>();
+            IHealthable healthable = hitted.GetComponentInParent<IHealthable>();
             StartCoroutine(Destroy());
             
             if (healthable == null)
             {
+                
                 return;
             }
             

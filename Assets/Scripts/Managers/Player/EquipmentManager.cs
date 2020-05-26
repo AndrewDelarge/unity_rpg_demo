@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using Actors.Base;
+using GameSystems;
 using Scriptable;
 using UnityEngine;
 
@@ -7,7 +9,10 @@ namespace Managers.Player
     public class EquipmentManager : MonoBehaviour
     {
         private Equipment[] currentEquipment;
-        private Weapon currentWeapon;
+        private MeleeWeapon currentWeapon;
+        private GameObject currentWeaponGameObject;
+        private RangeWeapon rangeWeapon;
+        private GameObject currentRangeWeaponGameObject;
         private Renderer[] currentMeshes;
 
 
@@ -16,17 +21,29 @@ namespace Managers.Player
         public Equipment[] defaultEquipments;
         public Weapon defaultWeapon;
         public GameObject targetMesh;
+        
+        
         public delegate void OnItemUnequip(Equipment item);
         public delegate void OnItemEquip(Equipment item);
-        public delegate void OnWeaponEquip(Weapon item);
-        public delegate void OnWeaponUnequip(Weapon item);
+        public delegate void OnMeleeWeaponEquip(MeleeWeapon item);
+        public delegate void OnMeleeWeaponUnequip(Weapon item);
 
         public OnItemUnequip onItemUnequip;
         public OnItemEquip onItemEquip;
-        public OnWeaponEquip onWeaponEquip;
-        public OnWeaponUnequip onWeaponUnequip;
+        public OnMeleeWeaponEquip onMeleeWeaponEquip;
+        public OnMeleeWeaponUnequip onMeleeWeaponUnequip;
         
         public void Init()
+        {
+            InitModelPaths();
+            
+            UnregisterEvents();
+            
+            int equipCount = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
+            currentEquipment = new Equipment[equipCount];
+            currentMeshes = new Renderer[equipCount];
+        }
+        private void InitModelPaths()
         {
             modelPaths = new Dictionary<EquipmentSlot, ModelEquipmentPath>();
 
@@ -34,18 +51,16 @@ namespace Managers.Player
             {
                 modelPaths.Add(modelEquipmentPaths[i].slot, modelEquipmentPaths[i]);
             }
-            
-            
+        }
+        
+        private void UnregisterEvents()
+        {
             onItemUnequip = null;
             onItemEquip = null;
-            onWeaponEquip = null;
-            onWeaponUnequip = null;
-            
-            int equipCount = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
-            currentEquipment = new Equipment[equipCount];
-            currentMeshes = new Renderer[equipCount];
+            onMeleeWeaponEquip = null;
+            onMeleeWeaponUnequip = null;
         }
-
+        
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.U))
@@ -67,7 +82,7 @@ namespace Managers.Player
             onItemEquip?.Invoke(newItem);
         }
         
-        public void Equip(Weapon newItem)
+        public void Equip(MeleeWeapon newItem)
         {
             int itemIndex = (int) newItem.equipmentSlot;
             
@@ -78,7 +93,16 @@ namespace Managers.Player
             ShowEquipment(newItem);
             
             onItemEquip?.Invoke(newItem);
-            onWeaponEquip?.Invoke(newItem);
+            onMeleeWeaponEquip?.Invoke(newItem);
+        }
+        
+        public void Equip(RangeWeapon newItem)
+        {
+            int itemIndex = (int) newItem.equipmentSlot;
+            Unequip(itemIndex);
+            rangeWeapon = newItem;
+            ShowEquipment(newItem);
+            onItemEquip?.Invoke(newItem);
         }
 
         protected void ShowEquipment(Equipment equipment)
@@ -100,11 +124,10 @@ namespace Managers.Player
             currentMeshes[itemIndex] = newMesh;
         }
         
-        protected void ShowEquipmentDump(Weapon equipment)
+        protected void ShowEquipment(Weapon equipment)
         {
-            int itemIndex = (int) equipment.equipmentSlot;
-
-            Transform itemTransform = targetMesh.transform.Find("Model/Rig/Hips/Spine/Chest/Shoulder.R/Upper Arm.R/Lower Arm.R/Hand.R/HandHold.R");
+            Actor player = GameController.instance.playerManager.GetPlayer();
+            Transform itemTransform = player.animator.handholdBoneRepeater;
             
             if (itemTransform == null)
             {
@@ -112,14 +135,39 @@ namespace Managers.Player
                 return;
             }
             
-            GameObject mesh = Instantiate(equipment.weaponModel, itemTransform);
+            GameObject curWeapon = Instantiate(equipment.weaponModel, itemTransform);
             
-            Renderer newMesh = mesh.GetComponent<Renderer>();
-            newMesh.enabled = true;
-            currentMeshes[itemIndex] = newMesh;
+            curWeapon.transform.localPosition = equipment.localPosition;
+            curWeapon.transform.localRotation = Quaternion.Euler(
+                    equipment.localRotation.x, equipment.localRotation.y, equipment.localRotation.z);
+            
+            
+            if (equipment.equipmentSlot == EquipmentSlot.RangeWeapon)
+            {
+                currentRangeWeaponGameObject = curWeapon;
+                return;
+            }
+
+            currentWeaponGameObject = curWeapon;
+        }
+
+        public void SetVisibleMelee(bool visible)
+        {
+            if (currentWeaponGameObject != null)
+            {
+                currentWeaponGameObject.SetActive(visible);
+            }
         }
         
         
+        public void SetVisibleRange(bool visible)
+        {
+            if (currentRangeWeaponGameObject != null)
+            {
+                currentRangeWeaponGameObject.SetActive(visible);
+            }
+        }
+        // Not for weapons!
         public Transform GetEquipmentTransform(Equipment equipment)
         {
             string equipPath = "";
@@ -130,26 +178,19 @@ namespace Managers.Player
             }
             
             equipPath += equipment.skinName;
-//            switch (equipment.equipmentSlot)
-//            {
-//                // Henry/Armature/Root/Belly/Chest/UArm.R/LArm.R/HandHold.R/
-//                // TODO harcoded eqipment path
-//                case EquipmentSlot.Weapon:
-//                    equipPath = "Henry/Armature/Root/Belly/Chest/UArm.R/LArm.R/HandHold.R/" + equipment.skinName;
-//                    break;
-//                case EquipmentSlot.Chest:
-//                    equipPath = "Henry/Armature/Root/Belly/Chest/" + equipment.skinName;
-//                    break;
-//                case EquipmentSlot.Head:
-//                    equipPath = "Henry/Armature/Root/Belly/Chest/Neck/Head/" + equipment.skinName;
-//                    break;
-//            }
             
             return targetMesh.transform.Find(equipPath);
         }
-        
-        
-        
+
+        public Transform GetMeleeWeaponTransform()
+        {
+            if (currentWeaponGameObject != null)
+            {
+                return currentWeaponGameObject.transform;
+            }
+
+            return null;
+        }
         
         
         public void Unequip(int slot)
@@ -169,9 +210,10 @@ namespace Managers.Player
             switch (oldItem.equipmentSlot)
             {
                 case EquipmentSlot.Weapon:
-                    onWeaponUnequip?.Invoke(currentWeapon);
-                    onItemUnequip?.Invoke(currentWeapon);
-                    currentWeapon = null;
+                    UneqipMelee();
+                    break;
+                case EquipmentSlot.RangeWeapon:
+                    UneqipRange();
                     break;
                 default:
                     currentEquipment[slot] = null;
@@ -181,6 +223,24 @@ namespace Managers.Player
             
         }
 
+        private void UneqipMelee()
+        {
+            onMeleeWeaponUnequip?.Invoke(currentWeapon);
+            onItemUnequip?.Invoke(currentWeapon);
+            currentWeapon = null;
+            Destroy(currentWeaponGameObject);
+            currentWeaponGameObject = null;
+        }
+
+        private void UneqipRange()
+        {
+            Debug.Log("ga");
+            onItemUnequip?.Invoke(currentWeapon);
+            rangeWeapon = null;
+            Destroy(currentRangeWeaponGameObject);
+            currentRangeWeaponGameObject = null;
+        }
+        
         public void UnequipAll()
         {
             for (int i = 0; i < currentEquipment.Length; i++)
@@ -203,7 +263,7 @@ namespace Managers.Player
             if (currentWeapon != null)
             {
                 onItemEquip?.Invoke(currentWeapon);
-                onWeaponEquip?.Invoke(currentWeapon);
+                onMeleeWeaponEquip?.Invoke(currentWeapon);
                 ShowEquipment(currentWeapon);
             }
         }
@@ -227,10 +287,17 @@ namespace Managers.Player
             {
                 return currentEquipment[slot];
             }
-
+                
+            
+            // TODO rework !
             if (slot == (int) EquipmentSlot.Weapon && currentWeapon != null)
             {
                 return currentWeapon;
+            }
+            
+            if (slot == (int) EquipmentSlot.RangeWeapon && rangeWeapon != null)
+            {
+                return rangeWeapon;
             }
             
             return null;

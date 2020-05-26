@@ -12,8 +12,6 @@ namespace Actors.Base
     [RequireComponent(typeof(Stats))]
     public class Combat : MonoBehaviour
     {
-        
-        
         [SerializeField]
         private float combatCooldown = 6;
         protected float lastAttackTime;
@@ -27,6 +25,7 @@ namespace Actors.Base
         public float meleeAttackRaduis = 2f;
         public float meleeAttackDamageMultiplier = 1f;
         public float commonCombatSpeedMultiplier = 1f;
+        public float aimTime;
 
 
         protected float curMAttackSpeed;
@@ -40,6 +39,8 @@ namespace Actors.Base
 
         public event System.Action OnAttack;
         public event System.Action OnAttackEnd;
+        public event System.Action OnAimStart;
+        public event System.Action OnAimEnd;
 
         public delegate void OnTargetChange(Actor target);
 
@@ -97,11 +98,21 @@ namespace Actors.Base
             }
         }
 
-        public virtual void RangeAttack(Vector3 point, float aimTime = 0f)
+        public virtual void Aim()
+        {
+            if (aimTime == 0)
+            {
+                OnAimStart?.Invoke();
+            }
+            aimTime += Time.deltaTime;
+        }
+        
+        public virtual void RangeAttack(Vector3 point)
         {
             //TODO rework
             // Get range weapon
             // Get weapon projectile
+            OnAimEnd?.Invoke();
             float rangeWeaponDamage = 14f;
 
             aimTime = Mathf.Min(aimTime, 1);
@@ -116,6 +127,7 @@ namespace Actors.Base
             projectile.angleSpeed = 1 - aimTime;
             projectile.ignorePlayer = true;
             projectile.Launch(damage);
+            aimTime = 0;
         }
 
         

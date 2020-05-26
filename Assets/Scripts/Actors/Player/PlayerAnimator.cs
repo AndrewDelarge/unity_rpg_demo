@@ -16,14 +16,12 @@ namespace Actors.Player
         
         
 
-        
-        
         public override void Init(Base.Combat actCombat, IControlable actMovement, Stats actStats)
         {
             base.Init(actCombat, actMovement, actStats);
             
-            GameController.instance.playerManager.equipmentManager.onWeaponEquip += OnWeaponEquip;
-            GameController.instance.playerManager.equipmentManager.onWeaponUnequip += OnWeaponUnequip;
+            GameController.instance.playerManager.equipmentManager.onMeleeWeaponEquip += OnWeaponEquip;
+            GameController.instance.playerManager.equipmentManager.onMeleeWeaponUnequip += OnWeaponUnequip;
             weaponAnimationDict = new Dictionary<WeaponType, WeaponAnimation>();
 
             foreach (WeaponAnimation anim in weaponAnimations)
@@ -31,9 +29,6 @@ namespace Actors.Player
                 weaponAnimationDict.Add(anim.weapon, anim);
             }
         }
-
-
-
 
         void OnWeaponEquip(Weapon equipment)
         {

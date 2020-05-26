@@ -1,0 +1,61 @@
+
+
+Player
+
+Создаем пустой объект (далее Player), внутрь помещаем модель персонажа
+Создаем пустые объекты в Player
+    LockAtPoint - точка куда будет смотреть голова и торс игрока при прицеливании 
+    NeckBonePos - точка с позицией шеи, либо немного выше игрока
+    HandholdR - точка спавна оружия
+На Player помещаем след компоненты:
+    Rigitbody, 
+    Character Controller, 
+    Vision, 
+    Player Actor,
+    Keyboard(input)
+    Movement(from player namespace)
+    Player Combat
+    PlayerStats
+    PlayerAnimator
+    PlayerFX
+    
+    
+    Vision: отвечает за зрение персонажа. Combat при MeleeAttack сканирует область с помощью Vision. 
+        по умолчанию нужно снять галочку с isEnabled тк сканируеться из Combat компонента
+    PlayerActor: основной компонент персонажа который инициализирует все под компоненты
+        для него настройки необходимо создать Фракцию Player и Участника Фракции Player 
+    Keyboard: компонент управления Actor 
+    Movement: компонент для передвижения, speedMultiplayer так же увеличивает анимацию
+    PlayerCombat: компонент для возможности атаки 
+        Combat cooldown - время выхода из комбата после последней атаки
+        Melee Attack Speed - время от начала и до конца дефолтной атаки
+        Melee Attack делай - время от начала аттаки до нанесения урона
+        ...
+        Common Combat Speed Multiplier - множитель всех параметров атаки
+        Weapons Combo - последовательности ударов для Melee оружия
+            WeaponType - тип оружия для комба
+            Max Attack In Row - количество комбоударов в дальнейшем это число должно быть указано для 
+                количества Delay, Speed, FinDamMult, Raduis
+            Delay, Speed, FinDamMult, Raduis - значения для ударов, их количество должно ровнятся Max Attack In Row!
+    PlayerStats: компонент для статов персонажа а также получения урона
+    PlayerAnimator: компонент анимирования персонажа
+        ReplaceableAttackClip - клип аттаки который будет в дальнейшем заменятся в зависимости от оружия
+        Defl Attack Anim Set - клипы для дефолтной атаки, выбираются рандомно
+        Attack Layer Name - название слоя где находятся атаки в режиме стоя на месте
+        Attack in Run ... name - название слоя для аттаки во время бега
+    
+    Pseudo Ik: поворот торса и головы за точкой
+        Lock point точка LockAtPoint
+        NeckBone - объект кости шеи
+        ChestBone - объект кости честа
+        NeckPos - точка NeckBonePos
+    
+    Hands Bones:
+        Handhold bone кость для держания оружия
+        Handhold bone repeater точка HandholdR 
+                
+    Weapon Animations: Анимации оружия по типу
+        Weapon тип оружия
+        Clips ролики для оружия
+        Idle айдл анимация аттаки
+    

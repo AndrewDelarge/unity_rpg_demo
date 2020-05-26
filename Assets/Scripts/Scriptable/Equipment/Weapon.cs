@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Scriptable
 {
-    [CreateAssetMenu(fileName = "New Weapon", menuName = "Inventory/Weapon")]
     public class Weapon : Equipment
     {
         [Header("Weapon Settings")]
@@ -12,14 +11,12 @@ namespace Scriptable
         public GameObject weaponModel;
         public WeaponType type;
         public int damage = 1; 
+
+        [Header("Position And Rotation")]
+        public Vector3 localPosition = Vector3.zero;
+        public Vector3 localRotation = Vector3.zero;
+
         
-        [Header("Particles")]
-        public GameObject trail;
-        public Vector3 trailSpawnLocalPos = Vector3.zero;
-        public Vector3 trailSpawnLocalRotation = Vector3.zero;
-        public Vector3 trailSpawnLocalScale = Vector3.one;
-
-
         public override void Use(Actor actor)
         {
             // TODO hardcoded tag

@@ -23,5 +23,11 @@ namespace Animation
             overrideController[defaultAnimName] = clip;
             animator.Play(customStateName);
         }
+
+
+        public void PlayState(string stateName)
+        {
+            animator.Play(stateName);
+        }
     }
 }

@@ -25,14 +25,12 @@ namespace Actors.Player
         
         public void Init(Base.Combat combat)
         {
-            this.combat = combat;
             equipmentManager = GameController.instance.playerManager.equipmentManager;
-            equipmentManager.onWeaponEquip += SpawnTrail;
-            equipmentManager.onWeaponUnequip += DestroyTrail;
-            combat.OnAttack += () => StartCoroutine(ShowTrail());
-            
             stats = GetComponent<IHealthable>();
-            stats.OnHealthChange += ShowHealChange;
+            this.combat = combat;
+            
+            RegisterEvents();
+            
             target = transform;
             Transform targetRend = GetComponentInChildren<Transform>();
             if (targetRend != null)
@@ -40,6 +38,14 @@ namespace Actors.Player
                 target = targetRend.transform;
             }
             
+        }
+
+        private void RegisterEvents()
+        {
+            equipmentManager.onMeleeWeaponEquip += SpawnTrail;
+            equipmentManager.onMeleeWeaponUnequip += DestroyTrail;
+            combat.OnAttack += () => StartCoroutine(ShowTrail());
+            stats.OnHealthChange += ShowHealChange;
         }
 
         void ShowHealChange(object healthable, HealthChangeEventArgs args)
@@ -77,11 +83,10 @@ namespace Actors.Player
         }
 
 
-        void SpawnTrail(Weapon weapon)
+        void SpawnTrail(MeleeWeapon weapon)
         {
-            Transform weaponTransform = equipmentManager.GetEquipmentTransform(weapon);
+            Transform weaponTransform = equipmentManager.GetMeleeWeaponTransform();
             GameObject trail = weapon.trail;
-            
             
             if (trail == null)
             {

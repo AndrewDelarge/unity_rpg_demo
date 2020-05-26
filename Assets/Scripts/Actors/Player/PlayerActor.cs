@@ -14,7 +14,9 @@ namespace Actors.Player
     {
         public PlayerFX playerFx;
         private CameraController cameraController;
-
+        private EquipmentManager equipment;
+        
+        
         private bool dashing = false;
         private float dashingColdownd = 1f;
         private float dashingTime;
@@ -28,6 +30,7 @@ namespace Actors.Player
             // turnoff automatic vision update
             vision.isEnabled = false;
             cameraController = GameController.instance.cameraController;
+            equipment = GameController.instance.playerManager.equipmentManager;
             combat.OnAttackEnd += ShakeCamera;
             combat.OnAttackEnd += PushPhysicsObjects;
         }
@@ -74,11 +77,18 @@ namespace Actors.Player
 
         public override void Aim(Vector3 point)
         {
-            //Revert 
-            point = -point;
-            aimTime += Time.deltaTime;
+            if (combat.aimTime == .0f)
+            {
+                equipment.SetVisibleMelee(false);
+                equipment.SetVisibleRange(true);
+            }
+            combat.Aim();
+
+            Transform cameraPos = GameController.instance.cameraController.GetCamera().transform;
+            point = - point;
             animator.isLookAtEnabled = true;
-            point = transform.position - point;
+
+            point = cameraPos.TransformPoint(point) - (cameraPos.position - transform.position);
             point.y = animator.lookPoint.position.y;
             animator.lookPoint.position = point;
 
@@ -93,20 +103,21 @@ namespace Actors.Player
 
         public override void RangeAttack()
         {
-            combat.RangeAttack(animator.lookPoint.position, aimTime);
+            combat.RangeAttack(animator.lookPoint.position);
         }
 
         public override void StopAim()
         {
-            movement.Rotating(true);
-
-            animator.isLookAtEnabled = false;
-            
-            if (aimTime > 0)
+            if (combat.aimTime > 0)
             {
                 RangeAttack();
             }
-            aimTime = 0;
+            movement.Rotating(true);
+            animator.isLookAtEnabled = false;
+            
+            equipment.SetVisibleMelee(true);
+            equipment.SetVisibleRange(false);
+            // show main weapon hide primary weapon
         }
 
         public IEnumerator Dashing()

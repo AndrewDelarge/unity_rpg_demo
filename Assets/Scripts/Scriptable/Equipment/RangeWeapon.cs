@@ -4,19 +4,11 @@ using UnityEngine;
 
 namespace Scriptable
 {
-    [CreateAssetMenu(fileName = "Range", menuName = "Inventory/Weapon")]
-    public class RangeWeapon : Equipment
+    [CreateAssetMenu(fileName = "Range", menuName = "Inventory/Range Weapon")]
+    public class RangeWeapon : Weapon
     {
-        [Header("Weapon Settings")]
-        public GameObject weaponModel;
-        public WeaponType type;
-        public int damage = 1; 
-        
-        [Header("Particles")]
-        public GameObject trail;
-        public Vector3 trailSpawnLocalPos = Vector3.zero;
-        public Vector3 trailSpawnLocalRotation = Vector3.zero;
-        public Vector3 trailSpawnLocalScale = Vector3.one;
+        [Header("Particles")] 
+        public GameObject projectile;
 
 
         public override void Use(Actor actor)
