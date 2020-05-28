@@ -52,6 +52,13 @@
               </e>
             </e>
           </e>
+          <e p="NavMesh" t="Include">
+            <e p="NavMeshComponents.asmdef" t="Include" />
+            <e p="NavMeshLink.cs" t="Include" />
+            <e p="NavMeshModifier.cs" t="Include" />
+            <e p="NavMeshModifierVolume.cs" t="Include" />
+            <e p="NavMeshSurface.cs" t="Include" />
+          </e>
           <e p="TextMesh Pro" t="Include">
             <e p="Resources" t="Include">
               <e p="LineBreaking Following Characters.txt" t="Include" />
@@ -216,13 +223,6 @@
               <e p="ITranslatable.cs" t="Include" />
               <e p="Text.cs" t="Include" />
               <e p="TextType.cs" t="Include" />
-            </e>
-            <e p="NavMesh" t="Include">
-              <e p="NavMeshComponents.asmdef" t="Include" />
-              <e p="NavMeshLink.cs" t="Include" />
-              <e p="NavMeshModifier.cs" t="Include" />
-              <e p="NavMeshModifierVolume.cs" t="Include" />
-              <e p="NavMeshSurface.cs" t="Include" />
             </e>
             <e p="SceneSettings.cs" t="Include" />
           </e>

@@ -53,13 +53,13 @@ namespace Actors.Player
                 damage = Mathf.FloorToInt(damage * Random.Range(.9f, 1.1f));
             }
             
-            return new Damage(damage, null, throwed <= chance);;
+            return new Damage(damage, actor, throwed <= chance);;
         }
 
 
         private int GetWeaponDamage()
         {
-            Weapon weapon = equipmentManager.GetCurrentWeapon();
+            Weapon weapon = equipmentManager.GetActiveWeapon();
 
             if (weapon == null)
             {

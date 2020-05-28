@@ -35,7 +35,9 @@ namespace Actors.Base
         public bool isRepeaterEnabled = false;
         public Transform handholdBone;
         public Transform handholdBoneRepeater;
-        
+        public Transform handholdBoneLeft;
+        public Transform handholdBoneLeftRepeater;
+
         
         
         private float angleChestHorz;
@@ -63,8 +65,8 @@ namespace Actors.Base
             combat.OnAttack += OnAttack;
             combat.OnAttackEnd += OnAttackEnd;
             stats.onGetDamage += OnGetHit;
-            combat.OnAimStart += OnAimStart;
-            combat.OnAimEnd += OnAimEnd;
+            combat.onAimStart += OnAimStart;
+            combat.onAimEnd += OnAimEnd;
         }
         
         private void LateUpdate()
@@ -104,6 +106,8 @@ namespace Actors.Base
             }
             handholdBoneRepeater.position = handholdBone.position;
             handholdBoneRepeater.rotation = handholdBone.rotation;
+            handholdBoneLeftRepeater.position = handholdBoneLeft.position;
+            handholdBoneLeftRepeater.rotation = handholdBoneLeft.rotation;
         }
         
         void Update()

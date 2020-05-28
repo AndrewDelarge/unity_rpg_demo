@@ -17,11 +17,14 @@ namespace Actors.Player
         private Camera cam;
         public Transform target { get; private set; }
         private bool stopped = false;
-
+        private float curSpeedMultiplier;
+        
+        
         private bool rotating = true;
         public void Init(Stats actorStats, BaseInput input)
         {
             this.input = input;
+            curSpeedMultiplier = speedMultiplier;
             cam = GameController.instance.cameraController.GetCamera();
             characterController = GetComponent<CharacterController>();
             stats = actorStats;
@@ -64,7 +67,7 @@ namespace Actors.Player
                 
                 direction = direction.normalized;
 
-                direction *= stats.GetMovementSpeed() * speedMultiplier;
+                direction *= stats.GetMovementSpeed() * curSpeedMultiplier;
                 
                 float speedMultiply;
                 
@@ -109,7 +112,7 @@ namespace Actors.Player
 
         public float GetSpeedMultiplier()
         {
-            return speedMultiplier;
+            return curSpeedMultiplier;
         }
 
         public float GetCurrentMagnitude()
@@ -183,7 +186,7 @@ namespace Actors.Player
 
         public void SetSpeedMultiplier(float multiplier)
         {
-            speedMultiplier = multiplier;
+            curSpeedMultiplier = multiplier;
         }
         
         public Transform GetTransform()
@@ -200,6 +203,12 @@ namespace Actors.Player
         public void Rotating(bool enabled)
         {
             rotating = enabled;
+        }
+
+
+        public void ResetSpeedMultiplier()
+        {
+            curSpeedMultiplier = speedMultiplier;
         }
     }
 }

@@ -31,6 +31,7 @@ namespace Actors.Base.Interface
         void Enable();
 
         void SetSpeedMultiplier(float multiplier);
+        void ResetSpeedMultiplier();
         Transform GetTransform();
 
         bool IsMoving();

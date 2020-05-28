@@ -1,6 +1,7 @@
 using Actors.Base;
 using UI.Hud;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace GameSystems.Input
 {
@@ -25,17 +26,10 @@ namespace GameSystems.Input
             actionBar = GameController.instance.uiManager.GetActionBar();
             actionBar.onActionKeyClick += actor.MeleeAttack;
             actionBar.onSecKeyClick += actor.Dash;
-
+            
             inited = true;
         }
-
-
-        private void LateUpdate()
-        {
-            
-            
-        }
-
+        
         private void FixedUpdate()
         {
             if (! inited)
@@ -58,7 +52,8 @@ namespace GameSystems.Input
             }
             
             Vector3 bowAimDir = GetBowStickValues();
-
+            
+            
             if (bowAimDir == Vector3.zero)
             {
                 actor.StopAim();

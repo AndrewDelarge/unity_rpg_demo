@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Actors.Base;
 using Actors.Base.Interface;
+using Actors.Base.StatsStuff;
+using Gameplay.Projectile;
 using GameSystems;
 using GameSystems.Input;
 using Managers.Player;
@@ -13,7 +15,6 @@ namespace Actors.Player
 {
     public class PlayerCombat : Base.Combat
     {
-
         private EquipmentManager equipmentManager;
         
         public WeaponComboHitParams[] weaponsCombo;
@@ -40,6 +41,45 @@ namespace Actors.Player
             equipmentManager.onMeleeWeaponUnequip += SetDefaultWeaponCombo;
         }
 
+        public override void Aim()
+        {
+            if (equipmentManager.GetRangeWeapon() == null)
+            {
+                return;
+            }
+            if (aimTime == 0)
+            {
+                onAimStart?.Invoke();
+            }
+            aimTime += Time.deltaTime;
+        }
+        
+        public override void RangeAttack(Vector3 point)
+        {
+            if (equipmentManager.GetRangeWeapon() == null)
+            {
+                return;
+            }
+            
+            onAimEnd?.Invoke();
+            RangeWeapon weapon = equipmentManager.GetRangeWeapon();
+
+            aimTime = Mathf.Min(aimTime, 1);
+            Vector3 pos = transform.position;
+            pos.y += 1;
+            GameObject gameObject = Instantiate(weapon.projectile, pos, Quaternion.identity);
+            gameObject.transform.LookAt(point);
+            BaseProjectile projectile = gameObject.GetComponent<BaseProjectile>();
+            
+            
+            projectile.angleSpeed = 1 - aimTime;
+            projectile.ignorePlayer = true;
+            projectile.Launch(stats.GetDamageValue());
+            aimTime = 0;
+        }
+        
+        
+        
         public override void MeleeAttack(List<IHealthable> targetStats)
         {
             if (Time.time - lastAttackTime < curMAttackSpeed)

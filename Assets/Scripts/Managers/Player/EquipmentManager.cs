@@ -9,11 +9,12 @@ namespace Managers.Player
     public class EquipmentManager : MonoBehaviour
     {
         private Equipment[] currentEquipment;
-        private MeleeWeapon currentWeapon;
-        private GameObject currentWeaponGameObject;
-        private RangeWeapon rangeWeapon;
-        private GameObject currentRangeWeaponGameObject;
         private Renderer[] currentMeshes;
+        private GameObject currentWeaponGameObject;
+        private GameObject currentRangeWeaponGameObject;
+        private MeleeWeapon meleeWeapon;
+        private RangeWeapon rangeWeapon;
+        private Weapon activeWeapon;
 
 
         public ModelEquipmentPath[] modelEquipmentPaths;
@@ -88,7 +89,7 @@ namespace Managers.Player
             
             Unequip(itemIndex);
             
-            currentWeapon = newItem;
+            meleeWeapon = newItem;
 
             ShowEquipment(newItem);
             
@@ -127,7 +128,12 @@ namespace Managers.Player
         protected void ShowEquipment(Weapon equipment)
         {
             Actor player = GameController.instance.playerManager.GetPlayer();
+            
             Transform itemTransform = player.animator.handholdBoneRepeater;
+            if (!equipment.rightHand)
+            {
+                itemTransform = player.animator.handholdBoneLeftRepeater;
+            }
             
             if (itemTransform == null)
             {
@@ -145,17 +151,37 @@ namespace Managers.Player
             if (equipment.equipmentSlot == EquipmentSlot.RangeWeapon)
             {
                 currentRangeWeaponGameObject = curWeapon;
+                SetVisibleRange(false);
                 return;
             }
-
+            
             currentWeaponGameObject = curWeapon;
+            activeWeapon = equipment;
         }
 
+        public Weapon GetActiveWeapon()
+        {
+            return activeWeapon;
+        }
+        
+        public void SetMainWeaponActive(bool active)
+        {
+            SetVisibleRange(! active);
+            SetVisibleMelee(active);
+            
+            activeWeapon = meleeWeapon;
+            if (! active)
+            {
+                activeWeapon = rangeWeapon;
+            }
+        }
+        
         public void SetVisibleMelee(bool visible)
         {
             if (currentWeaponGameObject != null)
             {
-                currentWeaponGameObject.SetActive(visible);
+                Renderer renderer = currentWeaponGameObject.GetComponentInChildren<Renderer>();
+                renderer.enabled = visible;
             }
         }
         
@@ -225,9 +251,9 @@ namespace Managers.Player
 
         private void UneqipMelee()
         {
-            onMeleeWeaponUnequip?.Invoke(currentWeapon);
-            onItemUnequip?.Invoke(currentWeapon);
-            currentWeapon = null;
+            onMeleeWeaponUnequip?.Invoke(meleeWeapon);
+            onItemUnequip?.Invoke(meleeWeapon);
+            meleeWeapon = null;
             Destroy(currentWeaponGameObject);
             currentWeaponGameObject = null;
         }
@@ -235,7 +261,7 @@ namespace Managers.Player
         private void UneqipRange()
         {
             Debug.Log("ga");
-            onItemUnequip?.Invoke(currentWeapon);
+            onItemUnequip?.Invoke(meleeWeapon);
             rangeWeapon = null;
             Destroy(currentRangeWeaponGameObject);
             currentRangeWeaponGameObject = null;
@@ -260,11 +286,11 @@ namespace Managers.Player
                 }
             }
 
-            if (currentWeapon != null)
+            if (meleeWeapon != null)
             {
-                onItemEquip?.Invoke(currentWeapon);
-                onMeleeWeaponEquip?.Invoke(currentWeapon);
-                ShowEquipment(currentWeapon);
+                onItemEquip?.Invoke(meleeWeapon);
+                onMeleeWeaponEquip?.Invoke(meleeWeapon);
+                ShowEquipment(meleeWeapon);
             }
         }
         
@@ -290,9 +316,9 @@ namespace Managers.Player
                 
             
             // TODO rework !
-            if (slot == (int) EquipmentSlot.Weapon && currentWeapon != null)
+            if (slot == (int) EquipmentSlot.Weapon && meleeWeapon != null)
             {
-                return currentWeapon;
+                return meleeWeapon;
             }
             
             if (slot == (int) EquipmentSlot.RangeWeapon && rangeWeapon != null)
@@ -303,9 +329,14 @@ namespace Managers.Player
             return null;
         }
 
-        public Weapon GetCurrentWeapon()
+        public MeleeWeapon GetMeleeWeapon()
         {
-            return currentWeapon;
+            return meleeWeapon;
+        }
+        
+        public RangeWeapon GetRangeWeapon()
+        {
+            return rangeWeapon;
         }
     }
 

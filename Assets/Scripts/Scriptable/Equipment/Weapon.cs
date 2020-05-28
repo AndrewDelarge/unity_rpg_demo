@@ -10,7 +10,8 @@ namespace Scriptable
 
         public GameObject weaponModel;
         public WeaponType type;
-        public int damage = 1; 
+        public int damage = 1;
+        public bool rightHand = true;
 
         [Header("Position And Rotation")]
         public Vector3 localPosition = Vector3.zero;

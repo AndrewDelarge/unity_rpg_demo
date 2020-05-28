@@ -14,24 +14,27 @@ namespace Actors.Base
     {
         [SerializeField]
         private float combatCooldown = 6;
-        protected float lastAttackTime;
-        
-        protected int successAttackInRow = 0;
-        protected int maxSuccessAttackInRow = 3;
-        protected float successAttackRowTime = 1f;
+
         
         public float meleeAttackSpeed = 1f;
         public float meleeAttackDelay = 0f;
         public float meleeAttackRaduis = 2f;
         public float meleeAttackDamageMultiplier = 1f;
         public float commonCombatSpeedMultiplier = 1f;
+        public float rangeAttackCooldown = .4f;
+        
         public float aimTime;
-
-
+        
+        protected float lastAttackTime;
+        protected int successAttackInRow = 0;
+        protected int maxSuccessAttackInRow = 3;
+        protected float successAttackRowTime = 1f;
+        
         protected float curMAttackSpeed;
         protected float curMAttackDelay;
         protected float curMAttackRadius;
         protected float curMAttackDamageMultiplier;
+        
         protected Actor targetActor;
         protected Actor actor;
         protected Stats stats;
@@ -39,9 +42,12 @@ namespace Actors.Base
 
         public event System.Action OnAttack;
         public event System.Action OnAttackEnd;
-        public event System.Action OnAimStart;
-        public event System.Action OnAimEnd;
+        public delegate void OnAimStart();
+        public delegate void OnAimEnd();
 
+        public OnAimStart onAimStart;
+        public OnAimEnd onAimEnd;
+        
         public delegate void OnTargetChange(Actor target);
 
         private void Awake()
@@ -80,13 +86,13 @@ namespace Actors.Base
         
         public virtual void MeleeAttack(List<IHealthable> targetStats)
         {
-            EnterCombat();
-
             if (Time.time - lastAttackTime < GetCurrentMeleeAttackSpeed())
             {
                 return;
             }
             
+            EnterCombat();
+
             lastAttackTime = Time.time;
             StartCoroutine(DoMeleeDamage(targetStats));
 
@@ -100,9 +106,10 @@ namespace Actors.Base
 
         public virtual void Aim()
         {
+            
             if (aimTime == 0)
             {
-                OnAimStart?.Invoke();
+                onAimStart?.Invoke();
             }
             aimTime += Time.deltaTime;
         }
@@ -110,9 +117,7 @@ namespace Actors.Base
         public virtual void RangeAttack(Vector3 point)
         {
             //TODO rework
-            // Get range weapon
-            // Get weapon projectile
-            OnAimEnd?.Invoke();
+            onAimEnd?.Invoke();
             float rangeWeaponDamage = 14f;
 
             aimTime = Mathf.Min(aimTime, 1);
@@ -122,7 +127,7 @@ namespace Actors.Base
             gameObject.transform.LookAt(point);
             BaseProjectile projectile = gameObject.GetComponent<BaseProjectile>();
             
-            Damage damage = new Damage(Mathf.CeilToInt(rangeWeaponDamage * aimTime), actor, false);
+            Damage damage = stats.GetDamageValue();
             
             projectile.angleSpeed = 1 - aimTime;
             projectile.ignorePlayer = true;

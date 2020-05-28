@@ -7,7 +7,6 @@ namespace Actors.Base
 {
     public class Stats : MonoBehaviour, IHealthable
     {
-        public event EventHandler<HealthChangeEventArgs> OnHealthChange;
         protected const int STAMINA_COEF = 10;
         protected const int ATTACK_POWER_COEF = 2;
 
@@ -17,7 +16,8 @@ namespace Actors.Base
         protected const float CRIT_CAP = 100;
         protected const float ARMOR_CAP = 100;
         protected const float CRIT_MULTIPLIER = 1.5f;
-
+        protected Actor actor;
+        
         [SerializeField]
         private int level = 1;
         [SerializeField]
@@ -41,6 +41,8 @@ namespace Actors.Base
         public OnDied onDied;
         public OnGetDamage onGetDamage;
 
+        public event EventHandler<HealthChangeEventArgs> OnHealthChange;
+
         public virtual void Init()
         {
             // Lvl coefs
@@ -55,7 +57,7 @@ namespace Actors.Base
             currentHealth = GetMaxHealth();
             currentMaxHealth = GetMaxHealth();
             stamina.onChange += UpdateCurrentStats;
-            
+            actor = GetComponent<Actor>();
             OnHealthChange?.Invoke(this, new HealthChangeEventArgs());
             if (isDead)
             {
@@ -81,7 +83,7 @@ namespace Actors.Base
                 damage = Mathf.FloorToInt(damage * UnityEngine.Random.Range(.9f, 1.1f));
             }
 
-            return new Damage(damage, null, throwed <= chance);
+            return new Damage(damage, actor, throwed <= chance);
         }
         
         public virtual void TakeDamage(Damage damage)
@@ -104,6 +106,22 @@ namespace Actors.Base
             args.initiator = damage.GetOwner();
             args.modifier = damage;
             
+            OnHealthChange?.Invoke(this, args);
+        }
+        
+        public void Heal(Heal heal)
+        {
+            float healAmount = heal.GetValue() / 100f * GetMaxHealth();
+            currentHealth += Mathf.FloorToInt(healAmount);
+
+            if (currentHealth > currentMaxHealth)
+            {
+                currentHealth = currentMaxHealth;
+            }
+            
+            HealthChangeEventArgs args = new HealthChangeEventArgs();
+            args.healthChange = Mathf.FloorToInt(healAmount);
+            args.modifier = heal;
             OnHealthChange?.Invoke(this, args);
         }
         
@@ -191,21 +209,6 @@ namespace Actors.Base
             return transform;
         }
 
-        public void Heal(Heal heal)
-        {
-            float healAmount = heal.GetValue() / 100f * GetMaxHealth();
-            currentHealth += Mathf.FloorToInt(healAmount);
-
-            if (currentHealth > currentMaxHealth)
-            {
-                currentHealth = currentMaxHealth;
-            }
-            
-            HealthChangeEventArgs args = new HealthChangeEventArgs();
-            args.healthChange = Mathf.FloorToInt(healAmount);
-            args.modifier = heal;
-            OnHealthChange?.Invoke(this, args);
-        }
     }
     
 

@@ -1,4 +1,5 @@
 using System.Collections;
+using Actors.Base;
 using Actors.Base.Interface;
 using GameSystems;
 using GameSystems.FX;
@@ -12,20 +13,28 @@ namespace Actors.Player
     {
         public GameObject healParticle;
         public GameObject hitParticle;
+        public GameObject arrowPath;
         public float particleLifetime;
         
         
         protected ParticleSystem currentTrail;
-        
-        private float trailTime;
+
+        private Transform target;
         private Base.Combat combat;
         private EquipmentManager equipmentManager;
-        private Transform target;
+        private Actor player;
         private IHealthable stats;
+        private GameObject arrowPathObject;
+        private LineRenderer arrowPathRenderer;
+        private float trailTime;
+        private bool inited = false;
+        private bool updatePath = false;
+        
         
         public void Init(Base.Combat combat)
         {
             equipmentManager = GameController.instance.playerManager.equipmentManager;
+            player = GameController.instance.playerManager.GetPlayer();
             stats = GetComponent<IHealthable>();
             this.combat = combat;
             
@@ -38,6 +47,50 @@ namespace Actors.Player
                 target = targetRend.transform;
             }
             
+            
+            SpawnArrowPath();
+            inited = true;
+        }
+
+
+        void SpawnArrowPath()
+        {
+            Vector3 pos = Vector3.zero;
+            pos.y = player.animator.lookPoint.localPosition.y;
+            arrowPathObject = Instantiate(arrowPath, target);
+            arrowPathObject.transform.localPosition = pos;
+            arrowPathRenderer = arrowPathObject.GetComponent<LineRenderer>();
+            SetVisibleArrowPath(false);
+        }
+        
+        private void FixedUpdate()
+        {
+            if (! inited)
+            {
+                return;
+            }
+
+            if (updatePath)
+            {
+                RaycastHit hit;
+                Vector3 pos = transform.position;
+                Vector3 direction = transform.TransformDirection(player.animator.lookPoint.localPosition);
+                pos.y = player.animator.lookPoint.position.y;
+                direction.y = 0;
+                Debug.DrawRay(pos, direction, Color.red);
+                if (Physics.Raycast(pos, direction, out hit,25f))
+                {
+                    arrowPathRenderer.SetPosition(1, new Vector3(0, 0, Vector3.Distance(player.transform.position, hit.point)));
+                }
+                else
+                {
+                    arrowPathRenderer.SetPosition(1, new Vector3(0, 0, 25));
+                }
+            }
+            
+            
+            arrowPathObject.transform.LookAt(player.animator.lookPoint);
+            
         }
 
         private void RegisterEvents()
@@ -46,8 +99,17 @@ namespace Actors.Player
             equipmentManager.onMeleeWeaponUnequip += DestroyTrail;
             combat.OnAttack += () => StartCoroutine(ShowTrail());
             stats.OnHealthChange += ShowHealChange;
+            combat.onAimStart += () => SetVisibleArrowPath(true);
+            combat.onAimEnd += () => SetVisibleArrowPath(false);
         }
 
+        void SetVisibleArrowPath(bool visible)
+        {
+            updatePath = visible;
+            arrowPathObject.SetActive(visible);
+        }
+        
+        
         void ShowHealChange(object healthable, HealthChangeEventArgs args)
         {
             if (args.healthChange > 0)

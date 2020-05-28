@@ -20,7 +20,7 @@ namespace Actors.Player
         private bool dashing = false;
         private float dashingColdownd = 1f;
         private float dashingTime;
-        private float aimTime;
+        private bool isAiming;
         
         public override void Init()
         {
@@ -77,30 +77,41 @@ namespace Actors.Player
 
         public override void Aim(Vector3 point)
         {
+            if (equipment.GetRangeWeapon() == null)
+            {
+                return;
+            }
+            
             if (combat.aimTime == .0f)
             {
-                equipment.SetVisibleMelee(false);
-                equipment.SetVisibleRange(true);
+                equipment.SetMainWeaponActive(false);
             }
+
+            isAiming = true;
+            float bodyRotationSpeed = 3f;
+            movement.SetSpeedMultiplier(0.6f);
             combat.Aim();
 
-            Transform cameraPos = GameController.instance.cameraController.GetCamera().transform;
-            point = - point;
-            animator.isLookAtEnabled = true;
-
-            point = cameraPos.TransformPoint(point) - (cameraPos.position - transform.position);
+            point = TransformJoystickPoint(point);
             point.y = animator.lookPoint.position.y;
             animator.lookPoint.position = point;
-
+            animator.isLookAtEnabled = true;
+            
+            // Rotate actor
             if (animator.excessAngle != 0)
             {
                 movement.Rotating(false);
-                transform.Rotate(0, animator.excessAngle * Time.deltaTime * 3f, 0);
+                transform.Rotate(0, animator.excessAngle * Time.deltaTime * bodyRotationSpeed, 0);
             }
-            
-            Debug.DrawLine(transform.position, point);
         }
 
+
+        private Vector3 TransformJoystickPoint(Vector3 point)
+        {
+            Camera camera = GameController.instance.cameraController.GetCamera();
+            return camera.transform.TransformPoint(- point) - (camera.transform.position - transform.position);
+        }
+        
         public override void RangeAttack()
         {
             combat.RangeAttack(animator.lookPoint.position);
@@ -108,18 +119,29 @@ namespace Actors.Player
 
         public override void StopAim()
         {
+            if (!isAiming)
+            {
+                return;
+            }
+            
             if (combat.aimTime > 0)
             {
                 RangeAttack();
+                movement.ResetSpeedMultiplier();
             }
+            isAiming = false;
             movement.Rotating(true);
             animator.isLookAtEnabled = false;
-            
-            equipment.SetVisibleMelee(true);
-            equipment.SetVisibleRange(false);
-            // show main weapon hide primary weapon
+
+            StartCoroutine(ShowMelee());
         }
 
+        IEnumerator ShowMelee(float time = .3f)
+        {
+            yield return new WaitForSeconds(time);
+            equipment.SetMainWeaponActive(true);
+        }
+        
         public IEnumerator Dashing()
         {
             // TODO remove hardcode dashing?
@@ -176,7 +198,7 @@ namespace Actors.Player
                     return false;
                 }
 
-                if (aimTime > 0)
+                if (combat.aimTime > 0)
                 {
                     return false;
                 }

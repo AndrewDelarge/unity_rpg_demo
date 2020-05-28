@@ -17,7 +17,7 @@ namespace Actors.AI
         private Stats stats;
         private BaseInput input;
         private bool rotating = true;
-        
+        private float curSpeedMultiplier;
         
         private void Awake()
         {
@@ -28,12 +28,14 @@ namespace Actors.AI
             agent = GetComponent<NavMeshAgent>();
             stats = actorStats;
             input = baseInput;
+            curSpeedMultiplier = speedMultiplier;
             enabled = true;
+            
         }
 
         private void FixedUpdate()
         {
-            agent.speed = stats.GetMovementSpeed() * speedMultiplier;
+            agent.speed = stats.GetMovementSpeed() * curSpeedMultiplier;
             agent.updateRotation = rotating;
             if (target != null)
             {
@@ -55,7 +57,7 @@ namespace Actors.AI
 
         public float GetSpeedMultiplier()
         {
-            return speedMultiplier;
+            return curSpeedMultiplier;
         }
 
         public float GetCurrentMagnitude()
@@ -137,7 +139,7 @@ namespace Actors.AI
         
         public void SetSpeedMultiplier(float multiplier)
         {
-            speedMultiplier = multiplier;
+            curSpeedMultiplier = multiplier;
         }
         
         public Transform GetTransform()
@@ -154,6 +156,11 @@ namespace Actors.AI
         public void Rotating(bool enabled)
         {
             rotating = enabled;
+        }
+
+        public void ResetSpeedMultiplier()
+        {
+            curSpeedMultiplier = speedMultiplier;
         }
     }
 }

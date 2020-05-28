@@ -14,9 +14,9 @@ namespace Gameplay.Projectile
         protected bool moving = false;
         protected float currentSpeed;
 
-        protected Rigidbody rigidbody;
+        protected new Rigidbody rigidbody;
         protected Damage damage;
-        private Collider collider;
+        private new Collider collider;
 
 
         public delegate void OnHitSomething(GameObject hitted);
