@@ -29,7 +29,6 @@ namespace UI.Hud
         {
             float cooldown = Mathf.Min(playerCombat.GetRangeCooldown(), playerCombat.rangeAttackCooldown);
             aimControlStick.SetCooldown(cooldown / playerCombat.rangeAttackCooldown);
-            Debug.Log(cooldown / playerCombat.rangeAttackCooldown);
         }
 
 
