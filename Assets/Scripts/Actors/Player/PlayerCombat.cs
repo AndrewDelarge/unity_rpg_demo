@@ -60,18 +60,24 @@ namespace Actors.Player
             {
                 return;
             }
-            
+            if (Time.time - lastRangeAttackTime < rangeAttackCooldown)
+            {
+                return;
+            }
+
+            lastRangeAttackTime = Time.time;
             onAimEnd?.Invoke();
             RangeWeapon weapon = equipmentManager.GetRangeWeapon();
 
             aimTime = Mathf.Min(aimTime, 1);
             Vector3 pos = transform.position;
-            pos.y += 1;
+            pos.y = point.y;
             GameObject gameObject = Instantiate(weapon.projectile, pos, Quaternion.identity);
             gameObject.transform.LookAt(point);
             BaseProjectile projectile = gameObject.GetComponent<BaseProjectile>();
             
-            
+            // 0.032 0.16 0.52
+            // -53.3 85.6 -85.8
             projectile.angleSpeed = 1 - aimTime;
             projectile.ignorePlayer = true;
             projectile.Launch(stats.GetDamageValue());

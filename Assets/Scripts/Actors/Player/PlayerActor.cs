@@ -94,6 +94,7 @@ namespace Actors.Player
 
             point = TransformJoystickPoint(point);
             point.y = animator.lookPoint.position.y;
+            point = Vector3.Slerp(animator.lookPoint.position, point, 0.25f);
             animator.lookPoint.position = point;
             animator.isLookAtEnabled = true;
             

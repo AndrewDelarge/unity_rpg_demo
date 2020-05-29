@@ -88,7 +88,7 @@ namespace GameSystems.Input
 
         Vector3 GetBowStickValues()
         {
-            return new Vector3(actionBar.bowControlStick.Horizontal, 0, actionBar.bowControlStick.Vertical);
+            return new Vector3(actionBar.aimControlStick.Horizontal, 0, actionBar.aimControlStick.Vertical);
         }
     }
     

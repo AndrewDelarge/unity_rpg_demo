@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Actors.Base;
+using UI.Hud.Joysticks;
+using UnityEngine;
 
 namespace UI.Hud
 {
@@ -6,7 +8,7 @@ namespace UI.Hud
     {
         
         public Joystick joystick;
-        public Joystick bowControlStick;
+        public CooldownableStick aimControlStick;
 
         
         public delegate void OnActionKeyClick();
@@ -14,10 +16,26 @@ namespace UI.Hud
         public OnActionKeyClick onActionKeyClick;
         public OnSecKeyClick onSecKeyClick;
 
+
+        private Combat playerCombat;
+        
         public void Init()
         {
             onActionKeyClick = null;
             onSecKeyClick = null;
+        }
+
+        private void FixedUpdate()
+        {
+            float cooldown = Mathf.Min(playerCombat.GetRangeCooldown(), playerCombat.rangeAttackCooldown);
+            aimControlStick.SetCooldown(cooldown / playerCombat.rangeAttackCooldown);
+            Debug.Log(cooldown / playerCombat.rangeAttackCooldown);
+        }
+
+
+        public void SetPlayer(GameObject player)
+        {
+            playerCombat = player.GetComponent<Combat>();
         }
         
         public void OnActionClick()

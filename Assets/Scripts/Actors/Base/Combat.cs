@@ -26,6 +26,7 @@ namespace Actors.Base
         public float aimTime;
         
         protected float lastAttackTime;
+        protected float lastRangeAttackTime;
         protected int successAttackInRow = 0;
         protected int maxSuccessAttackInRow = 3;
         protected float successAttackRowTime = 1f;
@@ -71,7 +72,7 @@ namespace Actors.Base
         
         protected virtual void FixedUpdate()
         {
-            float lastAttackDelta = Time.time - lastAttackTime; 
+            float lastAttackDelta = Time.time - lastAttackTime;
             
             if (lastAttackDelta > combatCooldown && inCombat)
             {
@@ -106,7 +107,6 @@ namespace Actors.Base
 
         public virtual void Aim()
         {
-            
             if (aimTime == 0)
             {
                 onAimStart?.Invoke();
@@ -116,6 +116,10 @@ namespace Actors.Base
         
         public virtual void RangeAttack(Vector3 point)
         {
+            if (Time.time - lastRangeAttackTime < rangeAttackCooldown)
+            {
+                return;
+            }
             //TODO rework
             onAimEnd?.Invoke();
             float rangeWeaponDamage = 14f;
@@ -220,6 +224,12 @@ namespace Actors.Base
         public bool InCombat()
         {
             return inCombat;
+        }
+
+
+        public float GetRangeCooldown()
+        {
+            return Time.time - lastRangeAttackTime;
         }
     }
 }

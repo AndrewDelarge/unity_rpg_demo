@@ -31,6 +31,7 @@ namespace Managers
         {
             uiHud.Init();
             uiHud.healthBar.SetHealthable(player.GetComponent<IHealthable>());
+            uiHud.actionBar.SetPlayer(player);
         }
 
 
