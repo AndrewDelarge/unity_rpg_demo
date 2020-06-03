@@ -15,14 +15,17 @@ namespace Actors.Player
 {
     public class PlayerCombat : Base.Combat
     {
-        private EquipmentManager equipmentManager;
-        
+        public float minAimTime = 0.2f;
+        [Header("Melee Weapons Combo")]
         public WeaponComboHitParams[] weaponsCombo;
         
+        
+
         private Dictionary<WeaponType, WeaponComboHitParams> weaponComboHitParams;
         private WeaponComboHitParams currentWeaponComboHitParams;
-        
-        
+        private EquipmentManager equipmentManager;
+
+
         public override void Init(Stats actorStats, BaseInput baseInput)
         {
             base.Init(actorStats, baseInput);
@@ -60,30 +63,39 @@ namespace Actors.Player
             {
                 return;
             }
+            
             if (Time.time - lastRangeAttackTime < rangeAttackCooldown)
             {
                 return;
             }
 
+            if (aimTime < minAimTime)
+            {
+                onAimBreak?.Invoke();
+                aimTime = 0;
+                return;
+            }
             lastRangeAttackTime = Time.time;
-            onAimEnd?.Invoke();
-            RangeWeapon weapon = equipmentManager.GetRangeWeapon();
-
             aimTime = Mathf.Min(aimTime, 1);
-            Vector3 pos = transform.position;
-            pos.y = point.y;
-            GameObject gameObject = Instantiate(weapon.projectile, pos, Quaternion.identity);
-            gameObject.transform.LookAt(point);
-            BaseProjectile projectile = gameObject.GetComponent<BaseProjectile>();
+
+            SpawnProjectile(equipmentManager.GetRangeWeapon().projectile, point);
             
-            // 0.032 0.16 0.52
-            // -53.3 85.6 -85.8
+            aimTime = 0;
+            onAimEnd?.Invoke();
+        }
+
+
+        void SpawnProjectile(GameObject proj, Vector3 target)
+        {
+            Vector3 pos = transform.position;
+            pos.y = target.y;
+            GameObject gameObject = Instantiate(proj, pos, Quaternion.identity);
+            gameObject.transform.LookAt(target);
+            BaseProjectile projectile = gameObject.GetComponent<BaseProjectile>();
             projectile.angleSpeed = 1 - aimTime;
             projectile.ignorePlayer = true;
             projectile.Launch(stats.GetDamageValue());
-            aimTime = 0;
         }
-        
         
         
         public override void MeleeAttack(List<IHealthable> targetStats)

@@ -1,16 +1,21 @@
+using System;
 using System.Collections;
 using Actors.Base;
+using Actors.Base.Interface;
 using Actors.Base.StatsStuff;
+using GameSystems;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Actors.AI.Behavior
 {
     public class AIBehavior : BaseBehavior
     {
-        private float visionUpdateTime = .5f;
-
         protected Vector3 lastIdlePosition;
-
+        
+        private float visionUpdateTime = .5f;
+        
+        
         public override void Init(Actor baseActor)
         {
             base.Init(baseActor);
@@ -28,8 +33,8 @@ namespace Actors.AI.Behavior
                 case BehaviorState.Idle:
                     Idle();
                     break;
-                case BehaviorState.Patrol:
-                    Patrol();
+                case BehaviorState.Chasing:
+                    Chasing();
                     break;
                 case BehaviorState.Attack:
                     Attack();
@@ -38,7 +43,7 @@ namespace Actors.AI.Behavior
                     ReturnToIdle();
                     break;
             }
-
+            
             yield return null;
         }
 
@@ -66,18 +71,56 @@ namespace Actors.AI.Behavior
             }
         }
 
-        protected override void Attack()
+        protected void Chasing()
         {
-            if (! TargetExists() || GetDistanceToTarget() > actor.vision.viewRadius)
+            if (! TargetExists() || GetDistanceToTarget() > actor.vision.viewRadius * 2)
             {
                 ReturnToIdle();
                 return;
             }
+
             
-            actor.movement.Follow(attackTarget.GetTransform());
-            actor.MeleeAttack(attackTarget);
+            if (! actor.combat.InMeleeRange(attackTarget.GetTransform()))
+            {
+                if (actor.movement.IsMoving())
+                {
+                    return;
+                }
+                Debug.Log($"Follow,  moving {actor.movement.IsMoving()} range {actor.combat.InMeleeRange(attackTarget.GetTransform())}");
+                actor.movement.Follow(attackTarget.GetTransform());
+                return;
+            }
+
+            if (GetAttackToken())
+            {
+                SetState(BehaviorState.Attack);
+            }
         }
 
+        
+        protected override void Attack()
+        {
+            if (actor.combat.IsAttacking())
+            {
+                return;
+            }
+            ReturnAttackToken();
+            SetState(BehaviorState.Chasing);
+        }
+
+        protected override void SetState(BehaviorState state)
+        {
+            switch (state)
+            {
+                case BehaviorState.Attack:
+                    actor.movement.StopFollow();
+                    actor.MeleeAttack(attackTarget);
+                    break;
+            }
+
+            this.state = state;
+        }
+        
         public override void ReturnToIdle()
         {
             if (Vector3.Distance(lastIdlePosition, actor.transform.position) <= 1)
@@ -106,17 +149,5 @@ namespace Actors.AI.Behavior
         {
             return attackTarget != null && ! attackTarget.IsDead();
         }
-        
-        protected void FollowTarget(Transform transform)
-        {
-            
-        }
-
-        protected override void Patrol(Vector3[] points = null)
-        {
-            
-        }
-       
-        
     }
 }

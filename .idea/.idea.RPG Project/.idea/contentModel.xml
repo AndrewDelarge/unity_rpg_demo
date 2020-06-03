@@ -103,6 +103,7 @@
               <e p="Behavior" t="Include">
                 <e p="AiBehavior.cs" t="Include" />
                 <e p="AICompanionBehavior.cs" t="Include" />
+                <e p="AIRange.cs" t="Include" />
                 <e p="BaseBehavior.cs" t="Include" />
                 <e p="Encounter.cs" t="Include" />
                 <e p="State" t="Include">
@@ -162,6 +163,7 @@
             <e p="FixedCameraZone.cs" t="Include" />
             <e p="Objects" t="Include">
               <e p="Destroyable.cs" t="Include" />
+              <e p="LockAt.cs" t="Include" />
             </e>
             <e p="Player" t="Include">
               <e p="SpawnPoint.cs" t="Include" />
@@ -278,6 +280,9 @@
             <e p="Hud" t="Include">
               <e p="ActionBar.cs" t="Include" />
               <e p="HealthBar.cs" t="Include" />
+              <e p="Joysticks" t="Include">
+                <e p="CooldownableStick.cs" t="Include" />
+              </e>
               <e p="PauseMenu.cs" t="Include" />
               <e p="QuestPanel.cs" t="Include" />
               <e p="TutorialFinger.cs" t="Include" />

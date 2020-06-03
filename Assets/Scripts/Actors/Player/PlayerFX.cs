@@ -101,6 +101,7 @@ namespace Actors.Player
             stats.OnHealthChange += ShowHealChange;
             combat.onAimStart += () => SetVisibleArrowPath(true);
             combat.onAimEnd += () => SetVisibleArrowPath(false);
+            combat.onAimBreak += () => SetVisibleArrowPath(false);
         }
 
         void SetVisibleArrowPath(bool visible)

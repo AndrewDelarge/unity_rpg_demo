@@ -76,6 +76,7 @@ namespace Gameplay.Projectile
             {
                 return;
             }
+            
             onHitSomething?.Invoke(other.gameObject);
         }
     }

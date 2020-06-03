@@ -45,9 +45,12 @@ namespace Actors.Base
         public event System.Action OnAttackEnd;
         public delegate void OnAimStart();
         public delegate void OnAimEnd();
+        public delegate void OnAimBreak();
 
         public OnAimStart onAimStart;
-        public OnAimEnd onAimEnd;
+        public OnAimEnd onAimEnd;        
+        public OnAimBreak onAimBreak;        
+
         
         public delegate void OnTargetChange(Actor target);
 
@@ -122,20 +125,17 @@ namespace Actors.Base
             }
             //TODO rework
             onAimEnd?.Invoke();
-            float rangeWeaponDamage = 14f;
+            lastRangeAttackTime = Time.time;
 
             aimTime = Mathf.Min(aimTime, 1);
             Vector3 pos = transform.position;
             pos.y += 1;
-            GameObject gameObject = (GameObject) Instantiate(Resources.Load("Projectiles/Arrow"), pos, Quaternion.identity);
-            gameObject.transform.LookAt(point);
+            GameObject gameObject = (GameObject) Instantiate(Resources.Load("Projectiles/ArrowE"), pos, Quaternion.identity);
             BaseProjectile projectile = gameObject.GetComponent<BaseProjectile>();
-            
             Damage damage = stats.GetDamageValue();
-            
-            projectile.angleSpeed = 1 - aimTime;
-            projectile.ignorePlayer = true;
+            projectile.angleSpeed = 0;
             projectile.Launch(damage);
+            gameObject.transform.LookAt(point);
             aimTime = 0;
         }
 

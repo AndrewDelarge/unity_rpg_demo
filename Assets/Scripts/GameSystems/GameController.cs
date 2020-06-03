@@ -40,7 +40,6 @@ namespace GameSystems
         
 
         public AIActorsManager actorsManager;
-        protected int spawnPointId = 0;
     
         private void Start()
         {
@@ -62,7 +61,6 @@ namespace GameSystems
 
         public void StartScene(int scene, int spawnId = 0)
         {
-            spawnPointId = spawnId;
             sceneController.LoadScene(scene);
             Pause(false);
         }
@@ -83,7 +81,7 @@ namespace GameSystems
 
             if (sceneController.IsNeedToSpawnPlayer())
             {
-                GameObject player = playerManager.SpawnPlayer(spawnPointId);
+                GameObject player = playerManager.SpawnPlayer(sceneController.GetStartSpawnPoint());
                 uiManager.SetPlayer(player);
                 playerManager.InitPlayer();
                 playerManager.equipmentManager.Reequip();
@@ -126,7 +124,7 @@ namespace GameSystems
             cameraController.target = player.transform;
         }
 
-
+        
         public void Pause(bool value)
         {
             Time.timeScale = (value) ? 0 : 1;

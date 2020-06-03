@@ -40,7 +40,8 @@ namespace Actors.Base
 
         public OnDied onDied;
         public OnGetDamage onGetDamage;
-
+        public Damage lastDamage;
+        
         public event EventHandler<HealthChangeEventArgs> OnHealthChange;
 
         public virtual void Init()
@@ -88,11 +89,15 @@ namespace Actors.Base
         
         public virtual void TakeDamage(Damage damage)
         {
+            if (currentHealth <= 0)
+            {
+                return;
+            }
             int damageValue = Mathf.FloorToInt(damage.GetValue() * GetArmorMultiplier());
             
             damageValue = Mathf.Clamp(damageValue, 0, int.MaxValue);
             currentHealth -= damageValue;
-            
+            lastDamage = damage;
             if (currentHealth <= 0)
             {
                 Die();

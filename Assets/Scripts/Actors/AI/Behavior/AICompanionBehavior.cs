@@ -15,9 +15,7 @@ namespace Actors.AI.Behavior
                 case BehaviorState.Idle:
                     Idle();
                     break;
-                case BehaviorState.Patrol:
-                    Patrol();
-                    break;
+
                 case BehaviorState.Attack:
                     Attack();
                     break;

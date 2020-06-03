@@ -1,4 +1,5 @@
 using System.Collections;
+using Actors.Base;
 using Actors.Base.Interface;
 using UnityEngine;
 
@@ -16,10 +17,17 @@ namespace Gameplay.Projectile
 
         private void OnHealthableHit(GameObject hitted)
         {
+            Actor targetActor = hitted.GetComponentInParent<Actor>();
+            if (targetActor != null && targetActor.IsFriend(damage.GetOwner()))
+            {
+                return;
+            }
+            
             Stop();
             gameObject.transform.parent = hitted.transform;
             IHealthable healthable = hitted.GetComponentInParent<IHealthable>();
             StartCoroutine(Destroy());
+            
             
             if (healthable == null)
             {

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Actors.Base;
 using Actors.Base.Interface;
 using Actors.Base.StatsStuff;
+using GameSystems;
 using UI;
 using UnityEngine;
 
@@ -77,6 +78,9 @@ namespace Actors.AI
         void Ragdoll()
         {
             SetSkilletColliderActivity(true);
+            Vector3 playerDirection = GameController.instance.playerManager.GetPlayer().transform.position;
+
+            playerDirection = transform.InverseTransformDirection(playerDirection).normalized;
             
             Rigidbody[] rigidbodies = GetComponentsInChildren<Rigidbody>();
             foreach (Rigidbody rigidbody in rigidbodies)
@@ -84,7 +88,7 @@ namespace Actors.AI
                 rigidbody.isKinematic = false;
                 rigidbody.useGravity = true;
                 
-                rigidbody.AddForce(- gameObject.transform.forward * 10, ForceMode.Impulse);
+                rigidbody.AddForce(- playerDirection * 10, ForceMode.Impulse);
             }
         }
 

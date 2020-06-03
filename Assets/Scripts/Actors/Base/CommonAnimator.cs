@@ -67,6 +67,7 @@ namespace Actors.Base
             stats.onGetDamage += OnGetHit;
             combat.onAimStart += OnAimStart;
             combat.onAimEnd += OnAimEnd;
+            combat.onAimBreak += OnAimBreak;
         }
         
         private void LateUpdate()
@@ -147,6 +148,11 @@ namespace Actors.Base
         protected virtual void OnAimEnd()
         {
             animator.SetTrigger("aimEnd");
+        }
+        
+        protected virtual void OnAimBreak()
+        {
+            animator.SetTrigger("aimBreak");
         }
         
         protected virtual void OnAttackEnd()

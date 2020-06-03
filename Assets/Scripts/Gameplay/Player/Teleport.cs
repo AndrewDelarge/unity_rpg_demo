@@ -13,7 +13,7 @@ namespace Gameplay
         
         protected void TeleportToScene(TeleportScene scene)
         {
-            GameController.instance.StartScene(scene.scene, scene.spawnPointId);
+            GameController.instance.StartScene(scene.scene);
         }
     }
 

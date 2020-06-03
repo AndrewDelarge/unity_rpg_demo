@@ -27,6 +27,9 @@ namespace GameSystems.Input
                 case BehaviorType.Warior:
                     behavior = new AIBehavior();
                     break;
+                case BehaviorType.Range:
+                    behavior = new AIRange();
+                    break;
             }
 
             behavior.Init(actor);

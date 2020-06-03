@@ -14,6 +14,7 @@ namespace GameSystems
         public float cameraRotationSpeed = 4f;
 
         public bool spawnPlayer = true;
+        public int spawnPointId = 0;
         
         public UnityEvent onStart;
         

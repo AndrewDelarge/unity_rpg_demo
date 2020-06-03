@@ -112,6 +112,10 @@ namespace Managers
         {
             return sceneSettings.spawnPlayer;
         }
-        
+
+        public int GetStartSpawnPoint()
+        {
+            return sceneSettings.spawnPointId;
+        }
     }
 }
