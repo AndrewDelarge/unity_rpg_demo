@@ -1,7 +1,7 @@
 ﻿//see README here: 
 //github.com/ColinLeung-NiloCat/UnityURPUnlitScreenSpaceDecalShader
 
-Shader "Lightweight Render Pipeline/ByNiloCat/Screen Space Decal/Unlit"
+Shader "Universal Render Pipeline/ByNiloCat/Screen Space Decal/Unlit"
 {
     Properties
     {
@@ -93,7 +93,7 @@ Shader "Lightweight Render Pipeline/ByNiloCat/Screen Space Decal/Unlit"
             // It will include Unity built-in shader variables (except the lighting variables)
             // (https://docs.unity3d.com/Manual/SL-UnityShaderVariables.html
             // It will also include many utilitary functions. 
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             struct appdata
             {
                 float4 vertex : POSITION;
