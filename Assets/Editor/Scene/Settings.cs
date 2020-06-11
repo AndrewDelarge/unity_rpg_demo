@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Editor.Scene
 {
     [InitializeOnLoad]
-    public static class Quest
+    public static class Settings
     {
         [MenuItem("GameObject/Scene/Settings", false, 10)]
         static void CreateSceneSettings(MenuCommand menuCommand)

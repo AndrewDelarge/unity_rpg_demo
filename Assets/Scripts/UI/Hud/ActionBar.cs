@@ -1,6 +1,7 @@
 ﻿using Actors.Base;
 using UI.Hud.Joysticks;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI.Hud
 {
@@ -23,8 +24,25 @@ namespace UI.Hud
         {
             onActionKeyClick = null;
             onSecKeyClick = null;
+            
+            ChangeActionBarOpacity(0.4f);
         }
 
+
+        void ChangeActionBarOpacity(float opacity)
+        {
+            Image[] images = GetComponentsInChildren<Image>();
+
+            foreach (Image image in images)
+            {
+                Color color = image.color;
+
+                color.a = opacity;
+                image.color = color;
+            }
+            
+        }
+        
         private void FixedUpdate()
         {
             float cooldown = Mathf.Min(playerCombat.GetRangeCooldown(), playerCombat.rangeAttackCooldown);
@@ -39,6 +57,7 @@ namespace UI.Hud
         
         public void OnActionClick()
         {
+            
             onActionKeyClick?.Invoke();
         }
         

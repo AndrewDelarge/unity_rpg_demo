@@ -75,9 +75,11 @@ namespace Actors.Base
         
         protected virtual void FixedUpdate()
         {
+            // TODO blend cooldowns ??
             float lastAttackDelta = Time.time - lastAttackTime;
+            float lastRangeAttackDelta = Time.time - lastRangeAttackTime;
             
-            if (lastAttackDelta > combatCooldown && inCombat)
+            if (lastAttackDelta > combatCooldown && lastRangeAttackDelta > rangeAttackCooldown && inCombat)
             {
                 ExitCombat();
             }
@@ -123,20 +125,7 @@ namespace Actors.Base
             {
                 return;
             }
-            //TODO rework
             onAimEnd?.Invoke();
-            lastRangeAttackTime = Time.time;
-
-            aimTime = Mathf.Min(aimTime, 1);
-            Vector3 pos = transform.position;
-            pos.y += 1;
-            GameObject gameObject = (GameObject) Instantiate(Resources.Load("Projectiles/ArrowE"), pos, Quaternion.identity);
-            BaseProjectile projectile = gameObject.GetComponent<BaseProjectile>();
-            Damage damage = stats.GetDamageValue();
-            projectile.angleSpeed = 0;
-            projectile.Launch(damage);
-            gameObject.transform.LookAt(point);
-            aimTime = 0;
         }
 
         

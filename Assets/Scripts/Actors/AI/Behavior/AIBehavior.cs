@@ -86,7 +86,6 @@ namespace Actors.AI.Behavior
                 {
                     return;
                 }
-                Debug.Log($"Follow,  moving {actor.movement.IsMoving()} range {actor.combat.InMeleeRange(attackTarget.GetTransform())}");
                 actor.movement.Follow(attackTarget.GetTransform());
                 return;
             }

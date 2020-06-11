@@ -29,6 +29,7 @@
           </e>
           <e p="Scene" t="Include">
             <e p="Quests.cs" t="Include" />
+            <e p="Settings.cs" t="Include" />
           </e>
         </e>
         <e p="External" t="Include">

@@ -77,6 +77,7 @@ namespace Actors.AI.Behavior
             
             actor.movement.FaceTarget(attackTarget.GetTransform().position);
 
+
             if (GetDistanceToTarget() > actor.vision.viewRadius / 1.5f)
             {
                 actor.movement.Follow(attackTarget.GetTransform(), actor.vision.viewRadius / 2f);
@@ -138,7 +139,7 @@ namespace Actors.AI.Behavior
             if (newTarget != null)
             {
                 SetAttackTarget(newTarget.stats);
-                
+
                 Actor friend = GetClosestFriend();
                 if (friend != null && !friend.movement.IsMoving())
                 {
@@ -149,11 +150,13 @@ namespace Actors.AI.Behavior
 
         protected override void Attack()
         {
+            actor.movement.FaceTarget(attackTarget.GetTransform().position);
+
             if (actor.combat.GetRangeCooldown() < actor.combat.rangeAttackCooldown)
             {
                 return;
             }
-            
+
             ReturnAttackToken();
             SetState(BehaviorState.Chasing);
         }
