@@ -40,8 +40,7 @@ namespace UI.Inventory
             lootSlots = lootSlotsHub.GetComponentsInChildren<LootSlot>();
 
             itemReceived.Init();
-            playerManager.onPlayerInited = () => inventoryStatsView.Init(playerManager);
-            
+            playerManager.onPlayerInited += () => inventoryStatsView.Init(playerManager);
             UpdateUI();
         }
 

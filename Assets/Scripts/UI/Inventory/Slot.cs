@@ -21,7 +21,7 @@ namespace UI.Inventory
         public void AddItem(Item newItem)
         {
             item = newItem;
-
+            
             icon.sprite = item.icon;
             icon.enabled = true;
             remove.interactable = true;

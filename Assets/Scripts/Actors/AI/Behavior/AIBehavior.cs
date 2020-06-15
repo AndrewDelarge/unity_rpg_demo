@@ -80,6 +80,7 @@ namespace Actors.AI.Behavior
             }
 
             
+            
             if (! actor.combat.InMeleeRange(attackTarget.GetTransform()))
             {
                 if (actor.movement.IsMoving())
@@ -93,7 +94,12 @@ namespace Actors.AI.Behavior
             if (GetAttackToken())
             {
                 SetState(BehaviorState.Attack);
+                return;
             }
+            
+            Vector3 position = new Vector3(0, 0, Random.Range(-1, 0)) * 3;
+            actor.movement.MoveTo(actor.transform.TransformPoint(position));
+            ShowPosition(actor.transform.TransformPoint(position));
         }
 
         

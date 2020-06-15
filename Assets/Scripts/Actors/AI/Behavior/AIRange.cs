@@ -1,7 +1,6 @@
 using System.Collections;
 using Actors.Base;
 using Actors.Base.StatsStuff;
-using GameSystems;
 using UnityEngine;
 
 namespace Actors.AI.Behavior
@@ -16,6 +15,8 @@ namespace Actors.AI.Behavior
         private int fearTime = 3;
         private float lastFearTime;
         private Vector3 lastTargetPos;
+        
+        
         public override void Init(Actor baseActor)
         {
             base.Init(baseActor);
@@ -75,9 +76,14 @@ namespace Actors.AI.Behavior
                 return;
             }
             
+            if (actor.movement.IsMoving())
+            {
+                return;
+            }
+            
             actor.movement.FaceTarget(attackTarget.GetTransform().position);
 
-
+            
             if (GetDistanceToTarget() > actor.vision.viewRadius / 1.5f)
             {
                 actor.movement.Follow(attackTarget.GetTransform(), actor.vision.viewRadius / 2f);
@@ -90,9 +96,13 @@ namespace Actors.AI.Behavior
                 return;
             }
             
-            
-            actor.movement.MoveTo(attackTarget.GetTransform().position * actor.vision.viewRadius);
+            // If we in range attack but havent token 
+            // Moving right or left
 
+            Vector3 position = new Vector3(Random.Range(-1, 1), 0, 0) * 5;
+            actor.movement.MoveTo(actor.transform.TransformPoint(position));
+            ShowPosition(position);
+            
         }
 
 
@@ -100,9 +110,9 @@ namespace Actors.AI.Behavior
         {
             state = BehaviorState.Fear;
             lastFearTime = Time.time;
-            Vector3 position = actor.transform.forward * 10;
+
             actor.movement.StopFollow();
-            actor.movement.MoveTo(- position);
+            actor.movement.MoveTo(actor.transform.TransformPoint(Vector3.back * 10));
         }
 
         bool CanFear()
@@ -121,6 +131,11 @@ namespace Actors.AI.Behavior
             {
                 actor.movement.StopFollow();
                 state = BehaviorState.Chasing;
+            }
+
+            if (!actor.movement.IsMoving())
+            {
+                actor.movement.MoveTo(actor.transform.TransformPoint(Vector3.back * 10));
             }
         }
         

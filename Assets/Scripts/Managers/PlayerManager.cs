@@ -36,7 +36,7 @@ namespace Managers
             {
                 return currentPlayer.gameObject;
             }
-            
+
             GameObject point = sceneController.FindSpawnPoint(spawnPointId);
 
             if (point == null)
@@ -60,7 +60,6 @@ namespace Managers
         }
         
 
-
         public void TeleportToPoint(int spawnPointId)
         {
             GameObject point = sceneController.FindSpawnPoint(spawnPointId);
@@ -77,6 +76,11 @@ namespace Managers
 
         private void ChangePlayerPos(Vector3 pos)
         {
+            if (currentPlayer == null)
+            {
+                Debug.Log("Player not spawned");
+                return;
+            }
             currentPlayer.transform.position = pos;
         }
     }

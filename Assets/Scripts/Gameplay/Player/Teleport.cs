@@ -15,6 +15,12 @@ namespace Gameplay
         {
             GameController.instance.StartScene(scene.scene);
         }
+        
+        
+        protected void TeleportToLevel()
+        {
+            GameController.instance.sceneController.NextLevel();
+        }
     }
 
     [System.Serializable]

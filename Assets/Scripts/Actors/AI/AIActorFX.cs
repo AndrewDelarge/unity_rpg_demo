@@ -24,7 +24,7 @@ namespace Actors.AI
         private WorldUiCanvas worldUiCanvas;
         public void Init()
         {
-            worldUiCanvas = GameController.instance.worldUiCanvas;
+            worldUiCanvas = GameController.instance.sceneController.worldUiCanvas;
             stats = GetComponent<IHealthable>();
             stats.OnHealthChange += ShowHealChange;
             stats.OnHealthChange += ShowDamageText;

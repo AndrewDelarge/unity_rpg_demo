@@ -21,7 +21,6 @@ namespace GameSystems
         
             instance = this;
             DontDestroyOnLoad(this);
-            SpawnCamera();
         }
     
         #endregion
@@ -33,13 +32,8 @@ namespace GameSystems
         public UIManager uiManager;
         [HideInInspector] 
         public SceneController sceneController;
-        [HideInInspector] 
-        public CameraController cameraController;
-        [HideInInspector] 
-        public WorldUiCanvas worldUiCanvas;
-        
 
-        public AIActorsManager actorsManager;
+        
     
         private void Start()
         {
@@ -51,27 +45,15 @@ namespace GameSystems
             uiManager.Spawn(transform);
             uiManager.HideHud();
             sceneController.Init();
-        
+            playerManager.Init();
+            
 #if (UNITY_EDITOR)
-//            SpawnWorldUiCanvas();
-            StartGame();
+            sceneController.StartCurrentEditorScene();
 #endif
-        }
-
-
-        public void StartScene(int scene, int spawnId = 0)
-        {
-            sceneController.LoadScene(scene);
-            Pause(false);
         }
 
         private void StartGame()
         {
-            SpawnCamera();
-            SpawnWorldUiCanvas();
-            actorsManager = new AIActorsManager();
-            playerManager.Init();
-            
             if (! sceneController.SceneIsPlayable())
             {
                 Debug.Log("Loaded not playable scene");
@@ -89,41 +71,26 @@ namespace GameSystems
             }
             
             uiManager.ShowHud();
-            sceneController.InitTriggers();
             sceneController.ApplySceneSettings(this);
         }
     
-    
-    
-        void SpawnCamera()
+        private void PrepareCamera(GameObject player)
         {
-            if (cameraController != null)
-            {
-                Debug.Log("Camera already exists");
-                return;
-            }
-            
-            cameraController = Instantiate(cameraPrefab).GetComponent<CameraController>();
-            
-            if (cameraController == null)
-            {
-                // Assigned camera dont have controller
-                throw new CameraControllerNotFound();
-            }
-        }
-
-
-        void SpawnWorldUiCanvas()
-        {
-            worldUiCanvas = Instantiate(worldUiCanvasGameObject).GetComponent<WorldUiCanvas>();
-        }
-        
-        void PrepareCamera(GameObject player)
-        {
-            CameraController cameraController = this.cameraController.GetComponent<CameraController>();
+            CameraController cameraController = GetCameraController();
             cameraController.target = player.transform;
         }
 
+        public void StartScene(int scene, int spawnId = 0)
+        {
+            sceneController.LoadScene(scene);
+            Pause(false);
+        }
+        
+        
+        public CameraController GetCameraController()
+        {
+            return sceneController.cameraController;
+        }
         
         public void Pause(bool value)
         {

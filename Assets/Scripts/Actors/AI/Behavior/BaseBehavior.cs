@@ -103,7 +103,7 @@ namespace Actors.AI.Behavior
         {
             if (actorsManager == null)
             {
-                actorsManager = GameController.instance.actorsManager;
+                actorsManager = GameController.instance.sceneController.GetActorsManager();
             }
 
             return hasAttackToken = actorsManager.GetAttackToken();
@@ -114,6 +114,11 @@ namespace Actors.AI.Behavior
             hasAttackToken = false;
             actorsManager.ReturnAttackToken();
         }
-        
+
+
+        public void ShowPosition(Vector3 position)
+        {
+            GameController.Instantiate(Resources.Load("System/Point") as GameObject, position, Quaternion.identity);
+        }
     }
 }

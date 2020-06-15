@@ -19,7 +19,7 @@ namespace UI
         
         public void Init(Transform targetTransform, string textOrCode, bool isCrit)
         {
-            cam = GameController.instance.cameraController.GetCamera();
+            cam = GameController.instance.GetCameraController().GetCamera();
             target = targetTransform;
             curElement = gameObject;
 

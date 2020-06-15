@@ -21,8 +21,8 @@ namespace UI.Base
         
         public override void Init()
         {
-            cam = GameController.instance.cameraController;
-            worldUiCanvas = GameController.instance.worldUiCanvas;
+            cam = GameController.instance.GetCameraController();
+            worldUiCanvas = GameController.instance.sceneController.worldUiCanvas;
             scale = 1;
 
             curElement = worldUiCanvas.SpawnUi(uiPrefab, type);

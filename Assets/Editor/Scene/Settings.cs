@@ -9,7 +9,7 @@ namespace Editor.Scene
     [InitializeOnLoad]
     public static class Settings
     {
-        [MenuItem("GameObject/Scene/Settings", false, 10)]
+        [MenuItem("GameObject/Scene/SceneSettings", false, 10)]
         static void CreateSceneSettings(MenuCommand menuCommand)
         {
             GameObject go = new GameObject("SceneSettings");
@@ -19,5 +19,15 @@ namespace Editor.Scene
             Selection.activeObject = go;
         }
         
+        
+        [MenuItem("GameObject/Scene/LevelSettings", false, 10)]
+        static void CreateSceneLevelSettings(MenuCommand menuCommand)
+        {
+            GameObject go = new GameObject("LevelSettings");
+            GameObjectUtility.SetParentAndAlign(go, menuCommand.context as GameObject);
+            go.AddComponent<LevelSettings>();
+            Undo.RegisterCreatedObjectUndo(go, "Create " + go.name);
+            Selection.activeObject = go;
+        }
     }
 }
