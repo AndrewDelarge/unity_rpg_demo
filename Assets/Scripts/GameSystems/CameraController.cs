@@ -21,17 +21,12 @@ namespace GameSystems
         private Camera defaultCamera;
         private bool positionFreezzed = false;
 
-        private void Start()
+        public void Init()
         {
             currentCamera = GetComponent<Camera>();
             defaultCamera = Camera.main;
 
-            if (target != null)
-            {
-                currentCamera.transform.position = target.position - offset * currentZoom;
-                currentCamera.transform.LookAt(target.position + Vector3.up * pitch);
-            }
-            
+            AlignCamera();
         }
         
         void FixedUpdate()
@@ -102,6 +97,15 @@ namespace GameSystems
             StartCoroutine(SetCurCamera(defaultCamera, false));
         }
 
+
+        public void AlignCamera()
+        {
+            if (target != null)
+            {
+                currentCamera.transform.position = target.position - offset * currentZoom;
+                currentCamera.transform.LookAt(target.position + Vector3.up * pitch);
+            }
+        }
 
         public Camera GetCamera()
         {

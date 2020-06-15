@@ -16,18 +16,17 @@ namespace Managers
         private int attackTokens;
         private int currentAttackTokens;
         
-        public AIActorsManager(int attackTokens = 3)
+        public AIActorsManager(int attackTokens = 4)
         {
-            AIActor[] actors = GameObject.FindObjectsOfType<AIActor>();
             aliveActors = new List<AIActor>();
             this.attackTokens = attackTokens;
             currentAttackTokens = attackTokens;
+            
+            AIActor[] actors = GameObject.FindObjectsOfType<AIActor>();
             for (int i = 0; i < actors.Length; i++)
             {
                 actors[i].Init();
-                
                 aliveActors.Add(actors[i]);
-
                 actors[i].stats.onDied += diedObject => GameController.instance.StartCoroutine(OnActorDied(diedObject));
             }
         }

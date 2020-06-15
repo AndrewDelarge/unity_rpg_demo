@@ -25,7 +25,7 @@ namespace Actors.Player
         {
             this.input = input;
             curSpeedMultiplier = speedMultiplier;
-            cam = GameController.instance.cameraController.GetCamera();
+            cam = GameController.instance.GetCameraController().GetCamera();
             characterController = GetComponent<CharacterController>();
             stats = actorStats;
         }
@@ -94,7 +94,7 @@ namespace Actors.Player
         Vector3 GetInputDirection()
         {
             Vector3 direction = new Vector3(input.horizontal, 0f, input.vertical);
-            direction = GameController.instance.cameraController.GetCamera().transform.TransformDirection(direction);
+            direction = GameController.instance.GetCameraController().GetCamera().transform.TransformDirection(direction);
             direction.y = 0;
 
             return direction;

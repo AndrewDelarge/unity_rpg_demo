@@ -36,7 +36,7 @@ namespace Gameplay
 
             target = collider.gameObject;
             
-            GameController.instance.cameraController.SetCamera(curCamera, true);
+            GameController.instance.GetCameraController().SetCamera(curCamera, true);
         }
 
         private void FixedUpdate()
@@ -55,7 +55,7 @@ namespace Gameplay
             }
 
             target = null;
-            GameController.instance.cameraController.ResetCamera();
+            GameController.instance.GetCameraController().ResetCamera();
         }
     }
     

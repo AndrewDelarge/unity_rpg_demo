@@ -1,7 +1,10 @@
 using System;
+using Exceptions.Game.Player;
 using Gameplay;
 using Gameplay.Player;
 using GameSystems;
+using Managers.Scenes;
+using UI;
 using UI.MainMenu;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,24 +13,31 @@ namespace Managers
 {
     public class SceneController : MonoBehaviour
     {
-        private int MAIN_MENU_SCENE_INDEX = 1;
+        [HideInInspector] 
+        public WorldUiCanvas worldUiCanvas;
+        [HideInInspector] 
+        public CameraController cameraController;
+        public event Action OnSceneLoaded;
+
         
         protected Scene currentScene;
-        private AsyncOperation sceneLoadingOperation;
-        private Loading loadingScreen;
+
+        
+        private int MAIN_MENU_SCENE_INDEX = 1;
+
+        private int currentLevel;
         private bool isLoading;
-
-        private TriggersManager triggersManager;
+        private LevelController levelController;
+        private AsyncOperation sceneLoadingOperation;
         private SceneSettings sceneSettings;
-        private SpawnPoint[] spawnPoints;
+        private Loading loadingScreen;
 
-        
-        public event Action OnSceneLoaded;
-        
-        
         public void Init()
         {
             loadingScreen = GameController.instance.uiManager.GetLoadScreen();
+            levelController = gameObject.AddComponent<LevelController>();
+            levelController.Init();
+
 #if (! UNITY_EDITOR)
             SceneManager.LoadScene(MAIN_MENU_SCENE_INDEX, new LoadSceneParameters(LoadSceneMode.Single));
 #endif
@@ -38,14 +48,8 @@ namespace Managers
             {
                 SceneManager.LoadScene(MAIN_MENU_SCENE_INDEX, new LoadSceneParameters(LoadSceneMode.Single));
             }
-
-            spawnPoints = FindObjectsOfType<SpawnPoint>();
-            sceneSettings = FindObjectOfType<SceneSettings>();
-            triggersManager = new TriggersManager(FindObjectsOfType<Trigger>());
 #endif
-
         }
-
 
         private void FixedUpdate()
         {
@@ -62,25 +66,7 @@ namespace Managers
             sceneLoadingOperation = SceneManager.LoadSceneAsync(scene);
             sceneLoadingOperation.completed += OnLoaded;
         }
-
-
-        private void OnLoaded(AsyncOperation operation)
-        {
-            loadingScreen.Hide();
-            isLoading = false;
-            spawnPoints = FindObjectsOfType<SpawnPoint>();
-            sceneSettings = FindObjectOfType<SceneSettings>();
-            triggersManager = new TriggersManager(FindObjectsOfType<Trigger>());
-            OnSceneLoaded?.Invoke();
-        }
         
-
-        public void InitTriggers()
-        {
-            triggersManager?.Init();
-        }
-
-
         public void ApplySceneSettings(GameController controller)
         {
             if (sceneSettings != null)
@@ -88,20 +74,39 @@ namespace Managers
                 sceneSettings.Apply(controller);
             }
         }
-        
-        public GameObject FindSpawnPoint(int spawnPointId)
-        {
-            for (int i = 0; i < spawnPoints.Length; i++)
-            {
-                if (spawnPoints[i].id == spawnPointId)
-                {
-                    return spawnPoints[i].gameObject;
-                }
-            }
 
-            return null;
+        public void NextLevel()
+        {
+            currentLevel++;
+
+            GameObject nextLevel = sceneSettings.GetLevel(currentLevel);
+            if (nextLevel != null)
+            {
+                levelController.LoadLevel(nextLevel);
+                return;
+            }
         }
 
+        public void StartCurrentEditorScene()
+        {
+            PrepareScene();
+        }
+        
+        public int GetStartSpawnPoint()
+        {
+            return levelController.GetStartSpawnId();
+        }
+        
+        public AIActorsManager GetActorsManager()
+        {
+            return levelController.actorsManager;
+        }
+
+        public GameObject FindSpawnPoint(int pointId)
+        {
+            return levelController.FindSpawnPoint(pointId);
+        }
+        
 
         public bool SceneIsPlayable()
         {
@@ -112,10 +117,54 @@ namespace Managers
         {
             return sceneSettings.spawnPlayer;
         }
-
-        public int GetStartSpawnPoint()
+        
+        // When Scene Is loaded
+        private void OnLoaded(AsyncOperation operation)
         {
-            return sceneSettings.spawnPointId;
+            PrepareScene();
+        }
+        
+        private void SpawnWorldUiCanvas()
+        {
+            worldUiCanvas = Instantiate(GameController.instance.worldUiCanvasGameObject).GetComponent<WorldUiCanvas>();
+        }
+
+        private void SpawnCamera()
+        {
+            if (cameraController != null)
+            {
+                Debug.Log("Camera already exists");
+                return;
+            }
+            
+            cameraController = Instantiate(GameController.instance.cameraPrefab).GetComponent<CameraController>();
+            cameraController.Init();
+            if (cameraController == null)
+            {
+                // Assigned camera dont have controller
+                throw new CameraControllerNotFound();
+            }
+        }
+        
+        private void PrepareScene()
+        {
+            SpawnCamera();
+            SpawnWorldUiCanvas();
+            sceneSettings = FindObjectOfType<SceneSettings>();
+#if (UNITY_EDITOR)
+            levelController.StartCurrentEditorLevel();
+            if (sceneSettings != null && sceneSettings.levels != null)
+            {
+                currentLevel = sceneSettings.startLevel;
+                levelController.LoadLevel(sceneSettings.GetLevel(currentLevel));
+            }
+#else
+            currentLevel = sceneSettings.startLevel;
+            levelController.LoadLevel(sceneSettings.GetLevel(currentLevel));
+#endif
+            loadingScreen.Hide();
+            isLoading = false;
+            OnSceneLoaded?.Invoke();
         }
     }
 }

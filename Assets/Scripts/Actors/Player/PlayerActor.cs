@@ -29,7 +29,7 @@ namespace Actors.Player
             playerFx.Init(combat);
             // turnoff automatic vision update
             vision.isEnabled = false;
-            cameraController = GameController.instance.cameraController;
+            cameraController = GameController.instance.GetCameraController();
             equipment = GameController.instance.playerManager.equipmentManager;
             combat.OnAttackEnd += ShakeCamera;
             combat.OnAttackEnd += PushPhysicsObjects;
@@ -109,7 +109,7 @@ namespace Actors.Player
 
         private Vector3 TransformJoystickPoint(Vector3 point)
         {
-            Camera camera = GameController.instance.cameraController.GetCamera();
+            Camera camera = GameController.instance.GetCameraController().GetCamera();
             return camera.transform.TransformPoint(- point) - (camera.transform.position - transform.position);
         }
         

@@ -58,16 +58,16 @@ namespace UI.Hud
 
         private void FixedUpdate()
         {
-            if (!hasTarget)
+            if (worldTarget == null)
             {
                 return;
             }
+            
             float x = 100 * Time.time * Time.deltaTime;
             float sinX = Mathf.Abs(Mathf.Sin(x)) * 0.5f;
             visualPointer.transform.localScale = new Vector3(1 + sinX, 1 + sinX);
             
-            
-            Camera camera = GameController.instance.cameraController.GetCamera();
+            Camera camera = GameController.instance.GetCameraController().GetCamera();
             Vector3 pos = camera.WorldToScreenPoint(СalcWorldPosition(worldTarget.position, camera));
 
             pos.y = GetPosition(Screen.height, pos.y);
