@@ -1,8 +1,10 @@
+using System.Collections;
 using System.Collections.Generic;
 using Actors.Base;
 using Actors.Base.Interface;
 using Actors.Base.StatsStuff;
 using GameSystems;
+using GameSystems.Input;
 using UI;
 using UnityEngine;
 
@@ -78,9 +80,7 @@ namespace Actors.AI
         void Ragdoll()
         {
             SetSkilletColliderActivity(true);
-            Vector3 playerDirection = GameController.instance.playerManager.GetPlayer().transform.position;
-
-            playerDirection = transform.InverseTransformDirection(playerDirection).normalized;
+            Vector3 playerDirection = GetDirection(GetLastDamageDealerPosition());
             
             Rigidbody[] rigidbodies = GetComponentsInChildren<Rigidbody>();
             foreach (Rigidbody rigidbody in rigidbodies)
@@ -115,6 +115,36 @@ namespace Actors.AI
                 
                 combat.MeleeAttack(attackList);
             }
+        }
+
+
+        // TODO: Pushing back direction
+        public override void PushBack(Vector3 pusherPos, float force = 1)
+        {
+            StartCoroutine(PushingBack(pusherPos, force));
+        }
+
+        void ToggleAi(bool active)
+        {
+            input.enabled = active;
+        }
+
+        IEnumerator PushingBack(Vector3 point, float force = 1)
+        {
+            ToggleAi(false);
+            float time = 0;
+            
+            Vector3 pos = transform.position;
+            Vector3 endPos = transform.TransformPoint(GetDirection(point) * force);
+            
+            while (time < 1)
+            {
+                time += Time.deltaTime * 5f;
+                transform.position = Vector3.Lerp(pos, endPos, time);
+                yield return null;
+            }
+            
+            ToggleAi(true);
         }
     }
 }

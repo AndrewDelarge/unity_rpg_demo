@@ -4,6 +4,7 @@ using Actors.Base;
 using Actors.Base.Interface;
 using Actors.Base.StatsStuff;
 using Gameplay.Projectile;
+using Gameplay.Zones;
 using GameSystems;
 using GameSystems.Input;
 using Managers.Player;
@@ -110,9 +111,20 @@ namespace Actors.Player
             curMAttackDamageMultiplier = currentWeaponComboHitParams.GetFinalDamage(successAttackInRow);
             
             base.MeleeAttack(targetStats);
+
+            if (IsLastCombatAttack())
+            {
+                StartCoroutine(SpawnPushBackWave(curMAttackDelay));
+            }
+            
         }
 
-        
+        IEnumerator SpawnPushBackWave(float waiting)
+        {
+            yield return new WaitForSeconds(waiting);
+            
+            PushBackZone.PushBackActors(transform.position, 2f, 1f);
+        }
 
         private void SetComboHitByWeapon(Weapon weapon)
         {

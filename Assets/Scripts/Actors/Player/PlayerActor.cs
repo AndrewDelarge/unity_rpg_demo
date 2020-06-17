@@ -209,5 +209,27 @@ namespace Actors.Player
             
             return false;
         }
+
+
+        public override void PushBack(Vector3 pusherPos, float force = 1)
+        {
+//            StartCoroutine(PushingBack(pusherPos, force));
+        }
+
+        IEnumerator PushingBack(Vector3 point, float force = 1)
+        {
+            float time = 0;
+            
+            Vector3 pos = transform.position;
+            Vector3 endPos = transform.TransformPoint(GetDirection(point) * force);
+            
+            while (time < 1)
+            {
+                time += Time.deltaTime * 5f;
+                transform.position = Vector3.Lerp(pos, endPos, time);
+                yield return null;
+            }
+            
+        }
     }
 }

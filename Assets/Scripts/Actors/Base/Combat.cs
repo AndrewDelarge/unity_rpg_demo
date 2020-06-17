@@ -138,22 +138,26 @@ namespace Actors.Base
 
             for (int i = 0; i < targetStats.Count; i++)
             {
-                if (InMeleeRange(targetStats[i].GetTransform()) && actor.vision.IsInViewAngle(targetStats[i].GetTransform()))
+                if (! InMeleeZone(targetStats[i].GetTransform()))
                 {
-                    if (!stats.IsDead())
-                    {
-                        Damage tmpDmg = stats.GetDamageValue();
-                        Damage damage = new Damage(Mathf.FloorToInt(tmpDmg.GetValue() * curMAttackDamageMultiplier), actor, tmpDmg.IsCrit());
+                    continue;
+                }
+                if (!stats.IsDead())
+                {
+                    Damage tmpDmg = stats.GetDamageValue();
+                    Damage damage = new Damage(Mathf.FloorToInt(tmpDmg.GetValue() * curMAttackDamageMultiplier), actor, tmpDmg.IsCrit());
 
-                        targetStats[i].TakeDamage(damage);
-                    }
+                    targetStats[i].TakeDamage(damage);
                 }
             }
 
             OnAttackEnd?.Invoke();
         }
-        
-        
+
+        protected bool InMeleeZone(Transform transform)
+        {
+            return InMeleeRange(transform) && actor.vision.IsInViewAngle(transform);
+        }
         
         protected void InvokeOnAttack()
         {
@@ -180,6 +184,11 @@ namespace Actors.Base
             return maxSuccessAttackInRow;
         }
 
+        public bool IsLastCombatAttack()
+        {
+            return successAttackInRow == 0;
+        }
+        
         public float GetCurrentMeleeAttackSpeed()
         {
             return curMAttackSpeed / commonCombatSpeedMultiplier;

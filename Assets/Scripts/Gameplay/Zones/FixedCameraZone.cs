@@ -2,7 +2,7 @@ using System;
 using GameSystems;
 using UnityEngine;
 
-namespace Gameplay
+namespace Gameplay.Zones
 {
     
     [RequireComponent(typeof(Collider))]

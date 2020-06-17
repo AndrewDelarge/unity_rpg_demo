@@ -20,7 +20,7 @@ namespace Actors.Player
         protected ParticleSystem currentTrail;
 
         private Transform target;
-        private Base.Combat combat;
+        private Combat combat;
         private EquipmentManager equipmentManager;
         private Actor player;
         private IHealthable stats;
@@ -28,10 +28,10 @@ namespace Actors.Player
         private LineRenderer arrowPathRenderer;
         private float trailTime;
         private bool inited = false;
-        private bool updatePath = false;
+        private bool updateAimPath = false;
         
         
-        public void Init(Base.Combat combat)
+        public void Init(Combat combat)
         {
             equipmentManager = GameController.instance.playerManager.equipmentManager;
             player = GameController.instance.playerManager.GetPlayer();
@@ -53,13 +53,15 @@ namespace Actors.Player
         }
 
 
-        void SpawnArrowPath()
+        private void SpawnArrowPath()
         {
             Vector3 pos = Vector3.zero;
             pos.y = player.animator.lookPoint.localPosition.y;
+            
             arrowPathObject = Instantiate(arrowPath, target);
             arrowPathObject.transform.localPosition = pos;
             arrowPathRenderer = arrowPathObject.GetComponent<LineRenderer>();
+            
             SetVisibleArrowPath(false);
         }
         
@@ -70,22 +72,9 @@ namespace Actors.Player
                 return;
             }
 
-            if (updatePath)
+            if (updateAimPath)
             {
-                RaycastHit hit;
-                Vector3 pos = transform.position;
-                Vector3 direction = transform.TransformDirection(player.animator.lookPoint.localPosition);
-                pos.y = player.animator.lookPoint.position.y;
-                direction.y = 0;
-                Debug.DrawRay(pos, direction, Color.red);
-                if (Physics.Raycast(pos, direction, out hit,25f))
-                {
-                    arrowPathRenderer.SetPosition(1, new Vector3(0, 0, Vector3.Distance(player.transform.position, hit.point)));
-                }
-                else
-                {
-                    arrowPathRenderer.SetPosition(1, new Vector3(0, 0, 25));
-                }
+                UpdateAimPath();
             }
             
             
@@ -93,6 +82,23 @@ namespace Actors.Player
             
         }
 
+        private void UpdateAimPath()
+        {
+            RaycastHit hit;
+            Vector3 pos = transform.position;
+            Vector3 direction = transform.TransformDirection(player.animator.lookPoint.localPosition);
+            pos.y = player.animator.lookPoint.position.y;
+            direction.y = 0;
+            if (Physics.Raycast(pos, direction, out hit,25f))
+            {
+                arrowPathRenderer.SetPosition(1, new Vector3(0, 0, Vector3.Distance(player.transform.position, hit.point)));
+            }
+            else
+            {
+                arrowPathRenderer.SetPosition(1, new Vector3(0, 0, 25));
+            }
+        }
+        
         private void RegisterEvents()
         {
             equipmentManager.onMeleeWeaponEquip += SpawnTrail;
@@ -106,7 +112,7 @@ namespace Actors.Player
 
         void SetVisibleArrowPath(bool visible)
         {
-            updatePath = visible;
+            updateAimPath = visible;
             arrowPathObject.SetActive(visible);
         }
         
@@ -126,11 +132,13 @@ namespace Actors.Player
 
         IEnumerator ShowTrail()
         {
+            yield return new WaitForSeconds(0.1f);
+
             if (currentTrail != null)
             {
                 currentTrail.Play();
                 
-                yield return new WaitForSeconds(combat.GetCurrentMeleeAttackSpeed());
+                yield return new WaitForSeconds(combat.GetCurrentMeleeAttackSpeed() - 0.3f);
                 
                 currentTrail.Stop();
             }

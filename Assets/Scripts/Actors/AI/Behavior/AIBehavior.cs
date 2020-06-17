@@ -99,7 +99,6 @@ namespace Actors.AI.Behavior
             
             Vector3 position = new Vector3(0, 0, Random.Range(-1, 0)) * 3;
             actor.movement.MoveTo(actor.transform.TransformPoint(position));
-            ShowPosition(actor.transform.TransformPoint(position));
         }
 
         

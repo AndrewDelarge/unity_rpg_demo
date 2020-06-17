@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Actors.Base.Interface;
+using GameSystems;
 using GameSystems.Input;
 using Scriptable;
 using UnityEngine;
@@ -45,6 +46,25 @@ namespace Actors.Base
             animator.Disable();
             movement.Disable();
             input.enabled = false;
+        }
+
+        protected Vector3 GetLastDamageDealerPosition()
+        {
+            Vector3 damagePosition = transform.TransformPoint(Vector3.forward);
+
+            if (stats.lastDamage.GetOwner() != null)
+            {
+                damagePosition = stats.lastDamage.GetOwner().transform.position;
+            }
+
+            return damagePosition;
+        }
+
+        protected Vector3 GetDirection(Vector3 point)
+        {
+            Vector3 heading = point - transform.position;
+            float distance = heading.magnitude;
+            return heading / distance;
         }
         
         public bool IsEnemy(Actor actor)
@@ -95,6 +115,11 @@ namespace Actors.Base
         public virtual void Dash()
         {
             throw new NotImplementedException("Implement Dash method!");
+        }
+
+        public virtual void PushBack(Vector3 pusherPos, float force = 1)
+        {
+            throw new NotImplementedException("Implement push back method!");
         }
     }
 }

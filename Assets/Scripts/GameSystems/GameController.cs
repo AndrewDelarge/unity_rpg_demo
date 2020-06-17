@@ -1,6 +1,4 @@
-using Exceptions.Game.Player;
 using Managers;
-using UI;
 using UnityEngine;
 
 namespace GameSystems
@@ -46,6 +44,7 @@ namespace GameSystems
             uiManager.HideHud();
             sceneController.Init();
             playerManager.Init();
+
             
 #if (UNITY_EDITOR)
             sceneController.StartCurrentEditorScene();
