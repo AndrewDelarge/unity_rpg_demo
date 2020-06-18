@@ -16,7 +16,7 @@ namespace Actors.Player
         private CharacterController characterController;
         private Camera cam;
         public Transform target { get; private set; }
-        private bool stopped = false;
+        private bool freezzed = false;
         private float curSpeedMultiplier;
         
         
@@ -64,22 +64,11 @@ namespace Actors.Player
             if (input.IsSomeDirection())
             {
                 direction = GetInputDirection();
-                
-                direction = direction.normalized;
+                direction = direction / direction.magnitude;
 
                 direction *= stats.GetMovementSpeed() * curSpeedMultiplier;
                 
-                float speedMultiply;
-                
-                if (Mathf.Abs(input.horizontal) >= .3f || Mathf.Abs(input.vertical) >= .3f)
-                {
-                    speedMultiply = 1f;
-                }
-                else
-                {
-                    speedMultiply = .4f;
-                }
-                direction *= speedMultiply;
+                direction *= GetSpeedByJoystickPushing();
 
                 if (rotating)
                 {
@@ -90,8 +79,23 @@ namespace Actors.Player
             Move(direction);
         }
 
-
-        Vector3 GetInputDirection()
+        private float GetSpeedByJoystickPushing()
+        {
+            float speedMultiply;
+                
+            if (Mathf.Abs(input.horizontal) >= .3f || Mathf.Abs(input.vertical) >= .3f)
+            {
+                speedMultiply = 1f;
+            }
+            else
+            {
+                speedMultiply = .4f;
+            }
+            
+            return speedMultiply;
+        }
+        
+        private Vector3 GetInputDirection()
         {
             Vector3 direction = new Vector3(input.horizontal, 0f, input.vertical);
             direction = GameController.instance.GetCameraController().GetCamera().transform.TransformDirection(direction);
@@ -102,7 +106,7 @@ namespace Actors.Player
         
         public bool IsCanMove()
         {
-            return characterController.isGrounded && !stopped;
+            return characterController.isGrounded && !freezzed;
         }
 
         public void Jump()
@@ -148,7 +152,7 @@ namespace Actors.Player
         
         public void FaceTarget(Vector3 target)
         {
-            Vector3 direction = (target - transform.position).normalized;
+            Vector3 direction = (target - transform.position);
             if (direction != Vector3.zero)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));

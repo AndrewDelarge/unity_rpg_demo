@@ -5,6 +5,7 @@ using Actors.Base.Interface;
 using Actors.Base.StatsStuff;
 using GameSystems;
 using GameSystems.Input;
+using Helpers;
 using UI;
 using UnityEngine;
 
@@ -81,14 +82,14 @@ namespace Actors.AI
         {
             SetSkilletColliderActivity(true);
             Vector3 playerDirection = GetDirection(GetLastDamageDealerPosition());
-            
+            playerDirection.y = -0.2f;
             Rigidbody[] rigidbodies = GetComponentsInChildren<Rigidbody>();
             foreach (Rigidbody rigidbody in rigidbodies)
             {
                 rigidbody.isKinematic = false;
                 rigidbody.useGravity = true;
                 
-                rigidbody.AddForce(- playerDirection * 10, ForceMode.Impulse);
+                rigidbody.AddForce(- playerDirection * 15, ForceMode.Impulse);
             }
         }
 
@@ -118,7 +119,6 @@ namespace Actors.AI
         }
 
 
-        // TODO: Pushing back direction
         public override void PushBack(Vector3 pusherPos, float force = 1)
         {
             StartCoroutine(PushingBack(pusherPos, force));
@@ -131,20 +131,20 @@ namespace Actors.AI
 
         IEnumerator PushingBack(Vector3 point, float force = 1)
         {
-            ToggleAi(false);
+//            ToggleAi(false);
             float time = 0;
             
             Vector3 pos = transform.position;
-            Vector3 endPos = transform.TransformPoint(GetDirection(point) * force);
+            Vector3 endPos = pos - (GetDirection(point) * force);
             
             while (time < 1)
             {
-                time += Time.deltaTime * 5f;
+                time += Time.deltaTime * 10f;
                 transform.position = Vector3.Lerp(pos, endPos, time);
                 yield return null;
             }
             
-            ToggleAi(true);
+//            ToggleAi(true);
         }
     }
 }

@@ -28,13 +28,13 @@ namespace Gameplay.Zones
             StartCoroutine(Pushing());
         }
 
-        public static void PushBackActors(Vector3 center, float raduis, float force = 1f)
+        public static void PushBackActors(Vector3 center, float radius, float force = 1f)
         {
-            RaycastHit[] raycastHit = Physics.SphereCastAll(center, raduis, Vector3.forward, raduis);
+            RaycastHit[] raycastHits = Physics.SphereCastAll(center, radius, Vector3.forward, radius);
             
-            for (int i = 0; i < raycastHit.Length; i++)
+            for (int i = 0; i < raycastHits.Length; i++)
             {
-                Actor actor = raycastHit[i].collider.gameObject.GetComponent<Actor>();
+                Actor actor = raycastHits[i].collider.gameObject.GetComponent<Actor>();
                 if (actor != null)
                 {
                     actor.PushBack(center, force);

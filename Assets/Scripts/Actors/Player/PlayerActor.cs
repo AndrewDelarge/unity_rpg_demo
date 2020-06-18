@@ -213,7 +213,7 @@ namespace Actors.Player
 
         public override void PushBack(Vector3 pusherPos, float force = 1)
         {
-//            StartCoroutine(PushingBack(pusherPos, force));
+            StartCoroutine(PushingBack(pusherPos, force));
         }
 
         IEnumerator PushingBack(Vector3 point, float force = 1)
@@ -221,7 +221,13 @@ namespace Actors.Player
             float time = 0;
             
             Vector3 pos = transform.position;
-            Vector3 endPos = transform.TransformPoint(GetDirection(point) * force);
+            Vector3 endPos = pos - (GetDirection(point) * force);
+            
+            // Todo check nan
+            if (endPos != endPos)
+            {
+                yield break;
+            }
             
             while (time < 1)
             {

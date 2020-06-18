@@ -12,12 +12,10 @@ namespace UI.Hud
         
         
         private Transform worldTarget;
-        private bool hasTarget;
         private float slerpPosSpeed = 1f;
 
         public override void Init()
         {
-            hasTarget = false;
             curElement = visualPointer;
             showSpeedTime = 2f;
             Hide();
@@ -29,12 +27,10 @@ namespace UI.Hud
         {
             if (target == null)
             {
-                hasTarget = false;
                 Hide();
                 return;
             }
             Show();
-            hasTarget = true;
             worldTarget = target;
             doneGameObject.SetActive(false);
             visualPointer.transform.localPosition = Vector3.zero;
@@ -82,7 +78,8 @@ namespace UI.Hud
         private Vector3 СalcWorldPosition(Vector3 position, Camera camera) {  
             Vector3 camNormal = camera.transform.forward;
             Vector3 vectorFromCam = position - camera.transform.position;
-
+            
+            // TODO normalized
             float camNormDot = Vector3.Dot (camNormal, vectorFromCam.normalized);
             
             if (camNormDot <= 0f) {

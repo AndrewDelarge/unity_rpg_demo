@@ -49,7 +49,7 @@ namespace Actors.AI
                 Vector3 direction = new Vector3(input.horizontal, 0f, input.vertical);
                 direction = Camera.main.transform.TransformDirection(direction);
                 direction.y = 0;
-                direction = direction.normalized;
+                direction = direction / direction.magnitude;
 
                 Move(direction);
             }
