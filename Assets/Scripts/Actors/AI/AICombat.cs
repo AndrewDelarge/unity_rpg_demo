@@ -34,7 +34,7 @@ namespace Actors.AI
             pos.y += .7f;
             GameObject gameObject = (GameObject) Instantiate(Resources.Load("Projectiles/ArrowE"), pos, Quaternion.identity);
             BaseProjectile projectile = gameObject.GetComponent<BaseProjectile>();
-            Damage damage = stats.GetDamageValue();
+            Damage damage = stats.GetDamageValue(false, false, rangeDamageMultiplier);
             projectile.angleSpeed = 0;
             projectile.Launch(damage);
             gameObject.transform.LookAt(point);

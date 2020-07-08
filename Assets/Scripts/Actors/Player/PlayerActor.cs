@@ -81,6 +81,11 @@ namespace Actors.Player
             {
                 return;
             }
+
+            if (combat.IsRangeCooldown())
+            {
+                return;
+            }
             
             if (combat.aimTime == .0f)
             {
@@ -180,13 +185,13 @@ namespace Actors.Player
         void ShakeCamera()
         {
             int current = combat.GetCurrentSuccessAttack();
-            int multyplier = 2;
+            int multyplier = 1;
             if (0 == current)
             {
-                multyplier *= 2;
+                multyplier *= 4;
             }
 
-            StartCoroutine(cameraController.Shake(.1f * multyplier, 1f / 2));
+            StartCoroutine(cameraController.Shake(.25f * multyplier));
         }
 
 
@@ -194,7 +199,7 @@ namespace Actors.Player
         {
             if (Time.time - dashingTime >= dashingColdownd)
             {
-                if (combat.IsAttacking())
+                if (combat.IsMeleeAttacking())
                 {
                     return false;
                 }

@@ -26,6 +26,8 @@ namespace Actors.AI.Behavior
         protected BehaviorState state;
         protected AIActorsManager actorsManager;
         protected bool hasAttackToken;
+        protected float stoppingDistance = 1.5f;
+        
         public virtual void Init(Actor baseActor)
         {
             actor = baseActor;
@@ -51,9 +53,28 @@ namespace Actors.AI.Behavior
         
         public virtual void Defence(Actor attackedBy)
         {
-            if (attackTarget == null)
+            if (attackTarget != null)
             {
-                SetAttackTarget(attackedBy.stats);
+                return;
+            }
+
+            
+            actor.movement.Follow(attackedBy.transform, stoppingDistance);
+            
+//            SetAttackTarget(attackedBy.stats);
+
+            Actor[] friends;
+            int friendsCount = GetClosestFriends(out friends);
+            
+            
+            Debug.Log($"Closests friends: {friendsCount} ");
+
+            for (int i = 0; i < friendsCount; i++)
+            {
+                if (!friends[i].movement.IsMoving())
+                {
+                    friends[i].movement.SetTarget(attackedBy.transform);
+                }
             }
         }
 
@@ -65,11 +86,13 @@ namespace Actors.AI.Behavior
         
         protected Actor GetNextEnemy()
         {
-            foreach (Actor npcActor in actor.vision.actors)
+            Actor[] actors;
+            int countActors = actor.vision.GetActorsInViewAngle(out actors);
+            for (int i = 0; i < countActors; i++)
             {
-                if (actor.IsEnemy(npcActor))
+                if (actor.IsEnemy(actors[i]))
                 {
-                    return npcActor;
+                    return actors[i];
                 }
             }
 
@@ -78,7 +101,7 @@ namespace Actors.AI.Behavior
         
         protected Actor GetClosestFriend()
         {
-            foreach (Actor npcActor in actor.vision.actors)
+            foreach (Actor npcActor in actor.vision.actorsInViewRadius)
             {
                 if (actor.IsFriend(npcActor))
                 {
@@ -87,6 +110,22 @@ namespace Actors.AI.Behavior
             }
 
             return null;
+        }
+        
+        protected int GetClosestFriends(out Actor[] actors)
+        {
+            actors = new Actor[actor.vision.actorsInViewRadius.Count];
+            int friendsCount = 0;
+            foreach (Actor npcActor in actor.vision.actorsInViewRadius)
+            {
+                if (actor.IsFriend(npcActor))
+                {
+                    actors[friendsCount] = npcActor;
+                    friendsCount++;
+                }
+            }
+
+            return friendsCount;
         }
 
         public abstract void Idle();

@@ -132,13 +132,12 @@ namespace Actors.Player
 
         IEnumerator ShowTrail()
         {
-            yield return new WaitForSeconds(0.1f);
 
             if (currentTrail != null)
             {
                 currentTrail.Play();
                 
-                yield return new WaitForSeconds(combat.GetCurrentMeleeAttackSpeed() - 0.3f);
+                yield return new WaitForSeconds(combat.GetCurrentMeleeAttackSpeed());
                 
                 currentTrail.Stop();
             }

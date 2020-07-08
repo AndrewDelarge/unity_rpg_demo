@@ -58,6 +58,7 @@ namespace Gameplay.Projectile
             if (Time.time - launchTime >= lifeTime)
             {
                 Stop();
+                Destroy(gameObject);
             }
 
             Move();

@@ -35,7 +35,7 @@ namespace Actors.Player
         }
 
 
-        public override Damage GetDamageValue(bool throwCrit = true, bool randomize = true)
+        public override Damage GetDamageValue(bool throwCrit = true, bool randomize = true, float multiplier = 1f)
         {
             int damage = GetWeaponDamage();
             damage += ConvertAPToDamage(attackPower);
@@ -52,6 +52,8 @@ namespace Actors.Player
             {
                 damage = Mathf.FloorToInt(damage * Random.Range(.9f, 1.1f));
             }
+            
+            damage = Mathf.FloorToInt(damage * multiplier);
             
             return new Damage(damage, actor, throwed <= chance);;
         }

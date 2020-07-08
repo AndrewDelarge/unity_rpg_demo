@@ -24,9 +24,9 @@ namespace Gameplay.Projectile
             }
             
             Stop();
-            gameObject.transform.parent = hitted.transform;
+//            gameObject.transform.parent = hitted.transform;
             IHealthable healthable = hitted.GetComponentInParent<IHealthable>();
-            StartCoroutine(Destroy());
+//            StartCoroutine(Destroy());
             
             
             if (healthable == null)
@@ -36,6 +36,7 @@ namespace Gameplay.Projectile
             }
             
             healthable.TakeDamage(damage);
+            Destroy(gameObject);
         }
 
 

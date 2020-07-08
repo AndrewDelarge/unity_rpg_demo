@@ -46,7 +46,10 @@ namespace UI.Base
                 time -= Time.deltaTime * showSpeedTime;
                 for (int i = 0; i < renderers.Length; i++)
                 {
-                    renderers[i].SetAlpha(visible ? 1 - time : time);
+                    if (renderers[i] != null)
+                    {
+                        renderers[i].SetAlpha(visible ? 1 - time : time);
+                    }
                 }
 
                 yield return null;
@@ -58,5 +61,6 @@ namespace UI.Base
                 onHided?.Invoke();
             }
         }
+
     }
 }

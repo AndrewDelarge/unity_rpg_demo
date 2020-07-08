@@ -49,7 +49,7 @@ namespace Managers
             currentPlayer = currentPlayerGO.GetComponent<PlayerActor>();
             
             equipmentManager.targetMesh = currentPlayer.gameObject;
-            equipmentManager.EquipDefault();
+            onPlayerInited += () => equipmentManager.EquipDefault();
             return currentPlayer.gameObject;
         }
 

@@ -3,7 +3,7 @@ using Actors.Base;
 
 namespace Actors.AI.Behavior
 {
-    public class AICompanionBehavior : AIBehavior 
+    public class AiMeleeCompanionBehavior : AIMeleeBehavior 
     {
         public float visionTickRate = 0.1f;
 

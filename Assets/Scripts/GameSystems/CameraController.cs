@@ -48,25 +48,35 @@ namespace GameSystems
 
         public IEnumerator Shake(float power = 1f, float speed = .1f)
         {
-            float oldSize = currentCamera.orthographicSize;
-            currentCamera.orthographicSize += power;
-            float t = oldSize;
-            
-            while (t < currentCamera.orthographicSize)
             {
-                if (power >= 0)
-                {
-                    currentCamera.orthographicSize -= Time.deltaTime / speed;
-                }
-                else
-                {
-                    currentCamera.orthographicSize += Time.deltaTime / speed;
-                }
-                
-                yield return null;
+                Transform targetT = transform;
+                float oldY = targetT.position.y;
+                Vector3 newPos = targetT.position;
+                newPos.y += power;
+                targetT.position = newPos;
+                yield return new WaitForSeconds(speed);
+                newPos = targetT.position;
+                newPos.y = oldY;
+                targetT.position = newPos;
             }
+            
+            
+            
+            
+            yield break;
+            // Pitching
+            {
+                float oldPitch = pitch;
+                pitch += power;
 
-            currentCamera.orthographicSize = oldSize;
+//            AlignCamera();
+                yield return new WaitForSeconds(speed);
+            
+                pitch = oldPitch;
+                Quaternion targetRotation = Quaternion.LookRotation(target.position - currentCamera.transform.position + Vector3.up * oldPitch, target.up);
+                currentCamera.transform.rotation = Quaternion.Slerp(currentCamera.transform.rotation, targetRotation, 0.5f);
+            }
+            
         }
 
         public void SetCamera(Camera camera, bool freezed = false)

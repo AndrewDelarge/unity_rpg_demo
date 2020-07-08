@@ -1,41 +1,8 @@
 fileFormatVersion: 2
 guid: 8b30db82199e31f41905688322d223f2
 ModelImporter:
-  serializedVersion: 19301
-  internalIDToNameTable:
-  - first:
-      74: -3244565684815287617
-    second: Rig|Atk_01
-  - first:
-      74: 2312758323114747109
-    second: Rig|Atk_02
-  - first:
-      74: -7289934149776625727
-    second: Golem Attack
-  - first:
-      74: 5182474460623082811
-    second: Rig|Atk_Idle_01
-  - first:
-      74: -8272594796115889076
-    second: Rig|Atk_Melee
-  - first:
-      74: -1236067496187662729
-    second: Rig|Atk_Melee_01
-  - first:
-      74: -429512112410174799
-    second: Golem Idle
-  - first:
-      74: -5667663360022990607
-    second: Rig|Idle_01
-  - first:
-      74: -6164689204684731139
-    second: Rig|Idle_02
-  - first:
-      74: -5181486892397411127
-    second: Golem Run
-  - first:
-      74: -5660678291860495987
-    second: Golem Tpose
+  serializedVersion: 25
+  internalIDToNameTable: []
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -43,7 +10,7 @@ ModelImporter:
       name: Material
     second: {fileID: 2100000, guid: af32ea5dcf0cb5a40ae56da90c155428, type: 2}
   materials:
-    materialImportMode: 1
+    importMaterials: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -72,7 +39,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Golem Attack
       takeName: Rig|Atk_03
-      internalID: 0
+      internalID: -7289934149776625727
       firstFrame: 0
       lastFrame: 27
       wrapMode: 0
@@ -101,7 +68,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Golem Idle
       takeName: Rig|Idle
-      internalID: 0
+      internalID: -429512112410174799
       firstFrame: 0
       lastFrame: 19
       wrapMode: 0
@@ -110,7 +77,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -130,7 +97,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Golem Run
       takeName: Rig|Run
-      internalID: 0
+      internalID: -5181486892397411127
       firstFrame: 0
       lastFrame: 19
       wrapMode: 0
@@ -159,7 +126,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Golem Tpose
       takeName: Rig|T_POSE
-      internalID: 0
+      internalID: -5660678291860495987
       firstFrame: 0
       lastFrame: 9
       wrapMode: 0
@@ -192,12 +159,10 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
-    sortHierarchyByName: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
-    fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
@@ -216,14 +181,15 @@ ModelImporter:
     useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 89
-    normalImportMode: 1
-    tangentImportMode: 2
-    normalCalculationMode: 2
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
-    normalSmoothingSource: 2
+    normalSmoothingSource: 0
   referencedClips: []
   importAnimation: 1
+  copyAvatar: 0
   humanDescription:
     serializedVersion: 3
     human: []
@@ -241,10 +207,8 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

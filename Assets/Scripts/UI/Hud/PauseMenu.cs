@@ -11,7 +11,7 @@ namespace UI.Hud
         public void OnExitButton()
         {
             // TODO hardcode
-            GameController.instance.StartScene(1);
+            Application.Quit();
             gameObject.SetActive(false);
         }
         

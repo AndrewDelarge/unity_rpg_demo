@@ -7,15 +7,15 @@ namespace Actors.Base
 {
     public class Stats : MonoBehaviour, IHealthable
     {
-        protected const int STAMINA_COEF = 10;
-        protected const int ATTACK_POWER_COEF = 2;
+        protected const int STAMINA_COEF = 2;
+        protected const int ATTACK_POWER_COEF = 10;
 
         protected const int STAMINA_TO_LVL_COEF = 5;
-        protected const int ATTACK_POWER_TO_LVL_COEF = 4;
+        protected const int ATTACK_POWER_TO_LVL_COEF = 15;
         
         protected const float CRIT_CAP = 100;
         protected const float ARMOR_CAP = 100;
-        protected const float CRIT_MULTIPLIER = 1.5f;
+        protected const float CRIT_MULTIPLIER = 2f;
         protected Actor actor;
         
         [SerializeField]
@@ -66,7 +66,7 @@ namespace Actors.Base
             }
         }
         
-        public virtual Damage GetDamageValue(bool throwCrit = true, bool randomize = true)
+        public virtual Damage GetDamageValue(bool throwCrit = true, bool randomize = true, float multiplier = 1f)
         {
             int damage = ConvertAPToDamage(attackPower);
             int chance = Mathf.FloorToInt(GetCriticalChance());
@@ -83,6 +83,8 @@ namespace Actors.Base
             {
                 damage = Mathf.FloorToInt(damage * UnityEngine.Random.Range(.9f, 1.1f));
             }
+            
+            damage = Mathf.FloorToInt(damage * multiplier);
 
             return new Damage(damage, actor, throwed <= chance);
         }

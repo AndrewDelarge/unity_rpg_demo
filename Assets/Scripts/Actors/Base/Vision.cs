@@ -11,8 +11,7 @@ namespace Actors.Base
         public float viewRadius;
         public float viewAngle = 360f;
         
-        public List<GameObject> visibleTargets = new List<GameObject>();
-        public List<Actor> actors = new List<Actor>();
+        public List<Actor> actorsInViewRadius = new List<Actor>();
 
         void Start()
         {
@@ -42,8 +41,7 @@ namespace Actors.Base
         
         void FindVisibleTargets(LayerMask mask)
         {
-            visibleTargets.Clear();
-            actors.Clear();
+            actorsInViewRadius.Clear();
 
             List<Collider> visibleObjects = FindVisibleColliders(mask);
             
@@ -51,11 +49,12 @@ namespace Actors.Base
             {
                 Actor actor = visibleObjects[i].GetComponent<Actor>();
 
-                if (actor != null && actor.transform != transform)
+                if (actor != null)
                 {
-                    actors.Add(actor);
+                    actorsInViewRadius.Add(actor);
                 }
-                    
+
+                
 //                    visibleTargets.Add(target);
                     
 //                    float dstToTarget = Vector3.Distance(target.position, transform.position);
@@ -66,7 +65,23 @@ namespace Actors.Base
             }
         }
 
+        public int GetActorsInViewAngle(out Actor[] actorsInView)
+        {
+            actorsInView = new Actor[actorsInViewRadius.Count];
+            int actorsCount = 0;
+            for (int i = 0; i < actorsInViewRadius.Count; i++)
+            {
+                if (IsInViewAngle(actorsInViewRadius[i].transform.position))
+                {
+                    actorsInView[actorsCount] = actorsInViewRadius[i];
+                    actorsCount++;
+                }
+            }
 
+            return actorsCount;
+        }
+        
+        
         public List<Collider> FindVisibleColliders(LayerMask mask)
         {
             Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, mask);
@@ -77,7 +92,7 @@ namespace Actors.Base
             {
                 GameObject target = targetsInViewRadius[i].gameObject;
                 
-                if (IsInViewAngle(target.transform.position) && target.transform != transform)
+                if (target.transform != transform)
                 {
                     visibleObjects.Add(targetsInViewRadius[i]);
                 }

@@ -40,7 +40,9 @@ namespace Actors.Base
         protected Actor actor;
         protected Stats stats;
         private bool inCombat = false;
-
+        private bool proccessAttack = false;
+        
+        
         public event System.Action OnAttack;
         public event System.Action OnAttackEnd;
         public delegate void OnAimStart();
@@ -48,8 +50,8 @@ namespace Actors.Base
         public delegate void OnAimBreak();
 
         public OnAimStart onAimStart;
-        public OnAimEnd onAimEnd;        
-        public OnAimBreak onAimBreak;        
+        public OnAimEnd onAimEnd;
+        public OnAimBreak onAimBreak;
 
         
         public delegate void OnTargetChange(Actor target);
@@ -92,22 +94,17 @@ namespace Actors.Base
         
         public virtual void MeleeAttack(List<IHealthable> targetStats)
         {
-            if (Time.time - lastAttackTime < GetCurrentMeleeAttackSpeed())
+            if (Time.time - lastAttackTime < GetCurrentMeleeAttackSpeed() && proccessAttack)
             {
                 return;
             }
-            
+            proccessAttack = true;
+
             EnterCombat();
 
             lastAttackTime = Time.time;
+            InvokeOnAttack();
             StartCoroutine(DoMeleeDamage(targetStats));
-
-            successAttackInRow++;
-
-            if (successAttackInRow == maxSuccessAttackInRow)
-            {
-                successAttackInRow = 0;
-            }
         }
 
         public virtual void Aim()
@@ -132,10 +129,8 @@ namespace Actors.Base
         
         protected virtual IEnumerator DoMeleeDamage(List<IHealthable> targetStats)
         {
-            InvokeOnAttack();
-
             yield return new WaitForSeconds(curMAttackDelay / commonCombatSpeedMultiplier);
-
+            
             for (int i = 0; i < targetStats.Count; i++)
             {
                 if (! InMeleeZone(targetStats[i].GetTransform()))
@@ -144,14 +139,19 @@ namespace Actors.Base
                 }
                 if (!stats.IsDead())
                 {
-                    Damage tmpDmg = stats.GetDamageValue();
-                    Damage damage = new Damage(Mathf.FloorToInt(tmpDmg.GetValue() * curMAttackDamageMultiplier), actor, tmpDmg.IsCrit());
-
-                    targetStats[i].TakeDamage(damage);
+                    targetStats[i].TakeDamage(stats.GetDamageValue(true, true, curMAttackDamageMultiplier));
                 }
             }
 
+            successAttackInRow++;
+
+            if (successAttackInRow == maxSuccessAttackInRow)
+            {
+                successAttackInRow = 0;
+            }
+            
             OnAttackEnd?.Invoke();
+            proccessAttack = false;
         }
 
         protected bool InMeleeZone(Transform transform)
@@ -186,7 +186,7 @@ namespace Actors.Base
 
         public bool IsLastCombatAttack()
         {
-            return successAttackInRow == 0;
+            return successAttackInRow == maxSuccessAttackInRow - 1;
         }
         
         public float GetCurrentMeleeAttackSpeed()
@@ -204,9 +204,14 @@ namespace Actors.Base
             return InMeleeRange(targetTransform.position);
         }
         
-        public bool IsAttacking()
+        public bool IsMeleeAttacking()
         {
             return Time.time - lastAttackTime <= GetCurrentMeleeAttackSpeed();
+        }
+
+        public bool IsRangeCooldown()
+        {
+            return Time.time - lastRangeAttackTime <= rangeAttackCooldown;
         }
         
         public void SetTarget(Actor target)

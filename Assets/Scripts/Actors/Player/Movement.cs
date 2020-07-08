@@ -89,7 +89,7 @@ namespace Actors.Player
             }
             else
             {
-                speedMultiply = .4f;
+                speedMultiply = .35f;
             }
             
             return speedMultiply;

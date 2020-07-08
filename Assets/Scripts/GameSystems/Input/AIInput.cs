@@ -25,10 +25,10 @@ namespace GameSystems.Input
             {
                 case BehaviorType.Default:
                 case BehaviorType.Warior:
-                    behavior = new AIBehavior();
+                    behavior = new AIMeleeBehavior();
                     break;
                 case BehaviorType.Range:
-                    behavior = new AIRange();
+                    behavior = new AIRangeBehavior();
                     break;
             }
 

@@ -12,27 +12,26 @@ namespace Actors.Base
     [RequireComponent(typeof(Vision), typeof(CommonAnimator))]
     public abstract class Actor : MonoBehaviour
     {
-        public GameActor actorScript;
-        public Stats stats{ get; protected set; }
-        public Combat combat{ get; protected set; }
         public CommonAnimator animator{ get; protected set; }
-        public Vision vision{ get; protected set; }
-        public BaseInput input{ get; protected set; }
-        
         public IControlable movement { get; protected set; }
+        public BaseInput input{ get; protected set; }
+        public GameActor actorScript;
+        public Combat combat{ get; protected set; }
+        public Vision vision{ get; protected set; }
+        public Stats stats{ get; protected set; }
 
 
         public virtual void Init()
         {
-            animator = GetComponent<CommonAnimator>();
-            vision = GetComponent<Vision>();
-            combat = GetComponent<Combat>();
-            input = GetComponent<BaseInput>();
-            stats = GetComponent<Stats>();
-            movement = GetComponent<IControlable>();
+            animator     = GetComponent<CommonAnimator>();
+            movement     = GetComponent<IControlable>();
+            vision       = GetComponent<Vision>();
+            combat       = GetComponent<Combat>();
+            input        = GetComponent<BaseInput>();
+            stats        = GetComponent<Stats>();
+            
             stats.Init();
             input.Init(this);
-            
             combat.Init(stats, input);
             movement.Init(stats, input);
             animator.Init(combat, movement, stats);

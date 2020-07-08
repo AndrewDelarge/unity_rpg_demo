@@ -20,7 +20,8 @@ namespace Managers.Player
         public ModelEquipmentPath[] modelEquipmentPaths;
         private Dictionary<EquipmentSlot, ModelEquipmentPath> modelPaths;
         public Equipment[] defaultEquipments;
-        public Weapon defaultWeapon;
+        public MeleeWeapon defaultWeapon;
+        public RangeWeapon defaultRangeWeapon;
         public GameObject targetMesh;
         
         
@@ -292,6 +293,13 @@ namespace Managers.Player
                 onMeleeWeaponEquip?.Invoke(meleeWeapon);
                 ShowEquipment(meleeWeapon);
             }
+            
+            
+            if (rangeWeapon != null)
+            {
+                onItemEquip?.Invoke(rangeWeapon);
+                ShowEquipment(rangeWeapon);
+            }
         }
         
         public void EquipDefault()
@@ -304,6 +312,11 @@ namespace Managers.Player
             if (defaultWeapon != null)
             {
                 Equip(defaultWeapon);
+            }
+            
+            if (defaultRangeWeapon != null)
+            {
+                Equip(defaultRangeWeapon);
             }
         }
         

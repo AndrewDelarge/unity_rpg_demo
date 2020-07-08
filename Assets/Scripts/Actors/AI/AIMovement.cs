@@ -112,7 +112,7 @@ namespace Actors.AI
             if (direction != Vector3.zero)
             {
                 Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
-                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 0.7f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 5f * Time.deltaTime);
             }
         }
 
