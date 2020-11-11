@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Actors.Base;
+using Gameplay.Actors.Base;
 using UnityEngine;
 
 namespace Gameplay.Env

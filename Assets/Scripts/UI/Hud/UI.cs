@@ -1,10 +1,17 @@
-﻿using GameSystems;
+﻿using System;
+using GameSystems;
 using UI.MainMenu;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI.Hud
 {
+    [Serializable]
+    public struct UITemplates
+    {
+        public GameObject damageTextFeed;
+    }
+    
     public class UI : MonoBehaviour
     {
         public ActionBar actionBar;
@@ -17,7 +24,9 @@ namespace UI.Hud
         public Loading loadingScreen;
         public UITarget uiTarget;
         public TutorialFinger tutorialFinger;
+        public DamageFeed damageFeed;
         
+        public UITemplates uiTemplates;
         
         private float deltaTime;
 
@@ -27,6 +36,7 @@ namespace UI.Hud
             inventory.Init();
             actionBar.Init();
             uiTarget.Init();
+            damageFeed.Init(uiTemplates.damageTextFeed);
             tutorialFinger.Init();
             upperPanel.onInventoryButtonClick = null;
             upperPanel.onInventoryButtonClick += inventory.ToggleInventory;

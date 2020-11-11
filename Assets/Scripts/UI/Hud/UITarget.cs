@@ -18,6 +18,7 @@ namespace UI.Hud
         {
             curElement = visualPointer;
             showSpeedTime = 2f;
+            inited = true;
             Hide();
             doneGameObject.SetActive(false);
         }

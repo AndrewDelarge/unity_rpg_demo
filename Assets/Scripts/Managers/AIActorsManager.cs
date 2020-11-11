@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Actors.AI;
+using Gameplay.Actors.AI;
 using GameSystems;
 using Managers.Player;
 using UnityEngine;
@@ -57,6 +57,11 @@ namespace Managers
         IEnumerator OnActorDied(GameObject actorGO)
         {
             yield return new WaitForSeconds(DESTROY_AFTER_DEATH_TIME);
+
+            if (actorGO == null)
+            {
+                yield break;
+            }
             AIActor aiActor = actorGO.GetComponent<AIActor>();
 
             aliveActors.Remove(aiActor);

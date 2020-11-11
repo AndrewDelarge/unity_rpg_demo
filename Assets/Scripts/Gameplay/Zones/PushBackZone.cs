@@ -1,5 +1,5 @@
 using System.Collections;
-using Actors.Base;
+using Gameplay.Actors.Base;
 using UnityEditor;
 using UnityEngine;
 

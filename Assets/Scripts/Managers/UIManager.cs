@@ -1,32 +1,30 @@
-using Actors.Base.Interface;
+using Gameplay.Actors.Base.Interface;
+using GameSystems;
 using UI.Hud;
 using UI.MainMenu;
 using UnityEngine;
 
 namespace Managers
 {
-    public class UIManager : MonoBehaviour
+    public class UIManager
     {
-        public GameObject UIPrefab;
-
         private bool isSpawned = false;
-
         private UI.Hud.UI uiHud;
         
-        public void Spawn(Transform parent)
+        public void Init(Transform parent)
         {
             if (isSpawned)
             {
                 return;
             }
-            
-            GameObject ui = Instantiate(UIPrefab, parent);
 
+            GameObject ui = GameController.Instantiate(GameController.instance.UIPrefab, parent);
+            GameController.instance.sceneController.OnSceneLoaded += RegisterEvents;
             uiHud = ui.GetComponent<UI.Hud.UI>();
             isSpawned = true;
             HideHud();
         }
-
+        
         public void SetPlayer(GameObject player)
         {
             uiHud.Init();
@@ -85,6 +83,19 @@ namespace Managers
         {
             uiHud.uiTarget.Hide();
         }
-        
+
+        public void AddDamageFeed(Transform target, string value, bool isCrit)
+        {
+            uiHud.damageFeed.Add(target, value, isCrit);
+        }
+
+        private void RegisterEvents()
+        {
+            GameController.instance.sceneController.LevelController.OnLevelUnload += HidePointTarget;
+            GameController.instance.sceneController.LevelController.OnLevelUnload += uiHud.tutorialFinger.Stop;
+            
+            GameController.instance.sceneController.OnSceneLoaded -= RegisterEvents;
+
+        }
     }
 }

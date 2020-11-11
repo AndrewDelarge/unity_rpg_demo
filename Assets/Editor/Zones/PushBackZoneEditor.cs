@@ -1,4 +1,3 @@
-using Actors.Base;
 using Gameplay.Zones;
 using UnityEditor;
 using UnityEngine;

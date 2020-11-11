@@ -1,7 +1,7 @@
 using System;
-using Actors.Player;
 using Exceptions.Game.Player;
 using Gameplay;
+using Gameplay.Actors.Player;
 using Gameplay.Player;
 using GameSystems;
 using Managers.Player;
@@ -48,8 +48,7 @@ namespace Managers
 
             currentPlayer = currentPlayerGO.GetComponent<PlayerActor>();
             
-            equipmentManager.targetMesh = currentPlayer.gameObject;
-            onPlayerInited += () => equipmentManager.EquipDefault();
+            
             return currentPlayer.gameObject;
         }
 

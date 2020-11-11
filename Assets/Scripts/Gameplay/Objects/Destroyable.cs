@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
-using Actors.Base.Interface;
-using Actors.Base.StatsStuff;
+using Gameplay.Actors.Base.Interface;
+using Gameplay.Actors.Base.StatsStuff;
 using UnityEngine;
 
 namespace Gameplay.Objects

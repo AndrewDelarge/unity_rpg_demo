@@ -18,6 +18,8 @@ namespace Managers
         [HideInInspector] 
         public CameraController cameraController;
         public event Action OnSceneLoaded;
+        
+        public LevelController LevelController => levelController;
 
         
         protected Scene currentScene;
@@ -50,7 +52,8 @@ namespace Managers
             }
 #endif
         }
-
+        
+        
         private void FixedUpdate()
         {
             if (isLoading)
@@ -117,6 +120,8 @@ namespace Managers
         {
             return sceneSettings.spawnPlayer;
         }
+
+        
         
         // When Scene Is loaded
         private void OnLoaded(AsyncOperation operation)
@@ -166,5 +171,7 @@ namespace Managers
             isLoading = false;
             OnSceneLoaded?.Invoke();
         }
+        
+        
     }
 }

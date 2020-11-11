@@ -1,3 +1,4 @@
+using System;
 using Gameplay;
 using Gameplay.Player;
 using GameSystems;
@@ -8,6 +9,9 @@ namespace Managers.Scenes
     public class LevelController : MonoBehaviour
     {
         public AIActorsManager actorsManager;
+        public event Action OnLevelLoaded;
+        public event Action OnLevelUnload;
+        
         
         private TriggersManager triggersManager;
         private SpawnPoint[] spawnPoints;
@@ -65,7 +69,7 @@ namespace Managers.Scenes
             {
                 return;
             }
-            
+            OnLevelUnload?.Invoke();
             Destroy(currentLevel);
             currentLevel = null;
         }
@@ -73,18 +77,20 @@ namespace Managers.Scenes
         private void PrepareLevel()
         {
             actorsManager = new AIActorsManager();
-            spawnPoints = FindObjectsOfType<SpawnPoint>();
             triggersManager = new TriggersManager(FindObjectsOfType<Trigger>());
-            levelSettings = FindObjectOfType<LevelSettings>();
             
+            spawnPoints = FindObjectsOfType<SpawnPoint>();
+            levelSettings = FindObjectOfType<LevelSettings>();
             
             triggersManager.Init();
 
             if (levelSettings != null)
             {
                 GameController.instance.playerManager.TeleportToPoint(levelSettings.spawnPointId);
-                levelSettings.Apply(GameController.instance);
+                levelSettings.Apply();
             }
+            
+            OnLevelLoaded?.Invoke();
         }
     }
 }

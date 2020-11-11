@@ -1,4 +1,4 @@
-using Actors.AI;
+using Gameplay.Actors.AI;
 using UnityEngine;
 
 namespace Gameplay.Quests.Conditions

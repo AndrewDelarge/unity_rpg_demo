@@ -1,4 +1,4 @@
-using Actors.Base;
+using Gameplay.Actors.Base;
 using UI.Hud;
 using UnityEngine;
 using UnityEngine.EventSystems;

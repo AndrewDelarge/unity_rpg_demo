@@ -1,6 +1,6 @@
 using System.Collections;
-using Actors.Base;
-using Actors.Base.Interface;
+using Gameplay.Actors.Base;
+using Gameplay.Actors.Base.Interface;
 using UnityEngine;
 
 namespace Gameplay.Projectile

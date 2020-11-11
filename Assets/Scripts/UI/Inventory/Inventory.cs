@@ -24,26 +24,29 @@ namespace UI.Inventory
         private Slot[] inventorySlots;
         private LootSlot[] lootSlots;
 
-        // Start is called before the first frame update
         public void Init()
         {
             PlayerManager playerManager = GameController.instance.playerManager;
             inventory = playerManager.inventoryManager;
-            
-            inventory.onItemsChangedCallback += UpdateUI;
-            inventory.onItemAddWithVisual += itemReceived.ShowItem;
-            inventory.onLoot += ShowLoot;
-            inventory.onLootEnd += HideLoot;
-            
-            
-            inventorySlots = slotsHub.GetComponentsInChildren<Slot>();
             lootSlots = lootSlotsHub.GetComponentsInChildren<LootSlot>();
+            inventorySlots = slotsHub.GetComponentsInChildren<Slot>();
 
             itemReceived.Init();
+            
+            RegisterEvents();
+            
             playerManager.onPlayerInited += () => inventoryStatsView.Init(playerManager);
             UpdateUI();
         }
 
+        private void RegisterEvents()
+        {
+            inventory.onItemsChangedCallback += UpdateUI;
+            inventory.onItemAddWithVisual += itemReceived.ShowItem;
+            inventory.onLoot += ShowLoot;
+            inventory.onLootEnd += HideLoot;
+        }
+        
         public void ToggleInventory()
         {
             GameController.instance.Pause(!inventoryUI.activeSelf);

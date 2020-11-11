@@ -1,4 +1,4 @@
-using Actors.AI;
+using Gameplay.Actors.AI;
 using Scriptable;
 using UnityEngine;
 

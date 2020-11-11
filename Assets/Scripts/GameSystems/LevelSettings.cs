@@ -17,9 +17,10 @@ namespace GameSystems
         
         public UnityEvent onStart;
         
-        public void Apply(GameController controller)
+        public void Apply()
         {
-            CameraController cameraController = controller.GetCameraController();
+            GameController gameController = GameController.instance;
+            CameraController cameraController = gameController.GetCameraController();
             cameraController.offset = cameraOffset;
             cameraController.currentZoom = cameraZoom;
             cameraController.cameraFollowSpeed = cameraFollowSpeed;

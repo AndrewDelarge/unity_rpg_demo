@@ -10,29 +10,36 @@ namespace UI.Base
     {
         public float showSpeedTime = 1f;
         protected GameObject curElement;
-
+        protected bool inited = false;
 
         public Action onHided;
         
         public virtual void Init()
         {
             curElement.SetActive(false);
+            inited = true;
         }
 
         public void Show()
         {
+            if (! inited)
+                return;
             curElement.SetActive(true);
             StartCoroutine(VisibleToggle(true));
         }
 
         public void Hide()
         {
+            if (! inited)
+                return;
             curElement.SetActive(true);
             StartCoroutine(VisibleToggle(false));
         }
         
         public void Hide(bool fast)
         {
+            if (! inited)
+                return;
             curElement.SetActive(false);
         }
 

@@ -16,7 +16,6 @@ namespace UI.Base
         protected CameraController cam;
         protected WorldUiCanvas worldUiCanvas;
         protected float scale = 1;
-        protected bool inited = false;
         
         
         public override void Init()

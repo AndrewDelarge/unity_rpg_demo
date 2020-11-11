@@ -1,5 +1,4 @@
-using Actors.Base;
-using Actors.Base.Interface;
+using Gameplay.Actors.Base.Interface;
 using GameSystems;
 using GameSystems.Languages;
 using UI.Hud;

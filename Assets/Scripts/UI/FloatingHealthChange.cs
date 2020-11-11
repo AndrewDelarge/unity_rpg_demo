@@ -15,16 +15,14 @@ namespace UI
         public GameSystems.Languages.Text text;
         public Transform target;
         protected Camera cam;
-        protected bool inited = false;
         
         public void Init(Transform targetTransform, string textOrCode, bool isCrit)
         {
             cam = GameController.instance.GetCameraController().GetCamera();
             target = targetTransform;
             curElement = gameObject;
-
+            
             showSpeedTime = 4f;
-            onHided += () => Destroy(gameObject);
 
             text.textCode = textOrCode;
             value.text = text.GetText();
@@ -43,6 +41,7 @@ namespace UI
         {
             yield return new WaitForSeconds(lifetime / 2);
             Hide();
+            inited = false;
         }
         
         void FixedUpdate()
@@ -56,5 +55,6 @@ namespace UI
             pos.y *= target.localScale.y;
             curElement.transform.position = pos;
         }
+
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Actors.Base;
+using Gameplay.Actors.Base;
 using GameSystems;
 using Scriptable;
 using UnityEngine;
@@ -44,7 +44,11 @@ namespace Managers.Player
             int equipCount = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
             currentEquipment = new Equipment[equipCount];
             currentMeshes = new Renderer[equipCount];
+            
+            GameController.instance.playerManager.onPlayerInited += EquipDefault;
         }
+        
+        
         private void InitModelPaths()
         {
             modelPaths = new Dictionary<EquipmentSlot, ModelEquipmentPath>();
@@ -131,6 +135,8 @@ namespace Managers.Player
             Actor player = GameController.instance.playerManager.GetPlayer();
             
             Transform itemTransform = player.animator.handholdBoneRepeater;
+            
+            
             if (!equipment.rightHand)
             {
                 itemTransform = player.animator.handholdBoneLeftRepeater;
@@ -181,8 +187,7 @@ namespace Managers.Player
         {
             if (currentWeaponGameObject != null)
             {
-                Renderer renderer = currentWeaponGameObject.GetComponentInChildren<Renderer>();
-                renderer.enabled = visible;
+                currentWeaponGameObject.SetActive(visible);
             }
         }
         
@@ -223,7 +228,7 @@ namespace Managers.Player
         public void Unequip(int slot)
         {
             Equipment oldItem = GetSlotEquipment(slot);
-
+            
             if (oldItem == null)
             {
                 return;
@@ -261,7 +266,6 @@ namespace Managers.Player
 
         private void UneqipRange()
         {
-            Debug.Log("ga");
             onItemUnequip?.Invoke(meleeWeapon);
             rangeWeapon = null;
             Destroy(currentRangeWeaponGameObject);
@@ -275,35 +279,11 @@ namespace Managers.Player
                 Unequip(i);
             }
         }
-
-        public void Reequip()
-        {
-            for (int i = 0; i < currentEquipment.Length; i++)
-            {
-                if (currentEquipment[i] != null)
-                {
-                    onItemEquip?.Invoke(currentEquipment[i]);
-                    ShowEquipment(currentEquipment[i]);
-                }
-            }
-
-            if (meleeWeapon != null)
-            {
-                onItemEquip?.Invoke(meleeWeapon);
-                onMeleeWeaponEquip?.Invoke(meleeWeapon);
-                ShowEquipment(meleeWeapon);
-            }
-            
-            
-            if (rangeWeapon != null)
-            {
-                onItemEquip?.Invoke(rangeWeapon);
-                ShowEquipment(rangeWeapon);
-            }
-        }
         
         public void EquipDefault()
         {
+            targetMesh = GameController.instance.playerManager.GetPlayer().gameObject;
+
             foreach (Equipment item in defaultEquipments)
             {
                 Equip(item);

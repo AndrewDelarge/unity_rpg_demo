@@ -24,6 +24,7 @@ namespace UI.Inventory
             itemAnimator = GetComponentInChildren<Animator>();
             textHolder.text = text.GetText();
             icon.enabled = false;
+            inited = true;
         }
 
         public void ShowItem(Item item)

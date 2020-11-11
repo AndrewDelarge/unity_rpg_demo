@@ -1,5 +1,5 @@
 ﻿using System;
-using Actors.Base.Interface;
+using Gameplay.Actors.Base.Interface;
 using UI.Base;
 using UnityEngine;
 using UnityEngine.UI;

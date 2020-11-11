@@ -17,12 +17,14 @@ namespace UI.Hud
             animator = GetComponentInChildren<Animator>();
             animator.gameObject.SetActive(false);
             curElement = animator.gameObject;
+            inited = true;
             Hide();
         }
 
-
         public void ShowJoystick()
         {
+            if (!inited)
+                return;
             Show();
             animator.gameObject.SetActive(true);
             animator.Play(SHOW_JOYSTICK_STATE);
@@ -30,6 +32,8 @@ namespace UI.Hud
         
         public void ShowAttack()
         {
+            if (!inited)
+                return;
             Show();
             animator.gameObject.SetActive(true);
             animator.Play(SHOW_ATTACK_STATE);
@@ -37,9 +41,12 @@ namespace UI.Hud
 
         public void Stop()
         {
+            if (!inited)
+                return;
             animator.Play(SHOW_NONE_STATE);
             animator.gameObject.SetActive(false);
             Hide();
         }
     }
+
 }

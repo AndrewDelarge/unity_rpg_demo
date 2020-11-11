@@ -1,2 +1,10 @@
-123
-2
+
+TODO:
+
+
+* !!! Player State!
+
+
+* Common EventHandler 
+* LayerMask dictionary
+* App defines ? 

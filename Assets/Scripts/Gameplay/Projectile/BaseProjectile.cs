@@ -1,5 +1,5 @@
-using Actors.Base.StatsStuff;
 using Exceptions.Game.Projectile;
+using Gameplay.Actors.Base.StatsStuff;
 using UnityEngine;
 
 namespace Gameplay.Projectile

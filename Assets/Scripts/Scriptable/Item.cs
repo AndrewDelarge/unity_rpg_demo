@@ -1,4 +1,4 @@
-﻿using Actors.Base;
+﻿using Gameplay.Actors.Base;
 using Managers.Player;
 using UnityEngine;
 

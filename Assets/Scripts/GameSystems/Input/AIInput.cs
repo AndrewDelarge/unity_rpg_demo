@@ -1,5 +1,5 @@
-using Actors.AI.Behavior;
-using Actors.Base;
+using Gameplay.Actors.AI.Behavior;
+using Gameplay.Actors.Base;
 
 namespace GameSystems.Input
 {

@@ -1,5 +1,5 @@
-using Actors.Base;
-using Actors.Base.StatsStuff;
+using Gameplay.Actors.Base;
+using Gameplay.Actors.Base.StatsStuff;
 using UnityEngine;
 
 namespace Scriptable.Items.Potion

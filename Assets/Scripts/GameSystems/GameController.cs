@@ -24,6 +24,9 @@ namespace GameSystems
         #endregion
         public GameObject cameraPrefab;
         public GameObject worldUiCanvasGameObject;
+        public GameObject UIPrefab;
+
+        
         [HideInInspector]
         public PlayerManager playerManager; 
         [HideInInspector]
@@ -36,11 +39,11 @@ namespace GameSystems
         private void Start()
         {
             playerManager = GetComponentInChildren<PlayerManager>();
-            uiManager = GetComponent<UIManager>();
+            uiManager = new UIManager();
             sceneController = GetComponentInChildren<SceneController>();
             sceneController.OnSceneLoaded += StartGame;
 
-            uiManager.Spawn(transform);
+            uiManager.Init(transform);
             uiManager.HideHud();
             sceneController.Init();
             playerManager.Init();
@@ -65,7 +68,6 @@ namespace GameSystems
                 GameObject player = playerManager.SpawnPlayer(sceneController.GetStartSpawnPoint());
                 uiManager.SetPlayer(player);
                 playerManager.InitPlayer();
-                playerManager.equipmentManager.Reequip();
                 PrepareCamera(player);
             }
             
