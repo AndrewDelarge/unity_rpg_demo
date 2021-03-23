@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.Serialization;
 using Exceptions.Game.Player;
 using Gameplay;
 using Gameplay.Player;
@@ -13,6 +14,25 @@ namespace Managers
 {
     public class SceneController : MonoBehaviour
     {
+        public static class BaseScenes
+        {
+            [Serializable]
+            public static class Indexes
+            {
+                public static int ROOT = 0;
+                public static int MENU = 1;
+                public static int GAME = 2;
+            }
+            
+            public static class Titles
+            {
+                public static string ROOT = "_root";
+                public static string MENU = "menu";
+                public static string GAME = "game";
+            }
+        }
+        
+        
         [HideInInspector] 
         public WorldUiCanvas worldUiCanvas;
         [HideInInspector] 
@@ -23,9 +43,6 @@ namespace Managers
 
         
         protected Scene currentScene;
-
-        
-        private int MAIN_MENU_SCENE_INDEX = 1;
 
         private int currentLevel;
         private bool isLoading;
@@ -41,18 +58,17 @@ namespace Managers
             levelController.Init();
 
 #if (! UNITY_EDITOR)
-            SceneManager.LoadScene(MAIN_MENU_SCENE_INDEX, new LoadSceneParameters(LoadSceneMode.Single));
+            SceneManager.LoadScene(BaseScenes.Indexes.ROOT, new LoadSceneParameters(LoadSceneMode.Single));
 #endif
             
 #if (UNITY_EDITOR)
             currentScene = SceneManager.GetActiveScene();
-            if (currentScene.name == "MainScene")
+            if (currentScene.name == BaseScenes.Titles.ROOT)
             {
-                SceneManager.LoadScene(MAIN_MENU_SCENE_INDEX, new LoadSceneParameters(LoadSceneMode.Single));
+                SceneManager.LoadScene(BaseScenes.Indexes.MENU, new LoadSceneParameters(LoadSceneMode.Single));
             }
 #endif
         }
-        
         
         private void FixedUpdate()
         {

@@ -1,13 +1,15 @@
 ﻿using GameSystems;
+using Managers;
 using UnityEngine;
 
 namespace UI.MainMenu
 {
+    
+    // TODO: Перенести в главный UI ?
     [RequireComponent(typeof(Loading))]
     public class UI : MonoBehaviour
     {
 
-        public int firstSceneIndex;
         public GameObject loading;
 
         private Loading _loading;
@@ -21,7 +23,8 @@ namespace UI.MainMenu
 
         public void OnButtonStart()
         {
-            GameController.instance.StartScene(firstSceneIndex);
+            //TODO: Переделать загрузку сцены
+            GameController.instance.StartScene((int) SceneController.BaseScenes.Indexes.GAME);
         }
 
         public void OnButtonExit()
