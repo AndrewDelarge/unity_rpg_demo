@@ -1,6 +1,7 @@
 using Gameplay.Actors.Base;
 using GameSystems;
 using GameSystems.Languages;
+using Managers;
 using UI.Hud;
 using UnityEngine;
 
@@ -15,7 +16,7 @@ namespace Gameplay.Scenario.Actions.Tutorial
         public override void Do()
         {
             base.Do();
-            tutorialFingerHud = GameController.instance.uiManager.GetTutorialFinger();
+            tutorialFingerHud = UIManager.Instance().GetTutorialFinger();
             tutorialFingerHud.ShowJoystick();
             doing = true;
         }
@@ -28,7 +29,7 @@ namespace Gameplay.Scenario.Actions.Tutorial
 
         public override void CheckDoing()
         {
-            Actor player = GameController.instance.playerManager.GetPlayer();
+            Actor player = PlayerManager.Instance().GetPlayer();
 
             if (player.movement.IsMoving())
             {

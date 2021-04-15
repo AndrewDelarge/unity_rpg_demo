@@ -24,7 +24,7 @@ namespace Managers.Scenes
 
         public void StartCurrentEditorLevel()
         {
-            currentLevel = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            currentLevel = GameObject.CreatePrimitive(PrimitiveType.Plane);
             
             PrepareLevel();
         }
@@ -32,9 +32,8 @@ namespace Managers.Scenes
         public void LoadLevel(GameObject level)
         {
             if (currentLevel != null)
-            {
                 UnloadLevel();
-            }
+            
             currentLevel = Instantiate(level);
 
             PrepareLevel();
@@ -45,9 +44,7 @@ namespace Managers.Scenes
             for (int i = 0; i < spawnPoints.Length; i++)
             {
                 if (spawnPoints[i].id == spawnPointId)
-                {
                     return spawnPoints[i].gameObject;
-                }
             }
 
             return null;
@@ -56,9 +53,7 @@ namespace Managers.Scenes
         public int GetStartSpawnId()
         {
             if (levelSettings != null)
-            {
                 return levelSettings.spawnPointId;
-            }
 
             return 0;
         }
@@ -66,9 +61,8 @@ namespace Managers.Scenes
         private void UnloadLevel()
         {
             if (currentLevel == null)
-            {
                 return;
-            }
+            
             OnLevelUnload?.Invoke();
             Destroy(currentLevel);
             currentLevel = null;
@@ -76,6 +70,12 @@ namespace Managers.Scenes
 
         private void PrepareLevel()
         {
+            if (currentLevel == null)
+            {
+                Debug.Log(" # -LvlCntr- # Current Level Not Found or not loaded");
+                return;
+            }
+            
             actorsManager = new AIActorsManager();
             triggersManager = new TriggersManager(FindObjectsOfType<Trigger>());
             
@@ -86,7 +86,7 @@ namespace Managers.Scenes
 
             if (levelSettings != null)
             {
-                GameController.instance.playerManager.TeleportToPoint(levelSettings.spawnPointId);
+                PlayerManager.Instance().TeleportToPoint(levelSettings.spawnPointId);
                 levelSettings.Apply();
             }
             

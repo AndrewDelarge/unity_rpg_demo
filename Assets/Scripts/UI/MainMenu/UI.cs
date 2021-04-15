@@ -1,4 +1,5 @@
 ﻿using GameSystems;
+using GameSystems.GameModes;
 using Managers;
 using UnityEngine;
 
@@ -23,8 +24,7 @@ namespace UI.MainMenu
 
         public void OnButtonStart()
         {
-            //TODO: Переделать загрузку сцены
-            GameController.instance.StartScene((int) SceneController.BaseScenes.Indexes.GAME);
+            GameModeManager.Instance().SetGameState(GameModeManager.GameModeState.TO_GAME_FROM_MAIN_MENU);
         }
 
         public void OnButtonExit()

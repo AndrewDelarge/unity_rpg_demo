@@ -10,7 +10,6 @@ namespace Gameplay.Objects
         private void FixedUpdate()
         {
             transform.LookAt(target);
-
         }
     }
 }

@@ -1,4 +1,5 @@
 using GameSystems;
+using Managers;
 using Managers.Player;
 using Scriptable;
 using Scriptable.Quests;
@@ -31,9 +32,8 @@ namespace Gameplay.Quests
                 return;
             }
 
-            GameController gc = GameController.instance;
-            questPanel = gc.uiManager.GetQuestPanel();
-            inventory = gc.playerManager.inventoryManager;
+            questPanel = UIManager.Instance().GetQuestPanel();
+            inventory = PlayerManager.Instance().inventoryManager;
             // TODO QUest manager
 //            if (! PlayerManager.instance.StartQuest(this))
 //            {

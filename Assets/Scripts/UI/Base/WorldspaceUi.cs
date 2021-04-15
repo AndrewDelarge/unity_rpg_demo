@@ -13,15 +13,15 @@ namespace UI.Base
         public bool scaleFromParent = true;
         public WorldUiType type;
         
-        protected CameraController cam;
+        protected CameraManager cam;
         protected WorldUiCanvas worldUiCanvas;
         protected float scale = 1;
         
         
         public override void Init()
         {
-            cam = GameController.instance.GetCameraController();
-            worldUiCanvas = GameController.instance.sceneController.worldUiCanvas;
+            cam = CameraManager.Instance();
+            worldUiCanvas = GameManager.Instance().sceneController.worldUiCanvas;
             scale = 1;
 
             curElement = worldUiCanvas.SpawnUi(uiPrefab, type);
@@ -52,8 +52,9 @@ namespace UI.Base
             {
                 return;
             }
+
             curElement.transform.position = new Vector3(target.position.x, target.position.y + (scale), target.position.z);
-            curElement.transform.forward = -cam.GetCamera().transform.forward;
+            curElement.transform.forward = - cam.GetCamera().transform.forward;
         }
     }
 }

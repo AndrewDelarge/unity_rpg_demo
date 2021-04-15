@@ -67,7 +67,7 @@ namespace Gameplay.Actors.AI.Behavior
             int friendsCount = GetClosestFriends(out friends);
             
             
-            Debug.Log($"Closests friends: {friendsCount} ");
+//            Debug.Log($"Closests friends: {friendsCount} ");
 
             for (int i = 0; i < friendsCount; i++)
             {
@@ -142,7 +142,7 @@ namespace Gameplay.Actors.AI.Behavior
         {
             if (actorsManager == null)
             {
-                actorsManager = GameController.instance.sceneController.GetActorsManager();
+                actorsManager = GameManager.Instance().sceneController.GetActorsManager();
             }
 
             return hasAttackToken = actorsManager.GetAttackToken();
@@ -157,7 +157,7 @@ namespace Gameplay.Actors.AI.Behavior
 
         public void ShowPosition(Vector3 position)
         {
-            GameController.Instantiate(Resources.Load("System/Point") as GameObject, position, Quaternion.identity);
+            GameManager.Instantiate(Resources.Load("System/Point") as GameObject, position, Quaternion.identity);
         }
     }
 }

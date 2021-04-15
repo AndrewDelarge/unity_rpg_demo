@@ -10,25 +10,24 @@ namespace Gameplay.Actors.Player
     public class Movement : MonoBehaviour, IControlable
     {
         public float speedMultiplier = 1f;
+        
+        [SerializeField]
         private BaseInput input;
+        [SerializeField]
         private Stats stats;
+        [SerializeField]
         private CharacterController characterController;
-        private Camera cam;
+        
         public Transform target { get; private set; }
         private bool freezzed = false;
         private float curSpeedMultiplier;
         
         
         private bool rotating = true;
-        public void Init(Stats actorStats, BaseInput input)
+        public void Init()
         {
-            this.input = input;
             curSpeedMultiplier = speedMultiplier;
-            cam = GameController.instance.GetCameraController().GetCamera();
-            characterController = GetComponent<CharacterController>();
-            stats = actorStats;
         }
-
 
         void OnControllerColliderHit(ControllerColliderHit hit)
         {
@@ -97,7 +96,7 @@ namespace Gameplay.Actors.Player
         private Vector3 GetInputDirection()
         {
             Vector3 direction = new Vector3(input.horizontal, 0f, input.vertical);
-            direction = GameController.instance.GetCameraController().GetCamera().transform.TransformDirection(direction);
+            direction = CameraManager.Instance().GetCamera().transform.TransformDirection(direction);
             direction.y = 0;
 
             return direction;

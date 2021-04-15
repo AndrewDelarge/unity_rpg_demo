@@ -15,10 +15,10 @@ namespace Gameplay.Actors.Base
 
         void Start()
         {
-            if (isEnabled)
-            {
-                InvokeRepeating(nameof(UpdateVision), 1f, visionUpdateTime);
-            }
+            if (! isEnabled)
+                return;
+        
+            InvokeRepeating(nameof(UpdateVision), 1f, visionUpdateTime);
         }
 
         public void FindVisibleTargets()
@@ -34,9 +34,10 @@ namespace Gameplay.Actors.Base
         
         void UpdateVision()
         {
-            if (isEnabled) {
-                FindVisibleTargets();
-            }
+            if (! isEnabled) 
+                return;
+            
+            FindVisibleTargets();
         }
         
         void FindVisibleTargets(LayerMask mask)
@@ -50,9 +51,7 @@ namespace Gameplay.Actors.Base
                 Actor actor = visibleObjects[i].GetComponent<Actor>();
 
                 if (actor != null)
-                {
                     actorsInViewRadius.Add(actor);
-                }
 
                 
 //                    visibleTargets.Add(target);
@@ -69,6 +68,7 @@ namespace Gameplay.Actors.Base
         {
             actorsInView = new Actor[actorsInViewRadius.Count];
             int actorsCount = 0;
+            
             for (int i = 0; i < actorsInViewRadius.Count; i++)
             {
                 if (IsInViewAngle(actorsInViewRadius[i].transform.position))
@@ -93,9 +93,7 @@ namespace Gameplay.Actors.Base
                 GameObject target = targetsInViewRadius[i].gameObject;
                 
                 if (target.transform != transform)
-                {
                     visibleObjects.Add(targetsInViewRadius[i]);
-                }
             }
             
             return visibleObjects;
@@ -104,9 +102,8 @@ namespace Gameplay.Actors.Base
         public Vector3 DirFromAngle(float angleInDegrese, bool angleIsGlobal)
         {
             if (!angleIsGlobal)
-            {
                 angleInDegrese += transform.eulerAngles.y;
-            }
+
             Vector3 result = new Vector3(Mathf.Sin(angleInDegrese * Mathf.Deg2Rad), 0,
                 Mathf.Cos(angleInDegrese * Mathf.Deg2Rad));
 
@@ -116,10 +113,9 @@ namespace Gameplay.Actors.Base
         public bool IsInViewAngle(Vector3 target)
         {
             Vector3 dirToTarget = (target - transform.position).normalized;
+            
             if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
-            {
                 return true;
-            }
 
             return false;
         }

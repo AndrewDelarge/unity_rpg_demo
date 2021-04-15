@@ -19,14 +19,13 @@ namespace GameSystems
         
         public void Apply()
         {
-            GameController gameController = GameController.instance;
-            CameraController cameraController = gameController.GetCameraController();
-            cameraController.offset = cameraOffset;
-            cameraController.currentZoom = cameraZoom;
-            cameraController.cameraFollowSpeed = cameraFollowSpeed;
-            cameraController.cameraRotationSpeed = cameraRotationSpeed;
+            CameraManager cameraManager = CameraManager.Instance();
+            cameraManager.offset = cameraOffset;
+            cameraManager.currentZoom = cameraZoom;
+            cameraManager.cameraFollowSpeed = cameraFollowSpeed;
+            cameraManager.cameraRotationSpeed = cameraRotationSpeed;
             
-            cameraController.AlignCamera();
+            cameraManager.AlignCamera();
             onStart?.Invoke();
         }
         

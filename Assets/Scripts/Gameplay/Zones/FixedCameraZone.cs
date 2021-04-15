@@ -36,7 +36,7 @@ namespace Gameplay.Zones
 
             target = collider.gameObject;
             
-            GameController.instance.GetCameraController().SetCamera(curCamera, true);
+            CameraManager.Instance().SetCamera(curCamera, true);
         }
 
         private void FixedUpdate()
@@ -55,7 +55,6 @@ namespace Gameplay.Zones
             }
 
             target = null;
-            GameController.instance.GetCameraController().ResetCamera();
         }
     }
     

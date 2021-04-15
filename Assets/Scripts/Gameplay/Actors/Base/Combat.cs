@@ -11,35 +11,35 @@ namespace Gameplay.Actors.Base
     public class Combat : MonoBehaviour
     {
         [SerializeField]
-        private float combatCooldown = 6;
-
+        protected float combatCooldown = 6;
+        [SerializeField]
+        protected Vision vision;
+        [SerializeField]
+        protected Stats stats;
         
+        [Header("Default settings")]
         public float meleeAttackSpeed = 1f;
         public float meleeAttackDelay = 0f;
         public float meleeAttackRaduis = 2f;
         public float meleeAttackDamageMultiplier = 1f;
         public float commonCombatSpeedMultiplier = 1f;
         public float rangeAttackCooldown = .4f;
-        
-        public float aimTime;
-        
+
+        public float aimTime { get; protected set; }
+
         protected float lastAttackTime;
         protected float lastRangeAttackTime;
-        protected int successAttackInRow = 0;
-        protected int maxSuccessAttackInRow = 3;
         protected float successAttackRowTime = 1f;
         
-        protected float curMAttackSpeed;
+        protected int successAttackInRow = 0;
+        protected int maxSuccessAttackInRow = 3;
+        
+        protected float curMAttackDuration;
         protected float curMAttackDelay;
         protected float curMAttackRadius;
         protected float curMAttackDamageMultiplier;
         
-        protected Actor targetActor;
-        protected Actor actor;
-        protected Stats stats;
         private bool inCombat = false;
-        private bool proccessAttack = false;
-        
         
         public event System.Action OnAttack;
         public event System.Action OnAttackEnd;
@@ -50,26 +50,16 @@ namespace Gameplay.Actors.Base
         public OnAimStart onAimStart;
         public OnAimEnd onAimEnd;
         public OnAimBreak onAimBreak;
-
         
-        public delegate void OnTargetChange(Actor target);
-
-        private void Awake()
+        public virtual void Init()
         {
-            enabled = false;
-        }
-
-        public virtual void Init(Stats actorStats, BaseInput baseInput)
-        {
-            stats = actorStats;
-            curMAttackSpeed = meleeAttackSpeed;
+            curMAttackDuration = meleeAttackSpeed;
             curMAttackDelay = meleeAttackDelay;
             curMAttackRadius = meleeAttackRaduis;
             curMAttackDamageMultiplier = meleeAttackDamageMultiplier;
+            
             OnAttack = null;
             OnAttackEnd = null;
-            // TODO Rework 
-            actor = GetComponent<Actor>();
             enabled = true;
         }
         
@@ -79,24 +69,17 @@ namespace Gameplay.Actors.Base
             float lastRangeAttackDelta = Time.time - lastRangeAttackTime;
             
             if (lastAttackDelta > combatCooldown && lastRangeAttackDelta > rangeAttackCooldown && inCombat)
-            {
                 ExitCombat();
-            }
             
-            if (lastAttackDelta > (successAttackRowTime + GetCurrentMeleeAttackSpeed()))
-            {
+            if (lastAttackDelta > (successAttackRowTime + GetCurrentMeleeAttackDuration()))
                 successAttackInRow = 0;
-            }
         }
         
         public virtual void MeleeAttack(List<IHealthable> targetStats)
         {
-            if (Time.time - lastAttackTime < GetCurrentMeleeAttackSpeed() && proccessAttack)
-            {
+            if (IsMeleeAttacking())
                 return;
-            }
-            proccessAttack = true;
-
+            
             EnterCombat();
 
             lastAttackTime = Time.time;
@@ -107,24 +90,19 @@ namespace Gameplay.Actors.Base
         public virtual void Aim()
         {
             if (aimTime == 0)
-            {
                 onAimStart?.Invoke();
-            }
+            
             aimTime += Time.deltaTime;
         }
         
         public virtual void RangeAttack(Vector3 point)
         {
             if (Time.time - lastRangeAttackTime < rangeAttackCooldown)
-            {
                 return;
-            }
 
             aimTime = 0;
             onAimEnd?.Invoke();
         }
-
-        
         
         protected virtual IEnumerator DoMeleeDamage(List<IHealthable> targetStats)
         {
@@ -133,29 +111,24 @@ namespace Gameplay.Actors.Base
             for (int i = 0; i < targetStats.Count; i++)
             {
                 if (! InMeleeZone(targetStats[i].GetTransform()))
-                {
                     continue;
-                }
+                
+                
                 if (!stats.IsDead())
-                {
                     targetStats[i].TakeDamage(stats.GetDamageValue(true, true, curMAttackDamageMultiplier));
-                }
             }
 
             successAttackInRow++;
 
             if (successAttackInRow == maxSuccessAttackInRow)
-            {
                 successAttackInRow = 0;
-            }
             
             OnAttackEnd?.Invoke();
-            proccessAttack = false;
         }
 
         protected bool InMeleeZone(Transform transform)
         {
-            return InMeleeRange(transform) && actor.vision.IsInViewAngle(transform);
+            return InMeleeRange(transform) && vision.IsInViewAngle(transform);
         }
         
         protected void InvokeOnAttack()
@@ -173,10 +146,7 @@ namespace Gameplay.Actors.Base
             inCombat = false;
         }
 
-        public int GetCurrentSuccessAttack()
-        {
-            return successAttackInRow;
-        }
+        public int GetCurrentSuccessAttack() => successAttackInRow;
         
         public int GetMaxSuccessAttack()
         {
@@ -188,9 +158,9 @@ namespace Gameplay.Actors.Base
             return successAttackInRow == maxSuccessAttackInRow - 1;
         }
         
-        public float GetCurrentMeleeAttackSpeed()
+        public float GetCurrentMeleeAttackDuration()
         {
-            return curMAttackSpeed / commonCombatSpeedMultiplier;
+            return curMAttackDuration / commonCombatSpeedMultiplier;
         }
 
         public bool InMeleeRange(Vector3 targetPosition)
@@ -205,7 +175,7 @@ namespace Gameplay.Actors.Base
         
         public bool IsMeleeAttacking()
         {
-            return Time.time - lastAttackTime <= GetCurrentMeleeAttackSpeed();
+            return Time.time - lastAttackTime < GetCurrentMeleeAttackDuration();
         }
 
         public bool IsRangeCooldown()
@@ -213,25 +183,15 @@ namespace Gameplay.Actors.Base
             return Time.time - lastRangeAttackTime <= rangeAttackCooldown;
         }
         
-        public void SetTarget(Actor target)
-        {
-            targetActor = target;
-        }
-        
-        public Actor GetTarget()
-        {
-            return targetActor;
-        }
-        
-        public bool InCombat()
-        {
-            return inCombat;
-        }
+//        public void SetTarget(Actor target)
+//        {
+//            targetActor = target;
+//        }
+//
+//        public Actor GetTarget() => targetActor;
 
-
-        public float GetRangeCooldown()
-        {
-            return Time.time - lastRangeAttackTime;
-        }
+        public bool InCombat() => inCombat;
+        
+        public float GetRangeCooldown() => Time.time - lastRangeAttackTime;
     }
 }

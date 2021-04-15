@@ -27,8 +27,10 @@ namespace Managers
             {
                 actors[i].Init();
                 aliveActors.Add(actors[i]);
-                actors[i].stats.onDied += diedObject => GameController.instance.StartCoroutine(OnActorDied(diedObject));
+                actors[i].stats.onDied += diedObject => GameManager.Instance().StartCoroutine(OnActorDied(diedObject));
             }
+            Debug.Log($" # -AI- # Actors on current level {actors.Length}, alive - {aliveActors.Count}");
+            
         }
 
         public bool GetAttackToken()

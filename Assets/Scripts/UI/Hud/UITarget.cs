@@ -13,9 +13,12 @@ namespace UI.Hud
         
         private Transform worldTarget;
         private float slerpPosSpeed = 1f;
-
+        private CameraManager cameraManager;
+        
+        
         public override void Init()
         {
+            cameraManager = CameraManager.Instance();
             curElement = visualPointer;
             showSpeedTime = 2f;
             inited = true;
@@ -64,7 +67,7 @@ namespace UI.Hud
             float sinX = Mathf.Abs(Mathf.Sin(x)) * 0.5f;
             visualPointer.transform.localScale = new Vector3(1 + sinX, 1 + sinX);
             
-            Camera camera = GameController.instance.GetCameraController().GetCamera();
+            Camera camera = cameraManager.GetCamera();
             Vector3 pos = camera.WorldToScreenPoint(СalcWorldPosition(worldTarget.position, camera));
 
             pos.y = GetPosition(Screen.height, pos.y);

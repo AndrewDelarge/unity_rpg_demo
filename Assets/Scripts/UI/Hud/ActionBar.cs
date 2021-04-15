@@ -24,7 +24,6 @@ namespace UI.Hud
         {
             onActionKeyClick = null;
             onSecKeyClick = null;
-            
             ChangeActionBarOpacity(0.4f);
         }
 
@@ -57,7 +56,6 @@ namespace UI.Hud
         
         public void OnActionClick()
         {
-            
             onActionKeyClick?.Invoke();
         }
         

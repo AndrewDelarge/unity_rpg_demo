@@ -6,7 +6,7 @@ namespace Gameplay.Actors.Base.Interface
     public interface IControlable
     {
         Transform target { get; }
-        void Init(Stats actorStats, BaseInput input);
+        void Init();
         float GetSpeedMultiplier();
 
         float GetCurrentMagnitude();

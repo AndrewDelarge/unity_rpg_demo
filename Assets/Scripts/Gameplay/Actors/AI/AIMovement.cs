@@ -11,26 +11,22 @@ namespace Gameplay.Actors.AI
     public class AIMovement : MonoBehaviour, IControlable
     {
         public float speedMultiplier = 1f;
-        private NavMeshAgent agent;
         public Transform target { get; private set; }
         
+        [SerializeField]
         private Stats stats;
+        [SerializeField]
         private BaseInput input;
+        [SerializeField]
+        private NavMeshAgent agent;
+
         private bool rotating = true;
         private float curSpeedMultiplier;
         
-        private void Awake()
+        public void Init()
         {
-            enabled = false;
-        }
-        public void Init(Stats actorStats, BaseInput baseInput)
-        {
-            agent = GetComponent<NavMeshAgent>();
-            stats = actorStats;
-            input = baseInput;
             curSpeedMultiplier = speedMultiplier;
             enabled = true;
-            
         }
 
         private void FixedUpdate()

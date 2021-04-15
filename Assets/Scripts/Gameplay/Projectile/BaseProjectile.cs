@@ -50,15 +50,16 @@ namespace Gameplay.Projectile
         
         protected virtual void FixedUpdate()
         {
-            if (!moving)
-            {
-                return;
-            }
-
             if (Time.time - launchTime >= lifeTime)
             {
                 Stop();
                 Destroy(gameObject);
+                return;
+            }
+            
+            if (!moving)
+            {
+                return;
             }
 
             Move();

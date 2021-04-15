@@ -1,5 +1,6 @@
 ﻿using System;
 using GameSystems;
+using Managers;
 using UnityEngine;
 
 namespace UI
@@ -27,7 +28,7 @@ namespace UI
                     break;
                 // TODO make go for damage feed in user hud
                 case WorldUiType.DamageFeed:
-                    targetToSpawn = GameController.instance.uiManager.GetHudGameObject();
+                    targetToSpawn = UIManager.Instance().GetHudGameObject();
                     break;
                 default:
                     targetToSpawn = this.gameObject;

@@ -1,5 +1,6 @@
 ﻿using Gameplay.Actors.Base;
 using GameSystems;
+using Managers;
 using UnityEngine;
 
 namespace Scriptable
@@ -21,7 +22,7 @@ namespace Scriptable
         {
             base.Use(actor);
             
-            GameController.instance.playerManager.equipmentManager.Equip(this);
+            PlayerManager.Instance().equipmentManager.Equip(this);
 //            RemoveFromInventory();
         }
         

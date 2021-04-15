@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Gameplay.Actors.Base;
 using Gameplay.Actors.Base.Interface;
 using GameSystems;
+using Managers;
 using Scriptable;
 using UnityEngine;
 
@@ -16,12 +17,12 @@ namespace Gameplay.Actors.Player
         
         
 
-        public override void Init(Base.Combat actCombat, IControlable actMovement, Stats actStats)
+        public override void Init(IControlable actMovement)
         {
-            base.Init(actCombat, actMovement, actStats);
+            base.Init(actMovement);
             
-            GameController.instance.playerManager.equipmentManager.onMeleeWeaponEquip += OnWeaponEquip;
-            GameController.instance.playerManager.equipmentManager.onMeleeWeaponUnequip += OnWeaponUnequip;
+            PlayerManager.Instance().equipmentManager.onMeleeWeaponEquip += OnWeaponEquip;
+            PlayerManager.Instance().equipmentManager.onMeleeWeaponUnequip += OnWeaponUnequip;
             weaponAnimationDict = new Dictionary<WeaponType, WeaponAnimation>();
 
             foreach (WeaponAnimation anim in weaponAnimations)

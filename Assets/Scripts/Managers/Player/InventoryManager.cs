@@ -43,7 +43,7 @@ namespace Managers.Player
         private EquipmentManager equipmentManager;
         public void Init()
         {
-            equipmentManager = GameController.instance.playerManager.equipmentManager;
+            equipmentManager = PlayerManager.Instance().equipmentManager;
             equipmentManager.onItemUnequip += AddAfterUnequip;
             equipmentManager.onItemEquip += Remove;
 
@@ -123,7 +123,7 @@ namespace Managers.Player
 
         public void Use(Item item)
         {
-            item.Use(GameController.instance.playerManager.GetPlayer());
+            item.Use(PlayerManager.Instance().GetPlayer());
 
             onItemUse?.Invoke(item);
         }

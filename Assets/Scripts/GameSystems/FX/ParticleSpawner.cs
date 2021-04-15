@@ -20,7 +20,7 @@ namespace GameSystems.FX
             GameObject currentParticle = Instantiate(particle, pos, rotation, target);
 
             
-            currentParticle.transform.LookAt(GameController.instance.GetCameraController().GetCamera().transform);
+            currentParticle.transform.LookAt(CameraManager.Instance().GetCamera().transform);
             currentParticle.transform.localScale = transform.localScale;
             
             yield return new WaitForSeconds(particleLifetime);

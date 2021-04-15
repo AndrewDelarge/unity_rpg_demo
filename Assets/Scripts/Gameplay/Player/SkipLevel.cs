@@ -7,7 +7,7 @@ namespace Gameplay.Player
     {
         public void Skip()
         {
-            GameController.instance.sceneController.NextLevel();
+            GameManager.Instance().sceneController.NextLevel();
         }
     }
 }

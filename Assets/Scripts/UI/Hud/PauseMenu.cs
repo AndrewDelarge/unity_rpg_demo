@@ -17,14 +17,14 @@ namespace UI.Hud
         
         public void Show()
         {
-            GameController.instance.Pause(true);
+            GameManager.Instance().Pause(true);
 
             gameObject.SetActive(! gameObject.activeSelf);
         }
         
         public void OnResumeButton()
         {
-            GameController.instance.Pause(false);
+            GameManager.Instance().Pause(false);
             this.gameObject.SetActive(false);
         }
     }

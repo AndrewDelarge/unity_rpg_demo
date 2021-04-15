@@ -22,7 +22,7 @@ namespace Gameplay.Actors.AI
         private WorldUiCanvas worldUiCanvas;
         public void Init()
         {
-            worldUiCanvas = GameController.instance.sceneController.worldUiCanvas;
+            worldUiCanvas = GameManager.Instance().sceneController.worldUiCanvas;
             stats = GetComponent<IHealthable>();
             stats.OnHealthChange += ShowHealChange;
             stats.OnHealthChange += ShowDamageText;
@@ -70,7 +70,7 @@ namespace Gameplay.Actors.AI
             {
                 return;
             }
-            GameController.instance.uiManager.AddDamageFeed(transform, args.modifier.GetValue().ToString(), args.modifier.IsCrit());
+            UIManager.Instance().AddDamageFeed(transform, args.modifier.GetValue().ToString(), args.modifier.IsCrit());
         }
     }
     

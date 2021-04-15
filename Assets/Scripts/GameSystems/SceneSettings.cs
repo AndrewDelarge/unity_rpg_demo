@@ -6,17 +6,18 @@ namespace GameSystems
 {
     public class SceneSettings : MonoBehaviour
     {
+        
         public bool spawnPlayer = true;
         public int startLevel = 0;
         public LevelsSequence levels;
         public UnityEvent onStart;
 
+        
         protected int currentScene;
         
         
-        public void Apply(GameController controller)
+        public void Apply()
         {
-            
             onStart?.Invoke();
         }
 

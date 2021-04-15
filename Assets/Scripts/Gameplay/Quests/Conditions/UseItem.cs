@@ -1,4 +1,5 @@
 using GameSystems;
+using Managers;
 using Scriptable;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ namespace Gameplay.Quests.Conditions
         
         public override void Init()
         {
-            GameController.instance.playerManager.inventoryManager.onItemUse += Completing;
+            PlayerManager.Instance().inventoryManager.onItemUse += Completing;
         }
 
         void Completing(Item usedItem)

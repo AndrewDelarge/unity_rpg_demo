@@ -1,6 +1,7 @@
 using Gameplay.Actors.Base;
 using Gameplay.Actors.Base.StatsStuff;
 using GameSystems;
+using Managers;
 using Managers.Player;
 using Scriptable;
 using UnityEngine;
@@ -14,7 +15,7 @@ namespace Gameplay.Actors.Player
         public override void Init()
         {
             base.Init();
-            equipmentManager = GameController.instance.playerManager.equipmentManager; 
+            equipmentManager = PlayerManager.Instance().equipmentManager; 
             
             equipmentManager.onItemEquip += ItemEquip;
             equipmentManager.onItemUnequip += ItemUnequip;

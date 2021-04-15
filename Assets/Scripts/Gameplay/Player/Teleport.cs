@@ -1,4 +1,5 @@
 using GameSystems;
+using Managers;
 using UnityEngine;
 
 namespace Gameplay
@@ -7,18 +8,18 @@ namespace Gameplay
     {
         protected void TeleportToPoint(int spawnpointId)
         {
-            GameController.instance.playerManager.TeleportToPoint(spawnpointId);
+            PlayerManager.Instance().TeleportToPoint(spawnpointId);
         }
         
         protected void TeleportToScene(TeleportScene scene)
         {
-            GameController.instance.StartScene(scene.scene);
+            GameManager.Instance().StartScene(scene.scene);
         }
         
         
         protected void TeleportToLevel()
         {
-            GameController.instance.sceneController.NextLevel();
+            GameManager.Instance().sceneController.NextLevel();
         }
     }
 

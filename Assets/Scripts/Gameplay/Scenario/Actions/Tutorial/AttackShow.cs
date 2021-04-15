@@ -1,6 +1,7 @@
 using Gameplay.Actors.Base.Interface;
 using GameSystems;
 using GameSystems.Languages;
+using Managers;
 using UI.Hud;
 using UnityEngine;
 
@@ -17,7 +18,7 @@ namespace Gameplay.Scenario.Actions.Tutorial
         public override void Do()
         {
             base.Do();
-            tutorialFingerHud = GameController.instance.uiManager.GetTutorialFinger();
+            tutorialFingerHud = UIManager.Instance().GetTutorialFinger();
             tutorialFingerHud.ShowAttack();
          
             doing = true;

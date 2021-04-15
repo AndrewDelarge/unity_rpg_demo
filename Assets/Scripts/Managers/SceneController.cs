@@ -1,8 +1,4 @@
 using System;
-using System.Runtime.Serialization;
-using Exceptions.Game.Player;
-using Gameplay;
-using Gameplay.Player;
 using GameSystems;
 using Managers.Scenes;
 using UI;
@@ -36,7 +32,7 @@ namespace Managers
         [HideInInspector] 
         public WorldUiCanvas worldUiCanvas;
         [HideInInspector] 
-        public CameraController cameraController;
+        public CameraManager cameraManager;
         public event Action OnSceneLoaded;
         
         public LevelController LevelController => levelController;
@@ -46,6 +42,8 @@ namespace Managers
 
         private int currentLevel;
         private bool isLoading;
+        
+        [SerializeField]
         private LevelController levelController;
         private AsyncOperation sceneLoadingOperation;
         private SceneSettings sceneSettings;
@@ -53,21 +51,8 @@ namespace Managers
 
         public void Init()
         {
-            loadingScreen = GameController.instance.uiManager.GetLoadScreen();
-            levelController = gameObject.AddComponent<LevelController>();
+            loadingScreen = UIManager.Instance().GetLoadScreen();
             levelController.Init();
-
-#if (! UNITY_EDITOR)
-            SceneManager.LoadScene(BaseScenes.Indexes.ROOT, new LoadSceneParameters(LoadSceneMode.Single));
-#endif
-            
-#if (UNITY_EDITOR)
-            currentScene = SceneManager.GetActiveScene();
-            if (currentScene.name == BaseScenes.Titles.ROOT)
-            {
-                SceneManager.LoadScene(BaseScenes.Indexes.MENU, new LoadSceneParameters(LoadSceneMode.Single));
-            }
-#endif
         }
         
         private void FixedUpdate()
@@ -81,17 +66,16 @@ namespace Managers
         public void LoadScene(int scene)
         {
             isLoading = true;
+            worldUiCanvas = null;
             loadingScreen.Show();
-            sceneLoadingOperation = SceneManager.LoadSceneAsync(scene);
+            sceneLoadingOperation = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Single);
             sceneLoadingOperation.completed += OnLoaded;
         }
         
-        public void ApplySceneSettings(GameController controller)
+        public void ApplySceneSettings()
         {
             if (sceneSettings != null)
-            {
-                sceneSettings.Apply(controller);
-            }
+                sceneSettings.Apply();
         }
 
         public void NextLevel()
@@ -99,15 +83,14 @@ namespace Managers
             currentLevel++;
 
             GameObject nextLevel = sceneSettings.GetLevel(currentLevel);
+            
             if (nextLevel != null)
-            {
                 levelController.LoadLevel(nextLevel);
-                return;
-            }
         }
 
         public void StartCurrentEditorScene()
         {
+            GameManager.Instance().sceneController.SpawnWorldUiCanvas();
             PrepareScene();
         }
         
@@ -137,42 +120,22 @@ namespace Managers
             return sceneSettings.spawnPlayer;
         }
 
-        
-        
-        // When Scene Is loaded
         private void OnLoaded(AsyncOperation operation)
         {
             PrepareScene();
         }
         
-        private void SpawnWorldUiCanvas()
+        public void SpawnWorldUiCanvas()
         {
-            worldUiCanvas = Instantiate(GameController.instance.worldUiCanvasGameObject).GetComponent<WorldUiCanvas>();
+            if (worldUiCanvas == null)
+                worldUiCanvas = Instantiate(GameManager.Instance().worldUiCanvasGameObject).GetComponent<WorldUiCanvas>();
         }
 
-        private void SpawnCamera()
-        {
-            if (cameraController != null)
-            {
-                Debug.Log("Camera already exists");
-                return;
-            }
-            
-            cameraController = Instantiate(GameController.instance.cameraPrefab).GetComponent<CameraController>();
-            cameraController.Init();
-            if (cameraController == null)
-            {
-                // Assigned camera dont have controller
-                throw new CameraControllerNotFound();
-            }
-        }
-        
         private void PrepareScene()
         {
-            SpawnCamera();
-            SpawnWorldUiCanvas();
             sceneSettings = FindObjectOfType<SceneSettings>();
 #if (UNITY_EDITOR)
+            SpawnWorldUiCanvas();
             levelController.StartCurrentEditorLevel();
             if (sceneSettings != null && sceneSettings.levels != null)
             {
@@ -180,12 +143,17 @@ namespace Managers
                 levelController.LoadLevel(sceneSettings.GetLevel(currentLevel));
             }
 #else
-            currentLevel = sceneSettings.startLevel;
-            levelController.LoadLevel(sceneSettings.GetLevel(currentLevel));
+            if (sceneSettings != null) 
+            {
+                SpawnWorldUiCanvas();
+                currentLevel = sceneSettings.startLevel;
+                levelController.LoadLevel(sceneSettings.GetLevel(currentLevel));
+            }
 #endif
             loadingScreen.Hide();
             isLoading = false;
             OnSceneLoaded?.Invoke();
+            OnSceneLoaded = null;
         }
         
         

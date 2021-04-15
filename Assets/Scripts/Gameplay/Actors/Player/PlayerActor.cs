@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Gameplay.Actors.Base;
 using Gameplay.Actors.Base.Interface;
 using GameSystems;
+using Managers;
 using Managers.Player;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ namespace Gameplay.Actors.Player
     public class PlayerActor : Actor
     {
         public PlayerFX playerFx;
-        private CameraController cameraController;
+        private CameraManager cameraManager;
         private EquipmentManager equipment;
         
         
@@ -22,13 +23,15 @@ namespace Gameplay.Actors.Player
         
         public override void Init()
         {
+            equipment = PlayerManager.Instance().equipmentManager;
+            cameraManager = CameraManager.Instance();
+
             base.Init();
-            playerFx = GetComponent<PlayerFX>();
+            
             playerFx.Init(combat);
             // turnoff automatic vision update
             vision.isEnabled = false;
-            cameraController = GameController.instance.GetCameraController();
-            equipment = GameController.instance.playerManager.equipmentManager;
+            
             combat.OnAttackEnd += ShakeCamera;
             combat.OnAttackEnd += PushPhysicsObjects;
         }
@@ -36,73 +39,45 @@ namespace Gameplay.Actors.Player
         
         public override void MeleeAttack()
         {
-            if (dashing)
-            {
+            if (dashing || combat.IsMeleeAttacking())
                 return;
-            }
             
-            float oldView = vision.viewAngle;
-            vision.viewAngle = 360f;
-            vision.viewRadius *= 2f;
-            List<Collider> objects = vision.FindVisibleColliders();
-
-            vision.viewAngle = oldView;
-            vision.viewRadius /= 2f;
-            List<IHealthable> attack = new List<IHealthable>();
-            
-            for (int i = 0; i < objects.Count; i++)
-            {
-                IHealthable healthableObject = objects[i].GetComponent<IHealthable>();
-
-                if (healthableObject != null)
-                {
-                    attack.Add(healthableObject);
-                }
-                
-            }
-            combat.MeleeAttack(attack);
+            combat.MeleeAttack(GetListHealthableInViewRadius());
         }
 
 
         public override void Dash()
         {
             if (CanDash())
-            {
                 StartCoroutine(Dashing());
-            }
         }
 
 
         public override void Aim(Vector3 point)
         {
             if (equipment.GetRangeWeapon() == null)
-            {
                 return;
-            }
 
             if (combat.IsRangeCooldown())
-            {
                 return;
-            }
             
             if (combat.aimTime == .0f)
-            {
                 equipment.SetMainWeaponActive(false);
-            }
 
             isAiming = true;
             float bodyRotationSpeed = 3f;
+            
             movement.SetSpeedMultiplier(0.6f);
             combat.Aim();
 
             point = TransformJoystickPoint(point);
             point.y = animator.lookPoint.position.y;
-//            point = Vector3.Slerp(animator.lookPoint.position, point, 0.25f);
+            
             animator.lookPoint.position = point;
             animator.isLookAtEnabled = true;
             
             // Rotate actor
-            if (animator.excessAngle != 0)
+            if (animator.excessAngle != 0f)
             {
                 movement.Rotating(false);
                 transform.Rotate(0, animator.excessAngle * Time.deltaTime * bodyRotationSpeed, 0);
@@ -112,7 +87,7 @@ namespace Gameplay.Actors.Player
 
         private Vector3 TransformJoystickPoint(Vector3 point)
         {
-            Camera camera = GameController.instance.GetCameraController().GetCamera();
+            Camera camera = cameraManager.GetCamera();
             return camera.transform.TransformPoint(- point) - (camera.transform.position - transform.position);
         }
         
@@ -124,15 +99,14 @@ namespace Gameplay.Actors.Player
         public override void StopAim()
         {
             if (!isAiming)
-            {
                 return;
-            }
             
             if (combat.aimTime > 0)
             {
                 RangeAttack();
                 movement.ResetSpeedMultiplier();
             }
+            
             isAiming = false;
             movement.Rotating(true);
             animator.isLookAtEnabled = false;
@@ -150,9 +124,8 @@ namespace Gameplay.Actors.Player
         {
             // todo rework to abilities 
             if (!CanDash())
-            {
                 yield break;
-            }
+            
             dashingTime = Time.time;
             dashing = true;
             animator.Trigger("dash");
@@ -183,13 +156,12 @@ namespace Gameplay.Actors.Player
         void ShakeCamera()
         {
             int current = combat.GetCurrentSuccessAttack();
-            int multyplier = 1;
+            int multiplier = 1;
+            
             if (0 == current)
-            {
-                multyplier *= 4;
-            }
+                multiplier *= 4;
 
-            StartCoroutine(cameraController.Shake(.25f * multyplier));
+            StartCoroutine(cameraManager.Shake(.25f * multiplier));
         }
 
 
@@ -198,14 +170,10 @@ namespace Gameplay.Actors.Player
             if (Time.time - dashingTime >= dashingColdownd)
             {
                 if (combat.IsMeleeAttacking())
-                {
                     return false;
-                }
 
                 if (combat.aimTime > 0)
-                {
                     return false;
-                }
                 
                 return true;
             }
@@ -228,9 +196,7 @@ namespace Gameplay.Actors.Player
             
             // Todo check nan
             if (endPos != endPos)
-            {
                 yield break;
-            }
             
             while (time < 1)
             {
@@ -239,6 +205,34 @@ namespace Gameplay.Actors.Player
                 yield return null;
             }
             
+        }
+
+        public List<IHealthable> GetListHealthableInViewRadius()
+        {
+            List<IHealthable> healthableInViewRadius = new List<IHealthable>();
+            
+            //Try get more that orig radius
+            float oldView = vision.viewAngle;
+            vision.viewAngle = 360f;
+            vision.viewRadius *= 2f;
+            
+            List<Collider> objects = vision.FindVisibleColliders();
+
+            vision.viewAngle = oldView;
+            vision.viewRadius /= 2f;
+            
+            for (int i = 0; i < objects.Count; i++)
+            {
+                IHealthable healthableObject = objects[i].GetComponent<IHealthable>();
+
+                if (healthableObject != null)
+                {
+                    healthableInViewRadius.Add(healthableObject);
+                }
+                
+            }
+
+            return healthableInViewRadius;
         }
     }
 }

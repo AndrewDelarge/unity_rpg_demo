@@ -3,6 +3,7 @@ using Gameplay.Actors.Base;
 using Gameplay.Actors.Base.Interface;
 using GameSystems;
 using GameSystems.FX;
+using Managers;
 using Managers.Player;
 using Scriptable;
 using UnityEngine;
@@ -33,8 +34,8 @@ namespace Gameplay.Actors.Player
         
         public void Init(Combat combat)
         {
-            equipmentManager = GameController.instance.playerManager.equipmentManager;
-            player = GameController.instance.playerManager.GetPlayer();
+            equipmentManager = PlayerManager.Instance().equipmentManager;
+            player = PlayerManager.Instance().GetPlayer();
             stats = GetComponent<IHealthable>();
             this.combat = combat;
             
@@ -137,7 +138,7 @@ namespace Gameplay.Actors.Player
             {
                 currentTrail.Play();
                 
-                yield return new WaitForSeconds(combat.GetCurrentMeleeAttackSpeed());
+                yield return new WaitForSeconds(combat.GetCurrentMeleeAttackDuration());
                 
                 currentTrail.Stop();
             }

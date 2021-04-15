@@ -28,10 +28,10 @@ namespace Gameplay.Actors.Base
             stats        = GetComponent<Stats>();
             
             stats.Init();
-            input.Init(this);
-            combat.Init(stats, input);
-            movement.Init(stats, input);
-            animator.Init(combat, movement, stats);
+            input.Init();
+            combat.Init();
+            movement.Init();
+            animator.Init(movement);
 
             stats.onDied += Die;
         }

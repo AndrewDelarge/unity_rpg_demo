@@ -22,6 +22,7 @@ namespace Managers.Player
         public Equipment[] defaultEquipments;
         public MeleeWeapon defaultWeapon;
         public RangeWeapon defaultRangeWeapon;
+        [HideInInspector]
         public GameObject targetMesh;
         
         
@@ -45,7 +46,7 @@ namespace Managers.Player
             currentEquipment = new Equipment[equipCount];
             currentMeshes = new Renderer[equipCount];
             
-            GameController.instance.playerManager.onPlayerInited += EquipDefault;
+            PlayerManager.Instance().onPlayerInited += EquipDefault;
         }
         
         
@@ -132,7 +133,7 @@ namespace Managers.Player
         
         protected void ShowEquipment(Weapon equipment)
         {
-            Actor player = GameController.instance.playerManager.GetPlayer();
+            Actor player = PlayerManager.Instance().GetPlayer();
             
             Transform itemTransform = player.animator.handholdBoneRepeater;
             
@@ -282,7 +283,7 @@ namespace Managers.Player
         
         public void EquipDefault()
         {
-            targetMesh = GameController.instance.playerManager.GetPlayer().gameObject;
+            targetMesh = PlayerManager.Instance().GetPlayer().gameObject;
 
             foreach (Equipment item in defaultEquipments)
             {

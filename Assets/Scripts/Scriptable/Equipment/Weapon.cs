@@ -1,5 +1,6 @@
 using Gameplay.Actors.Base;
 using GameSystems;
+using Managers;
 using UnityEngine;
 
 namespace Scriptable
@@ -23,7 +24,7 @@ namespace Scriptable
             // TODO hardcoded tag
             if (actor.CompareTag("Player"))
             {
-                GameController.instance.playerManager.equipmentManager.Equip(this);
+                PlayerManager.Instance().equipmentManager.Equip(this);
             }
         }
     }

@@ -6,9 +6,11 @@ using Gameplay.Projectile;
 using Gameplay.Zones;
 using GameSystems;
 using GameSystems.Input;
+using Managers;
 using Managers.Player;
 using Scriptable;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Gameplay.Actors.Player
 {
@@ -17,28 +19,24 @@ namespace Gameplay.Actors.Player
         public float minAimTime = 0.2f;
         [Header("Melee Weapons Combo")]
         public WeaponComboHitParams[] weaponsCombo;
-        
-        
 
         private Dictionary<WeaponType, WeaponComboHitParams> weaponComboHitParams;
         private WeaponComboHitParams currentWeaponComboHitParams;
         private EquipmentManager equipmentManager;
-
-
-        public override void Init(Stats actorStats, BaseInput baseInput)
+        
+        public override void Init()
         {
-            base.Init(actorStats, baseInput);
+            base.Init();
 
-            equipmentManager = GameController.instance.playerManager.equipmentManager;
-            
+            equipmentManager = PlayerManager.Instance().equipmentManager;
             
             weaponComboHitParams = new Dictionary<WeaponType, WeaponComboHitParams>();
+            
             foreach (WeaponComboHitParams comboParams in weaponsCombo)
-            {
                 weaponComboHitParams.Add(comboParams.weaponType, comboParams);
-            }
 
             currentWeaponComboHitParams = GetDefaultComboParams();
+            
             equipmentManager.onMeleeWeaponEquip += SetComboHitByWeapon;
             equipmentManager.onMeleeWeaponUnequip += SetDefaultWeaponCombo;
         }
@@ -46,27 +44,21 @@ namespace Gameplay.Actors.Player
         public override void Aim()
         {
             if (equipmentManager.GetRangeWeapon() == null)
-            {
                 return;
-            }
+            
             if (aimTime == 0)
-            {
                 onAimStart?.Invoke();
-            }
+            
             aimTime += Time.deltaTime;
         }
         
         public override void RangeAttack(Vector3 point)
         {
             if (equipmentManager.GetRangeWeapon() == null)
-            {
                 return;
-            }
             
             if (Time.time - lastRangeAttackTime < rangeAttackCooldown)
-            {
                 return;
-            }
 
             if (aimTime < minAimTime)
             {
@@ -74,6 +66,7 @@ namespace Gameplay.Actors.Player
                 aimTime = 0;
                 return;
             }
+            
             lastRangeAttackTime = Time.time;
             aimTime = Mathf.Min(aimTime, 1);
 
@@ -86,11 +79,14 @@ namespace Gameplay.Actors.Player
 
         void SpawnProjectile(GameObject proj, Vector3 target)
         {
-            Vector3 pos = transform.position;
+            var pos = transform.position;
             pos.y = target.y;
-            GameObject gameObject = Instantiate(proj, pos, Quaternion.identity);
+            
+            var gameObject = Instantiate(proj, pos, Quaternion.identity);
+            var projectile = gameObject.GetComponent<BaseProjectile>();
+            
             gameObject.transform.LookAt(target);
-            BaseProjectile projectile = gameObject.GetComponent<BaseProjectile>();
+
             projectile.angleSpeed = 1 - aimTime;
             projectile.ignorePlayer = true;
             projectile.Launch(stats.GetDamageValue());
@@ -99,22 +95,19 @@ namespace Gameplay.Actors.Player
         
         public override void MeleeAttack(List<IHealthable> targetStats)
         {
-            if (Time.time - lastAttackTime < curMAttackSpeed)
-            {
+            if (IsMeleeAttacking())
                 return;
-            }
+            
             curMAttackDelay = currentWeaponComboHitParams.GetDelay(successAttackInRow);
-            curMAttackSpeed = currentWeaponComboHitParams.GetSpeed(successAttackInRow);
             curMAttackRadius = currentWeaponComboHitParams.GetRaduis(successAttackInRow);
             curMAttackDamageMultiplier = currentWeaponComboHitParams.GetFinalDamage(successAttackInRow);
             
             base.MeleeAttack(targetStats);
 
+            curMAttackDuration = currentWeaponComboHitParams.GetDuration(successAttackInRow);
+
             if (IsLastCombatAttack())
-            {
                 StartCoroutine(SpawnPushBackWave(curMAttackDelay));
-            }
-            
         }
 
         IEnumerator SpawnPushBackWave(float waiting)
@@ -146,7 +139,7 @@ namespace Gameplay.Actors.Player
             WeaponComboHitParams param = new WeaponComboHitParams();
             param.maxAttackInRow = 1;
             param.delay = new float[1]{meleeAttackDelay};
-            param.speed = new float[1]{meleeAttackSpeed};
+            param.duration = new float[1]{meleeAttackSpeed};
             param.raduis = new float[1]{meleeAttackRaduis};
             param.finalDamageMultiplier = new float[1]{1f};
             
@@ -161,7 +154,7 @@ namespace Gameplay.Actors.Player
         public WeaponType weaponType;
         public int maxAttackInRow;
         public float[] delay;
-        public float[] speed;
+        [FormerlySerializedAs("speed")] public float[] duration;
         public float[] finalDamageMultiplier;
         public float[] raduis;
 
@@ -170,9 +163,9 @@ namespace Gameplay.Actors.Player
             return GetValue(delay, index);
         }
         
-        public float GetSpeed(int index)
+        public float GetDuration(int index)
         {
-            return GetValue(speed, index);
+            return GetValue(duration, index);
         }
 
         public float GetFinalDamage(int index)

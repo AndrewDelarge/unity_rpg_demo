@@ -1,4 +1,5 @@
 using System;
+using CoreUtils;
 using Exceptions.Game.Player;
 using Gameplay;
 using Gameplay.Actors.Player;
@@ -9,12 +10,10 @@ using UnityEngine;
 
 namespace Managers
 {
-    public class PlayerManager : MonoBehaviour
+    public class PlayerManager : SingletonDD<PlayerManager>
     {
         public GameObject playerPrefab;
-        [HideInInspector]
         public EquipmentManager equipmentManager;
-        [HideInInspector]
         public InventoryManager inventoryManager;
         public Action onPlayerInited;
 
@@ -23,9 +22,7 @@ namespace Managers
         
         public void Init()
         {
-            equipmentManager = GetComponent<EquipmentManager>();
-            inventoryManager = GetComponent<InventoryManager>();
-            sceneController = GameController.instance.sceneController;
+            sceneController = GameManager.Instance().sceneController;
             equipmentManager.Init();
             inventoryManager.Init();
         }
@@ -77,7 +74,7 @@ namespace Managers
         {
             if (currentPlayer == null)
             {
-                Debug.Log("Player not spawned");
+                Debug.Log(" # -PlayerMng- # Player not spawned");
                 return;
             }
             currentPlayer.transform.position = pos;

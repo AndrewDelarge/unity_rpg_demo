@@ -1,10 +1,14 @@
 using Gameplay.Actors.AI.Behavior;
 using Gameplay.Actors.Base;
+using UnityEngine;
 
 namespace GameSystems.Input
 {
     public class AIInput : BaseInput
     {
+        [SerializeField]
+        private Actor actor;
+        
         public BehaviorType behaviorType = BehaviorType.Default;
         
         public BaseBehavior behavior;
@@ -12,13 +16,8 @@ namespace GameSystems.Input
         public bool aiEnabled = true;
 
         private BehaviorState currentBstate;
-        
-        private void Awake()
-        {
-            enabled = false;
-        }
-        
-        public override void Init(Actor actor)
+
+        public override void Init()
         {
             // TODO rework case to inspector select
             switch (behaviorType)

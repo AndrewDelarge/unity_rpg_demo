@@ -1,6 +1,7 @@
 using Gameplay.Actors.Base;
 using GameSystems;
 using GameSystems.Languages;
+using Managers;
 using UI.Hud;
 using UnityEngine;
 
@@ -16,19 +17,19 @@ namespace Gameplay.Scenario.Actions.Tutorial
         public override void Do()
         {
             base.Do();
-            GameController.instance.uiManager.SetPointTarget(target);
+            UIManager.Instance().SetPointTarget(target);
             doing = true;
         }
 
         public override void Stop()
         {
-            GameController.instance.uiManager.SetPointTargetComplete();
-            GameController.instance.uiManager.HidePointTarget();
+            UIManager.Instance().SetPointTargetComplete();
+            UIManager.Instance().HidePointTarget();
         }
 
         public override void CheckDoing()
         {
-            Actor player = GameController.instance.playerManager.GetPlayer();
+            Actor player = PlayerManager.Instance().GetPlayer();
 
             if (Vector3.Distance(player.transform.position, target.position) <= 2f)
             {

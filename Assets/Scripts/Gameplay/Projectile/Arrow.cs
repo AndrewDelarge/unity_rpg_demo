@@ -18,22 +18,16 @@ namespace Gameplay.Projectile
         private void OnHealthableHit(GameObject hitted)
         {
             Actor targetActor = hitted.GetComponentInParent<Actor>();
+            
             if (targetActor != null && targetActor.IsFriend(damage.GetOwner()))
-            {
                 return;
-            }
             
             Stop();
-//            gameObject.transform.parent = hitted.transform;
-            IHealthable healthable = hitted.GetComponentInParent<IHealthable>();
-//            StartCoroutine(Destroy());
             
+            IHealthable healthable = hitted.GetComponentInParent<IHealthable>();
             
             if (healthable == null)
-            {
-                
                 return;
-            }
             
             healthable.TakeDamage(damage);
             Destroy(gameObject);

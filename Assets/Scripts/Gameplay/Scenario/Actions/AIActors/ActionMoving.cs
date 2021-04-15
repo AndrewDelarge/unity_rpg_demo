@@ -2,6 +2,7 @@ using System;
 using Gameplay.Actors.Base;
 using Gameplay.Actors.Base.Interface;
 using GameSystems;
+using Managers;
 using UnityEngine;
 
 namespace Gameplay.Scenario.Actions.AIActors
@@ -17,7 +18,9 @@ namespace Gameplay.Scenario.Actions.AIActors
         public override void Do()
         {
             base.Do();
+            
             controlable = controlableGameObject.GetComponent<IControlable>();
+            
             if (controlable == null)
             {
                 onComplete?.Invoke();
@@ -27,7 +30,7 @@ namespace Gameplay.Scenario.Actions.AIActors
 
             if (targetIsPlayer)
             {
-                Actor player = GameController.instance.playerManager.GetPlayer();
+                Actor player = PlayerManager.Instance().GetPlayer();
                 if (player == null)
                 {
                     doing = false;

@@ -26,7 +26,7 @@ namespace UI.Inventory
 
         public void Init()
         {
-            PlayerManager playerManager = GameController.instance.playerManager;
+            PlayerManager playerManager = PlayerManager.Instance();
             inventory = playerManager.inventoryManager;
             lootSlots = lootSlotsHub.GetComponentsInChildren<LootSlot>();
             inventorySlots = slotsHub.GetComponentsInChildren<Slot>();
@@ -49,7 +49,7 @@ namespace UI.Inventory
         
         public void ToggleInventory()
         {
-            GameController.instance.Pause(!inventoryUI.activeSelf);
+            GameManager.Instance().Pause(!inventoryUI.activeSelf);
             inventoryUI.SetActive(!inventoryUI.activeSelf);
         }
 
@@ -101,7 +101,7 @@ namespace UI.Inventory
         void ShowLoot(Interactable loot)
         {
             lootTarget = loot;
-            GameController.instance.Pause(true);
+            GameManager.Instance().Pause(true);
             lootTarget.onLootChange += UpdateLoot;
             
             UpdateLoot();
@@ -112,7 +112,7 @@ namespace UI.Inventory
         public void HideLoot()
         {
             lootUI.SetActive(false);
-            GameController.instance.Pause(false);
+            GameManager.Instance().Pause(false);
             if (lootTarget != null)
             {
                 lootTarget.onLootChange -= UpdateLoot;

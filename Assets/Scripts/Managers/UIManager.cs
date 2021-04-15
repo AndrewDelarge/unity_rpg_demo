@@ -1,3 +1,4 @@
+using CoreUtils;
 using Gameplay.Actors.Base.Interface;
 using GameSystems;
 using UI.Hud;
@@ -6,22 +7,21 @@ using UnityEngine;
 
 namespace Managers
 {
-    public class UIManager
+    public class UIManager : SingletonDD<UIManager>
     {
-        private bool isSpawned = false;
+        private bool isInited;
+        [SerializeField]
         private UI.Hud.UI uiHud;
         
-        public void Init(Transform parent)
+        public void Init()
         {
-            if (isSpawned)
+            if (isInited)
             {
                 return;
             }
 
-            GameObject ui = GameController.Instantiate(GameController.instance.UIPrefab, parent);
-            GameController.instance.sceneController.OnSceneLoaded += RegisterEvents;
-            uiHud = ui.GetComponent<UI.Hud.UI>();
-            isSpawned = true;
+            GameManager.Instance().sceneController.OnSceneLoaded += RegisterEvents;
+            isInited = true;
             HideHud();
         }
         
@@ -91,10 +91,10 @@ namespace Managers
 
         private void RegisterEvents()
         {
-            GameController.instance.sceneController.LevelController.OnLevelUnload += HidePointTarget;
-            GameController.instance.sceneController.LevelController.OnLevelUnload += uiHud.tutorialFinger.Stop;
+            GameManager.Instance().sceneController.LevelController.OnLevelUnload += HidePointTarget;
+            GameManager.Instance().sceneController.LevelController.OnLevelUnload += uiHud.tutorialFinger.Stop;
             
-            GameController.instance.sceneController.OnSceneLoaded -= RegisterEvents;
+            GameManager.Instance().sceneController.OnSceneLoaded -= RegisterEvents;
 
         }
     }

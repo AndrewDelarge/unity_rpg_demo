@@ -13,7 +13,7 @@ namespace UI.Hud
 
         public void Init(GameObject tempalte)
         {
-            GameController.instance.sceneController.LevelController.OnLevelUnload += Clear;
+            GameManager.Instance().sceneController.LevelController.OnLevelUnload += Clear;
 
             feedStack = new List<FloatingHealthChange>();
             feedTemplate = tempalte;

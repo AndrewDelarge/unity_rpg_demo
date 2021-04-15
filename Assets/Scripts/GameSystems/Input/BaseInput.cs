@@ -9,7 +9,7 @@ namespace GameSystems.Input
         public float horizontal = 0f;
 
         
-        public virtual void Init(Actor actor)
+        public virtual void Init()
         {
             
         }

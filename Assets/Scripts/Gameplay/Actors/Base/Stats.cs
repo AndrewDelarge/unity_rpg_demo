@@ -16,8 +16,11 @@ namespace Gameplay.Actors.Base
         protected const float CRIT_CAP = 100;
         protected const float ARMOR_CAP = 100;
         protected const float CRIT_MULTIPLIER = 2f;
+        
+        [SerializeField]
         protected Actor actor;
         
+        [Header("Base stats")]
         [SerializeField]
         private int level = 1;
         [SerializeField]
@@ -30,6 +33,7 @@ namespace Gameplay.Actors.Base
         private int currentMaxHealth = 0;
         private bool isDead;
         
+        [Header("Advanced stats")]
         public Stat stamina;
         public Stat armor;
         public Stat attackPower;
@@ -46,23 +50,24 @@ namespace Gameplay.Actors.Base
 
         public virtual void Init()
         {
-            // Lvl coefs
-            stamina.onChange = null;
             int startStamina = 21 + ((level - 1) * STAMINA_TO_LVL_COEF);
             int startAP = 20 + ((level - 1) * ATTACK_POWER_TO_LVL_COEF);
+            
+            stamina.onChange = null;
+            
             stamina.RemoveModifier(startStamina);
-            attackPower.RemoveModifier(startAP);
             stamina.AddModifier(startStamina);
+
+            attackPower.RemoveModifier(startAP);
             attackPower.AddModifier(startAP);
             
             currentHealth = GetMaxHealth();
             currentMaxHealth = GetMaxHealth();
+            
             stamina.onChange += UpdateCurrentStats;
-            actor = GetComponent<Actor>();
+            
             if (isDead)
-            {
                 onDied?.Invoke(gameObject);
-            }
         }
         
         public virtual Damage GetDamageValue(bool throwCrit = true, bool randomize = true, float multiplier = 1f)
@@ -72,16 +77,11 @@ namespace Gameplay.Actors.Base
             int throwed = UnityEngine.Random.Range(0, 99);
 
             if (throwed <= chance && throwCrit)
-            {
                 damage = Mathf.FloorToInt(damage * CRIT_MULTIPLIER);
-            }
 
             // Damage Randomising 
-
             if (randomize)
-            {
                 damage = Mathf.FloorToInt(damage * UnityEngine.Random.Range(.9f, 1.1f));
-            }
             
             damage = Mathf.FloorToInt(damage * multiplier);
 
@@ -91,21 +91,17 @@ namespace Gameplay.Actors.Base
         public virtual void TakeDamage(Damage damage)
         {
             if (currentHealth <= 0)
-            {
                 return;
-            }
+            
             int damageValue = Mathf.FloorToInt(damage.GetValue() * GetArmorMultiplier());
             
             damageValue = Mathf.Clamp(damageValue, 0, int.MaxValue);
             currentHealth -= damageValue;
             lastDamage = damage;
             if (currentHealth <= 0)
-            {
                 Die();
-            }
             
             onGetDamage?.Invoke(damage);
-
 
             HealthChangeEventArgs args = new HealthChangeEventArgs();
             args.healthChange = - damageValue;
@@ -121,9 +117,7 @@ namespace Gameplay.Actors.Base
             currentHealth += Mathf.FloorToInt(healAmount);
 
             if (currentHealth > currentMaxHealth)
-            {
                 currentHealth = currentMaxHealth;
-            }
             
             HealthChangeEventArgs args = new HealthChangeEventArgs();
             args.healthChange = Mathf.FloorToInt(healAmount);
@@ -145,9 +139,7 @@ namespace Gameplay.Actors.Base
             currentMaxHealth = GetMaxHealth();
 
             if (currentHealth > currentMaxHealth)
-            {
                 currentHealth = currentMaxHealth;
-            }
             
             HealthChangeEventArgs args = new HealthChangeEventArgs();
             

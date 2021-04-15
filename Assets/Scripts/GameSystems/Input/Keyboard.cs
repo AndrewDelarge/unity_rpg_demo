@@ -1,4 +1,5 @@
 using Gameplay.Actors.Base;
+using Managers;
 using UI.Hud;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,6 +8,8 @@ namespace GameSystems.Input
 {
     public class Keyboard : BaseInput
     {
+        [SerializeField]
+        private Actor actor;
 
         public KeyCode actionKey = KeyCode.E;
         public KeyCode secondKey = KeyCode.Q;
@@ -14,16 +17,13 @@ namespace GameSystems.Input
         private ActionBar actionBar;
 
 
-        private Actor actor;
-
         private bool inited = false;
 
         private float bowPulledTime;
         
-        public override void Init(Actor actor)
+        public override void Init()
         {
-            this.actor = actor;
-            actionBar = GameController.instance.uiManager.GetActionBar();
+            actionBar = UIManager.Instance().GetActionBar();
             actionBar.onActionKeyClick += actor.MeleeAttack;
             actionBar.onSecKeyClick += actor.Dash;
             

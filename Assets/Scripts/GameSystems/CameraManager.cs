@@ -1,10 +1,22 @@
 ﻿using System.Collections;
+using CoreUtils;
 using UnityEngine;
 
 namespace GameSystems
 {
-    public class CameraController : MonoBehaviour
+    public enum GameCameras
     {
+        Menu,
+        InGame
+    }
+    public class CameraManager : SingletonDD<CameraManager>
+    {
+        [Header("Cameras")] 
+        [SerializeField] 
+        private Camera _menuCamera;
+        [SerializeField] 
+        private Camera _inGameCamera;
+        
         public Transform target;
         public Vector3 offset;
         public float pitch = 2f;
@@ -18,15 +30,16 @@ namespace GameSystems
         
 
         private Camera currentCamera;
-        private Camera defaultCamera;
         private bool positionFreezzed = false;
 
+        private void Awake()
+        {
+            Init();
+        }
+        
         public void Init()
         {
-            currentCamera = GetComponent<Camera>();
-            defaultCamera = Camera.main;
-
-            AlignCamera();
+            currentCamera = _menuCamera;
         }
         
         void FixedUpdate()
@@ -43,57 +56,66 @@ namespace GameSystems
                 Quaternion targetRotation = Quaternion.LookRotation(target.position - currentCamera.transform.position + Vector3.up * pitch, target.up);
                 currentCamera.transform.rotation = Quaternion.Slerp(currentCamera.transform.rotation, targetRotation, cameraRotationSpeed * Time.deltaTime);
             }
-            
         }
 
         public IEnumerator Shake(float power = 1f, float speed = .1f)
         {
-            {
-                Transform targetT = transform;
-                float oldY = targetT.position.y;
-                Vector3 newPos = targetT.position;
-                newPos.y += power;
-                targetT.position = newPos;
-                yield return new WaitForSeconds(speed);
-                newPos = targetT.position;
-                newPos.y = oldY;
-                targetT.position = newPos;
-            }
+            Transform targetTransform = currentCamera.transform;
+            Vector3 newPos = targetTransform.position;
             
+            float oldY = targetTransform.position.y;
             
+            newPos.y += power;
             
+            targetTransform.position = newPos;
             
-            yield break;
-            // Pitching
-            {
-                float oldPitch = pitch;
-                pitch += power;
-
-//            AlignCamera();
-                yield return new WaitForSeconds(speed);
+            yield return new WaitForSeconds(speed);
             
-                pitch = oldPitch;
-                Quaternion targetRotation = Quaternion.LookRotation(target.position - currentCamera.transform.position + Vector3.up * oldPitch, target.up);
-                currentCamera.transform.rotation = Quaternion.Slerp(currentCamera.transform.rotation, targetRotation, 0.5f);
-            }
+            newPos = targetTransform.position;
+            newPos.y = oldY;
             
+            targetTransform.position = newPos;
         }
 
-        public void SetCamera(Camera camera, bool freezed = false)
+        public void SwitchCamera(GameCameras cameraType)
         {
-            StartCoroutine(SetCurCamera(camera, freezed));
+            DeactivateAllCameras();
+            switch (cameraType)
+            {
+                case GameCameras.Menu:
+                    SetCamera(_menuCamera, false, 0);
+                    break;
+                case GameCameras.InGame:
+                    SetCamera(_inGameCamera, false, 0);
+                    break;
+            }
         }
 
-        IEnumerator SetCurCamera(Camera camera, bool freezed)
+
+        private void DeactivateAllCameras()
         {
-            yield return new WaitForSeconds(1f);
+            _menuCamera.gameObject.SetActive(false);
+            _inGameCamera.gameObject.SetActive(false);
+        }
+        
+        public void SetCamera(Camera camera, bool freezed = false, float delay = 1f)
+        {
+            StartCoroutine(SetCurrentCamera(camera, freezed, delay));
+        }
+
+        private IEnumerator SetCurrentCamera(Camera camera, bool freezed, float delay)
+        {
             if (camera == null)
-            {
                 yield break;
-            }
+            
+            yield return new WaitForSeconds(delay);
+            
             positionFreezzed = freezed;
-            currentCamera.enabled = false;
-            camera.enabled = true;
+            
+            if (currentCamera != null)
+                currentCamera.gameObject.SetActive(false);
+            
+            camera.gameObject.SetActive(true);
             currentCamera = camera;
         }
         
@@ -101,12 +123,6 @@ namespace GameSystems
         {
             this.positionFreezzed = freeze;
         }
-        
-        public void ResetCamera()
-        {
-            StartCoroutine(SetCurCamera(defaultCamera, false));
-        }
-
 
         public void AlignCamera()
         {

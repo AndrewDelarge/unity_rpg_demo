@@ -9,12 +9,6 @@ namespace Gameplay.Actors.AI
     public class AICombat : Base.Combat
     {
         public float rangeDamageMultiplier = 1f;
-        public override void Init(Stats actorStats, BaseInput baseInput)
-        {
-            base.Init(actorStats, baseInput);
-
-        }
-
 
         public override void RangeAttack(Vector3 point)
         {
@@ -25,7 +19,6 @@ namespace Gameplay.Actors.AI
             EnterCombat();
 
             //TODO rework
-
             lastRangeAttackTime = Time.time;
 
             aimTime = Mathf.Min(aimTime, 1);

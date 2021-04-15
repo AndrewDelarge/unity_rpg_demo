@@ -8,15 +8,18 @@ namespace Gameplay.Actors.Base
     [RequireComponent(typeof(Stats))]
     public abstract class CommonAnimator : BaseAnimator
     {
+        [SerializeField]
+        protected Combat combat;
+        [SerializeField]
+        protected IControlable movement;
+        [SerializeField]
+        protected Stats stats;
+        
         public AnimationClip replaceableAttackClip;
         public AnimationClip[] defaultAttackAnimSet;
         public string attackLayerName = "Attack";
         public string attackInRunLayerName = "AttackInRun";
 
-
-        protected Combat combat;
-        protected IControlable movement;
-        protected Stats stats;
         protected const float locomotionAnimationSmoothTime = .1f;
         protected AnimationClip[] currentAttackAnimSet;
 
@@ -35,23 +38,15 @@ namespace Gameplay.Actors.Base
         public Transform handholdBoneRepeater;
         public Transform handholdBoneLeft;
         public Transform handholdBoneLeftRepeater;
-
-        
         
         private float angleChestHorz;
         private float angleNeckVert;
         
-        private void Awake()
-        {
-            enabled = false;
-        }
 
-        public virtual void Init(Combat actCombat, IControlable actMovement, Stats actStats)
+        public virtual void Init(IControlable actMovement)
         {
             base.Init();
-            combat = actCombat;
             movement = actMovement;
-            stats = actStats;
             currentAttackAnimSet = defaultAttackAnimSet;
             
             RegisterEvents();
