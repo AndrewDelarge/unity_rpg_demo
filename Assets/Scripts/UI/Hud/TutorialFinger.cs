@@ -18,7 +18,7 @@ namespace UI.Hud
             animator.gameObject.SetActive(false);
             curElement = animator.gameObject;
             inited = true;
-            Hide();
+            Hide(true);
         }
 
         public void ShowJoystick()

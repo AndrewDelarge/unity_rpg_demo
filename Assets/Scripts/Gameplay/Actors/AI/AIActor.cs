@@ -16,55 +16,53 @@ namespace Gameplay.Actors.AI
 
         private AIActorFX actorFx;
         private AIDialog dialog;
+
+        public float ragdollForceMultiplier = 15f;
         
         public override void Init()
         {
             base.Init();
 
+            InitComponents();
+            
+            SetSkilletColliderActivity(false);
+//            stats.onGetDamage += PushBack;
+        }
+
+        private void InitComponents()
+        {
             actorFx = GetComponent<AIActorFX>();
             if (actorFx != null)
-            {
                 actorFx.Init();
-            }
-            
+
             dialog = GetComponent<AIDialog>();
             if (dialog != null)
-            {
                 dialog.Init();
-            }
-            
+
             HealthUI healthUi = GetComponent<HealthUI>();
             if (healthUi != null)
-            {
                 healthUi.Init();
-            }
-            
             
             actorColider = GetComponent<Collider>();
             
             skilletColliders = GetComponentsInChildren<Collider>();
-            
-            SetSkilletColliderActivity(false);
-
-//            stats.onGetDamage += PushBack;
         }
+
 
         void PushBack(Damage damage)
         {
             float power = .1f;
-            if (damage.IsCrit())
-            {
-                power *= .5f;
-            }
-
-            Vector3 pos = transform.forward;
             
+            if (damage.IsCrit())
+                power *= .5f;
+
             Actor owner = damage.GetOwner();
+            Vector3 pos = transform.forward;
+
 
             if (owner != null)
-            {
                 pos = transform.InverseTransformPoint(owner.transform.position);
-            }
+            
             transform.position = transform.TransformPoint((-pos + Vector3.up) * power);
         }
         
@@ -78,15 +76,17 @@ namespace Gameplay.Actors.AI
         void Ragdoll()
         {
             SetSkilletColliderActivity(true);
+            
             Vector3 playerDirection = GetDirection(GetLastDamageDealerPosition());
             playerDirection.y = -0.2f;
+            
             Rigidbody[] rigidbodies = GetComponentsInChildren<Rigidbody>();
             foreach (Rigidbody rigidbody in rigidbodies)
             {
                 rigidbody.isKinematic = false;
                 rigidbody.useGravity = true;
                 
-                rigidbody.AddForce(- playerDirection * 15, ForceMode.Impulse);
+                rigidbody.AddForce(- playerDirection * ragdollForceMultiplier, ForceMode.Impulse);
             }
         }
 
@@ -95,9 +95,7 @@ namespace Gameplay.Actors.AI
             foreach (Collider collider in skilletColliders)
             {
                 if (collider == actorColider)
-                {
                     continue;
-                }
                 
                 collider.isTrigger = ! activity;
             }
@@ -108,9 +106,9 @@ namespace Gameplay.Actors.AI
             if (combat.InMeleeRange(target.GetTransform()))
             {
                 movement.FaceTarget(target.GetTransform().position);
-                List<IHealthable> attackList = new List<IHealthable>();
-                attackList.Add(target);
-                
+
+                var attackList = new List<IHealthable> {target};
+
                 combat.MeleeAttack(attackList);
             }
         }

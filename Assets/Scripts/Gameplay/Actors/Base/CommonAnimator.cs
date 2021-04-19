@@ -57,10 +57,11 @@ namespace Gameplay.Actors.Base
         {
             combat.OnAttack += OnAttack;
             combat.OnAttackEnd += OnAttackEnd;
-            stats.onGetDamage += OnGetHit;
             combat.onAimStart += OnAimStart;
             combat.onAimEnd += OnAimEnd;
             combat.onAimBreak += OnAimBreak;
+            
+            stats.onGetDamage += OnGetHit;
         }
         
         private void LateUpdate()
@@ -72,14 +73,10 @@ namespace Gameplay.Actors.Base
         private void LookAtCalculation()
         {
             if (!isLookAtEnabled)
-            {
                 return;
-            }
 
             if (lookPoint == null || stats.IsDead())
-            {
                 return;
-            }
 
             if (movement.target != null)
             {
@@ -90,14 +87,14 @@ namespace Gameplay.Actors.Base
             
             
             CalculateBodyRotation(lookPoint);
+            RotateBody();
         }
         
         private void ChangeHandRepeaterPos()
         {
             if (!isRepeaterEnabled)
-            {
                 return;
-            }
+
             handholdBoneRepeater.position = handholdBone.position;
             handholdBoneRepeater.rotation = handholdBone.rotation;
             handholdBoneLeftRepeater.position = handholdBoneLeft.position;
@@ -162,9 +159,7 @@ namespace Gameplay.Actors.Base
             int animIndex = combat.GetCurrentSuccessAttack();
 
             if (animIndex < currentAttackAnimSet.Length)
-            {
                 return animIndex;
-            }
             
             return Random.Range(0, currentAttackAnimSet.Length);
         }
@@ -181,9 +176,7 @@ namespace Gameplay.Actors.Base
             int indexRun = animator.GetLayerIndex(attackInRunLayerName);
 
             if (indexRun == -1 || index == -1)
-            {
                 return;
-            }
 
             if (speed > 0)
             {
@@ -214,9 +207,6 @@ namespace Gameplay.Actors.Base
             angleChestHorz = angleChestHorz > 0 ? Mathf.Min(angleChestHorz, 40f) : Mathf.Max(angleChestHorz, -40f);
             //Max neck rotation angle
             angleNeckVert = angleNeckVert > 0 ? Mathf.Min(angleNeckVert, 20f) : Mathf.Max(angleNeckVert, -20f);
-            
-            chestBone.Rotate(0, angleChestHorz, 0);
-            neckBone.Rotate(angleNeckVert, 0, 0);
         }
 
         private void RotateBody()

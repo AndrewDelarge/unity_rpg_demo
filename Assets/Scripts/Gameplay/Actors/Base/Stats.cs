@@ -94,20 +94,24 @@ namespace Gameplay.Actors.Base
                 return;
             
             int damageValue = Mathf.FloorToInt(damage.GetValue() * GetArmorMultiplier());
-            
             damageValue = Mathf.Clamp(damageValue, 0, int.MaxValue);
+            
             currentHealth -= damageValue;
-            lastDamage = damage;
+            
+            var finalDamage = new Damage(damageValue, damage.GetOwner(), damage.IsCrit());
+
+            lastDamage = finalDamage;
+            
             if (currentHealth <= 0)
                 Die();
             
-            onGetDamage?.Invoke(damage);
+            onGetDamage?.Invoke(finalDamage);
 
-            HealthChangeEventArgs args = new HealthChangeEventArgs();
-            args.healthChange = - damageValue;
-            args.initiator = damage.GetOwner();
-            args.modifier = damage;
-            
+            HealthChangeEventArgs args = new HealthChangeEventArgs
+            {
+                healthChange = -damageValue, actor = actor, modifier = finalDamage
+            };
+
             OnHealthChange?.Invoke(this, args);
         }
         

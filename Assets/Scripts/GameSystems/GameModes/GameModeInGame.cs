@@ -37,13 +37,13 @@ namespace GameSystems.GameModes
             PlayerManager playerManager = PlayerManager.Instance();
             SceneController sceneController = GameManager.Instance().sceneController;
             
-            GameObject player = playerManager.SpawnPlayer(sceneController.GetStartSpawnPoint());
-
+            playerManager.SpawnPlayer(sceneController.GetStartSpawnPoint());
+            var player = playerManager.CurrentPlayer;
+            
             CameraManager.Instance().SwitchCamera(GameCameras.InGame);
             CameraManager.Instance().target = player.transform;
 
-            UIManager.Instance().SetPlayer(player);
-            UIManager.Instance().ShowHud();
+            UIManager.Instance().SetScreen(UIManager.UIScreens.InGameHud);
             playerManager.InitPlayer();
             
             sceneController.ApplySceneSettings();

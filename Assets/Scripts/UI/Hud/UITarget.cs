@@ -20,27 +20,31 @@ namespace UI.Hud
         {
             cameraManager = CameraManager.Instance();
             curElement = visualPointer;
-            showSpeedTime = 2f;
+            
             inited = true;
-            Hide();
-            doneGameObject.SetActive(false);
+            ResetPointer();
         }
 
 
         public void SetTarget(Transform target)
         {
+            ResetPointer();
+            
             if (target == null)
-            {
-                Hide();
                 return;
-            }
-            Show();
+            
             worldTarget = target;
-            doneGameObject.SetActive(false);
-            visualPointer.transform.localPosition = Vector3.zero;
+            
+            Show();
             StartCoroutine(ChangeSlerpPointerPosSpeed());
         }
 
+        public void ResetPointer()
+        {
+            doneGameObject.SetActive(false);
+            visualPointer.transform.localPosition = Vector3.zero;
+            Hide(true);
+        }
 
         IEnumerator ChangeSlerpPointerPosSpeed()
         {
@@ -59,54 +63,40 @@ namespace UI.Hud
         private void FixedUpdate()
         {
             if (worldTarget == null)
-            {
                 return;
-            }
             
+            visualPointer.transform.localScale = GetLocalScaleAnimation();
+            
+            visualPointer.transform.position = GetPointerPosition();
+        }
+
+
+        private Vector3 GetLocalScaleAnimation()
+        {
             float x = 100 * Time.time * Time.deltaTime;
             float sinX = Mathf.Abs(Mathf.Sin(x)) * 0.5f;
-            visualPointer.transform.localScale = new Vector3(1 + sinX, 1 + sinX);
-            
-            Camera camera = cameraManager.GetCamera();
-            Vector3 pos = camera.WorldToScreenPoint(СalcWorldPosition(worldTarget.position, camera));
+            return new Vector3(1 + sinX, 1 + sinX);
+        }
 
-            pos.y = GetPosition(Screen.height, pos.y);
-            pos.x = GetPosition(Screen.width, pos.x);
+        private Vector3 GetPointerPosition()
+        {
+            Vector3 pos = cameraManager.WorldToScreenPoint(worldTarget.position);
+
+            pos.y = LimitPosition(Screen.height, pos.y);
+            pos.x = LimitPosition(Screen.width, pos.x);
             pos.z = 0;
             
-            pos = Vector3.Slerp(visualPointer.transform.position, pos, slerpPosSpeed);
-            visualPointer.transform.position = pos;
+            return Vector3.Slerp(visualPointer.transform.position, pos, slerpPosSpeed);
         }
         
-        
-        private Vector3 СalcWorldPosition(Vector3 position, Camera camera) {  
-            Vector3 camNormal = camera.transform.forward;
-            Vector3 vectorFromCam = position - camera.transform.position;
-            
-            // TODO normalized
-            float camNormDot = Vector3.Dot (camNormal, vectorFromCam.normalized);
-            
-            if (camNormDot <= 0f) {
-                float camDot = Vector3.Dot (camNormal, vectorFromCam);
-                Vector3 proj = (camNormal * camDot * 1.01f);
-                position = camera.transform.position + (vectorFromCam - proj);
-            }
- 
-            return position;
-        }
 
-
-        float GetPosition(int max, float current)
+        float LimitPosition(int max, float current)
         {
             if (current > max)
-            {
                 return max;
-            }
 
             if (current < 0)
-            {
                 return 0;
-            }
 
             return current;
         }

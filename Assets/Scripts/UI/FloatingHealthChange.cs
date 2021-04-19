@@ -10,11 +10,14 @@ namespace UI
 {
     public class FloatingHealthChange : HideableUi
     {
-        public Text value;
-        public float lifetime = 1f;
-        public GameSystems.Languages.Text text;
-        public Transform target;
-        protected Camera cam;
+        [SerializeField]
+        private Text value;
+        [SerializeField]
+        private float lifetime = 1f;
+        
+        private GameSystems.Languages.Text text;
+        private Transform target;
+        private Camera cam;
         
         public void Init(Transform targetTransform, string textOrCode, bool isCrit)
         {
@@ -26,11 +29,13 @@ namespace UI
 
             text.textCode = textOrCode;
             value.text = text.GetText();
+            
             if (isCrit)
             {
                 value.color = Color.red * 2;
                 value.text += "!";
             }
+            
             inited = true;
             Show();
             StartCoroutine(Lifetime());
@@ -47,11 +52,10 @@ namespace UI
         void FixedUpdate()
         {
             if (! inited)
-            {
                 return;
-            }
-
+            
             Vector3 pos = cam.WorldToScreenPoint(target.position);
+            
             pos.y *= target.localScale.y;
             curElement.transform.position = pos;
         }

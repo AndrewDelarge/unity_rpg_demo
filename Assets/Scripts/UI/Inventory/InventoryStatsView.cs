@@ -15,8 +15,9 @@ namespace UI.Inventory
         private Stats stats;
         
         
-        public void Init(PlayerManager playerManager)
+        public void Init()
         {
+            var playerManager = PlayerManager.Instance();
             Actor player = playerManager.GetPlayer();
             stats = player.stats;
             playerManager.equipmentManager.onItemEquip += OnEqip;

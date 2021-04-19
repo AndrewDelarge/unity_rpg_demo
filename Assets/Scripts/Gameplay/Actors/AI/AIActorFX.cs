@@ -10,7 +10,7 @@ namespace Gameplay.Actors.AI
 {
     public class AIActorFX : ParticleSpawner
     {
-
+        // TODO particle helper
         public GameObject hitParticle;
         public GameObject healParticle;
         
@@ -19,59 +19,42 @@ namespace Gameplay.Actors.AI
         
         private IHealthable stats;
         private Transform target;
-        private WorldUiCanvas worldUiCanvas;
         public void Init()
         {
-            worldUiCanvas = GameManager.Instance().sceneController.worldUiCanvas;
             stats = GetComponent<IHealthable>();
             stats.OnHealthChange += ShowHealChange;
-            stats.OnHealthChange += ShowDamageText;
+            
             target = transform;
+
+            // TODO: WTF
             Transform targetRend = GetComponentInChildren<Transform>();
+            
             if (targetRend != null)
-            {
                 target = targetRend.transform;
-            }
             
         }
-
-        void ShowHealChange(object healthable, HealthChangeEventArgs args)
+        
+        private void ShowHealChange(object healthable, HealthChangeEventArgs args)
         {
             if (args.healthChange > 0)
             {
                 StartCoroutine(SpawnParticle(healParticle, target, particleLifetime));
+                return;
             }
-            else if (args.healthChange < 0)
+
+            var damageInitiator = args.modifier.GetOwner();
+            if (damageInitiator == null)
             {
-                if (args.initiator != null)
-                {
-                    Quaternion quaternion = new Quaternion();
-                    quaternion.SetLookRotation(args.initiator.transform.position);
-                    StartCoroutine(SpawnParticle(hitParticle, target, particleLifetime, quaternion));
-                    return;
-                }
                 StartCoroutine(SpawnParticle(hitParticle, target, particleLifetime));
-            }
-
-        }
-
-        void ShowDamageText(object healthable, HealthChangeEventArgs args)
-        {
-            if (worldUiCanvas.worldUiObjects.damageTextFeed == null)
-            {
                 return;
             }
-
-            Actor owner = args.modifier.GetOwner();
             
-            // TODO hadcoded tag
-            // Only player damage showing
-            if (owner == null || ! owner.CompareTag("Player"))
-            {
-                return;
-            }
-            UIManager.Instance().AddDamageFeed(transform, args.modifier.GetValue().ToString(), args.modifier.IsCrit());
+            Quaternion quaternion = new Quaternion();
+            quaternion.SetLookRotation(damageInitiator.transform.position);
+            StartCoroutine(SpawnParticle(hitParticle, target, particleLifetime, quaternion));
         }
+
+
     }
     
     

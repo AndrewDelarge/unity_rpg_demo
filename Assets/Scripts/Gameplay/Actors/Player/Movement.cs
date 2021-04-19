@@ -81,7 +81,7 @@ namespace Gameplay.Actors.Player
         {
             float speedMultiply;
                 
-            if (Mathf.Abs(input.horizontal) >= .3f || Mathf.Abs(input.vertical) >= .3f)
+            if (Mathf.Abs(input.Horizontal) >= .3f || Mathf.Abs(input.Vertical) >= .3f)
             {
                 speedMultiply = 1f;
             }
@@ -95,7 +95,7 @@ namespace Gameplay.Actors.Player
         
         private Vector3 GetInputDirection()
         {
-            Vector3 direction = new Vector3(input.horizontal, 0f, input.vertical);
+            Vector3 direction = new Vector3(input.Horizontal, 0f, input.Vertical);
             direction = CameraManager.Instance().GetCamera().transform.TransformDirection(direction);
             direction.y = 0;
 

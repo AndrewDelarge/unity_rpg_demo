@@ -234,5 +234,10 @@ namespace Gameplay.Actors.Player
 
             return healthableInViewRadius;
         }
+
+        public override bool IsPlayer()
+        {
+            return true;
+        }
     }
 }

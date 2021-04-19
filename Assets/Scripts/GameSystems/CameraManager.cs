@@ -137,6 +137,27 @@ namespace GameSystems
         {
             return currentCamera;
         }
+
+        public Vector3 WorldToScreenPoint(Vector3 position)
+        {
+            return currentCamera.WorldToScreenPoint(CalculateWorldPosition(position));
+        }
         
+        public Vector3 CalculateWorldPosition(Vector3 position) 
+        {
+            Vector3 camNormal = currentCamera.transform.forward;
+            Vector3 vectorFromCam = position - currentCamera.transform.position;
+            
+            // TODO normalized
+            float camNormDot = Vector3.Dot (camNormal, vectorFromCam.normalized);
+            
+            if (camNormDot <= 0f) {
+                float camDot = Vector3.Dot (camNormal, vectorFromCam);
+                Vector3 proj = (camNormal * camDot * 1.01f);
+                position = currentCamera.transform.position + (vectorFromCam - proj);
+            }
+ 
+            return position;
+        }
     }
 }

@@ -16,9 +16,7 @@ namespace UI.Hud
         public void SetHealthable(IHealthable target)
         {
             if (healthable != null)
-            {
                 healthable.OnHealthChange -= ChangeHeathBarValue;
-            }
             
             healthable = target;
             healthable.OnHealthChange += ChangeHeathBarValue;
@@ -30,9 +28,7 @@ namespace UI.Hud
             value = transform.Find("Value").gameObject.GetComponent<Image>();
             
             if (healthable != null)
-            {
                 SetHealth(healthable.GetHealth());
-            }
         }
 
         public void Show()

@@ -4,6 +4,7 @@ using Managers.Player;
 using Scriptable;
 using Scriptable.Quests;
 using UI.Hud;
+using UI.Inventory;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;

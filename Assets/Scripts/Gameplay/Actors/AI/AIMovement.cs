@@ -42,7 +42,7 @@ namespace Gameplay.Actors.AI
 
             if (input.IsSomeDirection())
             {
-                Vector3 direction = new Vector3(input.horizontal, 0f, input.vertical);
+                Vector3 direction = new Vector3(input.Horizontal, 0f, input.Vertical);
                 direction = Camera.main.transform.TransformDirection(direction);
                 direction.y = 0;
                 direction = direction / direction.magnitude;

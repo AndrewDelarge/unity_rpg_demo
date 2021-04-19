@@ -12,8 +12,6 @@ namespace Gameplay.Scenario.Actions.Tutorial
         public Transform target;
         public Text message;
         
-        
-        
         public override void Do()
         {
             base.Do();

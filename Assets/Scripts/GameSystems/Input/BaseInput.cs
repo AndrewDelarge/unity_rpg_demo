@@ -5,10 +5,12 @@ namespace GameSystems.Input
 {
     public abstract class BaseInput : MonoBehaviour
     {
-        public float vertical = 0f;
-        public float horizontal = 0f;
+        protected float vertical = 0f;
+        protected float horizontal = 0f;
 
-        
+        public float Vertical => vertical;
+        public float Horizontal => horizontal;
+
         public virtual void Init()
         {
             

@@ -17,6 +17,8 @@ namespace GameSystems
         
         private void Awake()
         {
+            Application.targetFrameRate = 60;
+
             Init();
         }
 
@@ -54,6 +56,11 @@ namespace GameSystems
         public void Pause(bool value)
         {
             Time.timeScale = (value) ? 0 : 1;
+        }
+
+        public void Quit()
+        {
+            Application.Quit();
         }
     }
 }

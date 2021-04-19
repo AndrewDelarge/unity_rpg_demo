@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
+using CoreUtils;
 using GameSystems;
 using Scriptable;
+using UI.Inventory;
 using UnityEngine;
 
 namespace Managers.Player
 {
-    public class InventoryManager : MonoBehaviour
+    public class InventoryManager : SingletonDD<InventoryManager>
     {
         #region Singleton
     

@@ -30,7 +30,6 @@ namespace Gameplay.Actors.Base
         {
             return FindVisibleColliders(defaultLayerMask);
         }
-
         
         void UpdateVision()
         {
@@ -124,7 +123,5 @@ namespace Gameplay.Actors.Base
         {
             return IsInViewAngle(target.position);
         }
-        
-        
     }
 }

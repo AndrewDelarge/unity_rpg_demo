@@ -27,24 +27,18 @@ namespace Managers
                 public static string GAME = "game";
             }
         }
-        
+        [SerializeField]
+        private LevelController levelController;
         
         [HideInInspector] 
         public WorldUiCanvas worldUiCanvas;
-        [HideInInspector] 
-        public CameraManager cameraManager;
         public event Action OnSceneLoaded;
-        
         public LevelController LevelController => levelController;
-
-        
-        protected Scene currentScene;
 
         private int currentLevel;
         private bool isLoading;
         
-        [SerializeField]
-        private LevelController levelController;
+
         private AsyncOperation sceneLoadingOperation;
         private SceneSettings sceneSettings;
         private Loading loadingScreen;
@@ -58,9 +52,7 @@ namespace Managers
         private void FixedUpdate()
         {
             if (isLoading)
-            {
                 loadingScreen.SetProgress(sceneLoadingOperation.progress);
-            }
         }
 
         public void LoadScene(int scene)
@@ -107,17 +99,6 @@ namespace Managers
         public GameObject FindSpawnPoint(int pointId)
         {
             return levelController.FindSpawnPoint(pointId);
-        }
-        
-
-        public bool SceneIsPlayable()
-        {
-            return sceneSettings != null;
-        }
-        
-        public bool IsNeedToSpawnPlayer()
-        {
-            return sceneSettings.spawnPlayer;
         }
 
         private void OnLoaded(AsyncOperation operation)

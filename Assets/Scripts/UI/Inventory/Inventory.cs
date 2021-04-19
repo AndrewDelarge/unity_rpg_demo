@@ -3,31 +3,36 @@ using GameSystems;
 using Managers;
 using Managers.Player;
 using Scriptable;
+using UI.Base;
+using UI.Hud;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI.Inventory
 {
-    public class Inventory : MonoBehaviour
+    public class Inventory : UIWindow
     {
         public GameObject inventoryUI;
         public GameObject lootUI;
         public Transform slotsHub;
         public Transform lootSlotsHub;
+        public Button substrate;
+        
         public ItemReceived itemReceived; 
-        public InventoryStatsView inventoryStatsView; 
-        
+        public InventoryStatsView inventoryStatsView;
         public SlotInfo slotInfo;
-
-        private InventoryManager inventory;
+        public QuestPanel questPanel;
         public Interactable lootTarget;
-        
+
+        private InventoryManager inventoryManager;
+
         private Slot[] inventorySlots;
         private LootSlot[] lootSlots;
 
         public void Init()
         {
-            PlayerManager playerManager = PlayerManager.Instance();
-            inventory = playerManager.inventoryManager;
+            inventoryManager = InventoryManager.Instance();
+            
             lootSlots = lootSlotsHub.GetComponentsInChildren<LootSlot>();
             inventorySlots = slotsHub.GetComponentsInChildren<Slot>();
 
@@ -35,22 +40,39 @@ namespace UI.Inventory
             
             RegisterEvents();
             
-            playerManager.onPlayerInited += () => inventoryStatsView.Init(playerManager);
             UpdateUI();
+        }
+
+
+        public override void Open()
+        {
+            base.Open();
+            GameManager.Instance().Pause(true);
+        }
+
+        public override void Close()
+        {
+            base.Close();
+            GameManager.Instance().Pause(false);
         }
 
         private void RegisterEvents()
         {
-            inventory.onItemsChangedCallback += UpdateUI;
-            inventory.onItemAddWithVisual += itemReceived.ShowItem;
-            inventory.onLoot += ShowLoot;
-            inventory.onLootEnd += HideLoot;
+            PlayerManager.Instance().onPlayerInited += inventoryStatsView.Init;
+
+            inventoryManager.onItemsChangedCallback += UpdateUI;
+            inventoryManager.onItemAddWithVisual += itemReceived.ShowItem;
+            
+            inventoryManager.onLoot += ShowLoot;
+            inventoryManager.onLootEnd += HideLoot;
+            
+            substrate.onClick.AddListener(() => UIManager.Instance().CloseWindow(UIManager.UIWindows.Inventory));
         }
         
         public void ToggleInventory()
         {
             GameManager.Instance().Pause(!inventoryUI.activeSelf);
-            inventoryUI.SetActive(!inventoryUI.activeSelf);
+//            inventoryUI.SetActive(!inventoryUI.activeSelf);
         }
 
         public void ShowInfo(Item item)
@@ -68,14 +90,10 @@ namespace UI.Inventory
         {
             for (int i = 0; i < inventorySlots.Length; i++)
             {
-                if (i < inventory.items.Count)
-                {
-                    inventorySlots[i].AddItem(inventory.items[i]);
-                }
+                if (i < inventoryManager.items.Count)
+                    inventorySlots[i].AddItem(inventoryManager.items[i]);
                 else
-                {
                     inventorySlots[i].Clear();
-                }
             }
         }
 
@@ -86,15 +104,9 @@ namespace UI.Inventory
             for (int i = 0; i < lootSlots.Length; i++)
             {
                 if (i < loot.Count)
-                {
-                    Debug.Log(loot[i]);
-
                     lootSlots[i].AddItem(loot[i]);
-                }
                 else
-                {
                     lootSlots[i].Clear();
-                }
             }
         }
         
@@ -114,9 +126,7 @@ namespace UI.Inventory
             lootUI.SetActive(false);
             GameManager.Instance().Pause(false);
             if (lootTarget != null)
-            {
                 lootTarget.onLootChange -= UpdateLoot;
-            }
         }
 
     }

@@ -28,7 +28,7 @@ namespace Gameplay.Actors.Base.Interface
     public class HealthChangeEventArgs : EventArgs
     {
         public int healthChange = 0;
-        public Actor initiator;
+        public Actor actor;
         public BaseHealthModifier modifier;
     }
 }

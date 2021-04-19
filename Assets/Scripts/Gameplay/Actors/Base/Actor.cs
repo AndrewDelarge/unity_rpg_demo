@@ -49,9 +49,7 @@ namespace Gameplay.Actors.Base
             Vector3 damagePosition = transform.TransformPoint(Vector3.forward);
 
             if (stats.lastDamage.GetOwner() != null)
-            {
                 damagePosition = stats.lastDamage.GetOwner().transform.position;
-            }
 
             return damagePosition;
         }
@@ -83,6 +81,11 @@ namespace Gameplay.Actors.Base
             return stats.IsDead();
         }
 
+        public virtual bool IsPlayer()
+        {
+            return false;
+        }
+        
         public virtual void MeleeAttack()
         {
             throw new NotImplementedException("Implement Melee Attack method!");

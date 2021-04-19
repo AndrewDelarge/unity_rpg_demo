@@ -1,3 +1,4 @@
+using Managers;
 using UnityEngine;
 
 namespace GameSystems.GameModes
@@ -28,6 +29,7 @@ namespace GameSystems.GameModes
 
         private void InMainMenu()
         {
+            UIManager.Instance().SetScreen(UIManager.UIScreens.MainMenu);
             CameraManager.Instance().SwitchCamera(GameCameras.Menu);
             // In main menu state logic
         }

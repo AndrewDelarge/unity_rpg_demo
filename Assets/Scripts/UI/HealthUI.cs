@@ -6,20 +6,31 @@ using UnityEngine.UI;
 
 namespace UI
 {
+    
+    // TODO Split this into 2 comp
+    // First WorldspaceUI component
+    // Second - Actor Component 
     public class HealthUI : WorldspaceUi
     {
-        private GameObject levelGameObject;
-        private Image healthImage;
-        private Text healthText;
+        [Header("Health")]
+        [SerializeField] private Image healthImage;
+        [SerializeField] private Text healthText;
+        
+        [Header("Level")]
+        [SerializeField] private GameObject levelGameObject;
+        [SerializeField] private Text levelText;
+        
+        
         private IHealthable stats;
         private bool showed = false;
         
         public override void Init()
         {
             type = WorldUiType.Healthbars;
-            base.Init();
             stats = GetComponent<IHealthable>();
-
+            
+            base.Init();
+            
             healthImage = curElement.transform.GetChild(0).GetComponent<Image>();
             healthText = curElement.GetComponentInChildren<Text>();
             levelGameObject = curElement.transform.GetChild(3).gameObject;
@@ -34,7 +45,7 @@ namespace UI
             stats.OnHealthChange += SetHealth;
         }
         
-        void SetHealth(object obj, EventArgs args)
+        private void SetHealth(object obj, EventArgs args)
         {
             if (!showed)
             {
@@ -43,9 +54,7 @@ namespace UI
             }
             
             if (curElement == null)
-            {        
                 return;
-            }
             
             curElement.SetActive(true);
             healthImage.fillAmount = stats.GetHealth() / (float) stats.GetMaxHealth();

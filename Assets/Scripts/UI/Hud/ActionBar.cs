@@ -10,13 +10,12 @@ namespace UI.Hud
         
         public Joystick joystick;
         public CooldownableStick aimControlStick;
-
         
         public delegate void OnActionKeyClick();
         public delegate void OnSecKeyClick();
+        
         public OnActionKeyClick onActionKeyClick;
         public OnSecKeyClick onSecKeyClick;
-
 
         private Combat playerCombat;
         
@@ -35,7 +34,10 @@ namespace UI.Hud
             foreach (Image image in images)
             {
                 Color color = image.color;
-
+                
+                if (! color.a.Equals(1))
+                    continue;
+                
                 color.a = opacity;
                 image.color = color;
             }
@@ -49,9 +51,9 @@ namespace UI.Hud
         }
 
 
-        public void SetPlayer(GameObject player)
+        public void SetPlayer(Actor player)
         {
-            playerCombat = player.GetComponent<Combat>();
+            playerCombat = player.combat;
         }
         
         public void OnActionClick()

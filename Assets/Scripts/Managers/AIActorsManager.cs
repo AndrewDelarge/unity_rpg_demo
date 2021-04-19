@@ -10,6 +10,7 @@ namespace Managers
     public class AIActorsManager
     {
         protected List<AIActor> aliveActors;
+        public List<AIActor> AliveActors => aliveActors;
 
         private const int DESTROY_AFTER_DEATH_TIME = 3;
 

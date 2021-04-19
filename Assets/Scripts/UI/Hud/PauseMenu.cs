@@ -1,31 +1,36 @@
 ﻿using GameSystems;
+using Managers;
+using UI.Base;
 using UI.MainMenu;
 using UnityEngine;
 
 namespace UI.Hud
 {
-    public class PauseMenu : MonoBehaviour
+    public class PauseMenu : UIWindow
     {
-        public Loading loading;
 
-        public void OnExitButton()
+        public void OnResumeButtonClick()
         {
-            // TODO hardcode
-            Application.Quit();
-            gameObject.SetActive(false);
+            UIManager.Instance().CloseWindow(UIManager.UIWindows.Pause);
         }
         
-        public void Show()
+        public void OnExitButton()
+        {
+            GameManager.Instance().Quit();
+        }
+
+        public override void Open()
         {
             GameManager.Instance().Pause(true);
 
-            gameObject.SetActive(! gameObject.activeSelf);
+            base.Open();
         }
-        
-        public void OnResumeButton()
+
+        public override void Close()
         {
             GameManager.Instance().Pause(false);
-            this.gameObject.SetActive(false);
+
+            base.Close();
         }
     }
 }

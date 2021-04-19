@@ -14,7 +14,6 @@ namespace UI
 
         public GameObject SpawnUi(GameObject gameObject, WorldUiType type)
         {
-
             GameObject targetToSpawn;
             
             switch (type)
@@ -37,9 +36,6 @@ namespace UI
 
             return Instantiate(gameObject, targetToSpawn.transform);
         }
-        
-        
-        
     }
 
     [Serializable]

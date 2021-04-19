@@ -6,8 +6,6 @@ using UnityEngine;
 
 namespace Gameplay.Actors.Base
 {
-    
-    [RequireComponent(typeof(Stats))]
     public class Combat : MonoBehaviour
     {
         [SerializeField]
@@ -182,13 +180,6 @@ namespace Gameplay.Actors.Base
         {
             return Time.time - lastRangeAttackTime <= rangeAttackCooldown;
         }
-        
-//        public void SetTarget(Actor target)
-//        {
-//            targetActor = target;
-//        }
-//
-//        public Actor GetTarget() => targetActor;
 
         public bool InCombat() => inCombat;
         
