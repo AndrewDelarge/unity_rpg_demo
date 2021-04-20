@@ -1,3 +1,4 @@
+using GameSystems;
 using UI.Base;
 using UnityEngine;
 
@@ -9,12 +10,14 @@ namespace UI.Hud
         private const string SHOW_ATTACK_STATE = "AttackButtonClick";
         private const string SHOW_NONE_STATE = "None";
         
-        private Animator animator;
+        [SerializeField] private Animator animator;
         
         
         public override void Init()
         {
-            animator = GetComponentInChildren<Animator>();
+            // TODO HACK
+            GameManager.Instance().sceneController.LevelController.OnLevelUnload += () => Hide(true);
+
             animator.gameObject.SetActive(false);
             curElement = animator.gameObject;
             inited = true;

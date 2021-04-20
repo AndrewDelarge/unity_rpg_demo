@@ -8,7 +8,7 @@ namespace Managers.Scenes
 {
     public class LevelController : MonoBehaviour
     {
-        public AIActorsManager actorsManager;
+        public AIActorsController actorsController;
         public event Action OnLevelLoaded;
         public event Action OnLevelUnload;
         
@@ -76,7 +76,7 @@ namespace Managers.Scenes
                 return;
             }
             
-            actorsManager = new AIActorsManager();
+            actorsController = new AIActorsController();
             triggersManager = new TriggersManager(FindObjectsOfType<Trigger>());
             
             spawnPoints = FindObjectsOfType<SpawnPoint>();

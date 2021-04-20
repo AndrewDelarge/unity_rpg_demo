@@ -1,12 +1,11 @@
 using System;
 using GameSystems;
-using Managers.Scenes;
 using UI;
 using UI.MainMenu;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Managers
+namespace Managers.Scenes
 {
     public class SceneController : MonoBehaviour
     {
@@ -91,9 +90,9 @@ namespace Managers
             return levelController.GetStartSpawnId();
         }
         
-        public AIActorsManager GetActorsManager()
+        public AIActorsController GetActorsManager()
         {
-            return levelController.actorsManager;
+            return levelController.actorsController;
         }
 
         public GameObject FindSpawnPoint(int pointId)

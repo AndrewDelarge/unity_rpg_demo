@@ -5,6 +5,7 @@ using Managers.Player;
 using Scriptable;
 using UI.Base;
 using UI.Hud;
+using UI.Windows.ItemReceived;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,7 +19,6 @@ namespace UI.Inventory
         public Transform lootSlotsHub;
         public Button substrate;
         
-        public ItemReceived itemReceived; 
         public InventoryStatsView inventoryStatsView;
         public SlotInfo slotInfo;
         public QuestPanel questPanel;
@@ -35,8 +35,6 @@ namespace UI.Inventory
             
             lootSlots = lootSlotsHub.GetComponentsInChildren<LootSlot>();
             inventorySlots = slotsHub.GetComponentsInChildren<Slot>();
-
-            itemReceived.Init();
             
             RegisterEvents();
             
@@ -61,20 +59,21 @@ namespace UI.Inventory
             PlayerManager.Instance().onPlayerInited += inventoryStatsView.Init;
 
             inventoryManager.onItemsChangedCallback += UpdateUI;
-            inventoryManager.onItemAddWithVisual += itemReceived.ShowItem;
+            inventoryManager.onItemAddWithVisual += ShowItemReceivedWindow;
             
             inventoryManager.onLoot += ShowLoot;
             inventoryManager.onLootEnd += HideLoot;
             
             substrate.onClick.AddListener(() => UIManager.Instance().CloseWindow(UIManager.UIWindows.Inventory));
         }
-        
-        public void ToggleInventory()
-        {
-            GameManager.Instance().Pause(!inventoryUI.activeSelf);
-//            inventoryUI.SetActive(!inventoryUI.activeSelf);
-        }
 
+        private void ShowItemReceivedWindow(Item item)
+        {
+            var config = new ItemReceivedWindowConfig(item);
+            
+            UIManager.Instance().OpenWindow(UIManager.UIWindows.ItemReceived, config);
+        }
+        
         public void ShowInfo(Item item)
         {
             HideInfo();
@@ -125,6 +124,7 @@ namespace UI.Inventory
         {
             lootUI.SetActive(false);
             GameManager.Instance().Pause(false);
+            
             if (lootTarget != null)
                 lootTarget.onLootChange -= UpdateLoot;
         }

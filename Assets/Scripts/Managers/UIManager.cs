@@ -31,7 +31,8 @@ namespace Managers
         {
             Pause,
             Inventory,
-            LevelComplete
+            LevelComplete,
+            ItemReceived
         }
 
         private Dictionary<UIScreens, UIView> uiScreens = new Dictionary<UIScreens, UIView>();
@@ -50,6 +51,7 @@ namespace Managers
         [SerializeField] private PauseMenu uiPauseMenu;
         [SerializeField] private Inventory uiInventory;
         [SerializeField] private UILevelComplete uiLevelComplete;
+        [SerializeField] private UIItemReceivedWindow uiItemReceivedWindow;
         
         [Header("LoadingScreen")]
         [SerializeField]
@@ -79,6 +81,7 @@ namespace Managers
         private void InitViews()
         {
             uiInventory.Init();
+            uiItemReceivedWindow.Init();
         }
 
         private void InitScreensDictionary()
@@ -92,6 +95,7 @@ namespace Managers
             uiWindows.Add(UIWindows.Pause, uiPauseMenu);
             uiWindows.Add(UIWindows.Inventory, uiInventory);
             uiWindows.Add(UIWindows.LevelComplete, uiLevelComplete);
+            uiWindows.Add(UIWindows.ItemReceived, uiItemReceivedWindow);
         }
 
         public void SetScreen(UIScreens screen)
@@ -121,7 +125,7 @@ namespace Managers
             currentScreen.Open();
         }
 
-        public void OpenWindow(UIWindows windowType)
+        public void OpenWindow(UIWindows windowType, WindowConfig config = null)
         {
             if (! IsWindowExists(windowType))
             {
@@ -140,6 +144,8 @@ namespace Managers
             if (newWindow.CloseOthers)
                 CloseAllWindows();
             
+            if (config != null)
+                newWindow.SetConfig(config);
             
             newWindow.Open();
             newWindow.transform.SetAsLastSibling();

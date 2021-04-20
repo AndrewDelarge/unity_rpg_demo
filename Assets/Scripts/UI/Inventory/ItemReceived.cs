@@ -12,48 +12,50 @@ namespace UI.Inventory
         
         public Image icon;
         public Text textHolder;
+        
+        [SerializeField] private Animator itemAnimator;
+        
         public GameSystems.Languages.Text text;
-
-
-        protected List<Item> itemsToShow;
-        private Animator itemAnimator;
-
+        
         public override void Init()
         {
             curElement = gameObject;
-            itemAnimator = GetComponentInChildren<Animator>();
             textHolder.text = text.GetText();
+            
             icon.enabled = false;
             inited = true;
         }
 
-        public void ShowItem(Item item)
+        public void SetItem(Item item)
         {
-            gameObject.SetActive(true);
             icon.sprite = item.icon;
+        }
+        
+        public override void Show()
+        {
             icon.enabled = true;
-            if (itemAnimator != null)
-            {
-                itemAnimator.SetTrigger("Reset");
-            }
             
-            StartCoroutine(ShowWithAnimation());
+            if (itemAnimator != null)
+                itemAnimator.SetTrigger("Reset");
+            
+            base.Show();
         }
 
-        IEnumerator ShowWithAnimation()
+        public override void Hide()
         {
-            Show();
-            yield return new WaitForSeconds(1f);
-
             if (itemAnimator != null)
-            {
                 itemAnimator.SetTrigger("Start");
-            }
-            
+
+            StartCoroutine(HideWithDelay());
+        }
+        IEnumerator HideWithDelay()
+        {
             yield return new WaitForSeconds(0.8f);
-            Hide();
+            
+            base.Hide();
             icon.enabled = false;
             icon.sprite = null;
         }
+
     }
 }

@@ -18,6 +18,8 @@ namespace UI.Hud
         
         public override void Init()
         {
+            GameManager.Instance().sceneController.LevelController.OnLevelUnload += () => Hide(true);
+
             cameraManager = CameraManager.Instance();
             curElement = visualPointer;
             

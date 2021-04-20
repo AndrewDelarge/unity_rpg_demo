@@ -4,6 +4,7 @@ using Gameplay.Actors.Base.Interface;
 using GameSystems;
 using GameSystems.Input;
 using Managers;
+using Managers.Scenes;
 using UnityEngine;
 
 namespace Gameplay.Actors.AI.Behavior
@@ -24,7 +25,7 @@ namespace Gameplay.Actors.AI.Behavior
         protected BaseInput input;
         protected IHealthable attackTarget;
         protected BehaviorState state;
-        protected AIActorsManager actorsManager;
+        protected AIActorsController actorsController;
         protected bool hasAttackToken;
         protected float stoppingDistance = 1.5f;
         
@@ -140,18 +141,18 @@ namespace Gameplay.Actors.AI.Behavior
 
         public bool GetAttackToken()
         {
-            if (actorsManager == null)
+            if (actorsController == null)
             {
-                actorsManager = GameManager.Instance().sceneController.GetActorsManager();
+                actorsController = GameManager.Instance().sceneController.GetActorsManager();
             }
 
-            return hasAttackToken = actorsManager.GetAttackToken();
+            return hasAttackToken = actorsController.GetAttackToken();
         }
 
         public void ReturnAttackToken()
         {
             hasAttackToken = false;
-            actorsManager.ReturnAttackToken();
+            actorsController.ReturnAttackToken();
         }
 
 

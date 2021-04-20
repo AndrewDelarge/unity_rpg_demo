@@ -20,7 +20,7 @@ namespace UI.Base
             inited = true;
         }
 
-        public void Show()
+        public virtual void Show()
         {
             if (! inited)
                 return;
@@ -28,7 +28,7 @@ namespace UI.Base
             StartCoroutine(VisibleToggle(true));
         }
 
-        public void Hide()
+        public virtual void Hide()
         {
             if (! inited)
                 return;

@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using Gameplay.Actors.AI;
 using GameSystems;
-using Managers.Player;
 using UnityEngine;
 
-namespace Managers
+namespace Managers.Scenes
 {
-    public class AIActorsManager
+    public class AIActorsController
     {
         protected List<AIActor> aliveActors;
         public List<AIActor> AliveActors => aliveActors;
@@ -17,7 +16,7 @@ namespace Managers
         private int attackTokens;
         private int currentAttackTokens;
         
-        public AIActorsManager(int attackTokens = 4)
+        public AIActorsController(int attackTokens = 4)
         {
             aliveActors = new List<AIActor>();
             this.attackTokens = attackTokens;

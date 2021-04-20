@@ -43,16 +43,12 @@ namespace Managers.Player
         
         private GameObject defaultItemGameObject;
         private EquipmentManager equipmentManager;
+
         public void Init()
         {
             equipmentManager = PlayerManager.Instance().equipmentManager;
             equipmentManager.onItemUnequip += AddAfterUnequip;
             equipmentManager.onItemEquip += Remove;
-
-            onItemUse = null;
-            onLoot = null;
-            onItemsChangedCallback = null;
-            onLootEnd = null;
             
             defaultItemGameObject = Resources.Load<GameObject>("Equipments/EmptyItem");
         }
@@ -60,17 +56,14 @@ namespace Managers.Player
         public bool Add(Item item, bool visual = false)
         {
             if (items.Count >= space)
-            {
-                // Not enough space
                 return false;
-            }
+            
+            
             items.Add(item);
 
             if (visual)
-            {
                 onItemAddWithVisual?.Invoke(item);
-            }
-            
+
             onItemsChangedCallback?.Invoke();
             
             return true;
@@ -79,9 +72,7 @@ namespace Managers.Player
         protected void AddAfterUnequip(Item item)
         {
             if (! Add(item))
-            {
                 Drop(item);
-            }
         }
 
         public void Remove(Item item)
