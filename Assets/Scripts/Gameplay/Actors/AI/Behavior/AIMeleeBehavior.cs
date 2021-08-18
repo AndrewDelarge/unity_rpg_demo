@@ -23,7 +23,7 @@ namespace Gameplay.Actors.AI.Behavior
             actor.vision.visionUpdateTime = visionUpdateTime;
         }
 
-        public override IEnumerator AIUpdate()
+        public override void AIUpdate()
         {
             switch (state)
             {
@@ -40,8 +40,6 @@ namespace Gameplay.Actors.AI.Behavior
                     ReturnToIdle();
                     break;
             }
-            
-            yield return null;
         }
 
         protected override void OnActorDied(GameObject died)

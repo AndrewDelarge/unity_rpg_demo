@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CoreUtils;
 using Gameplay.Actors.Base.Interface;
 using GameSystems;
+using UI;
 using UI.Base;
 using UI.Hud;
 using UI.Inventory;
@@ -16,7 +17,7 @@ namespace Managers
     [Serializable]
     public struct UITemplates
     {
-        public GameObject damageTextFeed;
+        public FloatingHealthChange damageTextFeed;
     }
     public class UIManager : SingletonDD<UIManager>
     {

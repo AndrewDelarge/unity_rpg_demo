@@ -50,7 +50,7 @@ namespace Gameplay.Actors.AI.Behavior
                 ReturnAttackToken();
             }
         }
-        public abstract IEnumerator AIUpdate();
+        public abstract void AIUpdate();
         
         public virtual void Defence(Actor attackedBy)
         {

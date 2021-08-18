@@ -66,6 +66,8 @@ namespace UI.Base
             if (! visible)
             {
                 onHided?.Invoke();
+                curElement.SetActive(false);
+
             }
         }
 

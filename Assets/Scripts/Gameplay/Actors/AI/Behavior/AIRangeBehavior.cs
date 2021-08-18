@@ -33,7 +33,7 @@ namespace Gameplay.Actors.AI.Behavior
             
         }
 
-        public override IEnumerator AIUpdate()
+        public override void AIUpdate()
         {
             switch (state)
             {
@@ -55,7 +55,6 @@ namespace Gameplay.Actors.AI.Behavior
             }
 
             UpdateTarget();
-            yield return null;
         }
 
         void UpdateTarget()

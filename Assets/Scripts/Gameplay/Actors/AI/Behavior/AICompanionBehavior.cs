@@ -8,7 +8,7 @@ namespace Gameplay.Actors.AI.Behavior
         public float visionTickRate = 0.1f;
 
 
-        public override IEnumerator AIUpdate()
+        public override void AIUpdate()
         {
             switch (state)
             {
@@ -20,7 +20,6 @@ namespace Gameplay.Actors.AI.Behavior
                     Attack();
                     break;
             }
-            yield return null;
         }
         
         public override void Idle()

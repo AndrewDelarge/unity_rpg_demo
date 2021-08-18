@@ -42,11 +42,11 @@ namespace UI.Hud
             actionBar.SetPlayer(player);
         }
 
-        void Update ()
-        {
-            if (FPSTracker != null)
-                UpdateFpsTracker();
-        }
+//        void Update ()
+//        {
+//            if (FPSTracker != null)
+//                UpdateFpsTracker();
+//        }
 
         private void UpdateFpsTracker()
         {

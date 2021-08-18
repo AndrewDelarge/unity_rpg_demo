@@ -1,3 +1,4 @@
+using System.Collections;
 using Gameplay.Actors.AI.Behavior;
 using Gameplay.Actors.Base;
 using UnityEngine;
@@ -33,15 +34,18 @@ namespace GameSystems.Input
 
             behavior.Init(actor);
             enabled = true;
+            
+            StartCoroutine(AIUpdate());
         }
 
 
-        private void FixedUpdate()
+        private IEnumerator AIUpdate()
         {
-            if (aiEnabled)
+            while (aiEnabled)
             {
-                StartCoroutine(behavior.AIUpdate());
+                behavior.AIUpdate();
                 currentBstate = behavior.GetState();
+                yield return new WaitForSeconds(1f);
             }
         }
         
