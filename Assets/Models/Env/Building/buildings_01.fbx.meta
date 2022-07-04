@@ -9,6 +9,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: Hut_noRef
     second: {fileID: 2100000, guid: f49f9adefd540224f888688a400295af, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bl_hutmat
+    second: {fileID: 2100000, guid: f49f9adefd540224f888688a400295af, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
