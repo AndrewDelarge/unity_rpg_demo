@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d7ef288b238f62d4b8633b871b2f0109
+guid: 19a99f80ece8dec4591c8f0b7589f750
 ModelImporter:
   serializedVersion: 25
   internalIDToNameTable: []
@@ -7,13 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Hut_noRef
-    second: {fileID: 2100000, guid: f49f9adefd540224f888688a400295af, type: 2}
+      name: bl_grass_tile
+    second: {fileID: 2100000, guid: 47422ecdbfb3ff04aae09f8156f42c43, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: bl_hutmat
-    second: {fileID: 2100000, guid: 48ace3f67647cf740809ab4b109fc709, type: 2}
+      name: bl_rockwalls
+    second: {fileID: 2100000, guid: e0490bc41aa5de14aac0a5b7f9991bf0, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -53,7 +53,7 @@ ModelImporter:
     importCameras: 1
     importLights: 1
     swapUVChannels: 0
-    generateSecondaryUV: 1
+    generateSecondaryUV: 0
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1
@@ -71,11 +71,11 @@ ModelImporter:
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
-    tangentImportMode: 2
+    tangentImportMode: 3
     normalCalculationMode: 4
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
-    normalSmoothingSource: 3
+    normalSmoothingSource: 0
   referencedClips: []
   importAnimation: 1
   copyAvatar: 0
